@@ -1,5 +1,6 @@
 ------------------------------------------------------
 					ToTheRec Leagues
 ------------------------------------------------------
-
+Allow adding of a new season
+Figure out the query string and local model scope thing
 export HTTP_PROXY="http://155.247.166.25:8080"

@@ -9,11 +9,12 @@ use App\LeagueStanding;
 use App\LeaguePlayer;
 use App\LeagueTeam;
 use App\LeagueStat;
+use App\LeagueSeason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class LeagueScheduleController extends Controller
+class LeagueSeasonController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -22,7 +23,7 @@ class LeagueScheduleController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->only('index');
+        $this->middleware('auth');
     }
 
     /**
@@ -32,26 +33,28 @@ class LeagueScheduleController extends Controller
      */
     public function index()
     {
-		$league = Auth::user()->leagues_profiles->first();
-		$getWeeks = $league->get_weeks();
-		$getGames = $league->get_all_games();
-		// dd($getWeeks);
 		
-		return view('schedule.index', compact('league', 'getWeeks', 'getGames'));
     }
 	
 	/**
-     * Show the application welcome page for public.
+     * Store a new season for the logged in league.
      *
      * @return \Illuminate\Http\Response
      */
-    public function welcome()
+    public function store(Request $request)
     {
-		$getRecs = RecCenter::all();
-		$getLeagues = LeagueProfile::all();
-		$fireRecs = PlayerProfile::get_fire_recs();
+		$season = new LeagueSeason();
+		$season->leagues_profile_id = $request->query('league');
+		$season->season = $request->season;
+		$season->year = $request->year;
+		$season->age_group = $request->age_group;
+		$season->league_fee = $request->league_fee;
+		$season->ref_fee = $request->ref_fee;
+		$season->location = $request->location;
 		
-        return view('welcome', compact('getRecs', 'getLeagues', 'fireRecs'));
+		if($season->save()) {
+			return redirect()->back()->with(['status' => 'New Season Added Successfully']);
+		}
     }
 	
 	/**
@@ -59,8 +62,8 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function about()
+    public function edit()
     {
-        return view('about', compact(''));
+        
     }
 }

@@ -28,7 +28,7 @@
 											<label for="username">Username</label>
 										</div>
 										
-										@if($errors->has('username') || $errors->has('password'))
+										@if(session('errors'))
 											<!--Username/Password Combination error message-->
 											<div class="m-3">
 												<span class="red-text">That username/password combination was not found. Please try again.</span>

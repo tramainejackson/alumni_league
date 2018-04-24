@@ -70,6 +70,8 @@ class LoginController extends Controller
 				return redirect()->back()->with(['status' => 'The username/password combination you entered is incorrect.']);
 			}
 			
-        }
+        } else {
+			return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
+		}
     }
 }

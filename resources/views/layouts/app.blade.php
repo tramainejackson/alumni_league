@@ -68,24 +68,26 @@
 			<div class="d-none d-lg-flex" id="">
 				<!-- Right Side Of Navbar -->
 				<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
-					<li class="nav-item">
-						<a class='league_home nav-link' href="{{ route('home') }}">{{ $league->leagues_name }}</a>
-					</li>
-					<li class="nav-item">
-						<a class='nav-link' href="{{ route('league_schedule.index') }}">Schedule</a>
-					</li>
-					<li class="nav-item">
-						<a class='nav-link' href="{{ route('league_standings') }}">Standings</a>
-					</li>
-					<li class="nav-item">
-						<a class='nav-link' href="{{ route('league_stat.index') }}">Stats</a>
-					</li>
-					<li class="nav-item">
-						<a class='nav-link' href="{{ route('league_pictures.index') }}">League Pics</a>
-					</li>
-					<li class="nav-item">
-						<a class='nav-link' href="{{ route('league_info') }}">League Info</a>
-					</li>
+					@if(!Auth::guest())
+						<li class="nav-item">
+							<a class='league_home nav-link' href="{{ route('home') }}">{{ $league->leagues_name }}</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ route('league_schedule.index') }}">Schedule</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ route('league_standings') }}">Standings</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ route('league_stat.index') }}">Stats</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ route('league_pictures.index') }}">League Pics</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ route('league_info') }}">League Info</a>
+						</li>
+					@endif
 				</ul>
 			</div>
 			

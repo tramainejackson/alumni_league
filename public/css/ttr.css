@@ -766,13 +766,10 @@ button#okBtn {
     color: white !important;
     border: inset cadetblue !important;
 }
-.leagues_page_div {
-    position: relative;
-}
 
-.leagues_page_div h1 {
-    text-align: center;
-}
+.leagues_page_div {}
+
+.leagues_page_div h1 {}
 
 td#leagues_site_td {
 	display: none;
@@ -887,6 +884,7 @@ div#contender_2 {
   display: inline-block;
   font-size: 200%;
 }
+
 .leagues_schedule {
   display: -webkit-inline-box;
   max-width: 50%;
@@ -895,13 +893,10 @@ div#contender_2 {
   margin: 2% 5%;
   font-size: 150%;
 }
-.weekly_schedule {
-  padding: 0% 0%;
-  width: 100%;
-}
-.weekly_schedule td {
-  text-align: center;
-}
+.weekly_schedule {}
+
+.weekly_schedule td {}
+
 .team_stats_name {
   display: inline-block;
   margin: 0% 10%;
@@ -1007,11 +1002,9 @@ img#league_photo_banner {
   max-height: 50%;
   margin: 2% 10%;
 }
-div.leagueContactInfo {
-	max-width: 100%;
-	font-size: 125%;
-	padding: 2% 30%;
-}
+
+div.leagueContactInfo {}
+
 div#leagues_rules {
     max-width: 100%;
     font-size: 125%;
@@ -1019,12 +1012,10 @@ div#leagues_rules {
     background: linear-gradient(white, cornflowerblue, cornflowerblue);
     color: whitesmoke;
 }
-table.leagues_page_table {
-    width: 100%;
-}
-table.leagues_page_table td {
-    width: 50%;
-}
+table.leagues_page_table {}
+
+table.leagues_page_table td {}
+
 div#leagues_rules {
     display: none;
 }
@@ -1450,14 +1441,8 @@ button.updateIndBtn, button.submitIndPlayerStat {
     100%  {background-color:#feae46; border: solid 1px green; opacity:0.8;}
 }
 
-.maine_modal .navi, .maine_modal_league .navi, .maine_modal_player .navi, .maine_modal .leagues_page_div ul, 
-.maine_modal .leagues_page_div th  {
+.maine_modal .navi, .maine_modal_league .navi, .maine_modal_player .navi {
 	display: none;
-}
-
-.maine_modal .leagues_page_div {
-	border: none;
-	margin: 0.5% 2% 2%;
 }
 
 .maine_modal p.modal_league_link {
@@ -1659,26 +1644,7 @@ iframe[id^='twitter-widget-'] {
 	/* display: block; */
 }
 
-.leagues_page_div {
-	font-size: 175%;
-	/*width: 56%;
-	background-color: white;*/
-	opacity: 0.8;
-	/*border: solid green 5px;*/
-	border-radius: 10px;
-	/*margin: 2% 21.5%;*/
-}
-
-.leagues_page_div a {
-	text-decoration: none;
-	color: white;
-}
-
-.leagues_page_table {
-	padding: 4% 4% 2%;
-	width: 100%;
-	font-family: 'Special Elite', cursive;
-}
+.leagues_page_div {}
 
 .registrationPage h3 {
 	text-align: center;
@@ -2522,11 +2488,7 @@ table.recsPageTable tr {
 	padding: 2% 4%;
 }
 
-#leagues_page_table {
-	width: 100%;
-	text-align: center;
-	padding: 10px 0px;
-}
+#leagues_page_table {}
 
 #leagues_content_display {
 	display: inline-block;

@@ -39,3 +39,7 @@ Route::resource('league_players', 'LeaguePlayerController');
 Route::resource('league_stat', 'LeagueStatController');
 
 Route::resource('league_pictures', 'LeaguePictureController');
+
+Route::resource('league_profile', 'LeagueProfileController');
+
+Route::resource('league_season', 'LeagueSeasonController');

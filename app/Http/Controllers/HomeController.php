@@ -35,6 +35,12 @@ class HomeController extends Controller
 		$league = Auth::user()->leagues_profiles->first();
 		$showcaseGame = LeagueSchedule::get_random_game();
 		
+		if($league->seasons->count() > 1) {
+				
+		} else {
+			
+		}
+		
 		if($showcaseGame != null) {
 			$awayTeamLeader = LeagueStat::get_scoring_leader($showcaseGame->get_away_team_id());
 			$homeTeamLeader = LeagueStat::get_scoring_leader($showcaseGame->get_home_team_id());

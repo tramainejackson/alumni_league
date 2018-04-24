@@ -67,6 +67,14 @@ class LeagueProfile extends Model
         return $this->hasMany('App\LeagueStat');
     }
 	
+	/**
+	* Get the seasons for the league object.
+	*/
+    public function seasons()
+    {
+        return $this->hasMany('App\LeagueSeason');
+    }
+	
 	private function sql_formatted_stats($leagueID=0) {
 		$sqlFormat = "*, FORMAT(SUM(points)/SUM(game_played), 1) AS PPG,
 			FORMAT(SUM(threes_made)/SUM(game_played), 1) AS TPG,
@@ -206,4 +214,20 @@ class LeagueProfile extends Model
 		return $teams;
 	}
 
+	public function get_weeks() {
+		$weeks = DB::table("league_schedules")
+		->select(DB::raw('*, season_week'))
+		->groupBy("season_week")
+		->get();
+			
+		return $weeks;
+	}
+	
+	public function get_all_games() {
+		$games = DB::table("league_schedules")
+		->orderBy("season_week")
+		->get();
+			
+		return $games;
+	}
 }
