@@ -1,0 +1,912 @@
+@import url(https://fonts.googleapis.com/css?family=Lato|Oswald|Special+Elite|Slabo+27px|Raleway|PT+Sans+Narrow|PT+Serif|Indie+Flower|Bitter|Playfair+Display|Arvo|Lobster|Bree+Serif|Shadows+Into+Light|Orbitron|Pacifico|Rokkitt|Sigmar+One|Amatic+SC|Dancing+Script|Bangers);
+@import "normalize.css";
+
+body {
+    margin: 0;
+    position: relative;
+}
+body#admin_page_login h1 {
+    margin: 0% 0%;
+    padding: 2% 0% 3%;
+    z-index: 3;
+    color: white;
+    position: relative;
+}
+body#admin_page_login {
+    background-image: url("../images/sports_office.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+}
+div#bkgr_skirt {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+h1, h2, h3, h4 {
+	text-align: center;
+}
+h1.adminPageHeader {
+    margin: 0;
+    padding: 2%;
+}
+button:focus {
+	outline:0 !important;
+}
+button:hover {
+	cursor: pointer;
+}
+div#admin_overlay {
+    display: none;
+	position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+    background-color: rgba(0, 0, 0, 0.61);
+}
+div#admin_modal {
+    display: none;
+	position: fixed;
+    min-width: 50%;
+	max-width: 50%;
+    min-height: 30%;
+	max-height: 50%;
+    top: 10%;
+    left: 25%;
+    background-color: white;
+    z-index: 5;
+    border-radius: 5px;
+    box-shadow: 0 0 15px black;
+    border: outset 2px gray;
+}
+div#admin_modal_error {
+    display: none;
+    position: fixed;
+    max-width: 22.5%;
+	min-width: 22%;
+    min-height: 25%;
+    max-height: 85%;
+    top: 1%;
+    left: 1%;
+    background-color: white;
+    z-index: 5;
+    border-radius: 5px;
+    box-shadow: 0 0 15px black;
+    border: outset 2px gray;
+}
+div#admin_login {
+    z-index: 2;
+    position: relative;
+    max-width: 100%;
+    width: 24%;
+    margin: 0% 37%;
+    padding: 0% 0%;
+}
+div#admin_login ul {
+	list-style: none;
+	padding: 0;
+}
+div#admin_login ul li {
+    margin: 0.5% 0%;
+}
+div#admin_login label {
+	display: -webkit-inline-box;
+	max-width: 49%;
+	min-width: 10%;
+	width: 48%;
+	color: white;
+	font-weight: 600;
+}
+div#admin_login input {
+	width: 99%;
+	border-radius: 5px;
+	border: outset 2px;
+}
+div#admin_login select {
+	width: 100%;
+	margin: 0.2% 0% 0% 0%;
+	border-radius: 5px;
+	border: outset 2px;
+}
+div#admin_login input#admin_login_btn {
+    width: 50%;
+    padding: 1%;
+    border-radius: 10px;
+    margin: 1% 25%;
+    background-color: steelblue;
+    border: outset 2px #4B7D8C;
+    color: white;
+}
+h2#modal_title {
+    background-color: buttonface;
+    margin: 0;
+    padding: 2% 0%;
+}
+h2#modal_error_title {
+    background: darkred;
+    color: white;
+    margin: 0%;
+    padding: 3% 0%;
+}
+p#modal_content {
+    text-align: -webkit-center;
+    text-align: center;
+    font-size: 125%;
+    padding: 0% 2%;
+}
+p#modal_error_content {
+	
+}
+div#loginDiv label {
+    min-width: 15%;
+    margin: 1% 3% 0% 25%;
+    display: inline-block;
+    font-size: 120%;
+}
+div#loginDiv input {
+    max-width: 30%;
+}
+button#confirmBtn, button#confirmAdmin, button.confirmRemovePlayer, button.confirmRemoveTeam, 
+button.confirmLogin {
+    position: absolute;
+    bottom: 5%;
+    left: 20%;
+    width: 25%;
+    border: outset 3px;
+    border-radius: 5px;
+    padding: 1% 0%;
+}
+button#cancelBtn, button#cancelAdmin, button.cancelLogin {
+    position: absolute;
+    bottom: 5%;
+    right: 20%;
+    width: 25%;
+    border: outset 3px;
+    border-radius: 5px;
+    padding: 1% 0%;
+}
+button#okBtn {
+    position: absolute;
+    bottom: 5%;
+    width: 30%;
+    border: outset 3px;
+    border-radius: 5px;
+    padding: 1% 0%;
+	margin: 0% 35%;
+	display: none;
+}
+.activeBtn {
+    background-color: cornflowerblue !important;
+    color: white !important;
+    border: inset cadetblue !important;
+}
+.disabledBtn {
+	background-color: gray !important;
+    color: black !important;
+}
+.updateBkgdColor {
+	background-color: green;
+	color: white;
+}
+.activeBtnAdmin {
+    background-color: rgb(53, 82, 134) !important;
+    color: white !important;
+    border: inset cadetblue !important;
+}
+.leagues_page_div {
+    position: relative;
+}
+.leagues_page_div h1 {
+    text-align: center;
+}
+.leaguesNav {
+    background: #3f3a3a;
+    padding: 0px 0px;
+    margin: 0px -15px;
+}
+ul#leagues_menu {
+    max-width: 100%;
+    margin: 0% 0%;
+    padding: 2% 0%;
+    list-style: none;
+    height: 125px;
+}
+ul#leagues_menu li {
+    list-style: none;
+    display: inline-block;
+    background-color: beige;
+    margin: 0% 0.95%;
+    max-width: 12%;
+    min-width: 12%;
+    font-size: 120%;
+    border-radius: 10px;
+    text-align: -webkit-center;
+   }
+ul#leagues_menu a {
+    text-decoration: none;
+    display: inline-block;
+    width: 100%;
+    padding: 15% 0%;
+	color: black;
+}
+td#leagues_site_td {
+	display: none;
+}
+.match_ups_div {display: inline-block;/* max-width: 30%; */}
+#match_ups h2{
+  color: white;
+  font-family: fantasy;
+  font-size: 400%;
+}
+#match_ups {
+  background-color: black;
+  color: white;
+  padding: 1% 0%;
+}
+div#match_ups_headline {
+    text-align: -webkit-center;
+}
+div#match_ups_information p {
+    margin: 0% 41%;
+    padding: 0.25% 0%;
+    max-width: 20%;
+    font-size: 115%;
+    text-align: center;
+}
+#versus {
+  width: 7%;
+  font-size: 300%;
+  min-height: 4em;
+}
+div#league_stat_categories {
+    margin: 4% 0%;
+}
+button.statCategoryBtn {
+    max-width: 20%;
+    min-width: 20%;
+    margin: 0% 6.5%;
+    padding: 0.3% 0%;
+    font-size: 115%;
+    border: outset cadetblue;
+    border-radius: 5px;
+    background-color: beige;
+}
+.leagueLeadersCategory {
+    display: inline-block;
+    max-width: 45%;
+    min-width: 40%;
+    margin: 2% 4.5%;
+	border-radius: 5px;
+}
+div#league_leaders_blocks {
+    background-color: #7AA5F5;
+    color: white;
+}
+div#league_leaders_steals {
+    background-color: #2E57A2;
+    color: white;
+}
+div#league_leaders_rebounds {
+    background-color: rgba(22, 99, 241, 0.79);
+    color: white;
+}
+div#league_leaders_assist {
+    background-color: #2F5FB7;
+    color: white;
+}
+div#league_leaders_points {
+    background-color: rgb(63, 124, 234);
+    color: white;
+}
+table#points_category, table#assist_category, table#rebounds_category,
+table#steals_category, table#blocks_category, table#player_stats_table,
+table#team_stats_table {
+    width: 90%;
+    margin: 2% 5%;
+}
+table#player_stats_table td, table#team_stats_table td, .leagueLeadersCategory table td {
+    text-align: -webkit-center;
+}
+table#team_stats_table td.teamNameTD, table#player_stats_table td.playerNameTD, .leagueLeadersCategory table td.playerNameTD {
+	text-align: -webkit-left;
+}
+table#team_stats_table tr:hover, table#player_stats_table tr:hover {
+    background-color: antiquewhite;
+	cursor: pointer;
+}
+div.leagueLeadersCategory table tr:hover {
+    background-color: cornflowerblue;
+    color: black;
+	cursor: pointer;
+}
+.contenders {/* min-width: 45%; *//* max-width: 45%; */margin: 3% 0%;}
+div#contender_1 {
+    text-align: right;
+}
+div#contender_2 {
+    text-align: left;
+}
+.match_ups_player_pic1 {
+  margin: 0% 0% 0% 15%;
+}
+.match_ups_player_pic2 {
+  margin: 0% 15% 0% 0%;
+}
+.match_ups_player_pic1, .match_ups_player_pic2 {
+	height: 13em;
+	width: 13em;
+	margin: 0%;
+} 
+.contenders table {
+  margin: 0% 7%;
+  display: inline-block;
+  font-size: 200%;
+}
+.leagues_schedule {
+  display: -webkit-inline-box;
+  max-width: 50%;
+  min-width: 35%;
+  width: 35%;
+  margin: 2% 5%;
+  font-size: 150%;
+}
+.weekly_schedule {
+  padding: 0% 0%;
+  width: 100%;
+}
+.weekly_schedule td {
+  text-align: center;
+}
+.team_stats_name {
+  display: inline-block;
+  margin: 0% 10%;
+}
+.team_stats_div {
+  border: solid 5px;
+  border-radius: 10px;
+  margin: 2% 5%;
+}
+.player_stats_display {
+  width: 100%;
+  text-align: center;
+  font-size: 175%;
+  margin-top: 2%;
+}
+.player_stats_display {
+  width: 100%;
+  text-align: center;
+  font-size: 175%;
+  margin-top: 2%;
+  border-collapse: collapse;
+}
+.player_stats_display td {
+  border-top: solid;
+  border-right: solid;
+}
+.player_stats_display td:last-of-type {
+  border-right: none;
+}
+.individual_league_btn a {
+  font-size: 150%;
+  text-decoration: none;
+  display: inline-block;
+  width: 9em;
+  padding: 45% 0%;
+  color: white;
+}
+.individual_league_btn {
+  border-radius: 100px;
+  width: 27%;
+  height: 15em;
+  margin: 0% 3%;
+  border: solid green;
+  background-color: orange;
+}
+.stats_header {
+  width: 3%;
+  max-width: 5%;
+  min-width: 2%;
+}
+th.stats_name {
+  width: 10%;
+}
+.team_stats_header {  
+  background-repeat: no-repeat;
+  background-size: 50% 100%;
+  height: 400px;
+  background-position: center;
+}
+h1#ttr_header {
+  background-color: black;
+  margin: 0%;
+  opacity: 0.9;
+  color: green;
+  text-align: center;
+  position: fixed;
+  width: 100%;
+  top: 0%;
+}
+div#league_standings {
+  margin: 5% 10% 2%;
+}
+h1#league_banner {
+  text-align: center;
+  margin-top: 3%;
+}
+table#league_standings_table td {
+  text-align: center;
+}
+table#league_standings_table {
+  width: 100%;
+  font-size: 175%;
+}
+#league_standings_table caption {
+  font-size: 200%;
+  font-weight: bold;
+  margin: 1% 0%;
+}
+.league_name_picture_banner {
+  display: inline-block;
+  width: 50%;
+}
+h1#league_name_banner {
+  width: 100%;
+  float: left;
+  text-align: center;
+  padding: 0% 0% 10% 0%;
+  font-size: 500%;
+}
+img#league_photo_banner {
+  width: 40%;
+  height: 50%;
+  max-height: 50%;
+  margin: 2% 10%;
+}
+div.leagueContactInfo {
+	max-width: 100%;
+	font-size: 125%;
+	padding: 2% 30%;
+}
+div#leagues_rules {
+    max-width: 100%;
+    font-size: 125%;
+    padding: 2% 10%;
+    background: linear-gradient(white, cornflowerblue, cornflowerblue);
+    color: whitesmoke;
+}
+table.leagues_page_table {
+    width: 100%;
+}
+table.leagues_page_table td {
+    width: 50%;
+}
+div#leagues_rules {
+    display: none;
+}
+button#league_rules_btn {
+    background-color: darkgray;
+    padding: 1%;
+    width: 38%;
+    margin: 0% 30%;
+    border-radius: 5px;
+    font-size: 140%;
+}
+/*Player and Team Card Information*/
+div#player_card, div#team_card {
+    position: absolute;
+	display: none;
+    background-color: black;
+    top: 5%;
+    left: 25%;
+    width: 50%;
+    color: white;
+	z-index: 4;
+}
+div#card_overlay {
+    position: absolute;
+	display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: black;
+    opacity: 0.9;
+    z-index: 3;
+}
+div#bgrdBlur {
+    position: absolute;
+    bottom: 0%;
+    display: table;
+    width: 100%;
+    padding: 3% 0%;
+    background: linear-gradient(rgba(255, 255, 255, 0), black 100%, black);
+}
+div#player_card_content, div#team_card_content {
+	position: relative;
+}
+.playerCardHeader {
+    background: linear-gradient(blue, blue, black);
+	position: relative;
+}
+.teamCardHeader {
+    display: table;
+    width: 100%;
+    padding: 14% 0%;
+    background-position: center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+	position: relative;
+}
+h2.playerNamePlayerCard, h2.jerseyNumPlayerCard {
+    display: inline-block;
+}
+h2.jerseyNumPlayerCard {
+    margin: 0% 8% 0% 30%;
+}
+span.closeCard {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 125%;
+    position: absolute;
+    top: 1%;
+    right: 1%;
+}
+span.closeCard:hover {
+    text-shadow: 2px 2px 1px red;
+}
+.playerCardStats ul {
+    list-style: none;
+    padding: 0% 25%;
+    width: 50%;
+    text-align: center;
+    font-size: 120%;
+}
+.teamCardStats ul {
+    list-style: none;
+}
+.teamCardStats ul li {
+    display: inline-block;
+    width: 10%;
+    margin: 3.5% 11%;
+    text-align: center;
+}
+li.teamCardStatsLI span {
+    color: #B3B3B3;
+}
+/*Adding new players, teams, to stats and schedule admin page */
+div#add_player, div#add_team, div#edit_team, div#edit_stats, div#edit_schedule, div#edit_teams_info {
+	display:none;
+	position: relative;
+	margin: 2% 0%;
+}
+div#edit_player_stats_content {
+	display: none; 
+}
+div.editPlayerStats {
+	margin: 2% 0%;
+}
+div#current_week_schedule, div.editTeamInfo{
+	display: none;
+}
+div#add_player, div#add_team, div#edit_team {
+    max-width: 50%;
+    margin: 3% 25%;
+}
+div#edit_schedule {
+	max-width: 80%;
+	margin: 3% 10%;
+}
+div#edit_current_schedule, div#add_team_content, div#edit_team_content, div#create_new_schedule {
+    padding: 0% 0% 10% 0%;
+}
+div#week_select2 {
+    width: 100%;
+    margin: 0;
+}
+button.addToSchedule {
+    position: absolute;
+    border-radius: 70px;
+    padding: 3% 0%;
+    max-width: 10%;
+    /* width: 10%; */
+    display: none;
+}
+button#addNewWeek {
+	top: 30px;
+	left: 0px;
+}
+button#addNewGame{
+    top: 30px;
+    left: 120px;
+}
+button#editAllGames {
+    top: 30px;
+    left: 240px;
+}
+button#removeGame {
+    top: 30px;
+    right: 130px;
+}
+button#removeWeek {
+    top: 30px;
+    left: 360px;
+}
+#current_week_schedule table.weekScheduleTable td {
+    text-align: -webkit-center;
+    text-align: center;
+    border: solid 2px;
+}
+#current_week_schedule table.weekScheduleTable td:nth-of-type(1),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(3),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(7) {
+    max-width: 50px;
+}
+#current_week_schedule table.weekScheduleTable td:nth-of-type(2) {
+    max-width: 5px;
+}
+#current_week_schedule table.weekScheduleTable td:nth-of-type(4),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(5),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(6) {
+	max-width: 20px;
+}
+#current_week_schedule table.weekScheduleTable td:nth-of-type(8),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(9),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(10),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(11),
+#current_week_schedule table.weekScheduleTable td:nth-of-type(12) {
+    max-width: 40px;
+}
+#current_week_schedule table.weekScheduleTable input[type="date"], #current_week_schedule table.weekScheduleTable input[type="number"] {
+    height: 100%;
+    max-width: 100%;
+    min-width: 99.9%;
+    border: none;
+    text-align: -webkit-right;
+    text-align: right;
+}
+#current_week_schedule table.weekScheduleTable input[type="date"] {
+	/* background-color: gray; */
+}
+#current_week_schedule table.weekScheduleTable input[type="number"] {
+    /* background-color: gray; */
+}
+#current_week_schedule table.weekScheduleTable select {
+    height: 27px;
+    border: none;
+    max-width: 100%;
+    min-width: 99.9%;
+    height: 100%;
+    /* background-color: gray; */
+    padding: 0% 0% 0% 20%;
+    /* text-align: -webkit-center; */
+    /* text-align: center !important; */
+}
+#current_week_schedule table.weekScheduleTable select.game_time_select {
+    padding: 0% 0% 0% 33%;
+}
+#create_new_schedule table.weekScheduleTable td, #create_new_schedule table.weekScheduleTable th {
+    border: solid 2px;
+}
+#create_new_schedule table.weekScheduleTable {
+    border-collapse: collapse;
+    border: solid 2px;
+}
+#create_new_schedule table.weekScheduleTable td:nth-of-type(1),
+#create_new_schedule table.weekScheduleTable td:nth-of-type(3) {
+	max-width: 50px;
+}
+#create_new_schedule table.weekScheduleTable td:nth-of-type(2) {
+	max-width: 5px;
+}
+#create_new_schedule table.weekScheduleTable td:nth-of-type(4) {
+	max-width: 25px;
+}
+#create_new_schedule table.weekScheduleTable td:nth-of-type(5) {
+	max-width: 25px;
+	text-align: -webkit-right;
+	text-align: right;
+}
+#create_new_schedule table.weekScheduleTable td input, 
+#create_new_schedule table.weekScheduleTable td select {
+    border: none;
+	max-width: 98%;
+}
+.removeGameBtn, .editScoreBtn, .editGameBtn, .updateGameBtn, .cancelGameBtn,.removeGameBtn2 {
+    width: 99.5%;
+    border: none;
+    height: 103%;
+}
+input.homeTeamScore, input.awayTeamScore {
+    max-width: 100%;
+}
+.weekScheduleTable {
+    width: 100%;
+    margin: 5% 0% 2%;
+}
+table.weekScheduleTable td {
+    text-align: -webkit-center;
+    text-align: center;
+}
+table.weekScheduleTable td:nth-of-type(2) {
+    padding: 0% 0.5%;
+}
+table.weekScheduleTable caption {
+    margin: 0% 0% 3%;
+    font-size: 150%;
+}
+div#current_week_schedule select.away_team_select, div#current_week_schedule select.home_team_select {
+    width: 100%;
+}
+select.away_team_select, select.home_team_select {
+  width: 100%;  
+}
+.newTeamInfo {
+    padding: 1% 1%;
+    font-size: 110%;
+	text-align: -webkit-center;
+    text-align: center;
+}
+.editTeamInfo {
+    padding: 1% 12%;
+    font-size: 110%;
+	text-align: -webkit-center;
+    text-align: center;
+}
+.newPlayerInfo input,  .newPlayerInfo select, .newTeamInfo input, .editTeamInfo input, .editTeamInfo select {
+    margin: 0.4% 0.1%;
+}
+input.formInput {
+    max-width: 21%;
+}
+.edit_team_form_JN {
+    max-width: 10%;
+    text-align: -webkit-right;
+    text-align: right;
+}
+div#add_player select {
+    margin: 0% 0% 0% -1%;
+}
+form#add_player_form label, form#add_team_form label, form#edit_team_form label, form#edit_player_stats_form label {
+    min-width: 30%;
+    display: inline-block;
+}
+button.addAnotherPlayer {
+    position: absolute;
+    top: 35px;
+    left: 2%;
+    width: 12%;
+    padding: 1% 1%;
+    border-radius: 50px;
+    background-color: green;
+    color: white;
+}
+button.removePlayer, button.removeTeam, button.removeNewEditPlayer {
+    float: right;
+    border-radius: 10px;
+    background-color: rgba(250, 0, 0, 0.75);
+    color: whitesmoke;
+}
+div.manageSelections {
+    display: inline-block;
+    width: 39.5%;
+	margin: 1% 5% 3%;
+}
+div#team_select h2 {
+    text-align: -webkit-right;
+	text-align: right;
+}
+div#game_select h2 {
+    text-align: -webkit-left;
+	text-align: left;
+	color: gray;
+}
+form#edit_player_stats_form {
+    padding: 0% 1% 6.5%;
+}
+select#team_name_select, select#team_name_select2, select#team_select3, select#game_week_select {
+    width: 40%;
+}
+select#game_week_select {
+	margin: 0% 0% 0% -7%;
+}
+select#team_name_select2 {
+	margin: 0% 0% 0% 65%;
+}
+select#removePlaceHolderSelect {
+	margin: 0% 0% 0% 7%;
+}
+select#team_select3, select#game_week_select2 {
+    width: 20%;
+    margin: 0% 40%;
+}
+table.editPlayerNamesTable {
+	width: 100%;
+}
+table#editPlayerNamesTable th:first-of-type,  
+table#editPlayerNamesTable th:last-of-type {
+    width: 20%;
+}
+td.editPlayerStatTD input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: -webkit-center;
+    text-align: center;
+}
+tr.editTeamPlayerName td {
+    text-align: -webkit-center;
+	text-align: center;
+    border: solid 2px;
+    position: relative;
+    padding: 0.1% 0%;
+}
+.editPlayerStatBtn {
+    width: 7%;
+}
+button.addNewBtn:hover {
+    background-color: #1588F9;
+    border: inset dimgray;
+}
+button.addNewBtn {
+    width: 20%;
+    margin: 2% 2.35%;
+    font-size: 200%;
+    padding: 4.5%;
+    border-radius: 10px;
+    border: outset dimgray;
+    background-color: dodgerblue;
+    color: whitesmoke;
+}
+button.submit_btn {
+    border: outset 3px dodgerblue;
+    width: 50%;
+    margin: 0% 25%;
+    padding: 1% 0%;
+    font-size: 120%;
+    background-color: cornflowerblue;
+    color: whitesmoke;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    /* display: none; */
+}
+button#submit_edit_stats, button#update_all_btn {
+    display: none;
+}
+button#update_all_btn, button#update_ind_btn {
+    position: absolute;
+    top: 25px;
+    right: 5%;
+	border: 2px outset buttonface;
+    padding: 2% 2%;
+    font-size: 120%;
+    border-radius: 5px;
+}	
+button.updateIndBtn, button.submitIndPlayerStat {
+    min-width: 75%;
+	border-radius: 5px;
+	margin: 0.75% 0%;
+	background-color: yellow;
+	border: outset 2px darkkhaki;
+}
+@media only screen and (min-device-width:320px) and (max-device-width:768px) {
+
+}
+@media only screen and (min-device-width:768px) and (max-device-width:1023px) {
+	
+}
+@media only screen and (min-width:1024px) and (max-width:1279px) {
+
+}
+@media only screen and (min-width:1280px) and (max-width:1449px) {
+
+}
+@media only screen and (min-width:1450px) {
+	
+}

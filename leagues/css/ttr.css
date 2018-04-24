@@ -1,0 +1,3811 @@
+@import url(https://fonts.googleapis.com/css?family=Lato|Oswald|Special+Elite|Slabo+27px|Raleway|PT+Sans+Narrow|PT+Serif|Indie+Flower|Bitter|Playfair+Display|Arvo|Lobster|Bree+Serif|Shadows+Into+Light|Orbitron|Pacifico|Rokkitt|Sigmar+One|Amatic+SC|Dancing+Script|Bangers);
+@import "normalize.css";
+
+body {
+	background-color: #050505;
+	width:100%;
+	position: relative;
+	min-height: 1080px;
+	z-index: 0;
+	margin: 0 auto;
+	font-family: 'Indie Flower', serif;
+}
+
+button:focus {
+	outline:0 !important;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 5px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 20px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(0,128,0,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(0,128,0,0.4); 
+}
+
+#mainBody {
+	background-image:url("/totherec/public/images/Basketball-Wallpapers-HD-Pictures2.jpg");
+	background-repeat:no-repeat;
+	background-size: 100% 80%;
+	background-position: 100% 49%;
+	background-attachment: fixed;
+	margin:0 auto;
+	width:100%;
+	position: relative;
+	min-height: 1068px;
+	background-color: #050505;
+	z-index: 0;
+}
+
+.container a, img, h1, h2, h3, h4, h5, h6, ol, ul, p{
+	margin:0px;
+	padding:0px;
+	text-decoration:none;
+}
+
+.container a{
+	color:green;
+}
+
+div {
+	/* overflow:hidden; */
+}
+
+div#backgroundImageP, div#backgroundImageL, div#backgroundImageR, div#backgroundImageV {
+    height: 100%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: 100% 0%;
+    background-attachment: fixed;
+    position: absolute;
+    width: 100%;
+    left: 0%;
+    z-index: -1;
+}
+
+div#backgroundImageP {
+    background-image: url(../images/mybackground1.png);
+}
+
+#backgroundImageR, #backgroundImageV {
+    background-image: url("../images/Basketball-Wallpapers-HD-Pictures2.jpg");
+}
+
+div#backgroundImageL {
+    background-image: url(../images/mybackground1.png);
+}
+
+div[id^="backgroundImage"]::after {
+	content: "";
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	position: absolute;
+	z-index: -1;
+	background-color: rgba(5,5,5,.5);
+}
+div#loading_image {
+	display: none;
+}
+
+div#loading_image img {
+    display: block;
+    position: fixed;
+    top: 25px;
+    margin: 0% 25%;
+    z-index: 11;
+    border-radius: 100px;
+}
+
+div#playerProfileContainer {
+    padding-top: 70px;
+}
+
+.leaguesFilterOption {
+    max-width: 50%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    width: 49.94%;
+    padding: 0% 0%;
+    text-align: -webkit-center;
+    text-align: center;
+    font-size: 135%;
+}
+
+.leaguesFilterOption a {
+    padding: 15% 0%;
+    max-width: 100%;
+}
+
+.statLeagueOption a {
+    padding: 10% 0%;
+    max-width: 100%;
+}
+
+.leaguesFilterOption:first-of-type {
+    border-right: solid 1px;
+    background-color: aquamarine;
+    /* border-bottom-left-radius: 5px; */
+}
+
+.leaguesFilterOption:last-of-type {
+    /* margin: 0% 0% 0% -1.3%; */
+    background-color: beige;
+    /* border-bottom-right-radius: 5px; */
+}
+
+.statLeagueOption {
+	
+background: cadetblue;
+	
+text-align: -webkit-center;
+	
+text-align: center;
+}
+
+.maine_overlay, #about_ttr, .registration, #addtData, .moreGamesNotifi, .gameTime {
+	display: none;
+}
+
+.maine_overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.65);
+	z-index: 10;
+}
+
+.video_modal {
+    position: fixed;
+    left: 25%;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 10;
+    /* background-color: white; */
+    max-height: 300px;
+    min-height: 300px;
+    max-width: 50%;
+    /* min-width: 30%; */
+    margin: 0%;
+    display: none;
+}
+
+.video_modal .video_modal_header {
+    background: brown;
+    box-shadow: 0px -5px 25px 2px wheat;
+    color: whitesmoke;
+    padding: 1% 0%;
+}
+
+.alert_modal {
+	border: 5px solid green;
+	position: fixed;
+	left: 1%;
+	top: 1%;
+	margin: 0%;
+	border-radius: 5px;
+	text-align: center;
+	background-color: white;
+	font-family: 'Indie Flower', cursive;
+	width: 25%;
+	display: none;
+	z-index: 11;
+}
+
+.calendar_modal {
+    background-color: aliceblue;
+    border-radius: 10px;
+    left: 25%;
+    top: -50px;
+    width: 50%;
+    display: none;
+    position: fixed;
+    z-index: 11;
+    box-shadow: 0px 1px 5px 2px wheat;
+}
+
+.calendar_modal_content {
+    font-size: 150%;
+    padding: 1% 3%;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.awayBox {
+    box-shadow: 0px 0px 10px #b50000 !important;
+}
+
+.homeBox {
+    box-shadow: 0px 0px 10px #3091E5 !important;
+}
+
+.maine_modal, .leagues_modal, .recs_modal {
+	width: 70%;
+	border: 2px solid green;
+	position: fixed;
+	left: 15%;
+	top: -350px;
+	border-radius: 5px;
+	text-align: center;
+	background-color: white;
+	z-index: 11;
+	display: none;
+	box-shadow: 0px 0px 25px 4px darkseagreen;
+}
+
+#return_messages {
+    position: fixed;
+    z-index: 3;
+    right: 1%;
+    top: 1%;
+    width: 25%;
+}
+.message {
+    background: rgba(0,100,0,0.75);
+    color: white;
+    border-radius: 10px;
+    border: solid 2px dimgray;
+    box-shadow: 0px 0px 10px green;
+    margin: 2% 0%;
+}
+.errors {
+    background: rgba(139, 0, 0, 0.75);
+    color: white;
+    border-radius: 10px;
+    border: solid 2px dimgray;
+    box-shadow: 0px 0px 10px red;
+    margin: 2% 0%;
+}
+
+.message ul, .errors ul {
+    padding: 0% 3%;
+    list-style: none;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+button.close_x {
+    /* font-size: 125%; */
+    border-radius: 100px;
+    border: outset 3px dimgray;
+    height: 30px;
+    width: 30px;
+    top: -15px;
+    left: -15px;
+    background-image: url("../images/x.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+}
+
+div.container {
+    /* max-width: 74%; */
+    /* width: 73%; */
+    /* margin: 0% 0% 0% 26.5%; */
+    /* padding: 0% 0% 3%; */
+    position: relative;
+    /* display: -webkit-inline-box; */
+    /* display: inline-block; */
+    /* vertical-align: top; */
+    /* background-size: 98% 100%; */
+    /* background-position: center center; */
+    /* background-repeat: no-repeat; */
+    font-family: 'Indie Flower', serif;
+    overflow-x: hidden;
+}
+
+div.indLeague {
+    background: antiquewhite;
+    border: solid 2px green;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1% 29% 1% 1%;
+    max-width: 75%;
+    background-repeat: no-repeat;
+    background-size: 50% 100%;
+    background-position: 100% 50%;
+    z-index: 6;
+}
+
+div.indLeague div.indLeaguesInfo {
+	font-size: 135%;
+	padding: 0.2% 0%;
+	}
+
+.indLeaguesInfo {
+    margin-right: 2%;
+}
+
+div.indLeague div.indLeaguesInfo span:nth-of-type(1) {
+    width: 25%;
+    display: -webkit-inline-box;
+    display: inline-block;
+}
+
+.indLeaguesInfo.compLevelTable, .indLeaguesInfo.ageLevelTable {
+    border: solid 1.5px;
+    margin-right: 4%;
+    margin-bottom: 2%;
+}
+
+.indLeaguesInfo.compLevelTable span, .indLeaguesInfo.ageLevelTable span {
+	width: 100% !important;
+	text-align: -webkit-center;
+	text-align: center;
+	border-bottom: solid 1.5px;
+	background: burlywood;
+}
+
+div.indLeague div.indLeaguesInfo ul {
+    color: black !important;
+    padding: 0% 4%;
+    margin: 0;
+    font-size: initial;
+    font-size: 100%;
+}
+
+div.indLeague div.indLeaguesInfo ul li {
+    display:-webkit-inline-box;
+    display:inline-block;
+}
+
+div.indLeague div.indLeaguesInfo ul li:not(:last-of-type) {
+    /*border-right: solid 1.5px;
+    padding-right: 5px;*/
+}
+
+.indLeague h1 {
+    padding: 0% 0% 1%;
+    margin: 0% 3% 1% 0%;
+    border-bottom: solid 2.5px;
+    font-size: 260%;
+    position: relative;
+}
+
+.indLeague h1 span.ttrSite {
+    font-size: initial;
+    position: absolute;
+    max-width: 50%;
+    margin: 0% 0% 0% 25%;
+    padding: 0% 3% 0%;
+}
+
+#stat_leagues {
+    margin-top: 75px;
+}
+
+#stat_leagues .row {
+    margin-top: 10px;
+    padding-bottom: 10px
+}
+
+#stat_leagues .row:not(:last-of-type) {
+    border-bottom: solid;
+}
+
+#stat_leagues img {
+    max-width: 100%;
+    max-height: 200px;
+    margin: 0 auto;
+    display: -webkit-box;
+    display: block;
+}
+
+.statLeagueInfo {
+    color: whitesmoke;
+    font-size: 125%;
+}
+
+body#login::after {
+    position: absolute;
+    content: "";
+    background: url("../images/login_page_pic.jpg");
+    left: 10px;
+    bottom: 0;
+    right: 0;
+    top: 0;	
+    opacity: 0.5;
+    z-index: -1;
+}
+
+div.container#registrationPageContainer::after {
+    position: absolute;
+    content: "";
+    background: url("../images/registration_page.jpg");
+    background-size: 100% 80%;
+    left: 10px;
+    bottom: 0;
+    right: 0;
+    top: 0;	
+    opacity: 0.3;
+    z-index: -1;
+}
+
+div.container#recsPageContainer::after {
+    position: absolute;
+    content: "";
+    background-image: url("../images/blacktop_pic.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    left: 10px;
+    bottom: 0;
+    right: 0;
+    top: 0;	
+    opacity: 0.4;
+    z-index: -1;
+    max-height: 1080px;
+}
+
+div.container#leaguesProfileContainer {
+    background-repeat: no-repeat;
+    background-size: 74% 100%;
+    background-position: 100% 100%;
+    background-attachment: fixed;
+    padding: 0% 0% 3%;
+}
+
+#mainBody::after {
+    position: absolute;
+    content: "";
+    background-color: black;
+    left: 0px;
+    bottom: 0;
+    right: 0;
+    top: 0;	
+    opacity: 0.8;
+    z-index: -1;
+}
+
+div#modal_title_div {
+    position: relative;
+}
+
+.calendar_modal .modal_title {
+	margin: 0%;
+	padding: 2%;
+	font-size: 150%;
+	background-color: black;
+	color: white;
+	display: inline-block;
+	border-top-left-radius: 9px;
+	border-top-right-radius: 9px;
+}
+
+.modal_title { 
+	margin: 0%;
+	padding: 2%;
+	font-size: 200%;
+	background-color: black;
+	color: white;
+}
+
+p.confirmation_modal_content {
+    font-size: 150%;
+    padding: 4%;
+}
+
+.loginPage {
+    margin: 0%;
+    font-size: 115%;
+    background-color: #feae46;
+    border: solid 5px green;
+    border-radius: 5px;
+    top: 10px;
+    position: absolute;
+    right: 10px;
+    z-index: 1;
+    font-family: 'Indie Flower', cursive;
+    padding: 0% 0%;
+	display: none;
+}
+
+#loginPageError {
+    background-color: aliceblue;
+    width: 50%;
+    margin: 2% 25%;
+    border-radius: 5px;
+}
+
+.registrationPage {
+    width: 60%;
+    margin: 5% 20%;
+    background-color: rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px darkgreen;
+    color: white;
+}
+
+.registrationPage table input {
+    width: 97.2%;
+    border-radius: 5px;
+    color: black;
+}
+
+.registrationPage table select {
+    width: 100%;
+    border-radius: 5px;
+    color: black;
+}
+
+a.changeRegistrationLink {
+    position: fixed;
+    top: 7%;
+    left: 27.75%;
+    background-color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 1%;
+    box-shadow: 0px 0px 10px black;
+    max-width: 10%;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.content {
+	text-align:center;
+	/* background-color:gray; */
+	opacity:0.8;
+}
+
+.content p, ul {
+	color: white;
+	list-style:none;
+	margin: 1% 0%;
+	font-size: 125%;
+}
+
+.alert_modal p:last-of-type {
+  font-size: 145%;
+  padding: 5% 5%;
+}
+
+#playersPage2 a:hover {
+  background-color: darkgreen;
+  color: white;
+}
+
+.navi {
+	/* display: -webkit-inline-box; */
+	position: absolute;
+	/* font-weight:bold; */
+	/* opacity: 0.8; */
+	/* position: relative; */
+	/* max-width: 25%; */
+	/* padding: 0.5%; */
+	/* vertical-align: bottom; */
+	font-size: 125%;
+	z-index: 9;
+	width: 100%;
+	opacity: 0.8;
+	border-radius: 0px;
+}
+
+#navi2 {
+	max-width: 25%;
+	width: 25%;
+	padding: 2% 0%;
+	max-height: 100%;
+	height: 99%;
+	font-weight:bold;
+	opacity: 0.8;
+	position: fixed;
+	font-family: fantasy;
+}
+
+.myPlaygroundClass ul span.myPlaygroundRank {
+    /* max-width: 28%; */
+    /* min-width: 5%; */
+    /* display: -webkit-inline-box; */
+    /* display: inline-block; */
+    /* position: relative; */
+    padding: 0.2% 0%;
+}
+
+.myPlaygroundClass ul span.myPlaygroundRank select {
+    max-width: 100%;
+    width: 98%;
+    height: 100%;
+    text-align: -webkit-center;
+    text-align: center;
+    margin: 0 auto;
+    display: -webkit-box;
+    display: block;
+}
+
+.active {
+    color: white !important;
+}
+
+.active_btn {
+	background-color: green !important;
+	color: white !important;
+}
+
+.videoPage {
+    padding-top: 75px;
+    padding-bottom: 2%;
+}
+
+p.noVideosMessage {
+    color: white;
+    text-align: -webkit-center;
+    text-align: center;
+    font-size: 200%;
+    padding: 0% 20%;
+}
+
+p.noVideosMessage a {
+    color: green;
+}
+
+p.noVideosMessage a:hover {
+    text-decoration: underline;
+    font-size: 110%;
+    font-weight: 600;
+}
+
+div#video_div {
+    /* display: -webkit-inline-box; */
+    /* display: inline-block; */
+    width: 100%;
+    position: relative;
+}
+
+video {
+	width: 100%;
+	margin: 0 auto;
+	display: -webkit-box;
+	display: block;
+}
+
+div#videoPage {
+    margin: 5% 0% 0%;
+}
+
+.videoContent {
+    width: 29.5%;
+    max-width: 29.5%;
+    display: inline-block;
+    margin: 0% 0.5%;
+    background-color: azure;
+    border-radius: 3px;
+    background: linear-gradient(azure, azure, black);
+    margin: 1% 1.65%;
+    position: relative;
+}
+
+.videoContent2 {
+    width: 30%;
+    display: inline-block;
+    margin: 0% 0.5%;
+	background-color: azure;
+    border-radius: 3px;
+    background: linear-gradient(azure, azure, black);
+	margin: 1% 1.65%;
+}
+
+.videoContent h2 {
+    padding: 0.4% 1%;
+	text-align: center;
+}
+
+.currentVideo {
+    width: 100%;
+    /* display: block; */
+    height: 100%;
+    max-height: 200px;
+    margin: 0 auto;
+}
+
+.video_modal_content video.currentVideo {
+    width: 100%;
+    max-height: none;
+    margin: 0% 0% -1.5%;
+    background-color: black;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 0px 25px 2px wheat;
+}
+
+.playerPageVideo video.currentVideo {
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    margin: 0% 0% 0%;
+    max-height: 185px;
+}
+
+.maine_modal video.currentVideo {
+    width: 92%;
+    margin: 4% 4%;
+}
+
+button.addMoreVideos, button.noMoreVideos {
+    display: -webkit-box;
+    margin: 1% 41.2%;
+    width: 20%;
+    font-size: 150%;
+}
+
+@-webkit-keyframes animation {
+	0% {background-color:aliceblue; border: solid 1px black; opacity:1;}
+    100%  {background-color:#feae46; border: solid 1px green; opacity:0.8;}
+}
+
+@-moz-keyframes animation {
+	0% {background-color:aliceblue; border: solid 1px black; opacity:1;}
+    100%  {background-color:#feae46; border: solid 1px green; opacity:0.8;}
+}
+
+@keyframes animation {
+	0% {background-color:aliceblue; border: solid 1px black; opacity:1;}
+    100%  {background-color:#feae46; border: solid 1px green; opacity:0.8;}
+}
+
+.maine_modal .navi, .maine_modal_league .navi, .maine_modal_player .navi, .maine_modal .leagues_page_div ul, 
+.maine_modal .leagues_page_div th  {
+	display: none;
+}
+
+.maine_modal .leagues_page_div {
+	border: none;
+	margin: 0.5% 2% 2%;
+}
+
+.maine_modal p.modal_league_link {
+    margin: 2% 0%;
+    font-size: 115%;
+	display: none;
+}
+
+.menu {
+    /* max-width: 100%; */
+    /* width: 98%; */
+    /* margin: 0%; */
+    /* position: relative; */
+}
+
+.menu2 {
+    padding: 0% 0% 0% 0.3%;
+    display: inline-block;
+    width: 99%;
+    position: absolute;
+    max-height: 100%;
+    background-color: #000;
+    margin: 0%;
+}
+
+.menu li, .menu2 li {
+	/* float: left; */
+	/* margin: 1.4% 0%; */
+	/* padding: 0.6% 0.3%; */
+	/* text-align: center; */
+	/* display: inline-block; */
+	/* width: 99%; */
+	/* max-width: 100%; */
+	/* border: solid 2px; */
+	/* border-radius: 10px; */
+}
+
+.menu li a {
+	/* display: inline-block; */
+	/* padding: 5px 0px; */
+	/* text-decoration:none; */
+	/* color: green; */
+	/* width: 99.5%; */
+	/* font-size: 115%; */
+}
+
+.menu2 li a {
+	/*display: inline-block;
+	padding: 5px 0px;
+	text-decoration:none;
+	color: green;
+	width: 81.5%;
+	font-size: 130%;
+	font-family: 'Indie Flower', cursive;*/
+}
+	
+.menu li a:hover, .menu2 li a:hover {
+	/* border-radius:7px; */
+	/* color:white; */
+}
+
+.menu li:hover, .menu li:hover {
+	/*background-color:gray;
+	margin-left: 10%;*/
+}
+
+span.menuLiSpan {
+    display: -webkit-inline-box;
+    display: inline-block;
+    font-family: 'Indie Flower', serif;
+    vertical-align: text-top;
+    padding-left: 5px;
+    font-size: 120%;
+}
+
+.glyphicon {
+    font-size: 90%;
+    vertical-align: middle;
+}
+
+.header img{
+	width:100%;
+	height:10em;
+	margin-bottom: -2%;
+}
+
+div#header {
+	border-bottom: solid 2px green;
+	border-top: solid 2px green;
+}
+
+footer {
+	clear:both;
+	background-color:black;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	max-width: 100%;
+}
+
+footer p {
+	margin:0%;
+	min-width: 100%;
+	text-align: center;
+	color:white;
+	color: white;
+	position: relative;
+	background-color: black;
+	bottom: 0px;
+}
+
+.searches{
+	background-color: rgba(0,0,0,0.40);
+	position: relative;
+	padding: 4% 0% 10%;
+}
+
+.searchesBgrd {content: "";position: absolute;top: 0px;right: 0;bottom: 0;left: 0;background-image: url("../images/dunk_bcgrd.jpg");z-index: -1;background-size: 100% 200%;background-repeat: no-repeat;background-position-x: 100%;background-position-y: -350px;}
+
+.searchesHeader {
+    padding: 1% 0% 5%;
+}
+
+.searchesHeader h2 {
+    margin: 0% 18%;
+    padding: 2.5% 0%;
+    border-radius: 5px;
+    background: linear-gradient(rgba(240,255,255,0.80), rgba(240,255,255,0.80), rgba(240,255,255,0.80), transparent);
+    font-size: 200%;
+}
+
+.list {
+	/* float:left; */
+	display: -webkit-inline-box;
+	display: inline-block;
+	width: 65%;
+	height: 200px;
+	background-color: rgba(116, 116, 116, 0.75);
+	border: inset 5px;
+	margin:0.85% 2.2% 1%;
+	overflow:auto;
+	border-radius: 10px;
+	box-shadow: 2px 2px 10px black;
+}
+
+.list2, .list1 {
+	/* height: 100%; */
+	width: 100%;
+	color: white;
+	font-size: 150%;
+}
+
+table.list1 td {
+    position: relative;
+}
+
+img.fireIcon1, img.fireIcon2 {
+    height: 65px;
+    max-height: 100%;
+    width: 120px;
+    max-width: 20%;
+    /* display: -webkit-inline-box; */
+    /* display: inline-block; */
+    position: absolute;
+    bottom: 0;
+}
+
+img.fireIcon1 {
+    left: 0px;
+}
+
+img.fireIcon2 {
+    right: 0px;
+}
+
+.list2 td {
+	/* padding: 0%; */
+}
+
+.noLeaguesRow td {
+    padding: 3px 0px;
+}
+
+.list2 a:not(.noLeaguesLink), .list1 a {
+	display: block;
+	width: 100%;
+	text-align:center;
+	font-size: 125%;
+	text-decoration: none;
+	color: white;
+}
+
+.recDiv, .leagueDiv {
+    display: none;
+}
+
+.recs_modal .recDiv, .leagues_modal .leagueDiv {
+    display: block;
+    font-size: 150%;
+}
+
+.leagues_modal .leagueDiv {
+}
+
+.leagues_modal .leagueDiv .leagueProfileSub, .recs_modal .recDiv .recProfileSub {
+    font-weight: 600;
+}
+
+.leagues_modal .leagueDiv .leagueDivHeader h2, .recs_modal .recDiv .recDivHeader h2 {
+    font-size: 200%;
+    background: linear-gradient(to right, chocolate, chocolate, white);
+    color: white;
+    /* border-bottom: solid 1px #ff6a00; */
+}
+
+.list1 td a:hover, .list2 td a:not(.noLeaguesLink):hover {
+  background-color: rgba(12, 12, 12, 0.8);
+}
+
+.list2 td a:hover {
+}
+
+.media h3 {
+	margin: 0%;
+	padding:1% 30%;
+	max-width: 47.8%;
+}
+
+.media h4 {
+    color: #126091;
+    margin: 0% 0% 2%;
+}
+
+.media img {
+	padding:1% 18%;
+}
+
+.media {
+	/* min-width: 70%; */
+	/* max-height: 58em; */
+	margin: 0% 0%;
+	padding: 4% 0.5%;
+	background: #d8d8d8;
+}
+
+#twitter {
+	margin: 2% 35%;
+	font-family: 'Indie Flower', cursive;
+	font-size: 515%;
+	color: #1677b4;
+}
+
+.feed {
+    /* margin: 0 auto; */
+}
+
+iframe[id^='twitter-widget-'] {
+	padding: 0%;
+	margin: 0 auto;
+	/* display: -webkit-box; */
+	/* display: block; */
+}
+
+.leagues_page_div {
+	font-size: 175%;
+	/*width: 56%;
+	background-color: white;*/
+	opacity: 0.8;
+	/*border: solid green 5px;*/
+	border-radius: 10px;
+	/*margin: 2% 21.5%;*/
+}
+
+.leagues_page_div a {
+	text-decoration: none;
+	color: white;
+}
+
+.leagues_page_table {
+	padding: 4% 4% 2%;
+	width: 100%;
+	font-family: 'Special Elite', cursive;
+}
+
+.registrationPage h3 {
+	text-align: center;
+	margin: 0% 0% 2%;
+	padding: 1.5% 0%;
+	background-color: darkgreen;
+	font-size: 200%;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.registrationPage td {
+	width: 31%;
+	padding: 0.5% 2%;
+}
+
+#leagues_registration_table, #player_registration_table {
+  min-width: 60%;
+  margin: 0% 20% 0%;
+  font-size: 150%;
+}
+
+.error_border {
+	border-color: red;
+}
+
+#profileSetup, .player_setup, .league_setup, .updatePage {
+	margin: 2% 4%;
+	margin-top: 75px;
+	font-size: 135%;
+	/* background-color: #feae46; */
+	background-image: url("/totherec/public/images/blacktop.jpg");
+	border: outset 5px green;
+	border-radius: 5px;
+	opacity: 0.9;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+.playersPage {
+    display: -webkit-inline-box;
+    display: inline-block;
+    width: 20%;
+    vertical-align: inherit;
+    margin: 1% 1.5%;
+    font-size: 135%;
+    border: outset 2px green;
+    border-radius: 5px;
+    opacity: 0.9;
+    vertical-align: top;
+    box-shadow: 0px 2px 10px 2px #71ff6f;
+}
+
+.playerPicture {
+    max-height: 200px;
+    position: relative;
+}
+
+.playerNameHeader {
+    background-color: darkgray;
+    color: whitesmoke;
+    text-align: -webkit-center;
+    padding: 3% 0% 0%;
+}
+
+.playerNameHeader:first-of-type h2 {
+    padding: 4% 0%;
+}
+
+.playerBio {
+    padding: 0% 2%;
+    background-color: white;
+}
+
+.playerBio ul {
+    margin: 0;
+    padding: 1.5% 0%;
+    color: darkgreen;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.playerBio span.label {
+    display: -webkit-inline-box;
+    display: inline-block;
+    padding-right: 4%;
+    max-width: 35%;
+    width: 35%;
+    vertical-align: bottom;
+    color: #10650b;
+}
+
+.playerBio span.labelContent {
+    word-wrap: normal;
+    white-space: nowrap;
+    max-width: 65%;
+    width: 60%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    vertical-align: bottom;
+}
+
+.playerFooter {
+    background-color: gray;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    padding: 2% 0%;
+}
+
+.playerFooter a {
+    color: whitesmoke;
+    text-decoration: underline;
+    text-align: -webkit-center;
+    text-align: center;
+    display: block;
+}
+
+.playerPicture div {
+    width: 100%;
+    height: 200px;
+    max-width: 100%;
+    max-height: 200px;
+    background-size: 100% 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.updatePage h1, .updatePage span {
+	color: white;
+}
+
+.updatePage h1 {
+	font-size: 300%;
+	padding: 1%;
+	border-bottom: solid 1px;
+	border-right: solid 1px;
+	max-width: 50%;
+	text-align: -webkit-center;
+	text-align: center;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+div.updateVids, div.myPlayground, div.addVids, div.deleteVids {
+    border-top: solid 1.5px white;
+    padding: 2% 0% 0%;
+    position: relative;
+}
+
+.deleteVids {
+    background: linear-gradient(to right, darkgrey, transparent, transparent, darkred);
+}
+
+.addVids {
+    background: linear-gradient(to right, darkgrey, transparent, transparent, transparent, darkgreen);
+}
+
+.indProfileHeader {
+    color: whitesmoke;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.myPlaygroundClass {
+    color: whitesmoke;
+}
+
+.myPlaygroundClass .row {
+    
+max-width: 100%;
+    
+margin: 0 auto;
+}
+
+.myPlaygroundClass ul {
+    color: black;
+    padding: 0% 12%;
+    font-size: 125%;
+}
+
+.myPlaygroundInstr {
+    color: whitesmoke;
+}
+
+div.updateLeagueForm, div.updatePlayerForm {
+    display: -webkit-inline-box;
+    display: inline-block;
+    vertical-align: top;
+}
+
+div.updateLeagueForm:first-of-type, div.updatePlayerForm:first-of-type {
+    max-width: 250px;
+    margin: 2% 0%;
+    padding: 0% 2%;
+}
+
+div#update_pic {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin-bottom: 2%;
+}
+
+div#update_pic input {
+	display: -webkit-inline-box;
+	display: inline-block;
+}
+
+div.updateLeagueForm:first-of-type input, div.updateLeagueForm:first-of-type span,
+div.updatePlayerForm:first-of-type input, div.updatePlayerForm:first-of-type span {
+    max-width: 50%;
+    font-size: 75%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    padding: 0% 0.5%;
+    vertical-align: bottom;
+}
+
+div.updateLeagueForm:last-of-type, div.updatePlayerForm:last-of-type {
+    width: 64.5%;
+    max-width: 70%;
+}
+
+div.updatePlayerForm:last-of-type {
+    padding: 0% 0% 2%;
+}
+
+div.updateLeagueForm:last-of-type h1, div.updatePlayerForm:last-of-type h1 {
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+div.updateLeagueForm:last-of-type input, div.updatePlayerForm:last-of-type input {
+    width: 97.1%;
+    max-width: 98%;
+}
+
+div.updateLeagueForm:last-of-type select, div.updatePlayerForm:last-of-type select {
+    width: 100%;
+    max-width: 100%;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+div#updateVids form, div.viewCurrent_clips {
+}
+
+div#updateVids #file2 {
+    max-width: 100%;
+    margin: 1% 25% 0%;
+}
+
+div#updateVids form {
+    text-align: center;
+    margin: 0% 0%;
+}
+
+.updateClips_option {
+    float: left;
+    min-width: 50%;
+    max-width: 50%;
+    font-size: 85%;
+    text-align: center;
+    /* display: none; */
+}
+
+.updateClips_option:hover {
+    cursor: pointer;
+}
+
+.myVideo {
+    max-width: 25%;
+    height: 275px;
+    max-height: 275px;
+    width: 25%;
+    float: left;
+    margin: 3% 4%;
+    text-align: -webkit-center;
+    text-align: center;
+    position: relative;
+    color: white;
+    /* font-size: 175%; */
+    box-shadow: 0px 0px 10px #f9f9f9;
+    border: solid 2px;
+    border-radius: 10px;
+}
+
+.addVideoDiv {
+    color: white;
+    text-align: -webkit-center;
+    text-align: center;
+    padding: 2% 0% 0%;
+    font-size: 150%;
+}
+
+.addVideoDiv span {
+    padding-right: 1%;
+}
+
+.addVideoDiv input {
+    /* width: 11%; */
+    margin: 0 auto;
+}
+
+.playerPageVideo {
+    max-width: 25%;
+    height: 225px;
+    max-height: 275px;
+    width: 25%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    margin: 3% 4%;
+    text-align: -webkit-center;
+    text-align: center;
+    position: relative;
+    /* color: white; */
+    /* font-size: 175%; */
+    box-shadow: 0px 0px 10px #f9f9f9;
+    border: solid 2px;
+    border-radius: 10px;
+    background: linear-gradient(transparent, transparent, black);
+}
+
+.playerPageVideo::after {content: "";background-image: url("../images/play_button.png");position: absolute;top: 0;left: 0;bottom: 0;right: 0;background-size: 50% 50%;background-position: center center;background-repeat: no-repeat;}
+
+.myVideo h2 {
+    text-align: -webkit-center;
+    text-align: center;
+    position: relative;
+    padding: 3% 2%;
+}
+
+.myVideo span.myVideoID {
+    position: absolute;
+    right: 5px;
+}
+
+h1.addNewClips_btn {
+    background: linear-gradient(to left, white, forestgreen, forestgreen, forestgreen, forestgreen, forestgreen, forestgreen, forestgreen, forestgreen, forestgreen, forestgreen, forestgreen);
+    color: white;
+	padding: 10% 20% 30%;
+    position: relative;
+}
+
+h1.viewClips_btn {
+    background: linear-gradient(to right, white, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick, firebrick);
+    color: white;
+    padding: 10% 20% 30%;
+    position: relative;
+}
+
+a#addNewClips_icon {
+    background-image: url("/totherec/public/images/add_icon.png");
+    width: 35px;
+    height: 35px;
+    background-position: center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-radius: 100px;
+    border: solid forestgreen 2px;
+    position: absolute;
+    top: 25px;
+    left: 10px;
+}
+
+button#viewClips_icon {
+    background-image: url("/totherec/public/images/view_icon.png");
+    width: 70px;
+    height: 70px;
+    background-position: center center;
+    background-size: 80% 80%;
+    background-repeat: no-repeat;
+    border-radius: 77%;
+    border: solid 1px forestgreen;
+    position: absolute;
+    bottom: 2%;
+    left: 40%;
+}
+
+a.deleteClip {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 25px;
+    left: 55px;
+    display: inherit;
+    background-image: url("/totherec/public/images/symbol_remove_icon.png");
+    background-position: center center;
+    background-size: 100% 100%;
+    border-radius: 100px;
+    border: solid 2px #d32523;
+}
+
+button.viewClip {
+    width: 40%;
+    height: 20%;
+    position: absolute;
+    bottom: 0%;
+	left: 0%;
+    display: inherit;
+    background-image: url("/totherec/public/images/view_icon.png");
+    background-position: center center;
+    background-size: 100% 100%;
+    border-radius: 10px;
+    border: solid 1px;
+}
+
+.updatePage h2:hover {
+    background-color: darkseagreen;
+	border-bottom: solid 2px green;
+	cursor:pointer;
+}
+
+div#noVideos_message p {
+    padding: 1% 0%;
+    text-align: center;
+    text-align: center;
+    color: white;
+    margin: 2% 0%;
+    font-size: 125%;
+}
+
+div#playerPagePic {
+    margin: 3% 0%;
+}
+
+.videoNavBtn {
+	position: absolute;
+    bottom: 2%;
+    border-radius: 75px;
+    min-width: 40px;
+    min-height: 40px;
+    border: outset 2px green;
+}
+
+button.moreVidBtnLeft {
+    left: 37%;
+	background-image: url("/totherec/public/images/arrow_button_metal_blue_left.png");
+	background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+button.moreVidBtnRight {
+    left: 57%;
+	background-image: url("/totherec/public/images/arrow_button_metal_blue_right.png");
+	background-repeat: no-repeat;
+    background-position: center center;
+    background-size: contain;
+}
+
+button.playBtn {
+    height: 35px;
+    width: 35px;
+    position: absolute;
+    top: 40%;
+    left: 41%;
+    border-radius: 50px;
+    z-index: 1;
+    opacity: 0.9;
+	background-image: url("/totherec/public/images/play_button.png");
+	background-position: center center;
+    background-size: contain;
+}
+
+button.pauseBtn {
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    display: none;
+    top: 16%;
+    left: 2%;
+    border-radius: 50px;
+    z-index: 1;
+    opacity: 0.9;
+    background-image: url("/totherec/public/images/pause_button.png");
+    background-position: center center;
+    background-size: contain;
+}
+
+button.playerPageNavBtn {
+    position: absolute;
+    top: 0;
+    background-color: dimgrey;
+    border-radius: 86px;
+    color: white;
+    min-width: 60px;
+    min-height: 60px;
+    border: outset 2px green;
+}
+
+button#bioBtn {
+	top: 15%;
+	left: 2%;
+}
+
+button#vidsBtn {
+	top: 26.5%;
+	left: 2%;
+}
+
+button#backBtn {
+	top: 38%;
+	left: 2%;
+}
+
+.profile_setup {
+	font-size: 120%;
+}
+
+#updatePic form {
+	float: left;
+	width: 50%;
+	text-align: center;
+	margin: 6% 0% 0% 6%;
+}
+
+#update_form_table {
+	max-width: 100%;
+	width: 99%;
+}
+
+#leagues_validate_form {
+	min-width: 80%;
+	max-width: 80%;
+	margin: 0% 10% 4%;
+}
+
+table#leagues_validate_form select {/* width: 63%; *//* max-width: 63%; */}
+
+#leagues_name_header {
+	font-family: 'Lora', serif;
+	font-size: 230%;
+}
+
+#leagues_menu {
+	background-color: black;
+	margin: 0% 0%;
+	max-width: 100%;	
+}
+
+#leagues_menu li {
+	display: inline-block;
+    width: 11%;
+    padding: 1% 1% 1%;
+    text-align: center;
+}
+
+#current_pic {
+	height: 175px;
+	width: 100%;
+	max-width: 100%;
+	margin: 1% 0%;
+	border: outset 2px;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px black;
+}
+
+.maine_modal #my_leagues_photo {
+	height: 14em;
+	width: 17em;
+	margin: 4% 0% 0% 3%;
+}
+
+#my_leagues_photo {
+	height: 14em;
+	width: 17em;
+	margin: 4% 27.7% 0%;
+}
+
+#updatePic_btn {
+  width: 72%;
+  margin: 5% 0% 5% 0%;
+  border-radius: 5px;
+  height: 30px;
+  border: outset green;
+  background-color: darkgreen;
+  color: white;
+  opacity: 0.9;
+  font-size: 95%;
+}
+
+.playerVideos {
+	display: none;
+}
+
+.errorMsg {
+    max-width: 13%;
+    position: fixed;
+    top: 15px;
+    right: 25px;
+    background-color: rgba(0, 0, 0, 0.35);
+    box-shadow: 0px 0px 15px darkred;
+    border-radius: 10px;
+    font-size: 120%;
+}
+
+.errorMsg h3 {
+    text-align: -webkit-center;
+    text-align: center;
+    background-color: darkred;
+    color: white;
+    padding: 1% 0%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.errorMsg p {
+    color: white;
+    padding: 3% 5%;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.errorMsg ul {
+    list-style: square;
+    font-size: 100%;
+    padding: 2% 2% 2% 12%;
+}
+
+div#about_ttr {
+	position: fixed;
+	z-index: 10;
+}
+
+.contactPage, .contactPageDis{
+	font-size: 135%;
+	background-color: #feae46;
+	border: solid 5px green;
+	border-radius: 5px;
+	position: fixed;
+	top: -21.6%;
+	z-index: 10;
+}
+
+.contactPageDis {
+    width: 50%;
+    right: 33.8%;
+}
+
+.contactPage {
+    right: 1%;
+    width: 32%;
+}
+
+.contactPageDis p{
+	font-size: 125%;
+	padding: 0% 4%;
+}
+
+.contactPageDis p:last-child{
+	margin: 0% 0% 2% 0%;
+}
+
+.contactPageDis ul {
+	max-width: 50%;
+	list-style: none;
+	margin: 1% 0% 2.5% 29%;
+	font-size: 125%;
+	color: black;
+}
+
+.contactPage table {
+    text-align: center;
+    margin: 1.5% 0% 1.5% 10%;
+    width: 90%;
+}
+
+#login_page {
+	margin: 15% 25%;
+	background-color: rgba(0, 0, 0, 0.65);
+	/* max-width: 50%; */
+	border-radius: 10px;
+	box-shadow: 0px 0px 15px darkgreen;
+}
+
+.login_header {
+	text-align: center;
+	width: 100%;
+	padding: 1.5% 0%;
+	color: white;
+	background-color: darkgreen;
+	opacity: 0.9;
+	margin: 0%;
+	font-size: 250%;
+}
+
+#login_page_table {
+	width: 100%;
+	padding: 1% 4%;
+	margin: 6% 0%;
+	font-size: 175%;
+}
+
+#login_page_table input {
+    margin: 0.5% 3%;
+    color: black;
+    max-width: 90%;
+    width: 80%;
+    text-align: -webkit-center;
+    text-align: center;
+    border-radius: 5px;
+}
+
+#login_page_table th {
+	padding: 1.5% 0%;
+}
+
+#login_page_btn {
+	margin: 5% 25%;
+	border-radius: 5px;
+	/* height: 39px; */
+	border: 2px outset #b9b9b9;
+	background-color: darkgreen;
+	color: white !important;
+	opacity: 0.9;
+	font-size: 125%;
+}
+
+input#login_page_btn:hover {
+    box-shadow: 0px 4px 10px whitesmoke;
+}
+
+#login_page_btn2, #login_page_btn3 {
+	width: 45%;
+    margin: 1% 1%;
+    padding: 2% 0% 2%;
+    border-radius: 5px;
+    border: 2px outset green;
+    background-color: darkgreen;
+    color: white;
+    opacity: 0.9;
+    font-size: 95%;
+}
+
+#cancel_login_page_btn2, #cancel_login_page_btn3 {
+    width: 45%;
+    margin: 3% 0% 0% 5%;
+    padding: 2% 0%;
+    border-radius: 5px;
+    border: 2px outset green;
+    background-color: darkgreen;
+    color: white;
+    opacity: 0.9;
+    font-size: 95%;
+}
+
+.register {
+    float: left;
+    width: 40%;
+    padding: 0%;
+    font-size: 150%;
+    margin: 2% 4%;
+    border: outset 3px green;
+    border-radius: 5px;
+    opacity: 0.9;
+}
+
+div#registerPage {
+    color: white;
+}
+
+.register img {
+	padding: 0% 13%;
+	height: 200px;
+	width:200px;
+}
+
+.register h3 {
+	color: orange;
+	background-color: gray;
+	margin: 0% 0% 4% 0%;
+	min-width: 100%;
+	text-align: center;
+	font-size: 200%;
+	padding: 1% 0%;
+}
+
+.loginPage h2 {
+	text-align: center;
+	padding: 2% 0.5% 10%;
+}
+
+.loginPage th {
+	max-width: 50%;
+}
+
+.loginPage form {
+    padding: 2% 5%;
+}
+
+.playerPageInfo {position: relative;padding: 150px 0% 0%;}
+
+.playerPageVideos {
+    padding: 3% 0%;
+    margin: 0% 5% 0% 0%;
+    /* border-top: solid white 2px; */
+    background-color: white;
+}
+
+.playerPageVideos h2.playerPageVideosHeader {
+    font-size: 200%;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.playerPageVideos h2.playerPageVideosNone {
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.playerPagePic {
+    position: absolute;
+    height: 185px;
+    max-height: 185px;
+    width: 200px;
+    max-width: 200px;
+    top: 15px;
+    border-radius: 7px;
+    box-shadow: 3px 3px 5px 0px wheat;
+}
+
+.playerPageBio, .playerPlaygrounds {
+    color: whitesmoke;
+    font-size: 175%;
+    padding: 1% 0%;
+    margin: 0% 5% 0% 0%;
+    border-top: solid white 2px;
+    /* background-color: white; */
+}
+
+.playerPlaygrounds ol {
+    list-style: none;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.playerPlaygrounds h2 {
+    font-size: 150%;
+    padding-bottom: 2%;
+}
+
+#playersPage2 a {
+	display: inline-block;
+	width: 100%;
+	text-decoration:none;
+	text-align: -webkit-center;
+	text-align: center;
+	color: green;
+}
+
+.profilePic {
+	margin-bottom: 2%;
+}
+
+.playersPage table {
+	width: 100%;
+}
+
+.playerDisplay table {
+	padding:1% 1%;
+	text-align: center;
+	margin: 2% 0%;
+	width: 100%;
+}
+
+.playerDisplay th{
+	font-size:125%;
+}
+
+.playerDisplay {
+	/* margin: 1% 20%; */
+	/* font-size: 180%; */
+	/* background-color: gray; */
+	/* border: solid 5px green; */
+	/* border-radius: 5px; */
+	/* min-height: 15em; */
+	/* position: relative; */
+}
+
+.alphabetClass {
+    position: fixed;
+    top: 100px;
+    right: 5px;
+    min-width: 25px;
+    background: wheat;
+    color: black;
+    font-size: 135%;
+    /* padding: 1%; */
+    border-radius: 10px;
+    overflow: auto;
+    z-index: 1;
+}
+
+.alphabetClass .noPlayers {
+    position: relative;
+    padding: 0% 25%;
+}
+
+.alphabetClass .noPlayers a {
+    color: black;
+    width: 100%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+.alphabetClass .hasPlayers a {
+    font-weight: 600;
+    background-color: azure;
+    width: 100%;
+    max-width: 100%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    padding: 0% 0%;
+    text-align: -webkit-center;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.maine_modal .playerDisplay {
+  margin: 0%;
+  font-size: 180%;
+  border-radius: 0px;
+  background-color: inherit;
+  border: none;
+}
+
+.maine_modal .playerDisplay button, .maine_modal .playerDisplay h2 {
+  display: none;
+}
+
+.maine_modal .playerDisplay  #playerPic {
+  max-width: 300px;
+  max-height: 300px;
+  margin: 0% 12%;
+}
+
+.playerPagePic img#playerPic {
+	width: 100%;
+	height: 185px;
+	max-height: 185px;
+	border-radius: 5px;
+}
+
+.playerPic_btn a {
+	/* text-decoration: none; */
+	/* font-size: 220%; */
+	/* padding: 4% 0%; */
+	/* display: inherit; */
+	/* width: 100%; */
+	/* color: white; */
+}
+
+button.playerPic_btn {
+    /* width: 13%; */
+    /* background-color: darkgreen; */
+    /* border: solid green; */
+    /* border-radius: 3px; */
+    /* padding: 0%; */
+    /* position: absolute; */
+    /* top: 58%; */
+    /* left: 4%; */
+}
+
+.playerDisplay .playerVideos, .playerDisplay .playerVideos2 {
+    min-height: 478px;
+    padding: 0% 15%;
+}
+
+div.playerVideos .playerVideo, div.playerVideos2 .playerVideo {
+    max-width: 48%;
+    display: inline-block;
+    margin: 6% 1%;
+	position: relative;
+}
+
+div.playerVideos .playerVideo h2, div.playerVideos2 .playerVideo h2 {
+    font-size: 80%;
+	text-align: center;
+}
+
+.league_display {
+	margin: 1% 30%;
+	font-size: 135%;
+	background-color: gray;
+	border: solid 5px green;
+	border-radius: 5px;
+	opacity:0.9;
+}
+
+.leaguesPage {
+	float: left;
+	margin: 2% 6%;
+	padding: 0% 0% 0% 0%;
+	height: 16em;
+	width: 20em;
+	background-color: #feae46;
+	border: 5px solid green;
+	border-radius: 5px;
+	font-size: 161%;
+	margin: 1% 2%;
+	opacity: 0.8;
+}
+
+.leaguesPage th {
+	padding-bottom:10px;
+}
+
+p.leagues_age_header, p.leagues_arrows {
+	display: inline-block;	
+}
+
+p.leagues_age_header {
+	width: 50%;
+}
+
+#profilePic img {
+	float: none;
+	padding: 9% 0% 0% 32%;
+	width: 300px;
+	height: 300px;
+}
+
+h2.page_header {
+    position: relative;
+    background-color: transparent;
+    color: white;
+    text-align: -webkit-center;
+    text-align: center;
+    font-size: 350%;
+    padding: 1% 0%;
+}
+
+h2#rec_page_header.page_header {
+    background-color: transparent;
+}
+
+div#all_recs {
+	position: relative;
+}
+
+div#all_recs_frame {
+    margin: 3% 5%;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.recsPageContainer {
+    margin-top: 75px;
+}
+
+.recsPage {
+    float: left;
+    width: 30%;
+    /* display: none; */
+    font-size: 130%;
+    background-color: aliceblue;
+    border-radius: 11px;
+    margin: 1.55%;
+    position: relative;
+    border: solid 1px black;
+    opacity: 1;
+    min-height: 200px;
+    box-shadow: 0px 0px 25px wheat;
+    overflow-x: hidden;
+}
+
+.recsPage .recsPageList {
+    color: black;
+    overflow: hidden;
+}
+
+.recsPage .recsPageList li {
+    overflow: hidden;
+}
+
+.recsPage .recsPageList .listContent {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: -webkit-inline-box;
+    display: inline-block;
+    max-width: 49%;
+    vertical-align: bottom;
+}
+
+.recsPage .recsPageList .listLabel {
+    padding: 0% 3% 0%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    vertical-align: bottom;
+    max-width: 49%;
+    font-weight: 600;
+    text-shadow: 0px 3px 1px darkgray;
+}
+
+div.search_box {
+    position: relative;
+    margin: 1% 20% 4%;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+button#showAllRecs {
+    max-width: 50%;
+    min-width: 50%;
+    margin: 0% 25%;
+    padding: 2% 0%;
+    border-radius: 10px;
+    border: outset 3px forestgreen;
+    background-color: green;
+    color: white;
+    font-size: 135%;
+    z-index: 2;
+}
+
+button#scroll_to_top {
+    position: fixed;
+    display: none;
+    right: 1%;
+    bottom: 1%;
+    height: 5%;
+    width: 3%;
+    border-radius: 70%;
+    z-index: 1;
+    background-image: url("/totherec/public/images/topOfPage.jpg");
+    background-position: center center;
+    background-size: 100% 100%;
+}
+
+input.player_search {
+    width: 51%;
+    border-radius: 5px;
+    display: -webkit-inline-box;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+input#rec_search {
+    width: 97.6%;
+    max-width: 100%;
+    border-radius: 5px;
+}
+
+a.removeFilter, a.addFilter {
+    display: -webkit-inline-box;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 5px;
+    padding: 0.5% 1%;
+}
+
+a.addFilter {
+    border: inset 2px #777777;
+    background: bisque;
+}
+
+a.removeFilter {
+    background: darkred;
+    border: inset 2px #777777;
+    color: whitesmoke;
+}
+
+h3.recs_header {
+    text-align: -webkit-center;
+    text-align: center;
+    opacity: 1.0;
+    background-color: green;
+    margin: 0% 0%;
+    padding: 1% 3% 1%;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recsPageTable {
+    /* width: 100%; */
+    max-width: 100%;
+    margin: 5% 0%;
+    display: -webkit-inline-box;
+    display: inline-block;
+}
+
+table.recsPageTable td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 0% 5%;
+    max-width: 100%;
+    white-space: nowrap;
+    /* word-break: break-all; */
+    /* word-wrap: break-word; */
+}
+
+table.recsPageTable tr {
+    max-width: 100%;
+    position: relative;
+}
+
+.faqsPage {
+	margin: 1% 25%;
+	font-size: 135%;
+	background-color: #feae46;
+	border: solid 5px green;
+	border-radius: 5px;	
+	width: 50%;
+	opacity: 0.9;
+}
+
+.faqsPage p {
+	padding: 2% 4%;
+}
+
+th.search_list_header {
+	/* padding: 0px 0px 10px 0px; */
+	display: block;
+	background: linear-gradient(rgba(0,128,0,0.75), rgba(0,128,0,0.75), rgba(0,128,0,0.75), transparent);
+}
+
+a.search_list_link {
+	font-size: 200% !important;
+	padding: 8px 0px;
+}
+
+a.search_list_link:hover {
+    background: linear-gradient(rgba(0,0,0,0.9), rgba(47,79,79,0.80), rgba(0,128,0,0.75), transparent);
+    text-transform: uppercase;
+}
+
+#recs_list_div a#recs_link.search_list_link:hover {
+}
+
+a.search_list_link:hover #recs_list_div {}
+
+#leagues_page_table {
+	width: 100%;
+	text-align: center;
+	padding: 10px 0px;
+}
+
+#leagues_content_display {
+	display: inline-block;
+	margin: 2% 2%;
+	width: 68%;
+}
+
+#leagues {
+	background-color: white;
+	border: 5px solid green;
+	border-radius: 10px;
+	font-size: 170%;
+	margin: 4% 19%;
+	margin-top: 100px;
+	max-width: 100%;
+	/* min-height: 300px; */
+	opacity: 0.95;
+	display: inline-block;
+	width: 60%;
+}
+
+div#leagues h2 {
+    text-align: -webkit-center;
+    text-align: center;
+    padding: 2% 0%;
+    position: relative;
+    font-size: 225%;
+}
+
+div#leagues h2 span.switchFilterOption {
+    position: absolute;
+    font-size: initial;
+    right: 2%;
+    top: 40%;
+}
+
+div#leagues h2 span.switchFilterOption a {
+    text-decoration: underline;
+}
+
+div#leagues h2 span.switchFilterOption a:hover {
+    background-color: gray;
+    color: whitesmoke;
+    padding: 0% 1.5%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px black;
+}
+
+div#leagues h2::after {position: absolute;font-size: initial;right: 10px;top: 35%;}
+
+#leagues a {
+    display: inline-block;
+    width: 100%;
+    color: black;
+}
+
+.leagues_select {
+    min-width: 100%;
+    text-align: center;
+    margin: 0%;
+    /* background-color: white; */
+}
+
+li.leagues_link {
+    display: none;
+    padding: 0.2% 0%;
+}
+
+li.leagues_link:not(:last-of-type) {
+    border-bottom: solid 1px black;
+}
+
+li.leagues_link:hover a {
+    text-shadow: 0px 0px 2px black;
+}
+
+#leagues_select a:hover {
+  background-color: whitesmoke;
+}
+
+#leagues_select caption {
+    font-size: 150%;
+    background-color: black;
+    color: white;
+    padding: 0% 0% 1% 0%;
+}
+
+#leagues_select td {
+	border-bottom: 2px solid #008000;
+}
+
+input#regLeague_btn, input#regProfile_btn, input#updateVideo_btn {
+	width: 50%;
+	margin: 3% 25.5%;
+	border-radius: 5px;
+	/* height: 39px; */
+	border: outset 3px green;
+	background-color: darkgreen;
+	color: white;
+	opacity: 0.9;
+	font-size: 150%;
+}
+
+input#editProfile_btn {
+    position: absolute;
+    top: 32%;
+    /* max-width: 9%; */
+    left: 7%;
+    border-radius: 5px;
+    border: outset 3px green;
+    background-color: darkgreen;
+    color: white;
+    font-size: 150%;
+}  
+
+#leagues_comp_levels {
+	position: absolute;
+	top: 14.3%;
+	right: 20%;
+	background-color: whitesmoke;
+	opacity: 0.9;
+}
+
+button.leagues_site_btn {
+    background-color: orange;
+    border: outset 3px forestgreen;
+    color: white;
+    padding: 0.5%;
+    border-radius: 5px;
+}
+
+td#leagues_site_td {
+    padding: 2% 0%;
+}
+
+.comp_age_levels, .comp_level {
+    background-color: green;
+    border: white 1px solid;
+	color: white;
+}
+
+.comp_age_levels:hover {
+    background-color: rgb(0, 52, 0);
+}
+
+span.leagues_age_header {
+    display: -webkit-inline-box;
+    display: inline-block;
+    min-width: 80%;
+}
+
+.under10, .under12, .under14, .under16, .under18, .over30, .over50, .unlimited{
+	/* display: none; */
+}
+
+#about_header, #contact_header {
+	text-align: center;
+	max-height: 70px;
+	/* padding: 3% 0%; */
+	color: white;
+	/* background-color: darkgreen; */
+	opacity: 0.9;
+	margin: 0%;
+}
+
+#player_demographics h2#contact_header {
+    font-size: 300%;
+    padding: 0% 0% 0%;
+}
+
+.timeline-footer {
+    background: #5F9BCE !important;
+}
+
+.loginPage2, .loginPage3 {
+    position: absolute;
+    top: -5%;
+    right: 3%;
+    width: 21%;
+    color: white;
+    padding: 0% 2%;
+    margin: 0.5% 0% 0% 0%;
+    border-radius: 5px;
+    display: none;
+}
+
+.calendarHoliday {
+	
+}
+
+.importantDate {
+	background: linear-gradient(gray, darkgoldenrod, darkgoldenrod, gray);
+}
+
+.awayGame span.nbaMatchup {
+	background: linear-gradient(gray,darkred, darkred, gray);
+	display: -webkit-box;
+	display: block;
+	max-width: 100%;
+}
+
+.homeGame span.nbaMatchup {
+	background: linear-gradient(gray, darkblue, darkblue, gray);
+	display: -webkit-box;
+	display: block;
+	max-width: 100%;
+}
+
+div#all_calendar {
+    position: relative;
+}
+
+table.allCalendar_table th, table.allCalendar_table td, table.allCalendar_table caption {
+    border: solid 1.5px black;
+    /* border-collapse: collapse; */
+    color: whitesmoke;
+    position: relative;
+}
+
+table.allCalendar_table table, table.allCalendar_table tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
+}
+
+table.allCalendar_table tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+table.allCalendar_table {
+    border-collapse: separate;
+    margin: 0% 5%;
+    width: 90%;
+    display: none;
+    font-family: 'Indie Flower', cursive;
+    background-image: url(../images/sixers_kids.png);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: 100% 100%;
+    position: relative;
+}
+
+table.allCalendar_table {border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;box-shadow: 0px 0px 15px black;}
+
+table.allCalendar_table th {
+	color: white;
+	width: 9%;
+	padding: 0% 0.5%;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+td.weekDayContent {
+    padding: 5% 0.3%;
+    position: relative;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+span.weekDayNum {
+    position: absolute;
+    top: 0%;
+    right: 1%;
+}
+
+th.weekDayName {
+    width: 1%;
+	font-size: 150%;
+}
+
+table.allCalendar_table caption {
+    font-size: 400%;
+    background: linear-gradient(to bottom right, red, white,blue);
+    color: darkslategray;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow: 0px -2px 15px 0px black;
+    text-align: -webkit-center;
+    text-align: center;
+}
+
+td.weekDayContent:hover {
+    background-color: aliceblue;
+}
+
+td.weekDayContent:hover span.weekDayNum {
+    color: black;
+}
+
+p#calendarDayNum {
+    width: 2%;
+    position: absolute;
+    top: 15%;
+    margin: 0% 0%;
+}
+
+p#calendarDay {
+    width: 100%;
+    text-align: center;
+    padding: 3% 0%;
+}
+
+.calendar_modal p.calendarMatchups, .calendar_modal p.nbaMatchup {
+    margin: 1% 25%;
+    text-align: center;
+    font-size: 110%;
+	background: initial;
+}
+
+.calendar_modal span.gameTime {
+    margin: 0% 1%;
+    display: -webkit-inline-box;
+    display: inline;
+}
+
+.moreGamesNotifi {
+	color: white;
+}
+
+.nextMonth {right: 3%;background-image: url("../images/right_arrow.png");background-position: 68% 56%;background-repeat: no-repeat;background-size: 125% 150%;}
+
+button.nextMonth, button.prevMonth {
+    position: absolute;
+    top: 30%;
+    height: 35px;
+    width: 35px;
+    border-radius: 100px;
+    /* border: outset 2px; */
+}
+
+.prevMonth {
+    left: 3%;
+    background-image: url("../images/left_arrow.png");
+    background-position: 48% 57.5%;
+    background-repeat: no-repeat;
+    background-size: 125% 150%;
+}
+
+table.currentMonth {
+    display: table;
+}
+
+.calendars {
+    padding: 3% 0%;
+    margin: 1% 0%;
+}
+
+/*Smartphones portrait*/
+@media only screen and (min-device-width:320px) and (max-device-width:768px){
+
+body {
+	min-height: 1750px;
+}
+
+.maine_overlay {
+	height: 1750px;
+}
+
+.maine_modal_player, .maine_modal_league, .maine_modal {
+	width: 34em;
+	top: 7%;
+	margin-top: -16px;
+	margin-left: -375px;
+	font-size: 163%;
+}
+
+.maine_modal_player input, .maine_modal_league input {
+    height: 2em;
+	font-size: 50%;
+}
+
+.maine_modal_league #leagues_comp, .maine_modal_league #leagues_age {
+  width: 12.1em;
+  min-height: 3em;
+  font-size: 50%;
+  margin-top: 6%;
+}
+
+.maine_modal_league, .maine_modal {
+	height: 56em;
+}
+
+.maine_modal_player {	
+	height: 49em;
+}
+
+.modal_title {
+	font-size: 250%;
+}
+
+#close_modal_left {
+  top: 4%;
+  left: 35%;
+  font-size: 300%;
+}
+
+#close_modal_right {
+  top: 92%;
+  right: 37%;
+  font-size: 300%;
+}
+
+.profile_setup {
+  margin: 3% 3% 0%;
+}
+
+.list {
+	width: 94%;
+	height: 15em;
+}
+
+.media {
+	min-width: 94%;
+}
+
+iframe[id^='twitter-widget-'] {
+	padding: 3% 0% 0% 0% !important;
+}
+
+.media:last-of-type {
+  background-color: cyan;
+}
+
+input#regLeague_btn, input#regProfile_btn, input#editProfile_btn {
+	height: 2em;
+}
+
+#playersPage2 a {
+	font-size:130%;
+}
+
+.register {
+	min-width: 90%;
+	margin: 15% 0% 0% 4.5%;
+	font-size: 250%;
+	min-height: 11em;
+}
+
+.playerPageInfo {
+    min-width: 50%;
+	margin: 10%;
+}
+
+.registrationPage {
+    font-size: 130%;
+}
+
+.registrationPage h3 {
+	text-align: center;
+	margin: 3% 0%;
+	font-size: 100%;
+}
+
+.registrationPage td {
+	min-width: 50%;
+	padding: 0%;
+	text-align: center;
+}
+
+.updatePage input {
+	height: 2em;
+	font-size: 50%;
+}
+
+.updatePage td {
+	font-size: 160%;
+	text-align: left;
+}
+
+.updatePage input#regLeague_btn, .updatePage input#regProfile_btn, input#editProfile_btn {
+	height: 3em;
+	font-size: 119%;
+}
+
+.update_profile_header {
+	font-size: 200%;
+}
+
+#current_pic {
+	height: 9em;
+	width: 9em;
+	margin: 1% 5%;
+}
+
+#updatePic_btn {
+  height: 2em;
+  width: 85%;
+}
+
+#leagues_age, #leagues_comp {
+	width: 100%;
+	min-height: 92px;
+	font-size: 50%;
+	margin-top: 3%;
+}
+
+.list {
+	min-height: 150px;
+	background-color: #feae46;
+	border: solid gray 5px;
+	margin: 0.85% 2.5% 1%;
+	font-size: 100%;
+	min-width:90%;
+}
+
+.content p, ul {
+	margin: 4% 0%;
+	max-width: 100%;
+	font-size: 140%;
+}
+
+.media img {
+	padding: 0% 1%;
+}
+
+#champs, #twitter {
+	margin: 2% 25%;
+}
+
+iframe[id^='twitter-widget-'] {
+	padding: 2% 0% 0% 1% !important;
+	max-width: 80%;
+	min-width: 80%;
+}
+
+a.search_list_link {
+    font-size: 150%;
+}
+
+.list2 td a {
+    font-size: 140%;
+}
+
+.media img {
+    padding: 0 1%;
+    width: 96%;
+}
+
+#champs, #twitter {
+	margin: 2% 20%;
+	font-size: 350%;
+}
+
+#twitterFeed {
+	height: 62em;
+	max-height: 62em;
+	margin: 0% 0% 3.8%;
+}
+
+.media h3 {
+    margin: 0;
+    max-width: 100%;
+    padding: 1% 30%;
+}
+
+.media {
+    width: 100%;
+}
+
+.navi {
+    width: 100%;
+}
+
+#navi2 {
+	max-width: 25%;
+}
+
+.menu {
+    height: 17em;
+    font-size: 155%;
+}
+
+.menu li {
+  margin: 0;
+  padding: 2% 0%;
+  width: 33.3%;
+  font-size: 165%;
+}
+
+.menu li a {
+    padding: 1% 1%;
+    width: 100%;
+}
+
+#recs_li a {
+	width: 155px;
+}
+
+#league_li, #league_profile_li, #contact_li, #login_li, #register_li, #clips_li, #news_li, #logout_li, #player_profile_li {
+	border-top: dashed green 5px;
+}
+
+.searches {
+  background-color: #feae46;
+  opacity: 0.8;
+  font-size: 200%;
+}
+
+#profileSetup, .player_setup, .league_setup, .loginPage, .playersPage, .leaguesPage, .contactPage, .contactPageDis, .playerDisplay, .updatePage {
+    background-color: #feae46;
+    border: 5px solid green;
+    border-radius: 5px;
+    font-size: 200%;
+    margin: 4% 2%;
+    opacity: 0.8;
+}
+
+.playerPageInfo {
+    font-size: 170%;
+    min-width: 100%;
+    display: inline-block;
+    margin: 0%;
+    text-align: center;
+}
+
+.playerDisplay a {
+    display: inline-block;
+    width: 100%;
+    padding: 1% 0%;
+}
+
+#playerDemographics #about_header {
+  font-size: 125%;
+  max-height: 10em;
+}
+
+.playerDisplay table {
+  padding: 3% 0%;
+  font-family: "Special Elite",cursive;
+  text-align: center;
+  margin: 0% 0%;
+  min-width: 90%;
+  width: 95%;
+  font-size: 90%;
+}
+
+#profilePic img {
+	float: none;
+	height: 7em;
+	width: 7em;
+	padding: 5% 0% 0% 0%;
+	margin: 0% 0%;
+}
+
+#playerPagePic .playerPic_btn:first-of-type {
+	display: none;
+}
+
+button.playerPic_btn {
+	max-width: 94%;
+	font-size: 75% !important;
+}
+
+img#playerPic {
+  width: 64%;
+  height: 10em;
+  margin: 0% 18%;
+}
+
+.maine_modal .leagues_page_div {
+  margin: 2%;
+  width: 98%;
+}
+
+.leaguesPage {
+	float: left;
+	margin: 4% 16% 0%;
+	padding: 0% 0% 0%;
+	min-height: 14em;
+	width: 20em;
+}
+
+.leagues_page_div {
+	width: 80%;
+	margin: 4% 9.5%;
+}
+
+.leagues_page_table {
+	font-size: 135%;
+	text-align: left;
+}
+
+.leagues_page_table th {
+	font-size: 200%;
+	padding-bottom: 3%;
+}
+
+#leagues_select {
+  	height: 29em;
+}
+
+.loginPage {
+	margin: 20% 4.5% 0%;
+	width: 90%;
+	min-height: 18em;
+}
+
+.loginPage input{
+	height: 2.5em;
+	width: 13em;
+	font-size: 50%;
+}
+
+#login_page_btn {  
+	height: 2em;
+	width: 70%;
+	margin: 0% 15.5%;
+	font-size: 150%;
+}
+
+#login_page_table {
+	font-size: 160%;
+	width: 100%;
+}
+
+.loginPage h2 {
+  font-size: 200%;
+}
+
+.register img {
+	padding: 0% 27% 0%;
+	height: 10em;
+	width: 10em;
+}
+
+.playerDisplay button {
+    font-size: 160%;
+}
+
+#profilePic {
+	min-width: 100%;
+}
+
+.updatePage table {
+	width:100%;
+}
+
+.updatePage td {
+	text-align:center;
+}
+
+#update_form_table {
+	width: 100%;
+	margin: 0% 0% 4% 1%;
+}
+
+input#file {
+	padding-left: 0%;
+	font-size: 115%;
+}
+
+#picture_label {
+	font-size: 175%;
+}
+
+.contactPage table {
+	text-align: center;
+	margin: 1.5% 0% 1.5% 8%;
+	width: 95%;
+	font-size: 150%;
+}
+
+#leagues {
+	font-size: 300%;
+	margin: 4% 2.5%;
+	max-width: 100%;
+	min-width: 90%;
+	width: 94%;
+}
+
+footer {
+	clear: both;
+	background-color: black;
+	font-size: 200%;
+}
+
+iframe[id^='twitter-widget-']{
+	width: 80% !important;
+	padding: 0% !important;
+	height: 60em !important;
+
+}
+}
+
+/*Coverage between iPad and Smartphone*/
+@media only screen and (min-device-width:768px) and (max-device-width:1023px){
+
+.menu {
+	font-size:125%;
+}
+
+.menu li {
+	margin:0;
+}
+
+.menu li a {
+	width:105px;
+}
+
+.content {
+    font-size: 13px;
+}
+
+.content p, ul {
+	max-width: 100%;
+	margin-left: 0%;
+	list-style: none;
+	padding: 1% 0%;
+	font-size: 100%;
+}
+
+.list {
+	min-width: 100%;
+	min-height: 150px;
+	background-color: #feae46;
+	border: solid gray 5px;
+	margin: 1% 1%;
+	overflow:auto;
+}
+
+.list2 {
+	padding: 0%;
+}
+
+.champs {
+	overflow-y:hidden;
+}
+
+.media {
+	overflow:auto;
+	min-width:100%;
+	max-height:100%;
+	margin:0%;
+}
+
+.media img {
+	padding: 1% 5%;
+	width:90%;
+}
+
+iframe[id^='twitter-widget-']{
+	width:100% !important;
+	padding:1% 0% 0% 0% !important;
+}
+
+#profilePic {
+    padding: 5% 0% 0% 35%;
+    float: none;
+}
+
+.playerPageInfo {
+	min-width: 100%;
+	padding-left:19%;
+}
+
+.playerDisplay {
+	margin: 1% 5%;
+}
+
+#profileSetup, .player_setup, .league_setup, .loginPage, .playersPage, .leaguesPage, .contactPage, .contactPageDis, .playerDisplay, .updatePage {
+    margin: 1% 10%;
+    font-size: 135%;
+    background-color: #FEAE46;
+    border: 5px solid #008000;
+    border-radius: 5px;
+    opacity: 0.8;
+}
+
+.leaguesPage {
+    float: left;
+    margin: 1%;
+    padding: 0.5% 0% 0%;
+    height: 250px;
+    width: 355px;
+}
+
+.myPlaygroundClass ul {
+    padding: 0% 5%;
+}
+
+}
+
+/*Coverage between iPad and Smartphone*/
+@media only screen and (min-width:1024px) and (max-width:1279px){
+
+#leagues_registration_table, #player_registration_table {
+  /* min-width: 78%; */
+  margin: 0% 10% 0%;
+}
+
+.menu {
+	/* font-size: 150%; */
+	/* height: 100%; */
+	padding: 0.5%;
+}
+
+#mainBody .menu {
+    font-size: inherit;
+}
+
+#mainBody .menu li {}
+
+#mainBody .menu li a {}
+
+.menu li {
+	/* margin: 1.5% 0%; */
+	/* padding: 0% 0%; */
+	/* height: 9.1%; */
+}
+
+.menu li a {
+	/* width: 99%; */
+	/* padding: 2% 0%; */
+	/* font-size: 150%; */
+}
+
+ul.menu3 li {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0%;
+}
+
+ul.menu3 {
+    margin: 3% 3%;
+}
+
+p.nbaMatchup, p.calendarMatchups {
+    padding: 0% 5%;
+}
+
+.calendar_modal p.calendarMatchups, .calendar_modal p.nbaMatchup {
+    margin: 1% 5%;
+    text-align: center;
+    font-size: 110%;
+	background: initial;
+}
+
+.list {
+    /* float: left; */
+    /* overflow-y: scroll; */
+    /* width: 46%; */
+    /* min-height: 150px; */
+    /* border: solid gray 5px; */
+    /* margin: 1% 1.5%; */
+}
+
+.searchesBgrd {
+    /* background-position-y: -550px; */
+}	
+
+#champs, #twitter {
+    margin: 2% 25% 0.5%;
+}
+
+.playerPageInfo {
+	min-width: 100%;
+}
+
+.playerPagePic {
+    height: 160px;
+    max-height: 160px;
+    width: 165px;
+    max-width: 165px;
+}
+
+.playerPagePic img#playerPic {
+    height: 160px;
+    max-height: 160px;
+}
+
+.playerPlaygrounds h2 {
+    font-size: 85%;
+}
+
+.playerPageVideo h2 {
+    font-size: 100%;
+    padding: 3% 0% 0%;
+}
+
+.playerDisplay table {
+	min-width: 100%;
+	font-size: 100%;
+}
+
+#update_form_table {
+  width: 65%;
+  margin: 0% 22% 4%;
+  font-size: 150%;
+}
+
+#update_form_table input, #leagues_validate_form input {
+  /* font-size: 55%; */
+}
+
+#leagues_validate_form {
+  width: 75%;
+  margin: 0% 20% 4%;
+  font-size: 140%;
+}
+
+#leagues_comp, #leagues_age {
+  min-height: 70px;
+}
+
+#profilePic {
+    min-width: 100%;
+}
+
+#profilePic img {
+	padding: 9% 0% 0% 27%;
+}
+
+.playerDisplay button {
+	padding: 0%;
+}
+
+.playerDisplay a {
+	/* display: inline-block; */
+	/* width: 100%; */
+	/* padding: 1% 0%; */
+}
+
+.maine_modal {
+    /* width: 92%; */
+    /* top: 3%; */
+    /* left: 0%; */
+    font-size: 130%;
+}
+
+.maine_modal_content {
+    padding: 1%;
+}
+
+.maine_modal .playerDisplay {
+    font-size: 115%;
+}
+
+.maine_modal .playerDisplay #playerPic {
+    width: 50%;
+    height: 13em;
+    margin: 0% 25%;
+}
+
+.media {
+	/* overflow: auto; */
+	/* min-width: 100%; */
+	/* max-height: 100%; */
+	/* margin: 2% 0%; */
+}
+
+.media img {
+	padding: 1% 22%;
+}
+
+.media h3 {
+	margin: 0%;
+	padding: 1% 32%;
+	max-width: 47.8%;
+}
+
+.playerDisplay {
+	margin: 1% 5%;
+}
+
+.contactPage, .contactPageDis, .faqsPage, .playerDisplay, .updatePage {
+	/* margin: 5% 1%; */
+	font-size: 135%;
+}
+
+#current_pic {
+    width: 30%;
+    margin: 1% 0% 0% 23%;
+    vertical-align: bottom;
+}
+
+div.updateLeagueForm:first-of-type input, div.updatePlayerForm:first-of-type input {
+    max-width: 15%;
+}
+
+div.updateLeagueForm:last-of-type, div.updatePlayerForm:last-of-type {
+    width: 100%;
+    max-width: 100%;
+}
+
+div#update_pic {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin-bottom: 2%;
+}
+
+input#editProfile_btn {
+    max-width: 25%;
+    top: 7%;
+    right: 8%;
+    padding: 1%;
+    left: initial;
+}
+
+.playersPage {
+    margin: 3%;
+    width: 25%;
+}
+
+div.search_box {
+    margin: 1% 5% 4%;
+}
+
+input.player_search {
+    width: 60%;
+}
+
+.playerPicture {
+    max-height: 175px;
+}
+
+.playerPicture div {
+	height: 175px;
+    max-height: 175px;    
+}
+
+.playerPicture img {
+    height: 175px;
+    max-height: 175px;
+}
+
+.loginPage {
+	margin: 5% 0%;	
+	width: 92.5%;
+    right: 1.5%;
+}
+
+#login_page_table input#username, #login_page_table input#pass2 {
+    width: 90%;
+}
+
+.contactPageDis {
+	margin: 1% 6%;
+	font-size: 110%;
+	right: 37.3%;
+	opacity: 0.9;
+}
+
+.contactPage {
+	margin: 1%;
+	font-size: 110%;
+	width: 40%;
+	opacity: 0.9;
+}
+
+#login_page_table {
+    padding: 1% 0.5%;
+}
+
+.login_header, #about_header, #contact_header, .update_profile_header {
+  font-size: 200%;
+}
+
+#player_demographics h2#contact_header {
+    font-size: 200%;
+}
+
+ .recs_header {
+	font-size: 140%;
+}
+
+.recsPage {
+    width: 29.85%;
+}
+
+.recsPage .recsPageList {
+    color: black;
+    font-size: 100%;
+}
+
+.recsPageTable {
+    /* width: 100%; */ */
+    max-width: 100%;
+    max-width: 100%;
+    margin: 5% 0%;
+    display: -webkit-inline-box;
+    display: inline-block;
+    /* padding: 0% 0% 0% 0%; */
+    overflow: hidden;
+}
+
+a.changeRegistrationLink {
+    top: 5%;
+}
+
+.player_setup, .league_setup, #profileSetup {
+    margin: 1% 6%;
+    font-size: 135%;
+}
+
+.leaguesPage {
+    margin: 3% 20%;
+	width: 24em;
+}
+
+.register {
+    min-width: 40%;
+    margin: 4% 5%;
+}
+
+.register img {
+  padding: 0% 6%;
+  height: 200px;
+  width: 90%;
+}
+
+#leagues {
+  font-size: 200%;
+  margin: 4% 5%;
+  margin-top: 100px;
+  width: 90%;
+  max-width: 90%;
+}
+div.container#registrationPageContainer::after {
+	background-size: 100% 60%;
+}
+
+.registrationPage {
+    margin: 5% 5% 5% 20%;
+    width: 75%;
+}
+.leaguesFilterOption {
+	/* width: 49.9%; */
+	font-size: 100%;
+}
+
+.leaguesFilterOption:last-of-type {
+    /* margin: 0% 0% 0% -1%; */
+}
+
+div.indLeague {
+    /* margin: 2% 2% 2% 29%; */
+    background-position: 100% 50%;
+    background-size: 40% 100%;
+}
+
+.indLeague h1 span.ttrSite {
+    max-width: 75%;
+    margin: 0% 0% 0% 15%;
+}
+.myPlaygroundClass ul {
+    padding: 0% 0%;
+}
+
+}
+
+/*Bigger Screens*/
+@media only screen and (min-width:1280px) and (max-width:1449px){
+
+.maine_modal {
+	width: 55%;
+    left: 25%;
+}
+
+.alert_modal {
+    width: 22.5%;
+}
+
+.navi {
+	width: 100%;
+	font-size: 155%;
+}
+
+.myPlaygroundClass ul {
+    padding: 0% 5%;
+}
+
+div.indLeague {
+    margin: 2% 2% 4% 30%;
+}
+
+.indLeague h1 {
+    margin: 0% 15% 1% 0%;
+}
+
+.menu {
+	margin: 0%;
+}
+
+.menu li {
+	margin: 0.9% 0%;
+	text-align: center;
+	display: inline-block;
+}
+
+.menu li a {
+    font-size: 91.4%;
+}
+
+.list {
+	margin: 0.85% 1.5% 1%;
+	overflow:auto;
+}
+
+.register {
+}
+
+.register img {
+	padding: 0% 33%;
+}
+
+.media {
+	float: left;
+	max-width: 100%;
+	max-height: none;
+}
+
+.media img {
+	padding: 1% 5%;
+}
+
+.champs h1 {
+	margin: 2% 40%;
+}
+
+#twitter{
+	margin: 2% 30%;
+}
+
+.feed {
+    max-width: 33%;
+}
+
+#twitterFeed{
+	float:none;
+	
+}
+
+/*iframe[id^='twitter-widget-'] {
+	padding: 1% 0% !important;
+	margin:	0% !important;
+	min-height: 60em !important;
+}*/
+
+.playerDisplay {
+	margin: 1% 2%;
+}
+
+#profilePic img {
+    float: none;
+    padding: 0% 27%;
+}
+
+ul.menu3 {
+    margin: 3% 7%;
+}
+
+.playersPage, .faqsPage, .updatePage {
+	margin: 5%;
+	font-size: 135%;
+	border: solid 5px green;
+	border-radius: 5px;
+	opacity: 0.9;
+	max-width: 90%;
+	width: 90%;
+}
+
+div#updateBio {}
+
+.playerDisplay {
+	/* margin: 5% 25%; */
+	/* font-size: 135%; */
+	/* border: solid 5px green; */
+	/* border-radius: 5px; */
+	/* background-color: #feae46; */
+	/* opacity: 0.8; */
+}
+
+.alphabetClass {
+    top: 6px;
+    font-size: 100%;
+}
+
+.leaguesPage {
+	margin: 1% 4%;
+	padding: 0%;
+	max-width: 40%;
+	width: 40%;
+}
+
+.playersPage{
+	margin: 1% 2% 3%;
+	width: 26%;
+	max-width: 30%;
+}
+
+.contactPage, .contactPageDis {
+	padding: 0%;
+}
+
+#profileSetup, .player_setup, .league_setup {
+	margin: 1% 12%; 
+}
+
+.loginPage {
+	margin: 0%; 
+}
+
+a.league_standings, a.league_stats, a.league_schedule, a.league_pictures, a.league_contact
+a.league_home, a.ttr_home {
+	margin: 0% 0% 2% 0%;
+	display: inline-block;
+	width: 100%;
+	background-color: black;
+	padding: 0% 1.66%;
+	text-align: center;
+}
+
+.playerPageInfo {
+	min-width: 100%;
+}
+
+.playerDisplay table {
+	padding: 1% 1%;
+}
+
+.leaguesFilterOption {
+}
+
+#leagues {
+    margin: 4% 10%;
+    width: 80%;
+}
+
+div.updateLeagueForm:first-of-type, 
+div.updatePlayerForm:first-of-type {
+
+}
+}
+
+@media only screen and (min-width:1450px){
+.maine_modal {padding: 0% 3% 1%;}
+
+.maine_modal h2.maine_modal_header {
+    font-size: 250%;
+}
+
+.maine_modal p {
+    font-size: 135%;
+}
+
+.alert_modal{
+  width: 20%;
+}
+
+.alert_modal .modal_title {
+    background-color: darkred;
+}
+
+.alert_modal p:last-of-type {
+    font-size: 145%;
+    padding: 5% 2%;
+}
+
+.playersPage {
+  /* margin: 1% 0%; */
+}
+
+.playerPicture {}
+
+.playerNameHeader {}
+
+.playerBio {}
+
+.playerFooter {}
+
+.register { 
+  margin: 5% 5%;
+}
+
+.menu {
+}
+
+.menu li {
+    margin: 1.3% 0.5%;
+    max-width: 99%;
+    font-size: 150%;
+}
+
+.register img {
+	padding: 0% 35%;
+}
+
+.contenders table {
+  margin: 0% 20%;
+  width: 100%;
+}
+
+.list {
+  margin: 0.85% 2% 1%;
+}
+.leaguesPage {
+  margin: 1% 10%;
+}
+
+#playerPagePic button.playerPic_btn {
+  margin: 8% 3%;
+  width: 30%;
+}
+div.updateLeagueForm:first-of-type, 
+div.updatePlayerForm:first-of-type {
+
+}
+}

@@ -1,0 +1,126 @@
+a {
+	text-decoration: none;
+}
+
+h1, h2, h3, h4, h5 {
+	text-align: center;
+}
+
+.register img {
+  height: 15em;
+  width: 96%;
+  margin: 0% 0% 5% 2%;
+}
+
+img.match_ups_player_pic1, img.match_ups_player_pic2 {
+  margin: 0% 17%;
+  height: 10em;
+  width: 14em;
+}
+
+.contenders table {
+  width: 100%;
+  margin: 3% 20%;
+}
+
+#match_ups_information p {
+  margin: 1% 0%;
+}
+
+div#league {
+  background: linear-gradient(green, green, white);
+  color: white;
+}
+
+div#player {
+  background: linear-gradient(orange, orange, white);
+  color: white;
+}
+
+#twitter_page {
+	background-color: deepskyblue;
+}
+
+#leagues_page {
+	background-color: deepskyblue;
+}
+
+.leaguesPage {
+  background-color: dimgrey;
+  margin: 2% 0%;
+  border-radius: 1em;
+  color: white;
+}
+
+.recs_div {
+  margin: 1% 0%;
+}
+
+.recs_div:nth-child(odd) {
+  background-color: green;
+  color: white;
+}
+
+.recs_div:nth-child(even) {
+  background-color: black;
+  color: white;
+}
+
+.recs_div table {
+  min-width: 100%;
+}
+
+#current_pic, #my_leagues_photo, #playerPic {
+  height: 16em;
+  width: 100%;
+}
+
+#change_picture_label {
+  margin-bottom: 0%;
+  margin-top: 20%;
+}
+
+#current_picture_label {
+  margin-bottom: 0%;
+  margin-top: 20%;
+}
+
+.leagues_schedule:nth-of-type(even) {
+  background-color: green;
+  color: white;
+}
+
+.leagues_schedule:nth-of-type(even) h3 {
+  background-color: darkgreen;
+}
+
+.leagues_schedule:nth-of-type(even) .weekly_schedule tr:nth-of-type(even) {
+  background-color: darkgreen;
+}
+
+.leagues_schedule:nth-of-type(odd) .weekly_schedule tr:nth-of-type(even) {
+  background-color: mistyrose;
+}
+
+img#league_photo_banner {
+  width: 100%;
+  height: 20em;
+}
+
+.team_stats_header img#team_pic {
+  width: 100%;
+}
+
+.team_stats_div {
+  margin: 5% 0%;
+}
+
+.team_stats_div:nth-of-type(even) {
+  background-color: black;
+  color: white;
+}
+
+#league_standings #league_standings_table tr:nth-of-type(even) {
+  background-color: green;
+  color: white;
+}
