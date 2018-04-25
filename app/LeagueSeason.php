@@ -27,10 +27,43 @@ class LeagueSeason extends Model
     }
 
 	/**
-	* Get the league for the team object.
+	* Get the stats for the league season object.
 	*/
     public function stats()
     {
         return $this->hasMany('App\LeagueStat');
+    }
+	
+	/**
+	* Get the games for the league season object.
+	*/
+    public function games()
+    {
+        return $this->hasMany('App\LeagueSchedule');
+    }
+	
+	/**
+     * Scope a query to only include active seasons.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+    */
+    public function scopeActive($query)
+    {
+        return $query->where('active', 'Y');
+    }
+	
+	/**
+     * Scope a query to only include active seasons.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+    */
+    public function scopeCompleted($query)
+    {
+        return $query->where([
+			['completed', 'Y'],
+			['active', 'N'],
+		]);
     }
 }

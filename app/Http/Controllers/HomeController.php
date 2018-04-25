@@ -33,20 +33,21 @@ class HomeController extends Controller
     public function index()
     {
 		$league = Auth::user()->leagues_profiles->first();
-		$showcaseGame = LeagueSchedule::get_random_game();
+		$completedSeasons = $league->seasons()->completed()->get();
+		$activeSeasons = $league->seasons()->active()->get();
+		$ageGroups = explode(' ', $league->age);
+		$compGroups = explode(' ', $league->comp);
 		
-		if($league->seasons->count() > 1) {
-				
-		} else {
-			
+		// Get the season to show
+		$showSeason = $league->seasons()->active()->first();
+
+		if($showSeason != null) {
+			$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
+			$showSeasonStat = $showSeason->stats;
+			dd($showSeasonStat);
 		}
 		
-		if($showcaseGame != null) {
-			$awayTeamLeader = LeagueStat::get_scoring_leader($showcaseGame->get_away_team_id());
-			$homeTeamLeader = LeagueStat::get_scoring_leader($showcaseGame->get_home_team_id());
-		}
-		
-		return view('index', compact('league', 'showcaseGame'));
+		return view('index', compact('league', 'completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'ageGroups', 'compGroups'));
     }
 	
 	/**

@@ -133,11 +133,11 @@
 						</div>
 					</div>
 				{!! Form::close() !!}
+			</div>
 				
-				<!-- Dropdown button to show the league rules -->
+				<!-- Dropdown button to show the league rules
 				<button class="mb-4" id="league_rules_btn">SEE LEAGUE RULES</button>
 
-			</div>
 			<div class="col-12">
 				<div id="leagues_rules">
 					<h2>Leagues Rules</h2>
@@ -152,7 +152,7 @@
 						<li>Each overtime period will be 3 minutes</li>
 					</ul>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 @endsection

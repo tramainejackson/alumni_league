@@ -51,6 +51,16 @@ class LeagueStat extends Model
         return $this->belongsTo('App\LeaguePlayer');
     }
 	
+	/**
+	* Scope a query to only include games from now to next week.
+	*/
+	public function scopeScoringLeaders($query, $offset) {
+		return $query->where([
+			['game_date', '<>', null],
+			['game_date', '>', $now]
+		]);
+	}
+	
 	public static function get_formatted_stats($playerID) {
 		$players = DB::table('league_stats')
 		->select(DB::raw("

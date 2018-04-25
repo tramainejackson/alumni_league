@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class LeagueSchedule extends Model
 {
@@ -35,27 +36,39 @@ class LeagueSchedule extends Model
 	/**
 	* Get a random game of the week.
 	*/
-	public static function get_random_game() {
-		// Get a 1 week range to check game dates between
-		$addWeek = strtotime("+1 week");
-		$endRange = date("Y-m-d", $addWeek);
-		$begRange = date("Y-m-d");
+	// public static function get_random_game() {
+		// // Get a 1 week range to check game dates between
+		// $addWeek = strtotime("+1 week");
+		// $endRange = date("Y-m-d", $addWeek);
+		// $begRange = date("Y-m-d");
 
-		// Get all the game dates between now and next week
-		$leagues = self::where([
-			['game_date', '>=', $begRange],
-			['game_date', '<=', $endRange],
-		])
-		->get()
-		->first();
+		// // Get all the game dates between now and next week
+		// $leagues = self::where([
+			// ['game_date', '>=', $begRange],
+			// ['game_date', '<=', $endRange],
+		// ])
+		// ->get()
+		// ->first();
 		
-		// If object return single object
-		// If array, get random index to return
-		if(is_object($leagues)) {
-			return $leagues;
-		} elseif(is_array($leagues)) {
-			$randomNum = rand(0, (count($leagues) - 1));
-			return $leagues[$randomNum];
-		}
+		// // If object return single object
+		// // If array, get random index to return
+		// if(is_object($leagues)) {
+			// return $leagues;
+		// } elseif(is_array($leagues)) {
+			// $randomNum = rand(0, (count($leagues) - 1));
+			// return $leagues[$randomNum];
+		// }
+	// }
+	
+	/**
+	* Scope a query to only include games from now to next week.
+	*/
+	public function scopeUpcomingGames($query) {
+		$now = Carbon::now();
+		
+		return $query->where([
+			['game_date', '<>', null],
+			['game_date', '>', $now]
+		]);
 	}
 }
