@@ -30,14 +30,24 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 		$league = Auth::user()->leagues_profiles->first();
-		$getWeeks = $league->get_weeks();
-		$getGames = $league->get_all_games();
-		// dd($getWeeks);
+		$activeSeasons = $league->seasons()->active()->get();
+
+		// Get the season to show
+		$showSeason = '';
+
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
 		
-		return view('schedule.index', compact('league', 'getWeeks', 'getGames'));
+		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks();
+		$seasonWeekGames= $showSeason->games();
+
+		return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks', 'seasonWeekGames'));
     }
 	
 	/**

@@ -57,7 +57,7 @@ class LoginController extends Controller
      */
     public function authenticate(Request $request)
     {
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+        if(Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
 			// Once authenticated, make sure this is a league account with 
 			// totherec
 			$user = Auth::user();
@@ -67,7 +67,10 @@ class LoginController extends Controller
 				
 				return redirect()->action('HomeController@index');
 			} else {
-				return redirect()->back()->with(['status' => 'The username/password combination you entered is incorrect.']);
+				// Log the user with the player profile out and then redirect
+				Auth::logout();
+				
+				return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
 			}
 			
         } else {

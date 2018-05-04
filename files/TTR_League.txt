@@ -1,6 +1,8 @@
 ------------------------------------------------------
 					ToTheRec Leagues
 ------------------------------------------------------
-Allow adding of a new season
-Figure out the query string and local model scope thing
+Add parameters if users have no active season
+Done: Allow adding of a new season
+Done: Figure out the query string
+Done: Figure out local model scope thing
 export HTTP_PROXY="http://155.247.166.25:8080"

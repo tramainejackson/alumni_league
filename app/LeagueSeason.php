@@ -43,6 +43,14 @@ class LeagueSeason extends Model
     }
 	
 	/**
+	* Get the games for the league season object.
+	*/
+    public function standings()
+    {
+        return $this->hasOne('App\LeagueStanding');
+    }
+	
+	/**
      * Scope a query to only include active seasons.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

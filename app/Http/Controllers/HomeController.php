@@ -30,7 +30,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 		$league = Auth::user()->leagues_profiles->first();
 		$completedSeasons = $league->seasons()->completed()->get();
@@ -39,15 +39,18 @@ class HomeController extends Controller
 		$compGroups = explode(' ', $league->comp);
 		
 		// Get the season to show
-		$showSeason = $league->seasons()->active()->first();
+		$showSeason = '';
 
-		if($showSeason != null) {
-			$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
-			$showSeasonStat = $showSeason->stats;
-			dd($showSeasonStat);
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
 		}
+
+		$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
+		$showSeasonStat = $showSeason->stats();
 		
-		return view('index', compact('league', 'completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'ageGroups', 'compGroups'));
+		return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'ageGroups', 'compGroups'));
     }
 	
 	/**
@@ -89,12 +92,23 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function standings()
+    public function standings(Request $request)
     {
 		$league = Auth::user()->leagues_profiles->first();
-		$standings = $league->get_league_standings();
+		$activeSeasons = $league->seasons()->active()->get();
 
-        return view('standings', compact('standings', 'league'));
+		// Get the season to show
+		$showSeason = '';
+
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
+
+		$standings = $showSeason != null ? $showSeason->standings()->seasonStandings()->get() : null;
+
+        return view('standings', compact('activeSeasons', 'standings', 'league', 'showSeason'));
     }
 	
 	/**

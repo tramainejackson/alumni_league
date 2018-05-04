@@ -52,19 +52,57 @@ class LeagueStat extends Model
     }
 	
 	/**
-	* Scope a query to only include games from now to next week.
+	* Scope a query to get the scoring leaders for this league.
 	*/
-	public function scopeScoringLeaders($query, $offset) {
-		return $query->where([
-			['game_date', '<>', null],
-			['game_date', '>', $now]
-		]);
+	public function scopeStealingLeaders($query, $limit) {
+		return $query->select(DB::raw(self::get_formatted_stats()))
+		->groupBy('league_players_id')
+		->orderBy('SPG', 'desc')
+		->limit($limit);
 	}
 	
-	public static function get_formatted_stats($playerID) {
-		$players = DB::table('league_stats')
-		->select(DB::raw("
-			FORMAT(SUM(points)/SUM(game_played), 1) AS PPG,
+	/**
+	* Scope a query to get the scoring leaders for this league.
+	*/
+	public function scopeScoringLeaders($query, $limit) {
+		return $query->select(DB::raw(self::get_formatted_stats()))
+		->groupBy('league_players_id')
+		->orderBy('PPG', 'desc')
+		->limit($limit);
+	}
+	
+	/**
+	* Scope a query to get the assist leaders for this league.
+	*/
+	public function scopeAssistingLeaders($query, $limit) {
+		return $query->select(DB::raw(self::get_formatted_stats()))
+		->groupBy('league_players_id')
+		->orderBy('APG', 'desc')
+		->limit($limit);
+	}
+	
+	/**
+	* Scope a query to get the scoring leaders for this league.
+	*/
+	public function scopeReboundingLeaders($query, $limit) {
+		return $query->select(DB::raw(self::get_formatted_stats()))
+		->groupBy('league_players_id')
+		->orderBy('RPG', 'desc')
+		->limit($limit);
+	}
+	
+	/**
+	* Scope a query to get the scoring leaders for this league.
+	*/
+	public function scopeBlockingLeaders($query, $limit) {
+		return $query->select(DB::raw(self::get_formatted_stats()))
+		->groupBy('league_players_id')
+		->orderBy('BPG', 'desc')
+		->limit($limit);
+	}
+	
+	public static function get_formatted_stats() {
+		$format = "*, FORMAT(SUM(points)/SUM(game_played), 1) AS PPG,
 			FORMAT(SUM(threes_made)/SUM(game_played), 1) AS TPG,
 			FORMAT(SUM(ft_made)/SUM(game_played), 1) AS FTPG,
 			FORMAT(SUM(assist)/SUM(game_played), 1) AS APG,
@@ -78,12 +116,8 @@ class LeagueStat extends Model
 			SUM(rebounds) AS TRBD,
 			SUM(steals) AS TSTL,
 			SUM(blocks) AS TBLK
-		"))
-		->where('league_player_id', $playerID)
-		->groupBy('league_player_id')
-		->get()
-		->first();
+		";
 			
-		return $players;
+		return $format;
 	}
 }

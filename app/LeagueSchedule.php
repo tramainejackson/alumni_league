@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 class LeagueSchedule extends Model
@@ -70,5 +71,27 @@ class LeagueSchedule extends Model
 			['game_date', '<>', null],
 			['game_date', '>', $now]
 		]);
+	}
+	
+	/**
+	* Scope a query to get all the weeks listed on the schedule.
+	*/	
+	public function scopeGetScheduleWeeks($query) {
+		return $query->select('season_week')
+		->groupBy("season_week");
+	}
+	
+	/**
+	* Scope a query to get all the games on the schedule.
+	*/
+	public function scopeGetAllGames($query) {
+		return $query->orderBy("season_week");
+	}
+	
+	/**
+	* Scope a query to get all the games on the schedule for particular week.
+	*/
+	public function scopeGetWeekGames($query, $week) {
+		return $query->where("season_week", $week);
 	}
 }

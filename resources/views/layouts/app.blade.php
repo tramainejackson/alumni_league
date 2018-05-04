@@ -30,6 +30,10 @@
 	@yield('addt_style')
 </head>
 <body>
+	@php
+		$queryStrCheck = request()->query('season') != null && request()->query('year') != null ? ['season' => request()->query('season'), 'year' => request()->query('year')] : null;
+	@endphp
+
     <div id="app">
         <nav class="navbar navbar-expand-lg justify-content-between">
 
@@ -70,19 +74,19 @@
 				<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
 					@if(!Auth::guest())
 						<li class="nav-item">
-							<a class='league_home nav-link' href="{{ route('home') }}">{{ $league->leagues_name }}</a>
+							<a class='league_home nav-link' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ $showSeason->league_profile->leagues_name }}</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ route('league_schedule.index') }}">Schedule</a>
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ route('league_standings') }}">Standings</a>
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Standings</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ route('league_stat.index') }}">Stats</a>
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Stats</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ route('league_pictures.index') }}">League Pics</a>
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link' href="{{ route('league_info') }}">League Info</a>
@@ -108,7 +112,7 @@
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-								{{ $league->commish }} <span class="caret"></span>
+								{{ $showSeason->league_profile->commish }} <span class="caret"></span>
 							</a>
 
 							<ul class="dropdown-menu" role="menu">

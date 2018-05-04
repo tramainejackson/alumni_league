@@ -94,78 +94,7 @@ class LeagueProfile extends Model
 	}
 	
 	public function get_league_standings() {
-		$standings = DB::table('league_standings')
-		->select(DB::raw("*, ROUND(team_wins/team_games, 2) AS winPERC"))
-		->where('leagues_profile_id', $this->attributes['id'])
-		->orderBy('winPERC', 'desc')
-		->get();
-		
-		return $standings;
-	}
-	
-	public function get_scoring_leaders() { 
-		$statQuery = $this->sql_formatted_stats();
-		
-		$players = DB::table('league_stats')
-		->select(DB::raw($statQuery))
-		->where('leagues_profile_id', $this->attributes['id'])
-		->groupBy('league_player_id')
-		->orderBy('TPTS', 'desc')
-		->get();
-
-		return $players;
-	}
-
-	public function get_assist_leaders() { 
-		$statQuery = $this->sql_formatted_stats();
-		
-		$players = DB::table('league_stats')
-		->select(DB::raw($statQuery))
-		->where('leagues_profile_id', $this->attributes['id'])
-		->groupBy('league_player_id')
-		->orderBy('TASS', 'desc')
-		->get();
-
-		return $players;
-	}
-	
-	public function get_rebounds_leaders($returnTotal=0) { 
-		$statQuery = $this->sql_formatted_stats();
-		
-		$players = DB::table('league_stats')
-		->select(DB::raw($statQuery))
-		->where('leagues_profile_id', $this->attributes['id'])
-		->groupBy('league_player_id')
-		->orderBy('TRBD', 'desc')
-		->get();
-
-		return $players;
-	}
-	
-	public function get_steals_leaders($returnTotal=0) { 
-		$statQuery = $this->sql_formatted_stats();
-		
-		$players = DB::table('league_stats')
-		->select(DB::raw($statQuery))
-		->where('leagues_profile_id', $this->attributes['id'])
-		->groupBy('league_player_id')
-		->orderBy('TSTL', 'desc')
-		->get();
-
-		return $players;
-	}
-	
-	public function get_blocks_leaders($returnTotal=0) { 
-		$statQuery = $this->sql_formatted_stats();
-		
-		$players = DB::table('league_stats')
-		->select(DB::raw($statQuery))
-		->where('leagues_profile_id', $this->attributes['id'])
-		->groupBy('league_player_id')
-		->orderBy('TBLK', 'desc')
-		->get();
-
-		return $players;
+		/* Changed to scopeSeasonStandings in LeagueStanding.php */
 	}
 	
 	public function get_all_players_stats() { 
@@ -212,22 +141,5 @@ class LeagueProfile extends Model
 		->get();
 		
 		return $teams;
-	}
-
-	public function get_weeks() {
-		$weeks = DB::table("league_schedules")
-		->select(DB::raw('*, season_week'))
-		->groupBy("season_week")
-		->get();
-			
-		return $weeks;
-	}
-	
-	public function get_all_games() {
-		$games = DB::table("league_schedules")
-		->orderBy("season_week")
-		->get();
-			
-		return $games;
 	}
 }

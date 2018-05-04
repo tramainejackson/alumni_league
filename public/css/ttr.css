@@ -966,6 +966,7 @@ h1#ttr_header {
   width: 100%;
   top: 0%;
 }
+
 div#league_standings {
   margin: 5% 10% 2%;
 }
@@ -973,18 +974,7 @@ h1#league_banner {
   text-align: center;
   margin-top: 3%;
 }
-table#league_standings_table td {
-  text-align: center;
-}
-table#league_standings_table {
-  width: 100%;
-  font-size: 175%;
-}
-#league_standings_table caption {
-  font-size: 200%;
-  font-weight: bold;
-  margin: 1% 0%;
-}
+
 .league_name_picture_banner {
   display: inline-block;
   width: 50%;
