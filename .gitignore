@@ -8,6 +8,9 @@
 /public/music/*
 /public/videos/*
 /public/storage
+/public/addons
+/public/css/mdb*
+/public/js/mdb*
 /public/music/*
 /storage/*.key
 /vendor
