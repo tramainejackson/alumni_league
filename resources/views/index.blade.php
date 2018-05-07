@@ -159,6 +159,33 @@
 			</div>
 			<!--./ League season schedule snap shot /.-->
 			
+			<!-- League season teams snap shot -->
+			<div class="col-8 mx-auto my-5">
+				<div class="d-flex w-100 justify-content-center align-items-center">
+					<h1 class="h1-responsive">Quick Teams</h1>
+					<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Teams</a>
+				</div>
+				<div class="my-5 d-flex align-items-center justify-content-around">
+					@if($showSeasonTeams->isNotEmpty())
+						<p class="">
+							<label>Total Teams:&nbsp;<label>
+							<span class="text-muted text-underline font-weight-bold">{{ $showSeasonTeams->count() }}</span>
+						</p>
+						<p class="">
+							<label>Total Players:&nbsp;<label>
+							<span class="text-muted text-underline font-weight-bold">{{ $showSeasonPlayers->count() }}</span>
+						</p>
+						<p class="">
+							<label>Unpaid Teams:&nbsp;<label>
+							<span class="text-muted text-underline font-weight-bold">{{ $showSeasonUnpaidTeams->count() }}</span>
+						</p>
+					@else
+						<h3 class="h3-responsive">No teams showing for this season</h3>
+					@endif
+				</div>
+			</div>
+			<!--./ League season teams snap shot /.-->
+			
 			<!-- League season stats snap shot -->
 			<div class="col-8 mx-auto my-5">
 				<div class="d-flex w-100 justify-content-center align-items-center">

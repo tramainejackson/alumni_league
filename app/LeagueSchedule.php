@@ -34,6 +34,28 @@ class LeagueSchedule extends Model
         return $this->belongsTo('App\LeagueProfile');
     }
 	
+	/*
+	*
+	* Format the game date
+	*
+	*/
+	public function game_date() 
+	{
+		$dt = new Carbon($this->game_date);
+		return $dt->format('m-d-Y');
+	}
+	
+	/*
+	*
+	* Format the game time to include either AM or PM
+	*
+	*/
+	public function game_time()
+	{
+		$dt = new Carbon($this->game_time);
+		return $dt->format('h:i A');
+	}
+	
 	/**
 	* Get a random game of the week.
 	*/
@@ -64,19 +86,21 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to only include games from now to next week.
 	*/
-	public function scopeUpcomingGames($query) {
+	public function scopeUpcomingGames($query) 
+	{
 		$now = Carbon::now();
-		
+
 		return $query->where([
 			['game_date', '<>', null],
-			['game_date', '>', $now]
+			['game_date', '>=', $now->toDateString()]
 		]);
 	}
 	
 	/**
 	* Scope a query to get all the weeks listed on the schedule.
 	*/	
-	public function scopeGetScheduleWeeks($query) {
+	public function scopeGetScheduleWeeks($query) 
+	{
 		return $query->select('season_week')
 		->groupBy("season_week");
 	}
@@ -84,14 +108,16 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to get all the games on the schedule.
 	*/
-	public function scopeGetAllGames($query) {
+	public function scopeGetAllGames($query) 
+	{
 		return $query->orderBy("season_week");
 	}
 	
 	/**
 	* Scope a query to get all the games on the schedule for particular week.
 	*/
-	public function scopeGetWeekGames($query, $week) {
+	public function scopeGetWeekGames($query, $week) 
+	{
 		return $query->where("season_week", $week);
 	}
 }

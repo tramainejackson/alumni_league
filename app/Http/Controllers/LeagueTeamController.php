@@ -30,17 +30,23 @@ class LeagueTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-		$league = Auth::user()->leagues_profiles->where('user_id', Auth::id())->first();
-		$showcaseGame = LeagueSchedule::get_random_game();
-		
-		if($showcaseGame != null) {
-			$awayTeamLeader = LeagueStat::get_scoring_leader($showcaseGame->get_away_team_id());
-			$homeTeamLeader = LeagueStat::get_scoring_leader($showcaseGame->get_home_team_id());
+		$league = Auth::user()->leagues_profiles->first();
+		$activeSeasons = $league->seasons()->active()->get();
+
+		// Get the season to show
+		$showSeason = '';
+
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
 		}
 		
-		return view('index', compact('league', 'showcaseGame'));
+		$seasonTeams = $showSeason->league_teams;
+
+		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams'));
     }
 	
 	/**

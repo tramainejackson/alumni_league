@@ -9,6 +9,10 @@ html, body, header, .view {
 	height: 100%;
 }
 
+.card .view {
+	min-height: initial !important;
+}
+
 .wow {
     visibility: hidden;
 }
@@ -28,6 +32,28 @@ button:focus {
 button:hover {
 	cursor: pointer;
 }
+
+/**Additional MDB-Classes**/
+.table-fixed {
+    table-layout: fixed;
+    overflow: hidden;
+}
+
+.table-wrapper {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.w-auto {
+    width: auto;
+}
+
+.text-underline {
+	text-decoration: underline;
+}    
+/*************************/
 
 .welcomeVideo .col {
     padding: 0px;
@@ -97,6 +123,13 @@ div[id^="backgroundImage"]::after {
 	position: absolute;
 	z-index: -1;
 	background-color: rgba(5,5,5,.5);
+}
+
+.feesButton {
+	position: absolute!important;
+    transform: rotate(-90deg);
+    left: 0;
+    top: 20%;
 }
 
 .myPlaygroundClass input.select-dropdown {
@@ -885,14 +918,8 @@ div#contender_2 {
   font-size: 200%;
 }
 
-.leagues_schedule {
-  display: -webkit-inline-box;
-  max-width: 50%;
-  min-width: 35%;
-  width: 35%;
-  margin: 2% 5%;
-  font-size: 150%;
-}
+.leagues_schedule {}
+
 .weekly_schedule {}
 
 .weekly_schedule td {}

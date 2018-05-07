@@ -1,47 +1,78 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid">
+	<div class="container-fluid leagues_page_div">
+		<div class="row">
+			<!--Column will include buttons for creating a new season-->
+			<div class="col-md mt-3">
+				@if($activeSeasons->isNotEmpty())
+					@foreach($activeSeasons as $activeSeason)
+						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
+					@endforeach
+				@else
+				@endif
+			</div>
+			<div class="col-12 col-md-8">
+				<div class="text-center coolText1">
+					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+				</div>
 
-		<div id="backgroundImageR"></div>
-		<div class="recsPageContainer">
-			<div class="">
-				<h2 id="rec_page_header" class="page_header">Philly Rec Centers</h2>
-			</div>
-			<div class="search_box">
-				<input id="rec_search" name="search" type="search" placeholder="Search Center"/>
-			</div>
-			<div id="all_recs_frame">
-				<div id="all_recs">
-					@foreach($getRecs as $showRec)
-						<div class="recsPage">
-							@if($showRec->recs_name != "")
-								@if($showRec->recs_nickname != "")
-									<h3 id="{{ strtolower(str_ireplace(" ", "", $showRec->recs_name)) }}" class="recs_header" title="{{ $showRec->recs_name }}"><b>"{{ $showRec->recs_nickname }}"</b>&nbsp;{{ $showRec->recs_name }}</h3>
-								@else
-									<h3 id="{{ strtolower(str_ireplace(" ", "", $showRec->recs_name)) }}" class="recs_header" title="{{ $showRec->recs_name }}">{{ $showRec->recs_name }}</h3>
-								@endif
-							@endif
-							<ul class="recsPageList">
-								<li><span class="listLabel">Rec Advisor:</span><span class="listContent" title="{{ $showRec->recs_owner }}">{{ $showRec->recs_owner != "" ? $showRec->recs_owner : "None Available" }}</span></li>
-								<li><span class="listLabel">Address:</span><span class="listContent" title="{{ $showRec->recs_address }}">{{ $showRec->recs_address != "" ? $showRec->recs_address : "None Available" }}</span></li>
-								<li><span class="listLabel">Website:</span><span class="listContent" title="{{ $showRec->recs_website }}">{{ $showRec->recs_website != "" ? $showRec->recs_website : "None Available" }}</span></li>
-								<li><span class="listLabel">Indoor Gym:</span><span class="listContent" title="">{{ $showRec->indoor == 1 ? "Yes" : "No" }}</span></li>
-								<li><span class="listLabel">Blacktop:</span><span class="listContent" title="">{{ $showRec->outdoor == 1 ? "Yes" : "No" }}</span></li>
-								<li><span class="listLabel">Cost:</span><span class="listContent" title="">{{ $showRec->fee != "" ? "Yes" : "No" }}</span></li>
-								<li><span class="listLabel">More Info:</span><span class="listContent" title="{{ $showRec->recs_phone }}">{{ $showRec->recs_phone }}</span></li>
-							</ul>
-							@if(in_array(str_ireplace(" ", "_", $showRec->recs_name), $fireRecs))
-								<span><img src="images/fire.png" class="fireIcon2" /></span>
-							@endif
+				@if($seasonTeams->isNotEmpty())
+					@foreach($seasonTeams as $team)
+						<div class="card card-cascade wider my-4">
+							<!-- Card image -->
+							<div class="view overlay">
+								<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/photo6.jpg" alt="Card image cap">
+								<a href="#!">
+									<div class="mask rgba-white-slight"></div>
+								</a>
+							</div>
+							
+							<!-- Card content -->
+							<div class="card-body text-center">
+								<!-- Title -->
+								<h1 class="card-title h1-responsive font-weight-bold">{{ $team->team_name }}</h1>
+								<!-- Team Captain Info -->
+								<div class="d-flex flex-column align-items-center">
+									<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
+									<div class="d-flex flex-column align-items-center justify-content-center">
+										<p class="m-0">
+											<label class="">Name:&nbsp;</label>
+											<span>{{ $team->team_captain ? $team->team_captain : 'N/A' }}</span>
+										</p>
+										<p class="m-0">
+											<label class="">Email:&nbsp;</label>
+											<span>{{ $team->captain_email ? $team->captain_email : 'No email address' }}</span>
+										</p>
+										<p class="m-0">
+											<label class="">Phone:&nbsp;</label>
+											<span>{{ $team->captain_phone ? $team->captain_phone : 'No email address' }}</span>
+										</p>
+									</div>
+									<div class="">
+										<a href="{{ route('league_teams.edit', ['team' => $team->id]) }}" class="btn btn-lg blue lighten-1">Edit Team</a>
+									</div>
+								</div>
+								<div class="feesButton">
+									@if($team->fee_paid == 'N')
+										<button class="btn orange darken-2" type="button">Fees Due</button>
+									@else
+										<button class="btn green darken-1" type="button">Fees Paid</button>
+									@endif
+								</div>
+							</div>
 						</div>
 					@endforeach
-				</div>
+				@else
+					<div class="">
+						<h3 class="h3-responsive text-center">There are no teams added for this season yet</h3>
+					</div>
+				@endif
 			</div>
-			<button id="showAllRecs">Show All Rec Centers</button>
-			<button id="scroll_to_top"></button>
+
+			<div class="col-md mt-3">
+				<a href="{{ route('league_teams.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
+			</div>
 		</div>
 	</div>
-	
-	@include("modal")
 @endsection

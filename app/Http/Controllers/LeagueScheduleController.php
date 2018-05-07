@@ -45,9 +45,8 @@ class LeagueScheduleController extends Controller
 		}
 		
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks();
-		$seasonWeekGames= $showSeason->games();
 
-		return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks', 'seasonWeekGames'));
+		return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
     }
 	
 	/**

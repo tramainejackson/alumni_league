@@ -25,6 +25,14 @@ class LeagueSeason extends Model
     {
         return $this->hasMany('App\LeagueTeam');
     }
+	
+	/**
+	* Get the contact for the media object.
+	*/
+    public function league_players()
+    {
+        return $this->hasMany('App\LeaguePlayer');
+    }
 
 	/**
 	* Get the stats for the league season object.

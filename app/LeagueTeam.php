@@ -49,4 +49,19 @@ class LeagueTeam extends Model
     {
         return $this->hasMany('App\LeaguePlayer');
     }
+	
+	/**
+	* Get the league for the team object.
+	*/
+    public function season()
+    {
+        return $this->belongsTo('App\LeagueSeason');
+    }
+	
+	/**
+	* Scope a query to get all the teams who haven't paid yet
+	*/
+	public function scopeUnpaid($query) {
+		return $query->where('fee_paid', 'N');
+	}
 }

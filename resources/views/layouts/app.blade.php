@@ -86,6 +86,9 @@
 							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Stats</a>
 						</li>
 						<li class="nav-item">
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Teams</a>
+						</li>
+						<li class="nav-item">
 							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
 						</li>
 						<li class="nav-item">

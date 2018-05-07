@@ -4,7 +4,7 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md" id="">
+			<div class="col-md mt-3">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
@@ -18,26 +18,35 @@
 				</div>
 				@if($seasonScheduleWeeks->get()->isNotEmpty())
 					@foreach($seasonScheduleWeeks->get() as $showWeekInfo)
-						<div class='leagues_schedule'>
-							<h2 class="">{{ $showWeekInfo->season_week }}</h2>
-							<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table table-responsive'>
+						@php $seasonWeekGames = $showSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
+						<div class='leagues_schedule text-center mb-5'>
+							<h2 class="h2-responsive">Week {{ $showWeekInfo->season_week }} Games</h2>
+							<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table'>
 								<thead>
-									<tr>
+									<tr class="indigo darken-3 white-text">
 										<th class="text-center" colspan="3">Match-Up</th>
 										<th>Time</th>
 										<th>Date</th>
+										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($seasonWeekGames->getWeekGames($showWeekInfo->season_week)->get() as $game)
+									@if($seasonWeekGames->isEmpty())
 										<tr>
-											<td>{{ $game->away_team }}</td>
-											<td>vs</td>
-											<td>{{ $game->home_team }}</td>
-											<td>{{ $game->game_time }}</td>
-											<td>{{ $game->game_date }}</td>
+											<th colspan="6" class="">NO GAMES SCHEDULED FOR THIS WEEK</th>
 										</tr>
-									@endforeach
+									@else
+										@foreach($seasonWeekGames as $game)
+											<tr>
+												<td>{{ $game->away_team }}</td>
+												<td>vs</td>
+												<td>{{ $game->home_team }}</td>
+												<td>{{ $game->game_time() }}</td>
+												<td>{{ $game->game_date() }}</td>
+												<td><button class="btn btn-primary btn-rounded btn-sm my-0" type="button">Edit Game</button></td>
+											</tr>
+										@endforeach
+									@endif
 								</tbody>
 							</table>
 						</div>
@@ -48,7 +57,10 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-md"></div>
+			<div class="col-md mt-3">
+				<a href="{{ route('league_schedule.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
+				<a href="{{ route('league_schedule.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Game</a>
+			</div>
 		</div>
 	</div>
 @endsection

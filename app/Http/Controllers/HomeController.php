@@ -49,8 +49,11 @@ class HomeController extends Controller
 
 		$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
 		$showSeasonStat = $showSeason->stats();
+		$showSeasonTeams = $showSeason->league_teams;
+		$showSeasonUnpaidTeams = $showSeason->league_teams()->unpaid();
+		$showSeasonPlayers = $showSeason->league_players;
 		
-		return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'ageGroups', 'compGroups'));
+		return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));
     }
 	
 	/**
@@ -119,7 +122,8 @@ class HomeController extends Controller
     public function info()
     {
 		$league = Auth::user()->leagues_profiles->first();
+		$showSeason = $league->seasons()->active()->first();
 
-        return view('info', compact('league'));
+        return view('info', compact('league', 'showSeason'));
     }
 }
