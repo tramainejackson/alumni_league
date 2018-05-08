@@ -53,7 +53,7 @@ class LeagueSchedule extends Model
 	public function game_time()
 	{
 		$dt = new Carbon($this->game_time);
-		return $dt->format('h:i A');
+		return $dt->format('g:i A');
 	}
 	
 	/**

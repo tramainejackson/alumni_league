@@ -101,6 +101,47 @@ class LeagueStat extends Model
 		->limit($limit);
 	}
 	
+	/**
+	* Scope a query to get all player stats
+	*/
+	public function scopeAllFormattedStats($query) { 		
+		return $query->select(DB::raw(self::get_formatted_stats()))
+		->groupBy('league_players_id')
+		->orderBy('TPTS', 'desc');
+	}
+	
+	/**
+	* Scope a query to get all team stats
+	*/
+	public function scopeAllTeamStats($query) {
+		return $query->join('league_standings', 'league_stats.league_team_id', '=', 'league_standings.league_team_id')
+		->join('league_teams', 'league_stats.league_team_id', '=', 'league_teams.id')
+		->select(DB::raw("DISTINCT
+			SUM(points) AS TPTS,
+			SUM(threes_made) AS TTHR,
+			SUM(ft_made) AS TFTS,
+			SUM(assist) AS TASS,
+			SUM(rebounds) AS TRBD,
+			SUM(steals) AS TSTL,
+			SUM(blocks) AS TBLK,
+			FORMAT(SUM(points)/team_games, 1) AS PPG,
+			FORMAT(SUM(threes_made)/team_games, 1) AS TPG,
+			FORMAT(SUM(ft_made)/team_games, 1) AS FTPG,
+			FORMAT(SUM(assist)/team_games, 1) AS APG,
+			FORMAT(SUM(steals)/team_games, 1) AS SPG,
+			FORMAT(SUM(rebounds)/team_games, 1) AS RPG,
+			FORMAT(SUM(blocks)/team_games, 1) AS BPG,
+			league_standings.league_team_id,
+			league_standings.team_name,
+			team_wins,
+			team_losses,
+			team_games,
+			team_picture")
+		)
+		->groupBy('league_team_id')
+		->orderBy('TPTS', 'desc');
+	}
+	
 	public static function get_formatted_stats() {
 		$format = "*, FORMAT(SUM(points)/SUM(game_played), 1) AS PPG,
 			FORMAT(SUM(threes_made)/SUM(game_played), 1) AS TPG,

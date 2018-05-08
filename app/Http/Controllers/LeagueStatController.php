@@ -30,18 +30,25 @@ class LeagueStatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 		$league = Auth::user()->leagues_profiles->first();
-		$scoringLeaders = $league->get_scoring_leaders();
-		$assistLeaders = $league->get_assist_leaders();
-		$reboundsLeaders = $league->get_rebounds_leaders();
-		$stealsLeaders = $league->get_steals_leaders();
-		$blocksLeaders = $league->get_blocks_leaders();
-		$allPlayers = $league->get_all_players_stats();
-		$allTeams = $league->get_all_teams_stats();
+		$activeSeasons = $league->seasons()->active()->get();
+
+		// Get the season to show
+		$showSeason = '';
+
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
 		
-		return view('stats.index', compact('league', 'scoringLeaders', 'assistLeaders', 'reboundsLeaders', 'stealsLeaders', 'blocksLeaders', 'allPlayers', 'allTeams'));
+		$seasonStats = $showSeason->stats();
+		
+		$allPlayers = $seasonStats->allFormattedStats();
+		$allTeams = $seasonStats->allTeamStats();
+		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams'));
     }
 	
 	/**

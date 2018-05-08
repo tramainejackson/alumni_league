@@ -17,6 +17,10 @@ html, body, header, .view {
     visibility: hidden;
 }
 
+.hidden {
+	display: none;
+}
+
 /** Different Text **/
 .coolText1 {font-family: 'Fredericka the Great', cursive;}
 .coolText2 {font-family: 'Cinzel Decorative', cursive;}
@@ -873,18 +877,7 @@ div#league_leaders_points {
     background-color: rgb(63, 124, 234);
     color: white;
 }
-table#points_category, table#assist_category, table#rebounds_category,
-table#steals_category, table#blocks_category, table#player_stats_table,
-table#team_stats_table {
-    width: 90%;
-    margin: 2% 5%;
-}
-table#player_stats_table td, table#team_stats_table td, .leagueLeadersCategory table td {
-    text-align: -webkit-center;
-}
-table#team_stats_table td.teamNameTD, table#player_stats_table td.playerNameTD, .leagueLeadersCategory table td.playerNameTD {
-	text-align: -webkit-left;
-}
+
 table#team_stats_table tr:hover, table#player_stats_table tr:hover {
     background-color: antiquewhite;
 	cursor: pointer;

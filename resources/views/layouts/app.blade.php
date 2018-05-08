@@ -41,10 +41,10 @@
 			<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'Laravel') }}</a>
 	
 			<!-- SideNav slide-out button -->
-			<a href="#" data-activates="slide-out" class="btn btn-primary p-3 button-collapse navbar-toggler" data-toggle="collapse" data-target="#app-navbar-collapse" aria-controls="app-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+			<button type="button" data-activates="slide-out" class="btn btn-primary p-3 button-collapse navbar-toggler" data-toggle="collapse" data-target="#app-navbar-collapse" aria-controls="app-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="sr-only">Toggle Navigation</span>
 				<i class="fa fa-bars"></i>
-			</a>
+			</button>
 
 			<!-- Sidebar navigation -->
 			<div id="slide-out" class="side-nav fixed">

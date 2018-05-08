@@ -133,27 +133,34 @@
 		</div>
 		<div class="row">
 			<!-- League season schedule snap shot -->
-			<div class="col-8 mx-auto my-5">
+			<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
 				<div class="my-5 d-flex align-items-center justify-content-center flex-column">
 					<div class="d-flex w-100 justify-content-center align-items-center">
 						<h1 class="h1-responsive">Upcoming Schedule</h1>
 						<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">Full Schedule</a>
 					</div>
 					
-					<div class="">
-						@if($showSeasonSchedule->isNotEmpty())
-							@foreach($showSeasonSchedule as $upcomingGame)
-								<div class="card">
-									<div class="card-body">
-										<p class="">{{ $upcomingGame->home_team }}</p>
-										<p class="">vs</p>
-										<p class="">{{ $upcomingGame->home_team }}</p>
+					<div class="container-fluid">
+						<div class="row">
+							@if($showSeasonSchedule->isNotEmpty())
+								@foreach($showSeasonSchedule as $upcomingGame)
+									<div class="card col-6 col-md-6 col-lg-4 col-lg-3 my-2">
+										<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
+										<div class="card-body text-center">
+											<p class="">{{ $upcomingGame->home_team }}</p>
+											<p class="">vs</p>
+											<p class="">{{ $upcomingGame->home_team }}</p>
+										</div>
+										<div class="card-footer px-1 d-flex align-items-center justify-content-around">
+											<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
+											<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+										</div>
 									</div>
-								</div>
-							@endforeach
-						@else
-							<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
-						@endif
+								@endforeach
+							@else
+								<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
+							@endif
+						</div>
 					</div>
 				</div>
 			</div>
