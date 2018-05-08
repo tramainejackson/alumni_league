@@ -32,6 +32,8 @@ Route::get('/league_standings', 'HomeController@standings')->name('league_standi
 
 Route::get('/league_info', 'HomeController@info')->name('league_info');
 
+Route::post('league_schedule/add_game/', 'LeagueScheduleController@add_game');
+
 Route::resource('league_schedule', 'LeagueScheduleController');
 
 Route::resource('league_players', 'LeaguePlayerController');

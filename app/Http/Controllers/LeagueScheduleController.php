@@ -12,6 +12,7 @@ use App\LeagueStat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class LeagueScheduleController extends Controller
 {
@@ -30,19 +31,11 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-		$league = Auth::user()->leagues_profiles->first();
-		$activeSeasons = $league->seasons()->active()->get();
-
 		// Get the season to show
-		$showSeason = '';
-
-		if($request->query('season') != null && $request->query('year') != null) {
-			$showSeason = $league->seasons()->active()->find($request->query('season'));
-		} else {
-			$showSeason = $league->seasons()->active()->first();
-		}
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks();
 
@@ -54,13 +47,23 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function welcome()
+    public function add_game(Request $request)
     {
-		$getRecs = RecCenter::all();
-		$getLeagues = LeagueProfile::all();
-		$fireRecs = PlayerProfile::get_fire_recs();
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$time = new Carbon($request->game_time);
 		
-        return view('welcome', compact('getRecs', 'getLeagues', 'fireRecs'));
+		$newGame = new LeagueSchedule();
+		$newGame->league_season_id = $showSeason->id;
+		$newGame->season_week = $request->season_week;
+		$newGame->away_team_id = $request->away_team;
+		$newGame->home_team_id = $request->home_team;
+		$newGame->game_time = $time->toTimeString();
+		$newGame->game_date = $request->date_picker_submit;
+		
+		if($newGame->save()) {
+			return redirect()->back()->with('status', 'Game Added Successfully');
+		} else {}
     }
 	
 	/**
@@ -72,4 +75,23 @@ class LeagueScheduleController extends Controller
     {
         return view('about', compact(''));
     }
+	
+	/**
+     * Check for a query string and get the current season.
+     *
+     * @return seaon
+    */
+	public function find_season(Request $request) {
+		$league = Auth::user()->leagues_profiles->first();
+		
+		$showSeason = '';
+		
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
+		
+		return $showSeason;
+	}
 }

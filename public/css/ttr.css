@@ -37,6 +37,12 @@ button:hover {
 	cursor: pointer;
 }
 
+.bottom {bottom: 0px;}
+.top {top: 0px;}
+.left {left: 0px;}
+.right {right:0px;}
+.middle {top:45% !important;}
+
 /**Additional MDB-Classes**/
 .table-fixed {
     table-layout: fixed;
@@ -832,24 +838,14 @@ div#match_ups_information p {
     font-size: 115%;
     text-align: center;
 }
-#versus {
-  width: 7%;
-  font-size: 300%;
-  min-height: 4em;
-}
+
 div#league_stat_categories {
     margin: 4% 0%;
 }
+
 button.statCategoryBtn {
-    max-width: 20%;
-    min-width: 20%;
-    margin: 0% 6.5%;
-    padding: 0.3% 0%;
-    font-size: 115%;
-    border: outset cadetblue;
-    border-radius: 5px;
-    background-color: beige;
 }
+
 .leagueLeadersCategory {
     display: inline-block;
     max-width: 45%;

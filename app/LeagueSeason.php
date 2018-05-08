@@ -19,7 +19,7 @@ class LeagueSeason extends Model
     }
 	
 	/**
-	* Get the contact for the media object.
+	* Get the teams for the selected season.
 	*/
     public function league_teams()
     {

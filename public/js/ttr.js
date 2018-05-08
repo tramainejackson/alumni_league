@@ -52,7 +52,7 @@ $(document).ready(function() {
 	}
 	
 	//Toggle value for checked item
-	$("body").on("click", ".registrationFormCard .profileSelection button", function(e) {
+	$("body").on("click", ".registrationFormCard .profileSelection button, .inputSwitchToggle", function(e) {
 		$(this).add($(this).siblings()).toggleClass('green grey active');
 		
 		if($(this).children().attr('checked') == 'checked') {
@@ -85,6 +85,22 @@ $(document).ready(function() {
 			}
 		}
 	});
+	
+	// Add a new player row on the team edit page
+	$('body').on('click', '.addPlayerBtn', function() {
+		var newPlayer = $('.newPlayerRow').clone();
+		
+		$(newPlayer).removeClass('hidden newPlayerRow')
+			.insertBefore('#team_players_table .newPlayerRow')
+			.removeAttr('hidden')
+			.find('input, button').removeClass('hidden').removeAttr('disabled');
+	});
+	
+	// Remove the newly added player row on team edit page
+	$('body').on('click', '.removeNewPlayerRow', function() {
+		$(this).parents('tr').remove();
+	});
+	
 	
 //Variables being used often
 	var windowHeight = window.innerHeight;

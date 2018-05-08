@@ -22,7 +22,7 @@ class LeagueTeam extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'team_name', 'leagues_profile_id', 'fee_paid',
     ];
 	
 	/**

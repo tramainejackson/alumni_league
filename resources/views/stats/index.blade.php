@@ -7,7 +7,7 @@
 			<div class="col-md mt-3">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
+						<a href="{{ route('league_stat.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
 					@endforeach
 				@else
 				@endif
@@ -16,15 +16,15 @@
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
-				<div id="league_stat_categories">
-					<button class="statCategoryBtn activeBtn" id="league_leaders_btn">League Leaders</button>
-					<button class="statCategoryBtn" id="player_stats_btn">Player Stats</button>
-					<button class="statCategoryBtn" id="team_stats_btn">Team Stats</button>
+				<div id="league_stat_categories" class="d-flex align-items-center justify-content-around">
+					<button type="button" class="btn statCategoryBtn activeBtn" id="league_leaders_btn">League Leaders</button>
+					<button type="button" class="btn statCategoryBtn" id="player_stats_btn">Player Stats</button>
+					<button type="button" class="btn statCategoryBtn" id="team_stats_btn">Team Stats</button>
 				</div>
 				<div id="league_stats">
 					<div id="league_leaders">
 						<div class="leagueLeadersCategory" id="league_leaders_points">
-							<table class="table table-responsive" id="points_category">
+							<table class="table table-responsive-sm" id="points_category">
 								<thead>
 									<tr class="leagueLeadersCategoryFR">
 										<th></th>
@@ -58,7 +58,7 @@
 							</table>
 						</div>
 						<div class="leagueLeadersCategory" id="league_leaders_assist">
-							<table class="table table-responsive" id="assist_category">
+							<table class="table table-responsive-sm" id="assist_category">
 								<thead>
 									<tr class="leagueLeadersCategoryFR">
 										<th></th>
@@ -92,7 +92,7 @@
 							</table>
 						</div>
 						<div class="leagueLeadersCategory" id="league_leaders_rebounds">
-							<table class="table table-responsive" id="rebounds_category">
+							<table class="table table-responsive-sm" id="rebounds_category">
 								<thead>
 									<tr class="leagueLeadersCategoryFR">
 										<th></th>
@@ -126,7 +126,7 @@
 							</table>
 						</div>
 						<div class="leagueLeadersCategory" id="league_leaders_steals">
-							<table class="table table-responsive" id="steals_category">
+							<table class="table table-responsive-sm" id="steals_category">
 								<thead>
 									<tr class="leagueLeadersCategoryFR">
 										<th></th>
@@ -160,7 +160,7 @@
 							</table>
 						</div>
 						<div class="leagueLeadersCategory" id="league_leaders_blocks">
-							<table class="table table-responsive" id="blocks_category">
+							<table class="table table-responsive-sm" id="blocks_category">
 								<thead>
 									<tr class="leagueLeadersCategoryFR">
 										<th></th>
@@ -196,7 +196,7 @@
 					</div>
 
 					<div class="hidden" id="player_stats">
-						<table class="table table-responsive" id="player_stats_table">
+						<table class="table table-responsive-sm" id="player_stats_table">
 							<thead>
 								<tr>
 									<th></th>
@@ -236,7 +236,7 @@
 					</div>
 
 					<div class="hidden" id="team_stats">
-						<table class="table table-responsive" id="team_stats_table">
+						<table class="table table-responsive-sm" id="team_stats_table">
 							<tr>
 								<th></th>
 								<th>Total Points</th><th>Points p/g</th>

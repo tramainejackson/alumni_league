@@ -32,44 +32,84 @@ class LeagueTeamController extends Controller
      */
     public function index(Request $request)
     {
-		$league = Auth::user()->leagues_profiles->first();
-		$activeSeasons = $league->seasons()->active()->get();
-
 		// Get the season to show
-		$showSeason = '';
-
-		if($request->query('season') != null && $request->query('year') != null) {
-			$showSeason = $league->seasons()->active()->find($request->query('season'));
-		} else {
-			$showSeason = $league->seasons()->active()->first();
-		}
-		
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		$seasonTeams = $showSeason->league_teams;
 
 		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams'));
     }
 	
 	/**
-     * Show the application welcome page for public.
+     * Show the application create team page.
      *
      * @return \Illuminate\Http\Response
-     */
-    public function welcome()
+    */
+    public function create()
     {
-		$getRecs = RecCenter::all();
-		$getLeagues = LeagueProfile::all();
-		$fireRecs = PlayerProfile::get_fire_recs();
-		
-        return view('welcome', compact('getRecs', 'getLeagues', 'fireRecs'));
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+
+		return view('teams.create', compact('showSeason', 'activeSeasons'));
     }
 	
 	/**
-     * Show the application about us page for public.
+     * Show the application create team page.
      *
      * @return \Illuminate\Http\Response
-     */
-    public function about()
+    */
+    public function store(Request $request)
     {
-        return view('about', compact(''));
+		$this->validate($request, [
+			'team_name' => 'required',
+		]);
+		
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		
+		// Create a new team for the selected season
+		$team = $showSeason->league_teams()->create([
+			'team_name' => ucwords(strtolower($request->team_name)),
+			'fee_paid' => $request->fee_paid,
+			'leagues_profile_id' => $showSeason->league_profile->id,
+		]);
+
+		if($team) {
+			return redirect()->action('LeagueTeamController@edit', ['team' => $team->id])->with('status', 'New Team Added Successfully');
+		} else {}
     }
+	
+	/**
+     * Show the application create team page.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function edit(LeagueTeam $league_team)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
+		return view('teams.edit', compact('league_team', 'showSeason'));
+    }
+	
+	/**
+     * Check for a query string and get the current season.
+     *
+     * @return seaon
+    */
+	public function find_season(Request $request) {
+		$league = Auth::user()->leagues_profiles->first();
+		
+		$showSeason = '';
+		
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
+		
+		return $showSeason;
+	}
 }
