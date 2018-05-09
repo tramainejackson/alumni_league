@@ -43,7 +43,23 @@ class LeagueScheduleController extends Controller
     }
 	
 	/**
-     * Show the application welcome page for public.
+     * Show the application create team page.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function create()
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+
+		$weekCount = $showSeason->games->max('season_week');
+		
+		return view('schedule.create', compact('showSeason', 'activeSeasons', 'showSeason', 'weekCount'));
+    }
+	
+	/**
+     * Store a new game on the schedule.
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,19 +67,61 @@ class LeagueScheduleController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
+		$awayTeam = LeagueTeam::find($request->away_team);
+		$homeTeam = LeagueTeam::find($request->home_team);
 		$time = new Carbon($request->game_time);
 		
 		$newGame = new LeagueSchedule();
 		$newGame->league_season_id = $showSeason->id;
 		$newGame->season_week = $request->season_week;
-		$newGame->away_team_id = $request->away_team;
-		$newGame->home_team_id = $request->home_team;
+		$newGame->away_team_id = $awayTeam->id;
+		$newGame->away_team = $awayTeam->team_name;
+		$newGame->home_team_id = $homeTeam->id;
+		$newGame->home_team = $homeTeam->team_name;
 		$newGame->game_time = $time->toTimeString();
 		$newGame->game_date = $request->date_picker_submit;
 		
 		if($newGame->save()) {
 			return redirect()->back()->with('status', 'Game Added Successfully');
 		} else {}
+    }
+	
+	/**
+     * Store a new week on the schedule.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function add_week(Request $request)
+    {
+		// dd($request);
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$newGameCount = 0;
+		$weekCount = $showSeason->games->max('season_week') + 1;
+		
+		foreach($request->home_team as $key => $homeTeam) {
+			$awayTeam = LeagueTeam::find($request->away_team[$key]);
+			$homeTeam = LeagueTeam::find($homeTeam);
+			
+			$time = new Carbon($request->game_time[$key]);
+			$date = $request->date_picker[($key*2)+1];
+			
+			$newGame = new LeagueSchedule();
+			$newGame->league_season_id = $showSeason->id;
+			$newGame->season_week = $weekCount;
+			$newGame->away_team_id = $awayTeam->id;
+			$newGame->away_team = $awayTeam->team_name;
+			$newGame->home_team_id = $homeTeam->id;
+			$newGame->home_team = $homeTeam->team_name;
+			$newGame->game_time = $time->toTimeString();
+			$newGame->game_date = $date;
+			
+			if($newGame->save()) {
+				$newGameCount++;
+			} else {}
+		}
+
+		return redirect()->action('LeagueScheduleController@index')->with('status', $newGameCount . 'Game(s) Added Successfully');
     }
 	
 	/**

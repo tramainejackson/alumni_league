@@ -27,11 +27,19 @@ class LeagueSchedule extends Model
     ];
 	
 	/**
-	* Get the league for the team object.
+	* Get the league for the game object.
 	*/
     public function league()
     {
         return $this->belongsTo('App\LeagueProfile');
+    }
+	
+	/**
+	* Get the result for the game object.
+	*/
+    public function result()
+    {
+        return $this->hasOne('App\LeagueScheduleResult');
     }
 	
 	/*
