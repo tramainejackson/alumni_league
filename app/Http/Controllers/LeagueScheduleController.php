@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\PlayerProfile;
 use App\LeagueProfile;
 use App\LeagueSchedule;
+use App\LeagueScheduleResult;
 use App\LeagueStanding;
 use App\LeaguePlayer;
 use App\LeagueTeam;
@@ -56,6 +57,21 @@ class LeagueScheduleController extends Controller
 		$weekCount = $showSeason->games->max('season_week');
 		
 		return view('schedule.create', compact('showSeason', 'activeSeasons', 'showSeason', 'weekCount'));
+    }
+	
+	/**
+     * Edit the schedule for a particular week.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function edit($week)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
+		$weekGames = $showSeason->games()->getWeekGames($week)->orderBy('game_time')->get();
+		
+		return view('schedule.edit', compact('showSeason', 'weekGames'));
     }
 	
 	/**
@@ -125,13 +141,85 @@ class LeagueScheduleController extends Controller
     }
 	
 	/**
-     * Show the application about us page for public.
+     * Store a new week on the schedule.
      *
      * @return \Illuminate\Http\Response
      */
-    public function about()
+    public function update_week(Request $request, $week)
     {
-        return view('about', compact(''));
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		// dd($request);
+		// Update all the games which are previously scheduled
+		foreach($request->game_id as $key => $game_id) {
+			$game		= LeagueSchedule::find($game_id);
+			$awayTeam	= LeagueTeam::find($request->away_team[$key]);
+			$homeTeam 	= LeagueTeam::find($request->home_team[$key]);
+
+			$time 		= new Carbon($request->game_time[$key]);
+			$date 		= $request->date_picker[($key*2)+1];
+	
+					// dd($awayForfeit);
+			// Check if any games are set to forfeit
+			// If there are check and see if this game id is
+			// in either the home or away array
+			$awayForfeit = isset($request->away_forfeit) ? in_array($game->id, $request->away_forfeit) ? : null : null;
+			$homeForfeit = isset($request->home_forfeit) ? in_array($game->id, $request->home_forfeit) ? : null : null;
+			
+			$game->league_season_id = $showSeason->id;
+			$game->away_team_id = $awayTeam->id;
+			$game->away_team = $awayTeam->team_name;
+			$game->home_team_id = $homeTeam->id;
+			$game->home_team = $homeTeam->team_name;
+			$game->game_time = $time->toTimeString();
+			$game->game_date = $date;
+			
+			if($game->save()) {
+				// Update game result row if it exist
+				if(LeagueScheduleResult::where('league_schedule_id', $game_id)->first()) {
+				} else {
+					$result = new LeagueScheduleResult();
+					$result->league_schedule_id = $game_id;
+					$result->league_season_id = $showSeason->id;
+					$result->home_team_score = $request->home_score[$key];
+					$result->away_team_score = $request->away_score[$key];
+					$result->forfeit = 'N';
+					$result->game_complete = 'N';
+					
+					// If forfeit
+					if($homeForfeit != null || $awayForfeit != null) {
+						$result->forfeit = 'Y';
+						$result->game_complete = 'Y';
+						$result->home_team_score = null;
+						$result->away_team_score = null;
+						
+						if($awayForfeit != null) {
+							$result->winning_team_id = $homeTeam->id;
+							$result->losing_team_id = $awayTeam->id;
+						} else {
+							$result->losing_team_id = $homeTeam->id;
+							$result->winning_team_id = $awayTeam->id;
+						}
+					} else {
+						if($result->home_team_score > 0 || $result->away_team_score > 0) {
+							if($result->home_team_score > $result->away_team_score) {
+								$result->winning_team_id = $homeTeam->id;
+								$result->losing_team_id = $awayTeam->id;
+							} else {
+								$result->losing_team_id = $homeTeam->id;
+								$result->winning_team_id = $awayTeam->id;
+							}
+							
+							$result->game_complete = 'Y';
+						}
+					}
+						
+					if($result->save()) {}
+				}
+			} else {}
+		}
+
+		return redirect()->action('LeagueScheduleController@index')->with('status', '');
     }
 	
 	/**

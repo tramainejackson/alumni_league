@@ -36,6 +36,8 @@ Route::post('league_schedule/add_game/', 'LeagueScheduleController@add_game');
 
 Route::post('league_schedule/add_week/', 'LeagueScheduleController@add_week');
 
+Route::patch('league_schedule/{week}/', 'LeagueScheduleController@update_week');
+
 Route::resource('league_schedule', 'LeagueScheduleController');
 
 Route::resource('league_players', 'LeaguePlayerController');

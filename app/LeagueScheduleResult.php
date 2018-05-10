@@ -34,6 +34,14 @@ class LeagueScheduleResult extends Model
         return $this->belongsTo('App\LeagueProfile');
     }
 	
+	/**
+	* Get the league for the team object.
+	*/
+    public function game()
+    {
+        return $this->belongsTo('App\LeagueSchedule');
+    }
+	
 	/*
 	*
 	* Format the game date

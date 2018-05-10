@@ -51,7 +51,8 @@ $(document).ready(function() {
 		}, 8000);
 	}
 	
-	//Toggle value for checked item
+	// Toggle value for checked item 
+	// (allows one of 2 options to be selected but required at least one to be selected)
 	$("body").on("click", ".registrationFormCard .profileSelection button, .inputSwitchToggle", function(e) {
 		$(this).add($(this).siblings()).toggleClass('green grey active');
 		
@@ -64,9 +65,9 @@ $(document).ready(function() {
 		}
 	});
 	
-	//Toggle value for leagues ages and competition for leages edit page
+	// Toggle value for leagues ages and competition for leages edit page .
+	// (Will toggle on and off. Not related to sibling option. Does not require a selection)
 	$("body").on("click", ".compBtnSelect, .ageBtnSelect", function(e) {
-		console.log($(this));
 		if($(this).hasClass('compBtnSelect')) {
 			$(this).toggleClass('orange gray active');
 			
@@ -86,6 +87,25 @@ $(document).ready(function() {
 		}
 	});
 	
+	// Toggle value for game forfeit.
+	// (Will toggle on and off. Allows only 1 of 2 sibling 
+	// options to be selected. Does not require a selection)
+	$("body").on("click", ".homeForfeitBtn, .awayForfeitBtn", function(e) {
+		if($(this).hasClass('red')) {
+			$(this).children().removeAttr('checked');
+		} else {
+			$(this).children().attr('checked', 'checked');
+			
+			// If sibling has red class then remove it
+			if($(this).siblings().hasClass('red')) {
+				$(this).siblings().toggleClass('red gray active');
+				$(this).siblings().children().removeAttr('checked')
+			}
+		}
+
+		$(this).toggleClass('red gray active');
+	});
+	
 	// Add a new player row on the team edit page
 	$('body').on('click', '.addPlayerBtn', function() {
 		var newPlayer = $('.newPlayerRow').clone();
@@ -101,6 +121,32 @@ $(document).ready(function() {
 		$(this).parents('tr').remove();
 	});
 	
+	// Add new game card on the schedule week edit page
+	$('body').on('click', '#edit_page_add_game', function() {
+		var newGame = $('.newGameRow').clone();
+		
+		$(newGame).removeClass('hidden newGameRow')
+			.prependTo('.updateWeekForm')
+			.removeAttr('hidden')
+			.find('input, button, select').removeAttr('disabled');
+		
+		// Initialize timepicker
+		$(newGame).find('.timepicker').pickatime({
+			// 12 or 24 hour 
+			twelvehour: true,
+			autoclose: true,
+			default: '18:00',
+		});
+		
+		// Initialize datetimepicker
+		$(newGame).find('.datetimepicker').pickadate({
+			format: 'mm/dd/yyyy',
+			formatSubmit: 'yyyy/mm/dd',
+		});
+		
+		// Initialize datetimepicker
+		$(newGame).find('select').addClass('.mdb-select').material_select();
+	});
 	
 //Variables being used often
 	var windowHeight = window.innerHeight;

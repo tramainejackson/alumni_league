@@ -20,9 +20,16 @@
 					@foreach($seasonScheduleWeeks->get() as $showWeekInfo)
 						@php $seasonWeekGames = $showSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
 						<div class='leagues_schedule text-center mb-5'>
-							<h2 class="h2-responsive">Week {{ $showWeekInfo->season_week }} Games</h2>
 							<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table'>
 								<thead>
+									<tr class="indigo darken-2 white-text">
+										<th class="text-center" colspan="6">
+											<h2 class="h2-responsive position-relative my-3">
+												<span>Week {{ $showWeekInfo->season_week }} Games</span>
+												<a href="{{ request()->query() == null ? route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week]) : route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white">Edit Week</a>
+											</h2>
+										</th>
+									</tr>
 									<tr class="indigo darken-3 white-text">
 										<th class="text-center" colspan="3">Match-Up</th>
 										<th>Time</th>
@@ -53,11 +60,11 @@
 					@endforeach
 				@else
 					<div class="text-center">
-						<p class="">There are no stats for the selected season</p>
+						<p class="">There is no schedule for the selected season</p>
 					</div>
 				@endif
 			</div>
-			<div class="col-md mt-3">
+			<div class="col-md mt-3 text-right">
 				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
 				<a href="#" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
 			</div>

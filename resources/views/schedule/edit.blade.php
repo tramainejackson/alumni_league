@@ -1,144 +1,257 @@
 @extends('layouts.app')
 
-@section('additional_scripts')
-	<script type="text/javascript">
-		$('.md-form label[for="leagues_comp"], .md-form label[for="leagues_ages"]').addClass('active');
-	</script>
-@endsection
-
 @section('content')
-	@include('include.functions')
-	
-	<div class="container-fluid" id="leaguesProfileContainer">
+	<div class="container-fluid leagues_page_div">
 		<div class="row">
-			<div class="col-8 mx-auto">
-				{!! Form::open(['action' => ['LeagueProfileController@update', $league->id], 'method' => 'PATCH', 'files' => true]) !!}
-					<div class="row">
-						<div class="col-5 my-3 mx-auto">
-							<div id="update_pic" class="card card-cascade mx-auto">
-								<!--Card Image-->
-									<div class="view" style="min-height: initial !important;">
-										<img id="current_pic" class="card-img-top" src="{{ $league->leagues_picture != null ? asset($league->leagues_picture) : '/images/commissioner.jpg' }}">
-									</div>
-								<!--./Card Image/.-->
-								
-								<!--Card Body-->
-									<div class="card-body">
-										<!--Title-->
-										<h1 class="card-title coolText1 text-center">{{ $league->leagues_name }}</h1>
-									</div>
-								<!--./Card Body/.-->
-								
-								<!--Card Footer/.-->
-									<div class="card-footer grey">
-										<div class="md-form">
-											<div class="file-field">
-												<div class="btn btn-primary btn-sm float-left">
-													<span class="changeSpan">Change Photo</span>
-													<input type="file" name="file" id="file">
-												</div>
-												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text" placeholder="Upload your file">
-												</div>
+			<!--Column will include buttons for creating a new season-->
+			<div class="col-md mt-3"></div>
+			<div class="col-12 col-md-8">
+				<div class="text-center coolText1">
+					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+				</div>
+				<div class="my-4 d-flex align-items-center justify-content-center">
+					<button class="btn btn-rounded btn-sm green darken-1 white-text mx-4" id="edit_page_add_game" type="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Game</button>
+					
+					<h2 class="h2-responsive text-center m-2">Edit Week {{ $weekGames->first()->season_week }}</h2>
+					
+					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>
+				</div>
+
+				{!! Form::open(['action' => ['LeagueScheduleController@update_week', $weekGames->first()->season_week], 'class' => 'updateWeekForm', 'method' => 'PATCH']) !!}
+					@if($weekGames->count() > 0)
+						@foreach($weekGames as $game)
+							<!--Card-->
+							<div class="card mb-4">
+								<!--Card content-->
+								<div class="card-body">
+									<!--Title-->
+									<div class="d-flex align-items-center justify-content-between">
+										<div class="d-flex align-items-center justify-content-center">
+											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration}}</h2>
+											<button class="btn btn-sm btn-rounded orange darken-1" type="button" data-toggle="modal" data-target="#remove_game">Remove Game</button>
+										</div>
+										
+										<!-- Forfeit Toggle -->
+										<div class="d-flex flex-column align-items-center">
+											<p class="m-0">Forfeit</p>
+											<div class="">
+												<button class="btn btn-sm awayForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' red' : ' gray' : ' gray' }}" type="button">{{ $game->away_team }} Forfeit
+													<input type="checkbox" name="away_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' checked' : '' : '' }} />
+												</button>
+												<button class="btn btn-sm homeForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' red' : ' gray' : ' gray' }}" type="button">{{ $game->home_team }} Forfeit
+													<input type="checkbox" name="home_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' checked' : '' : '' }} />
+												</button>
 											</div>
 										</div>
 									</div>
-								<!--./Card Footer/.-->
-							</div>
-						</div>
-					</div>
-					<div class="updateLeagueForm">
-						<div class="md-form">
-							<input type="text" name="leagues_name" class="form-control" id="leagues_name" value="{{ $league->leagues_name }}" />
-							
-							<label for="leagues_name">League Name</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_commish" class="form-control" id="leagues_commish" placeholder="Commissioner" value="{{ $league->commish }}" />
-
-							<label for="leagues_commish">Commissioner</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $league->address }}" />
-
-							<label for="leagues_address">League Address</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_phone" class="form-control" id="leagues_phone" placeholder="Phone" value="{{ $league->leagues_phone }}" />
-
-							<label for="leagues_phone">League Phone</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_email" class="form-control" id="leagues_email" value="{{ $league->leagues_email }}" />
-
-							<label for="leagues_email">League Email</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_website" class="form-control" id="leagues_website" value="{{ $league->leagues_website }}" />
-
-							<label for="leagues_website">League Website</label>
-						</div>
-						<div class="md-form input-group">
-							<div class="input-group-prepend">
-								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-							</div>
-							
-							<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $league->leagues_fee }}"  step="0.01" />
-							
-							<div class="input-group-prepend">
-								<span class="input-group-text">Per Team</span>
-							</div>
-							
-							<label for="leagues_fee">Entry Fee</label>
-						</div>
-						<div class="md-form input-group mb-5">
-							<div class="input-group-prepend">
-								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-							</div>
-							
-							<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $league->ref_fee }}" step="0.01" />
-							
-							<div class="input-group-prepend">
-								<span class="input-group-text">Per Game</span>
-							</div>
-							
-							<label for="ref_fee">Ref Fee</label>
-						</div>
-						<div class="md-form mb-5">
-							@php $ages = find_all_ages(); @endphp
-							@php $ageArray =  explode(" ", $league->age); @endphp
-							<div class="row">
-								@foreach($ages as $age)
-									<div class="col-6 col-md-3">
-										<button type="button" class="btn btn-lg gray mx-0 w-100 ageBtnSelect{{ in_array($age, $ageArray) ? ' blue ' : '' }}">{{ str_ireplace("_", " ", ucwords($age)) }}
-											<input type="checkbox" class="hidden" name="age[]" value="{{ $age }}" hidden{{ in_array($age, $ageArray) ? ' checked ' : '' }}/>
-										</button>
+									<!-- Create Form -->
+									<div class="my-2">
+										<div class="row">
+											<div class="col">
+												<div class="md-form">
+													<select class="mdb-select" name="away_team[]">
+														<option value="" disabled selected>Choose your option</option>
+														@foreach($showSeason->league_teams as $away_team)
+															<option value="{{ $away_team->id }}"{{ $game->away_team_id == $away_team->id ? 'selected' : '' }}>{{ $away_team->team_name }}</option>
+														@endforeach
+													</select>
+													<label for="away_team">Away Team</label>
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form">
+													<select class="mdb-select" name="home_team[]">
+														<option value="" disabled selected>Choose your option</option>
+														@foreach($showSeason->league_teams as $home_team)
+															<option value="{{ $home_team->id }}"{{ $game->home_team_id == $home_team->id ? 'selected' : '' }}>{{ $home_team->team_name }}</option>
+														@endforeach
+													</select>
+													<label for="home_team">Home Team</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col">
+												<div class="md-form input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Home Team Score</span>
+													</div>
+													
+													<input type="number" name="away_score[]" id="" class="form-control" value="{{ $game->result ? $game->result->away_team_score : '' }}" placeholder="Enter Away Score" min="0" max="200" />
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Away Team Score</span>
+													</div>
+													
+													<input type="number" name="home_score[]" id="" class="form-control" value="{{ $game->result ? $game->result->home_team_score : '' }}" placeholder="Enter Home Score" min="0" max="200" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col">
+												<div class="md-form input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Game Date</span>
+													</div>
+													
+													<input type="text" name="date_picker[]" id="input_gamedate" class="form-control datetimepicker" value="{{ $game->game_date() }}" placeholder="Selected Date" />
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form input-group">
+													<div class="input-group-prepend">
+														<span class="input-group-text">Game Time</span>
+													</div>
+													
+													<input type="text" name="game_time[]" id="input_starttime" class="form-control timepicker" value="{{ $game->game_time() }}" placeholder="Selected time" />
+												</div>
+											</div>
+											
+											<input type="number" name="game_id[]" class="hidden" value="{{ $game->id }}" hidden />
+										</div>
 									</div>
-								@endforeach
+								</div>
 							</div>
-
-							<label for="leagues_ages">League Ages</label>
-						</div>
-						<div class="md-form">
-							@php $getComp = find_competitions(); @endphp
-							@php $compArray =  explode(" ", $league->comp); @endphp
-							<div class="row">
-								@foreach($getComp as $comp)
-									<div class="col-6 col-lg-3">
-										<button class="btn btn-lg gray mx-0 w-100 compBtnSelect{{ in_array($comp, $compArray) ? ' orange' : '' }}" type="button">{{ str_ireplace("_", " ", ucwords($comp)) }}
-											<input type="checkbox" class="hidden" name="leagues_comp[]" value="{{ $comp }}" hidden{{ in_array($comp, $compArray) ? ' checked ' : '' }}/>
-										</button>
+							<!--/.Card-->
+						@endforeach
+						
+						<!-- Hidden card for new games -->
+						<!--Card-->
+						<div class="card mb-4 newGameRow hidden" hidden>
+							<!--Card content-->
+							<div class="card-body">
+								<!--Title-->
+								<h2 class="card-title h2-responsive my-2 text-underline">New Game</h2>
+								<!-- Create Form -->
+								<div class="my-2">
+									<div class="row">
+										<div class="col">
+											<div class="md-form">
+												<select class="" name="new_away_team[]" disabled>
+													<option value="" disabled selected>Choose your option</option>
+													@foreach($showSeason->league_teams as $away_team)
+														<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
+													@endforeach
+												</select>
+												<label for="away_team">Away Team</label>
+											</div>
+										</div>
+										<div class="col">
+											<div class="md-form">
+												<select class="" name="new_home_team[]" disabled>
+													<option value="" disabled selected>Choose your option</option>
+													@foreach($showSeason->league_teams as $home_team)
+														<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
+													@endforeach
+												</select>
+												<label for="home_team">Home Team</label>
+											</div>
+										</div>
 									</div>
-								@endforeach
+									<div class="row">
+										<div class="col">
+											<div class="md-form input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Home Team Score</span>
+												</div>
+												
+												<input type="number" name="new_away_score[]" class="form-control" value="" placeholder="Enter Away Score" min="0" max="200" disabled />
+											</div>
+										</div>
+										<div class="col">
+											<div class="md-form input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Away Team Score</span>
+												</div>
+												
+												<input type="number" name="new_home_score[]" class="form-control" value="" placeholder="Enter Home Score" min="0" max="200" disabled />
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col">
+											<div class="md-form input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Game Date</span>
+												</div>
+												
+												<input type="text" name="new_date_picker[]" class="form-control datetimepicker" value="" placeholder="Selected Date" disabled />
+											</div>
+										</div>
+										<div class="col">
+											<div class="md-form input-group">
+												<div class="input-group-prepend">
+													<span class="input-group-text">Game Time</span>
+												</div>
+												
+												<input type="text" name="new_game_time[]" class="form-control timepicker" value="" placeholder="Selected time" disabled />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--/.Card-->
+						<div class="md-form">
+							<button class="btn btn-lg blue lighten-1" type="submit">Update Week Games</button>
+						</div>
+						
+						<div class="removeModals">
+							<!-- Remove Week Modal -->
+							<div class="modal fade" id="remove_week" tabindex="-1" role="dialog" aria-labelledby="removeWeek" aria-hidden="true" data-backdrop="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h2 class="h2-responsive">Remove Week</h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p class="">Show all games scheduled for week and if resulted or not</p>
+										</div>
+									</div>
+								</div>
 							</div>
 							
-							<label for="leagues_comp">League Competition</label>
+							<!-- Remove Game Modal -->
+							<div class="modal fade" id="remove_game" tabindex="-1" role="dialog" aria-labelledby="removeGame" aria-hidden="true" data-backdrop="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h2 class="h2-responsive">Remove Game</h2>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<p class="">Show all games scheduled for week and if resulted or not</p>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="md-form">
-							<button type="submit" name="submit" class="btn btn-lg green m-0" id="" value="">Update League</button>
+					@else
+						<div class="my-5 text-center">
+							<h2 class="h2-responsive red-text coolText4"><i class="fa fa-warning" aria-hidden="true"></i>&nbsp;You do not have any teams added to this season. Please add some teams before creating a schedule&nbsp;<i class="fa fa-warning" aria-hidden="true"></i></h2>
+							<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">Add Teams</a>
 						</div>
-					</div>
+					@endif
 				{!! Form::close() !!}
+			</div>
+			<div class="col-md mt-3">
+				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
+				
+				@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
+					@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
+					<div class="">
+						<h3 class="">Week {{ $week->season_week }}</h3>	
+						<p class="">{{ $gamesCount }} games scheduled</p>
+					</div>
+				@endforeach
 			</div>
 		</div>
 	</div>
