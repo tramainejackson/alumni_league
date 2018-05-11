@@ -7,6 +7,7 @@ html, body, header, .view {
 
 html, body, header, .view {
 	height: 100%;
+	font-size: 125%;
 }
 
 .card .view {

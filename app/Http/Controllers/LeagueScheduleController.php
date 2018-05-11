@@ -67,11 +67,11 @@ class LeagueScheduleController extends Controller
     public function edit($week)
     {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
-
-		$weekGames = $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
+		$showSeason	= $this->find_season(request());
+		$thisWeek 	= $week;
+		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
 		
-		return view('schedule.edit', compact('showSeason', 'weekGames'));
+		return view('schedule.edit', compact('showSeason', 'weekGames', 'thisWeek'));
     }
 	
 	/**
@@ -265,6 +265,9 @@ class LeagueScheduleController extends Controller
 				
 			} else {}
 		}
+
+		// Update the standings after updating all the games
+		$showSeason->standings()->standingUpdate();
 
 		return redirect()->back()->with('status', 'Week ' . $week . ' updated successfully');
     }

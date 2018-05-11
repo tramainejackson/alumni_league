@@ -50,7 +50,7 @@
 										</p>
 									</div>
 									<div class="">
-										<a href="{{ route('league_teams.edit', ['team' => $team->id]) }}" class="btn btn-lg blue lighten-1">Edit Team</a>
+										<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1">Edit Team</a>
 									</div>
 								</div>
 								<div class="feesButton">

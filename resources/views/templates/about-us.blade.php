@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
-    <!--  Required meta tags always come first  -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Material Design Bootstrap Template</title>
-    <!--  Font Awesome  -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="../css/mdb.min.css" rel="stylesheet">
-    <!-- Custom styles -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Favicon -->
+	<!-- <link rel="shortcut icon" href="/favicon_jrh.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon_jrh.ico" type="image/x-icon"> -->
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>ToTheRec</title>
+
+    <!-- Styles -->
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Bootstrap core CSS -->
+	<link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+	<!-- Material Design Bootstrap -->
+	<link href="{{ asset('/css/mdb.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/ttr.css') }}" rel="stylesheet">
+	
     <style>
         html,
         body,
@@ -518,23 +528,15 @@
     </footer>
     <!-- Footer -->
 
-    <!--  SCRIPTS  -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="../js/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="../js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="../js/mdb.min.js"></script>
-    <script>
-        new WOW().init();
-
-        // MDB Lightbox Init
-        $(function () {
-            $("#mdb-lightbox-ui").load("../mdb-addons/mdb-lightbox-ui.html");
-        });
-
-    </script>
+    <!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="/js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<script type="text/javascript" src="/js/mdb.min.js"></script>
+	<script type="text/javascript" src="/js/ttr.js"></script>
 </body>
 </html>

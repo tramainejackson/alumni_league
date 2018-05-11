@@ -126,6 +126,15 @@ class LeagueSchedule extends Model
 	*/
 	public function scopeGetWeekGames($query, $week) 
 	{
-		return $query->where("season_week", $week);
+		return $query->where("season_week", $week)->orderBy('game_date')->orderBy('game_time');
+	}
+	
+	/**
+	* Scope a query to get all the games on the schedule for particular week.
+	*/
+	public function scopeGetTeamGames($query, $teamID) 
+	{
+		return $query->where("home_team_id", $teamID)
+			->orWhere('away_team_id', $teamID);
 	}
 }

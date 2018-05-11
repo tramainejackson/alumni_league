@@ -22,7 +22,7 @@
 						<h2 class="card-title h2-responsive text-center">{{ $league_team->team_name }}</h2>
 						
 						<!-- Create Form -->
-						{!! Form::open(['action' => ['LeagueTeamController@store', $league_team->id], 'method' => 'PATCH']) !!}
+						{!! Form::open(['action' => ['LeagueTeamController@update', $league_team->id], 'method' => 'PATCH']) !!}
 							<!-- Team Info -->
 							<div class="">
 								<div class="md-form">

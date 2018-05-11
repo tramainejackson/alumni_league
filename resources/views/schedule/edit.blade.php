@@ -6,8 +6,8 @@
 			<!--Column will include buttons for creating a new season-->
 			<div class="col-md mt-3">
 				<h2 class="h2-responsive text-underline">Check List</h2>
-				<p class="text-justify">*Make Sure All Games Have Teams, Date, and Time Selected*</p>
-				<p class="text-justify">*Forfeited Games Will Not Have Team Scores*</p>
+				<p class="text-justify font-small">*Make Sure All Games Have Teams, Date, and Time Selected*</p>
+				<p class="text-justify font-small">*Forfeited Games Will Not Have Team Scores*</p>
 			</div>
 			<div class="col-12 col-md-8">
 				<div class="text-center coolText1">
@@ -78,7 +78,7 @@
 											<div class="col">
 												<div class="md-form input-group">
 													<div class="input-group-prepend">
-														<span class="input-group-text">Home Team Score</span>
+														<span class="input-group-text">Away Team Score</span>
 													</div>
 													
 													<input type="number" name="away_score[]" id="" class="form-control" value="{{ $game->result ? $game->result->away_team_score : '' }}" placeholder="Enter Away Score" min="0" max="200" />
@@ -87,7 +87,7 @@
 											<div class="col">
 												<div class="md-form input-group">
 													<div class="input-group-prepend">
-														<span class="input-group-text">Away Team Score</span>
+														<span class="input-group-text">Home Team Score</span>
 													</div>
 													
 													<input type="number" name="home_score[]" id="" class="form-control" value="{{ $game->result ? $game->result->home_team_score : '' }}" placeholder="Enter Home Score" min="0" max="200" />
@@ -249,13 +249,19 @@
 			<div class="col-md mt-3">
 				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
 				
-				@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
-					@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
-					<div class="">
-						<h3 class="">Week {{ $week->season_week }}</h3>	
-						<p class="">{{ $gamesCount }} games scheduled</p>
-					</div>
-				@endforeach
+				<table class="table table-hover table-striped mt-3">
+					<tbody>
+						@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
+						@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
+							<tr class="{{ $week->season_week == $thisWeek ? 'white-text blue' : '' }}">
+								<td class="text-center">
+									<span class="w-100 d-block font-weight-bold text-underline">Week {{ $week->season_week }}</span>
+									<span class="">{{ $gamesCount }} games scheduled</span>
+								</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

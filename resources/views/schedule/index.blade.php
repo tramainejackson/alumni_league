@@ -45,9 +45,44 @@
 									@else
 										@foreach($seasonWeekGames as $game)
 											<tr>
-												<td>{{ $game->away_team }}</td>
-												<td>vs</td>
-												<td>{{ $game->home_team }}</td>
+												@if($game->result)
+													<td>{{ $game->away_team }}
+														@if($game->result->winning_team_id == $game->away_team_id)
+															@if($game->result->forfeit == 'Y')
+																<span class="badge badge-pill green darken-2 ml-3">Winner</span>
+															@else
+																<span class="badge badge-pill green darken-2 ml-3">{{ $game->result->away_team_score }}</span>
+															@endif
+														@else
+															@if($game->result->forfeit == 'Y')
+																<span class="badge badge-pill red darken-2 ml-3">Forfeit</span>
+															@else
+																<span class="badge badge-pill red darken-2 ml-3">{{ $game->result->away_team_score }}</span>
+															@endif
+														@endif
+													</td>
+													<td>vs</td>
+													<td>{{ $game->home_team }}
+														@if($game->result->winning_team_id == $game->home_team_id)
+															@if($game->result->forfeit == 'Y')
+																<span class="badge badge-pill green darken-2 ml-3">Winner</span>
+															@else
+																<span class="badge badge-pill green darken-2 ml-3">{{ $game->result->home_team_score }}</span>
+															@endif
+														@else
+															@if($game->result->forfeit == 'Y')
+																<span class="badge badge-pill red darken-2 ml-3">Forfeit</span>
+															@else
+																<span class="badge badge-pill red darken-2 ml-3">{{ $game->result->home_team_score }}</span>
+															@endif
+														@endif
+													</td>
+												@else
+													<td>{{ $game->away_team }}</td>
+													<td>vs</td>
+													<td>{{ $game->home_team }}</td>
+												@endif
+												
 												<td>{{ $game->game_time() }}</td>
 												<td>{{ $game->game_date() }}</td>
 												<td><button class="btn btn-primary btn-rounded btn-sm my-0" type="button">Edit Game</button></td>

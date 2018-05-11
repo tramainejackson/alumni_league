@@ -95,6 +95,63 @@ class LeagueTeamController extends Controller
     }
 	
 	/**
+     * Update the teams information.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function update(Request $request, LeagueTeam $league_team)
+    {
+		// dd($league_team->home_games);
+		$league_team->team_name = $request->team_name;
+		$league_team->fee_paid = $request->fee_paid;
+		$team_players = $league_team->players;
+		$team_standing = $league_team->standings;
+		$team_home_games = $league_team->home_games;
+		$team_away_games = $league_team->away_games;
+
+		if($league_team->save()) {
+			// Updates team players
+			if($team_players) {
+				foreach($team_players as $key => $player) {
+					$player->team_name = $request->team_name;
+					$player->player_name = $request->player_name[$key];
+					$player->jersey_num = $request->jersey_num[$key];
+					$player->email = $request->player_email[$key];
+					$player->phone = $request->player_phone[$key];
+					
+					if($player->save()) {}
+				}
+			}
+			
+			// Update team standings
+			if($team_standing) {
+				$team_standing->team_name = $request->team_name;
+				if($team_standing->save()) {}
+			}
+			
+			// Update games on the calendar
+			if($team_home_games) {
+				foreach($team_home_games as $home_game) {
+					$home_game->home_team = $request->team_name;
+					
+					if($home_game->save()) {}
+				}
+			}
+			
+			if($team_away_games) {
+				foreach($team_away_games as $away_game) {
+					$away_game->away_team = $request->team_name;
+					
+					if($away_game->save()) {}
+				}
+			}
+			
+			// Update player stats
+			return redirect()->back()->with('status', 'Team Updated');
+		}
+    }
+	
+	/**
      * Check for a query string and get the current season.
      *
      * @return seaon

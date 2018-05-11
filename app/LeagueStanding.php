@@ -4,15 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LeagueStanding extends Model
 {
+	use SoftDeletes;
+
+	/**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+	
 	public function __construct() {
 		
 	}
 	
 	/**
-	* Get the league for the team object.
+	* Get the league for the standings object.
 	*/
     public function league()
     {
@@ -20,11 +30,19 @@ class LeagueStanding extends Model
     }
 	
 	/**
-	* Get the league for the team object.
+	* Get the season for the standings object.
 	*/
     public function season()
     {
         return $this->belongsTo('App\LeagueSeason');
+    }
+	
+	/**
+	* Get the team for the standings object.
+	*/
+    public function team()
+    {
+        return $this->belongsTo('App\LeagueTeam');
     }
 	
 	/**
@@ -35,5 +53,77 @@ class LeagueStanding extends Model
 		->orderBy('winPERC', 'desc')
 		->orderBy('team_wins', 'desc')
 		->orderBy('team_losses', 'asc');
+	}
+	
+	/**
+	* Scope a query to update standings for this season.
+	*/
+	public function scopeStandingUpdate($query) {
+		$teamStandings = $query->get();
+		
+		// Update each team standings row
+		foreach($teamStandings as $teamStanding) {
+			$teamPoints = 0;
+			$teamWins = 0;
+			$teamLosses = 0;
+			$teamForfeits = 0;
+			$team = LeagueTeam::find($teamStanding->league_teams_id);
+			$homeGames = $team->home_games()->get();
+			$awayGames = $team->away_games()->get();
+
+			// Results when the away team
+			foreach($awayGames as $game) {
+				if($game->result()->get()->first()) {
+					$result = $game->result()->get()->first();
+					
+					if($result->game_complete == 'Y') {
+						if($result->winning_team_id == $game->away_team_id) {
+							$teamWins++;
+						} else {
+							$teamLosses++;
+						}
+						
+						if($result->forfeit == 'Y') {
+							if($result->losing_team_id == $game->away_team_id) {
+								$teamForfeits++;
+							}
+						} else {
+							$teamPoints += $result->away_team_score;
+						}
+					}
+				}
+			}
+			
+			// Results when the home team
+			foreach($homeGames as $game) {
+				if($game->result()->get()->first()) {
+					$result = $game->result()->get()->first();
+					
+					if($result->game_complete == 'Y') {
+						if($result->winning_team_id == $game->home_team_id) {
+							$teamWins++;
+						} else {
+							$teamLosses++;
+						}
+						
+						if($result->forfeit == 'Y') {
+							if($result->losing_team_id == $game->home_team_id) {
+								$teamForfeits++;
+							}
+						} else {
+							$teamPoints += $result->home_team_score;
+						}
+					}
+				}
+			}
+		
+			$teamStanding->team_games	= $teamLosses + $teamWins;
+			$teamStanding->team_wins 	= $teamWins;
+			$teamStanding->team_losses 	= $teamLosses;
+			$teamStanding->team_forfeits = $teamForfeits;
+			$teamStanding->team_points 	= $teamPoints;
+			
+			$teamStanding->save();
+		}
 	}
 }

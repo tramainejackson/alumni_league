@@ -55,7 +55,7 @@ class LeagueSeason extends Model
 	*/
     public function standings()
     {
-        return $this->hasOne('App\LeagueStanding');
+        return $this->hasMany('App\LeagueStanding');
     }
 	
 	/**

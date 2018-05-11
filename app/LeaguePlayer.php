@@ -65,4 +65,11 @@ class LeaguePlayer extends Model
     {
         return $this->hasMany('App\LeagueStat');
     }
+	
+	/**
+	* Scope a query to get the captain of the team
+	*/
+	public function scopeCaptain($query) {
+		return $query->where('team_captain', 'Y')->first();
+	}
 }

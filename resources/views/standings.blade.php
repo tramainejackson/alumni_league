@@ -23,7 +23,7 @@
 
 				@if($standings != null && $standings->isNotEmpty())
 					<div class="text-center coolText4 mt-3">
-						<h3 class="h3-responsive"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;Standings are not editable. They are automatically compiled from the games results&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h3>
+						<p class=""><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;Standings are not editable. They are automatically compiled from the games results&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></p>
 					</div>
 					<div id="league_standings">
 						<table id="league_standings_table" class="table text-center table-striped">
