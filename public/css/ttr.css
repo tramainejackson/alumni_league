@@ -62,7 +62,11 @@ button:hover {
 
 .text-underline {
 	text-decoration: underline;
-}    
+}
+
+.btn.black-text {
+	color: black !important;
+}  
 /*************************/
 
 .welcomeVideo .col {

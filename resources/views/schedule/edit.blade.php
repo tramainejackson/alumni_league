@@ -4,7 +4,11 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3"></div>
+			<div class="col-md mt-3">
+				<h2 class="h2-responsive text-underline">Check List</h2>
+				<p class="text-justify">*Make Sure All Games Have Teams, Date, and Time Selected*</p>
+				<p class="text-justify">*Forfeited Games Will Not Have Team Scores*</p>
+			</div>
 			<div class="col-12 col-md-8">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
@@ -35,10 +39,10 @@
 										<div class="d-flex flex-column align-items-center">
 											<p class="m-0">Forfeit</p>
 											<div class="">
-												<button class="btn btn-sm awayForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' red' : ' gray' : ' gray' }}" type="button">{{ $game->away_team }} Forfeit
+												<button class="btn btn-sm awayForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->away_team }} Forfeit
 													<input type="checkbox" name="away_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' checked' : '' : '' }} />
 												</button>
-												<button class="btn btn-sm homeForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' red' : ' gray' : ' gray' }}" type="button">{{ $game->home_team }} Forfeit
+												<button class="btn btn-sm homeForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->home_team }} Forfeit
 													<input type="checkbox" name="home_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' checked' : '' : '' }} />
 												</button>
 											</div>

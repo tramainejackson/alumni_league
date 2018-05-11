@@ -98,12 +98,12 @@ $(document).ready(function() {
 			
 			// If sibling has red class then remove it
 			if($(this).siblings().hasClass('red')) {
-				$(this).siblings().toggleClass('red gray active');
+				$(this).siblings().toggleClass('red stylish-color-dark active');
 				$(this).siblings().children().removeAttr('checked')
 			}
 		}
 
-		$(this).toggleClass('red gray active');
+		$(this).toggleClass('red stylish-color-dark active');
 	});
 	
 	// Add a new player row on the team edit page
