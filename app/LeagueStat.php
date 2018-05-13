@@ -114,8 +114,8 @@ class LeagueStat extends Model
 	* Scope a query to get all team stats
 	*/
 	public function scopeAllTeamStats($query) {
-		return $query->join('league_standings', 'league_stats.league_team_id', '=', 'league_standings.league_team_id')
-		->join('league_teams', 'league_stats.league_team_id', '=', 'league_teams.id')
+		return $query->join('league_standings', 'league_stats.league_teams_id', '=', 'league_standings.league_teams_id')
+		->join('league_teams', 'league_stats.league_teams_id', '=', 'league_teams.id')
 		->select(DB::raw("DISTINCT
 			SUM(points) AS TPTS,
 			SUM(threes_made) AS TTHR,
@@ -131,14 +131,14 @@ class LeagueStat extends Model
 			FORMAT(SUM(steals)/team_games, 1) AS SPG,
 			FORMAT(SUM(rebounds)/team_games, 1) AS RPG,
 			FORMAT(SUM(blocks)/team_games, 1) AS BPG,
-			league_standings.league_team_id,
+			league_standings.league_teams_id,
 			league_standings.team_name,
 			team_wins,
 			team_losses,
 			team_games,
 			team_picture")
 		)
-		->groupBy('league_team_id')
+		->groupBy('league_teams_id')
 		->orderBy('TPTS', 'desc');
 	}
 	

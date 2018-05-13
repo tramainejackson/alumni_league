@@ -2922,6 +2922,11 @@ table.currentMonth {
 
 /*Bigger Screens*/
 @media only screen and (min-width:992px) {
+	html, body, header, .view {
+		font-size: 110%;
+	}
+
+
 	#leagues {
 		margin: 100px 10% 4%;
 		width: 80%;

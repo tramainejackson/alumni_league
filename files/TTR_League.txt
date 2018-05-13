@@ -2,11 +2,11 @@
 					ToTheRec Leagues
 ------------------------------------------------------
 Add parameters if users have no active season
-If team name changes, change team name on scheduled games and standings
 Add a calendar for the games schedule
 Add some animation
 Do complete season function
-Add completed games to standings
+Add players to stats db when new game is created
+Done: If team name changes, change team name on scheduled games and standings
 Done: Allow adding of a new season
 Done: Figure out the query string
 Done: Figure out local model scope thing

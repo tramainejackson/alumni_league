@@ -1,144 +1,99 @@
 @extends('layouts.app')
 
-@section('additional_scripts')
-	<script type="text/javascript">
-		$('.md-form label[for="leagues_comp"], .md-form label[for="leagues_ages"]').addClass('active');
-	</script>
-@endsection
-
 @section('content')
 	@include('include.functions')
 	
 	<div class="container-fluid" id="leaguesProfileContainer">
 		<div class="row">
-			<div class="col-8 mx-auto">
-				{!! Form::open(['action' => ['LeagueProfileController@update', $league->id], 'method' => 'PATCH', 'files' => true]) !!}
-					<div class="row">
-						<div class="col-5 my-3 mx-auto">
-							<div id="update_pic" class="card card-cascade mx-auto">
-								<!--Card Image-->
-									<div class="view" style="min-height: initial !important;">
-										<img id="current_pic" class="card-img-top" src="{{ $league->leagues_picture != null ? asset($league->leagues_picture) : '/images/commissioner.jpg' }}">
+			<div class="col-12 mt-3">
+				@foreach($seasonScheduleWeeks as $edit_week)
+					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $edit_week->season_week]) : route('league_stat.edit_week', ['week' => $edit_week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_week->season_week == $week ? ' disabled' : '' }}"{{ $edit_week->season_week == $week ? ' disabled' : '' }}>Week {{ $edit_week->season_week }} Stats</a>
+				@endforeach
+			</div>
+			<div class="col-12">
+				<div class="text-center coolText1">
+					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+				</div>
+				<div class="text-center">
+					<h3 class="h3-responsive">Week {{ $week }} Stats</h3>
+				</div>
+				
+				@if($weekGames->count() > 0)
+					@foreach($weekGames as $game)
+					{{ dd($game->home_team) }}
+						<!--Card-->
+						<div class="card mb-4">
+							<!--Card content-->
+							<div class="card-body">
+								<!--Title-->
+								<div class="d-flex align-items-center justify-content-between">
+									<div class="d-flex align-items-center justify-content-center">
+										<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration}}</h2>
+										<button class="btn btn-sm btn-rounded orange darken-1" type="button" data-toggle="modal" data-target="#remove_game">Remove Game</button>
 									</div>
-								<!--./Card Image/.-->
-								
-								<!--Card Body-->
-									<div class="card-body">
-										<!--Title-->
-										<h1 class="card-title coolText1 text-center">{{ $league->leagues_name }}</h1>
-									</div>
-								<!--./Card Body/.-->
-								
-								<!--Card Footer/.-->
-									<div class="card-footer grey">
-										<div class="md-form">
-											<div class="file-field">
-												<div class="btn btn-primary btn-sm float-left">
-													<span class="changeSpan">Change Photo</span>
-													<input type="file" name="file" id="file">
-												</div>
-												<div class="file-path-wrapper">
-													<input class="file-path validate" type="text" placeholder="Upload your file">
-												</div>
-											</div>
+									
+									<div class="d-flex flex-column align-items-center">
+										<div class="btn-group mb-2" role="group" aria-label="Game Time and Date">
+											<button class="btn btn-outline-mdb-color" type="button"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>{{ $game->game_date() }}</button>
+											<button class="btn btn-outline-mdb-color" type="button"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i>{{ $game->game_time() }}</button>
+										</div>
+										<div class="btn-group" role="group" aria-label="Game Time and Date">
+											<button class="btn btn-outline-mdb-color" type="button">{{ $game->result ? $game->result->away_team_score : '' }} Away Score</button>
+											<button class="btn btn-outline-mdb-color" type="button">{{ $game->result ? $game->result->home_team_score : '' }} Home Score</button>
 										</div>
 									</div>
-								<!--./Card Footer/.-->
-							</div>
-						</div>
-					</div>
-					<div class="updateLeagueForm">
-						<div class="md-form">
-							<input type="text" name="leagues_name" class="form-control" id="leagues_name" value="{{ $league->leagues_name }}" />
-							
-							<label for="leagues_name">League Name</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_commish" class="form-control" id="leagues_commish" placeholder="Commissioner" value="{{ $league->commish }}" />
-
-							<label for="leagues_commish">Commissioner</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $league->address }}" />
-
-							<label for="leagues_address">League Address</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_phone" class="form-control" id="leagues_phone" placeholder="Phone" value="{{ $league->leagues_phone }}" />
-
-							<label for="leagues_phone">League Phone</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_email" class="form-control" id="leagues_email" value="{{ $league->leagues_email }}" />
-
-							<label for="leagues_email">League Email</label>
-						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_website" class="form-control" id="leagues_website" value="{{ $league->leagues_website }}" />
-
-							<label for="leagues_website">League Website</label>
-						</div>
-						<div class="md-form input-group">
-							<div class="input-group-prepend">
-								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-							</div>
-							
-							<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $league->leagues_fee }}"  step="0.01" />
-							
-							<div class="input-group-prepend">
-								<span class="input-group-text">Per Team</span>
-							</div>
-							
-							<label for="leagues_fee">Entry Fee</label>
-						</div>
-						<div class="md-form input-group mb-5">
-							<div class="input-group-prepend">
-								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-							</div>
-							
-							<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $league->ref_fee }}" step="0.01" />
-							
-							<div class="input-group-prepend">
-								<span class="input-group-text">Per Game</span>
-							</div>
-							
-							<label for="ref_fee">Ref Fee</label>
-						</div>
-						<div class="md-form mb-5">
-							@php $ages = find_all_ages(); @endphp
-							@php $ageArray =  explode(" ", $league->age); @endphp
-							<div class="row">
-								@foreach($ages as $age)
-									<div class="col-6 col-md-3">
-										<button type="button" class="btn btn-lg gray mx-0 w-100 ageBtnSelect{{ in_array($age, $ageArray) ? ' blue ' : '' }}">{{ str_ireplace("_", " ", ucwords($age)) }}
-											<input type="checkbox" class="hidden" name="age[]" value="{{ $age }}" hidden{{ in_array($age, $ageArray) ? ' checked ' : '' }}/>
-										</button>
+								</div>
+								
+								<!-- Edit Form -->
+								{!! Form::open(['action' => ['LeagueStatController@update', 'week' => $week], 'method' => 'PATCH']) !!}
+									<div class="my-2">
+										<div class="row">
+											<div class="col-12">
+												<table class="table">
+													<thead>
+														<tr>
+															<th>Away Team</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>{{ $away_team->team_name }}<td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-12">
+												<table class="table">
+													<thead>
+														<tr>
+															<th>Home Team</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>{{ $home_team->team_name }}<td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<input type="number" name="game_id[]" class="hidden" value="{{ $game->id }}" hidden />
 									</div>
-								@endforeach
+								{!! Form::close() !!}
 							</div>
+						</div>
+						<!--/.Card-->
+					@endforeach
 
-							<label for="leagues_ages">League Ages</label>
-						</div>
-						<div class="md-form">
-							@php $getComp = find_competitions(); @endphp
-							@php $compArray =  explode(" ", $league->comp); @endphp
-							<div class="row">
-								@foreach($getComp as $comp)
-									<div class="col-6 col-lg-3">
-										<button class="btn btn-lg gray mx-0 w-100 compBtnSelect{{ in_array($comp, $compArray) ? ' orange' : '' }}" type="button">{{ str_ireplace("_", " ", ucwords($comp)) }}
-											<input type="checkbox" class="hidden" name="leagues_comp[]" value="{{ $comp }}" hidden{{ in_array($comp, $compArray) ? ' checked ' : '' }}/>
-										</button>
-									</div>
-								@endforeach
-							</div>
-							
-							<label for="leagues_comp">League Competition</label>
-						</div>
-						<div class="md-form">
-							<button type="submit" name="submit" class="btn btn-lg green m-0" id="" value="">Update League</button>
-						</div>
+					<div class="md-form">
+						<button class="btn btn-lg blue lighten-1" type="submit">Update Week Games</button>
 					</div>
-				{!! Form::close() !!}
+				@else
+					<div class="my-5 text-center">
+						<h2 class="h2-responsive red-text coolText4"><i class="fa fa-warning" aria-hidden="true"></i>&nbsp;You do not have any teams added to this season. Please add some teams before creating a schedule&nbsp;<i class="fa fa-warning" aria-hidden="true"></i></h2>
+						<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">Add Teams</a>
+					</div>
+				@endif					
 			</div>
 		</div>
 	</div>

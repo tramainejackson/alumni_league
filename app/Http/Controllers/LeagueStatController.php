@@ -26,52 +26,71 @@ class LeagueStatController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the stats index page.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-		$league = Auth::user()->leagues_profiles->first();
-		$activeSeasons = $league->seasons()->active()->get();
-
 		// Get the season to show
-		$showSeason = '';
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		$seasonTeams = $showSeason->league_teams;
+		
+		$seasonStats = $showSeason->stats();		
+		$allPlayers = $seasonStats->allFormattedStats();
+		$allTeams = $seasonStats->allTeamStats();
+		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 
+		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks'));
+    }
+	
+	/**
+     * Show the stats to be edited for selected week.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_week(Request $request, $week)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
+		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
+
+		return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames'));
+    }
+	
+	/**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $week)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		
+		$seasonStats = $showSeason->stats();
+
+		return view('stats.edit', compact('activeSeasons', 'showSeason', 'week'));
+    }
+	
+	/**
+     * Check for a query string and get the current season.
+     *
+     * @return seaon
+    */
+	public function find_season(Request $request) {
+		$league = Auth::user()->leagues_profiles->first();
+		
+		$showSeason = '';
+		
 		if($request->query('season') != null && $request->query('year') != null) {
 			$showSeason = $league->seasons()->active()->find($request->query('season'));
 		} else {
 			$showSeason = $league->seasons()->active()->first();
 		}
 		
-		$seasonStats = $showSeason->stats();
-		
-		$allPlayers = $seasonStats->allFormattedStats();
-		$allTeams = $seasonStats->allTeamStats();
-		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams'));
-    }
-	
-	/**
-     * Show the application welcome page for public.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function welcome()
-    {
-		$getRecs = RecCenter::all();
-		$getLeagues = LeagueProfile::all();
-		$fireRecs = PlayerProfile::get_fire_recs();
-		
-        return view('welcome', compact('getRecs', 'getLeagues', 'fireRecs'));
-    }
-	
-	/**
-     * Show the application about us page for public.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function about()
-    {
-        return view('about', compact(''));
-    }
+		return $showSeason;
+	}
 }

@@ -38,13 +38,17 @@ Route::post('league_schedule/add_week/', 'LeagueScheduleController@add_week');
 
 Route::patch('league_schedule/{week}/', 'LeagueScheduleController@update_week');
 
+Route::get('league_stat', 'LeagueStatController@index')->name('league_stat.index');
+
+Route::get('league_stat/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stat.edit_week');
+
+Route::patch('league_stat/edit_week/{week}', 'LeagueStatController@update');
+
 Route::resource('league_schedule', 'LeagueScheduleController');
 
 Route::resource('league_players', 'LeaguePlayerController');
 
 Route::resource('league_teams', 'LeagueTeamController');
-
-Route::resource('league_stat', 'LeagueStatController');
 
 Route::resource('league_pictures', 'LeaguePictureController');
 

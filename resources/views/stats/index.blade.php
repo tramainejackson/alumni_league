@@ -274,7 +274,11 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md mt-3"></div>
+			<div class="col-md mt-3">
+				@foreach($seasonScheduleWeeks as $week)
+					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">Week {{ $week->season_week }} Stats</a>
+				@endforeach
+			</div>
 		</div>
 		<div class="row">
 			<div id="card_overlay"></div>
