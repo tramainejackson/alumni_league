@@ -69,10 +69,114 @@ class LeagueStatController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		
-		$seasonStats = $showSeason->stats();
 
-		return view('stats.edit', compact('activeSeasons', 'showSeason', 'week'));
+		// Update existing stats
+		if(isset($request->edit_points)) {
+			$player_points   = $request->edit_points;
+			$player_assists  = $request->edit_assists;
+			$player_rebounds = $request->edit_rebounds;
+			$player_steals   = $request->edit_steals;
+			$player_blocks   = $request->edit_blocks;
+			$counter = 0;
+
+			//Get the games that are getting stats added to them
+			foreach($request->edit_game_id as $game) {
+				$game = LeagueSchedule::find($game);
+				$away_team = $game->away_team_obj;
+				$home_team = $game->home_team_obj;
+				
+				// Add away player stats
+				foreach($away_team->players as $away_player) {
+					$away_stat = $away_player->stats->where('league_schedule_id', $game->id)->first();
+					$away_stat->points = $player_points[$counter];
+					$away_stat->assist = $player_assists[$counter];
+					$away_stat->rebounds = $player_rebounds[$counter];
+					$away_stat->steals = $player_steals[$counter];
+					$away_stat->blocks = $player_blocks[$counter];
+					$away_stat->league_season_id = $showSeason->id;
+					$away_stat->league_player_id = $away_player->id;
+					$away_stat->league_teams_id = $away_team->id;
+					$away_stat->league_schedule_id = $game->id;
+					
+					if($away_stat->save()) {
+						$counter++;
+					}
+				}
+				
+				// Add home player stats
+				foreach($home_team->players as $home_player) {
+					$home_stat = $home_player->stats->where('league_schedule_id', $game->id)->first();
+					$home_stat->points = $player_points[$counter];
+					$home_stat->assist = $player_assists[$counter];
+					$home_stat->rebounds = $player_rebounds[$counter];
+					$home_stat->steals = $player_steals[$counter];
+					$home_stat->blocks = $player_blocks[$counter];
+					$home_stat->league_season_id = $showSeason->id;
+					$home_stat->league_player_id = $home_player->id;
+					$home_stat->league_teams_id = $home_team->id;
+					$home_stat->league_schedule_id = $game->id;
+					
+					if($home_stat->save()) {
+						$counter++;
+					}
+				}
+			}
+		} 
+		
+		// Add new stats
+		if(isset($request->points)) {
+			$player_points   = $request->points;
+			$player_assists  = $request->assists;
+			$player_rebounds = $request->rebounds;
+			$player_steals   = $request->steals;
+			$player_blocks   = $request->blocks;
+			$counter = 0;
+
+			//Get the games that are getting stats added to them
+			foreach($request->game_id as $game) {
+				$game = LeagueSchedule::find($game);
+				$away_team = $game->away_team_obj;
+				$home_team = $game->home_team_obj;
+				
+				// Add away player stats
+				foreach($away_team->players as $away_player) {
+					$away_stat = new LeagueStat();
+					$away_stat->points = $player_points[$counter];
+					$away_stat->assist = $player_assists[$counter];
+					$away_stat->rebounds = $player_rebounds[$counter];
+					$away_stat->steals = $player_steals[$counter];
+					$away_stat->blocks = $player_blocks[$counter];
+					$away_stat->league_season_id = $showSeason->id;
+					$away_stat->league_player_id = $away_player->id;
+					$away_stat->league_teams_id = $away_team->id;
+					$away_stat->league_schedule_id = $game->id;
+					
+					if($away_stat->save()) {
+						$counter++;
+					}
+				}
+				
+				// Add home player stats
+				foreach($home_team->players as $home_player) {
+					$home_stat = new LeagueStat();
+					$home_stat->points = $player_points[$counter];
+					$home_stat->assist = $player_assists[$counter];
+					$home_stat->rebounds = $player_rebounds[$counter];
+					$home_stat->steals = $player_steals[$counter];
+					$home_stat->blocks = $player_blocks[$counter];
+					$home_stat->league_season_id = $showSeason->id;
+					$home_stat->league_player_id = $home_player->id;
+					$home_stat->league_teams_id = $home_team->id;
+					$home_stat->league_schedule_id = $game->id;
+					
+					if($home_stat->save()) {
+						$counter++;
+					}
+				}
+			}
+		}
+
+		return redirect()->back()->with('status', 'Stats saved successfully');
     }
 	
 	/**

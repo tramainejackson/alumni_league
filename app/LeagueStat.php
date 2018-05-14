@@ -56,7 +56,7 @@ class LeagueStat extends Model
 	*/
 	public function scopeStealingLeaders($query, $limit) {
 		return $query->select(DB::raw(self::get_formatted_stats()))
-		->groupBy('league_players_id')
+		->groupBy('league_player_id')
 		->orderBy('SPG', 'desc')
 		->limit($limit);
 	}
@@ -66,7 +66,7 @@ class LeagueStat extends Model
 	*/
 	public function scopeScoringLeaders($query, $limit) {
 		return $query->select(DB::raw(self::get_formatted_stats()))
-		->groupBy('league_players_id')
+		->groupBy('league_player_id')
 		->orderBy('PPG', 'desc')
 		->limit($limit);
 	}
@@ -76,7 +76,7 @@ class LeagueStat extends Model
 	*/
 	public function scopeAssistingLeaders($query, $limit) {
 		return $query->select(DB::raw(self::get_formatted_stats()))
-		->groupBy('league_players_id')
+		->groupBy('league_player_id')
 		->orderBy('APG', 'desc')
 		->limit($limit);
 	}
@@ -86,7 +86,7 @@ class LeagueStat extends Model
 	*/
 	public function scopeReboundingLeaders($query, $limit) {
 		return $query->select(DB::raw(self::get_formatted_stats()))
-		->groupBy('league_players_id')
+		->groupBy('league_player_id')
 		->orderBy('RPG', 'desc')
 		->limit($limit);
 	}
@@ -96,7 +96,7 @@ class LeagueStat extends Model
 	*/
 	public function scopeBlockingLeaders($query, $limit) {
 		return $query->select(DB::raw(self::get_formatted_stats()))
-		->groupBy('league_players_id')
+		->groupBy('league_player_id')
 		->orderBy('BPG', 'desc')
 		->limit($limit);
 	}
@@ -106,7 +106,7 @@ class LeagueStat extends Model
 	*/
 	public function scopeAllFormattedStats($query) { 		
 		return $query->select(DB::raw(self::get_formatted_stats()))
-		->groupBy('league_players_id')
+		->groupBy('league_player_id')
 		->orderBy('TPTS', 'desc');
 	}
 	
