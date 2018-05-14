@@ -20,7 +20,6 @@
 				
 				@if($weekGames->count() > 0)
 					@foreach($weekGames as $game)
-					{{ dd($game->home_team) }}
 						<!--Card-->
 						<div class="card mb-4">
 							<!--Card content-->
@@ -49,30 +48,130 @@
 									<div class="my-2">
 										<div class="row">
 											<div class="col-12">
-												<table class="table">
+												<table class="table table-striped table-sm table-fixed">
 													<thead>
-														<tr>
-															<th>Away Team</th>
+														<tr class="blue darken-3 white-text text-center">
+															<th>{{ $game->away_team_obj->team_name }}</th>
+															<th>Points</th>
+															<th>Assists</th>
+															<th>Rebounds</th>
+															<th>Steals</th>
+															<th>Blocks</th>
 														</tr>
 													</thead>
 													<tbody>
-														<tr>
-															<td>{{ $away_team->team_name }}<td>
-														</tr>
+														@foreach($game->away_team_obj->players as $away_player)
+															<tr>
+																<td class="text-center">{{ '#' . $away_player->jersey_num . ' ' . $away_player->player_name }}</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Pts</span>
+																		</div>
+																		<input type="text" name="points[]" class="form-control" value="" placeholder="Enter Points" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Ast</span>
+																		</div>
+																		<input type="text" name="assists[]" class="form-control" value="" placeholder="Enter Assists" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Rebs</span>
+																		</div>
+																		
+																		<input type="text" name="rebounds[]" class="form-control" value="" placeholder="Enter Rebounds" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Stls</span>
+																		</div>
+																		
+																		<input type="text" name="steals[]" class="form-control" value="" placeholder="Enter Steals" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Blks</span>
+																		</div>
+																		
+																		<input type="text" name="blocks[]" class="form-control" value="" placeholder="Enter Blocks" />
+																	</div>
+																</td>
+															</tr>
+														@endforeach
 													</tbody>
 												</table>
 											</div>
 											<div class="col-12">
-												<table class="table">
+												<table class="table table-striped table-sm table-fixed">
 													<thead>
-														<tr>
-															<th>Home Team</th>
+														<tr class="blue-grey white-text text-center">
+															<th>{{ $game->home_team_obj->team_name }}</th>
+															<th>Points</th>
+															<th>Assists</th>
+															<th>Rebounds</th>
+															<th>Steals</th>
+															<th>Blocks</th>
 														</tr>
 													</thead>
 													<tbody>
-														<tr>
-															<td>{{ $home_team->team_name }}<td>
-														</tr>
+														@foreach($game->home_team_obj->players as $home_player)
+															<tr>
+																<td class="text-center">{{ '#' . $home_player->jersey_num . ' ' . $home_player->player_name }}</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Pts</span>
+																		</div>
+																		<input type="text" name="points[]" class="form-control" value="" placeholder="Enter Game Points" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Ast</span>
+																		</div>
+																		<input type="text" name="assists[]" class="form-control" value="" placeholder="Enter Game Assists" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Rebs</span>
+																		</div>
+																		
+																		<input type="text" name="rebounds[]" class="form-control" value="" placeholder="Enter Game Rebounds" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Stls</span>
+																		</div>
+																		
+																		<input type="text" name="steals[]" class="form-control" value="" placeholder="Enter Game Steals" />
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">Blks</span>
+																		</div>
+																		
+																		<input type="text" name="blocks[]" class="form-control" value="" placeholder="Enter Game Total Blocks" />
+																	</div>
+																</td>
+															</tr>
+														@endforeach
 													</tbody>
 												</table>
 											</div>

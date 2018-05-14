@@ -43,7 +43,7 @@ class LeagueTeam extends Model
     }
 	
 	/**
-	* Get the contact players the team object.
+	* Get the players for the team object.
 	*/
     public function players()
     {
@@ -51,7 +51,7 @@ class LeagueTeam extends Model
     }
 	
 	/**
-	* Get the contact games the team object.
+	* Get the home games for the team object.
 	*/
     public function home_games()
     {
@@ -59,7 +59,7 @@ class LeagueTeam extends Model
     }
 	
 	/**
-	* Get the contact games the team object.
+	* Get the away games for the team object.
 	*/
     public function away_games()
     {

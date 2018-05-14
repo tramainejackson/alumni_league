@@ -42,6 +42,30 @@ class LeagueSchedule extends Model
         return $this->hasOne('App\LeagueScheduleResult');
     }
 	
+	/**
+	* Get the player stats for the game object.
+	*/
+    public function player_stats()
+    {
+        return $this->hasMany('App\LeagueStat');
+    }
+	
+	/**
+	* Get the home team for the scheduled game object.
+	*/
+    public function home_team_obj()
+    {
+        return $this->belongsTo('App\LeagueTeam', 'home_team_id');
+    }
+	
+	/**
+	* Get the away team for the scheduled game object.
+	*/
+    public function away_team_obj()
+    {
+        return $this->belongsTo('App\LeagueTeam', 'away_team_id');
+    }
+	
 	/*
 	*
 	* Format the game date
