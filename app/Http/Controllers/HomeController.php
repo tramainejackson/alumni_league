@@ -48,7 +48,7 @@ class HomeController extends Controller
 		}
 
 		$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
-		$showSeasonStat = $showSeason->stats();
+		$showSeasonStat = $showSeason->stats()->get();
 		$showSeasonTeams = $showSeason->league_teams;
 		$showSeasonUnpaidTeams = $showSeason->league_teams()->unpaid();
 		$showSeasonPlayers = $showSeason->league_players;

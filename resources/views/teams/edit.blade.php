@@ -102,16 +102,16 @@
 										<tr class="newPlayerRow hidden" hidden>
 											<td class="text-center">&nbsp;</td>
 											<td class="">
-												<input type="number" name="new_jers_num" class="form-control" value="" placeholder="Enter Jersey #" disabled />
+												<input type="number" name="new_jers_num[]" class="form-control" value="" placeholder="Enter Jersey #" disabled />
 											</td>
 											<td class="">
-												<input type="text" name="new_player_name" class="form-control" value="" placeholder="Enter Player Name" disabled />
+												<input type="text" name="new_player_name[]" class="form-control" value="" placeholder="Enter Player Name" disabled />
 											</td>
 											<td class="">
 												<input type="text" name="new_player_email[]" class="form-control" value="" placeholder="Enter Player Email" disabled />
 											</td>
 											<td class="">
-												<input type="text" name="new_player_phone" class="form-control" value="" placeholder="Enter Player Phone" disabled />
+												<input type="text" name="new_player_phone[]" class="form-control" value="" placeholder="Enter Player Phone" disabled />
 											</td>
 											<td class="">
 												<button class="btn btn-sm orange lighten-1 w-100 my-0 removeNewPlayerRow hidden" type="button">Hide</button>

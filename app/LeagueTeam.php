@@ -92,8 +92,8 @@ class LeagueTeam extends Model
 	/**
 	* Scope a query to get all the games for this team
 	*/
-	// public function scopeGames($query) {
-		// return $query->where('home_team_id', $this->id)
-			// ->orWhere('away_team_id', $this->id);
-	// }
+	public function scopeGames($query) {
+		return $query->where('home_team_id', $this->id)
+			->orWhere('away_team_id', $this->id);
+	}
 }

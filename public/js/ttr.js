@@ -65,6 +65,19 @@ $(document).ready(function() {
 		}
 	});
 	
+	// Toggle team captain checkbox
+	$('body').on('click', '#team_players_table input[name="team_captain"]', function(e) {
+		var checkInputs = $('#team_players_table input[name="team_captain"]');
+		var checkedInput = $(this);
+
+		// Remove checkbox from all other checkboxes
+		checkInputs.each(function() {
+			if($(this).prop('checked') && $(this).val() != checkedInput.val()) {
+				$(this).prop('checked', false);
+			}
+		});
+	});
+	
 	// Toggle value for leagues ages and competition for leages edit page .
 	// (Will toggle on and off. Not related to sibling option. Does not require a selection)
 	$("body").on("click", ".compBtnSelect, .ageBtnSelect", function(e) {
@@ -113,7 +126,7 @@ $(document).ready(function() {
 		$(newPlayer).removeClass('hidden newPlayerRow')
 			.insertBefore('#team_players_table .newPlayerRow')
 			.removeAttr('hidden')
-			.find('input, button').removeClass('hidden').removeAttr('disabled');
+			.find('input, button').removeClass('hidden').removeAttr('disabled').focus();
 	});
 	
 	// Remove the newly added player row on team edit page

@@ -70,6 +70,7 @@ class LeaguePlayer extends Model
 	* Scope a query to get the captain of the team
 	*/
 	public function scopeCaptain($query) {
-		return $query->where('team_captain', 'Y')->first();
+		return $query->where('team_captain', 'Y')
+			->get();
 	}
 }

@@ -16,53 +16,59 @@
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
-
+				
 				@if($seasonTeams->isNotEmpty())
-					@foreach($seasonTeams as $team)
-						<div class="card card-cascade wider my-4">
-							<!-- Card image -->
-							<div class="view overlay">
-								<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/photo6.jpg" alt="Card image cap">
-								<a href="#!">
-									<div class="mask rgba-white-slight"></div>
-								</a>
-							</div>
-							
-							<!-- Card content -->
-							<div class="card-body text-center">
-								<!-- Title -->
-								<h1 class="card-title h1-responsive font-weight-bold">{{ $team->team_name }}</h1>
-								<!-- Team Captain Info -->
-								<div class="d-flex flex-column align-items-center">
-									<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
-									<div class="d-flex flex-column align-items-center justify-content-center">
-										<p class="m-0">
-											<label class="">Name:&nbsp;</label>
-											<span>{{ $team->team_captain ? $team->team_captain : 'N/A' }}</span>
-										</p>
-										<p class="m-0">
-											<label class="">Email:&nbsp;</label>
-											<span>{{ $team->captain_email ? $team->captain_email : 'No email address' }}</span>
-										</p>
-										<p class="m-0">
-											<label class="">Phone:&nbsp;</label>
-											<span>{{ $team->captain_phone ? $team->captain_phone : 'No email address' }}</span>
-										</p>
+					<div class="row">
+						@foreach($seasonTeams as $team)
+							@php $teamCaptain = $team->players()->captain(); @endphp
+
+							<div class="col-6">
+								<div class="card card-cascade wider my-4">
+									<!-- Card image -->
+									<div class="view overlay">
+										<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/photo6.jpg" alt="Card image cap">
+										<a href="#!">
+											<div class="mask rgba-white-slight"></div>
+										</a>
 									</div>
-									<div class="">
-										<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1">Edit Team</a>
+									
+									<!-- Card content -->
+									<div class="card-body text-center">
+										<!-- Title -->
+										<h1 class="card-title h1-responsive font-weight-bold">{{ $team->team_name }}</h1>
+										<!-- Team Captain Info -->
+										<div class="d-flex flex-column align-items-center">
+											<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
+											<div class="d-flex flex-column align-items-center justify-content-center">
+												<p class="m-0">
+													<label class="">Name:&nbsp;</label>
+													<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
+												</p>
+												<p class="m-0">
+													<label class="">Email:&nbsp;</label>
+													<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->email != null ? $teamCaptain->first()->email : 'No email address' : 'No email address' }}</span>
+												</p>
+												<p class="m-0">
+													<label class="">Phone:&nbsp;</label>
+													<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No email address' : 'No email address' }}</span>
+												</p>
+											</div>
+											<div class="">
+												<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1">Edit Team</a>
+											</div>
+										</div>
+										<div class="feesButton">
+											@if($team->fee_paid == 'N')
+												<button class="btn orange darken-2" type="button">Fees Due</button>
+											@else
+												<button class="btn green darken-1" type="button">Fees Paid</button>
+											@endif
+										</div>
 									</div>
 								</div>
-								<div class="feesButton">
-									@if($team->fee_paid == 'N')
-										<button class="btn orange darken-2" type="button">Fees Due</button>
-									@else
-										<button class="btn green darken-1" type="button">Fees Paid</button>
-									@endif
-								</div>
 							</div>
-						</div>
-					@endforeach
+						@endforeach
+					</div>
 				@else
 					<div class="">
 						<h3 class="h3-responsive text-center">There are no teams added for this season yet</h3>

@@ -101,7 +101,9 @@ class LeagueTeamController extends Controller
     */
     public function update(Request $request, LeagueTeam $league_team)
     {
-		// dd($league_team->home_games);
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
 		$league_team->team_name = $request->team_name;
 		$league_team->fee_paid = $request->fee_paid;
 		$team_players = $league_team->players;
@@ -110,9 +112,48 @@ class LeagueTeamController extends Controller
 		$team_away_games = $league_team->away_games;
 
 		if($league_team->save()) {
+			// Add new players
+			if(isset($request->new_player_name)) {
+				foreach($request->new_player_name as $key => $newPlayerName) {
+					$newPlayer = new LeaguePlayer();
+					$newPlayer->team_name = $request->team_name;
+					$newPlayer->player_name = $newPlayerName;
+					$newPlayer->jersey_num = $request->new_jers_num[$key];
+					$newPlayer->email = $request->new_player_email[$key];
+					$newPlayer->phone = $request->new_player_phone[$key];
+					$newPlayer->team_captain = 'N';
+					$newPlayer->league_team_id = $league_team->id;
+					$newPlayer->league_season_id = $showSeason->id;
+					
+					// Save the new team player
+					if($newPlayer->save()) {
+						// If this team has any team stats, then
+						// add each new player to that games stats
+						if($league_team->home_games->merge($league_team->away_games)->isNotEmpty()) {
+							$games = $league_team->home_games->merge($league_team->away_games);
+							
+							foreach($games as $game) {
+								// Check and see if the game has stats added yet
+								// Add player to that games stats if exist
+								if($game->player_stats->isNotEmpty()) {
+									$newPlayerStat = new LeagueStat();
+									$newPlayerStat->league_teams_id = $league_team->id;
+									$newPlayerStat->league_season_id = $showSeason->id;
+									$newPlayerStat->league_schedule_id = $game->id;
+									$newPlayerStat->league_player_id = $newPlayer->id;
+									$newPlayerStat->game_played = 0;
+									
+									if($newPlayerStat->save()) {}
+								}
+							}
+						}
+					}
+				}
+			}
 			// Updates team players
 			if($team_players) {
 				foreach($team_players as $key => $player) {
+					$player->team_captain = str_ireplace('captain_', '', $request->team_captain) == $player->id ? 'Y' : 'N';
 					$player->team_name = $request->team_name;
 					$player->player_name = $request->player_name[$key];
 					$player->jersey_num = $request->jersey_num[$key];

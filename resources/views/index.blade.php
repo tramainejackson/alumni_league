@@ -149,7 +149,7 @@
 										<div class="card-body text-center">
 											<p class="">{{ $upcomingGame->home_team }}</p>
 											<p class="">vs</p>
-											<p class="">{{ $upcomingGame->home_team }}</p>
+											<p class="">{{ $upcomingGame->away_team }}</p>
 										</div>
 										<div class="card-footer px-1 d-flex align-items-center justify-content-around">
 											<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
@@ -201,7 +201,7 @@
 				</div>
 				<div class="my-5 d-flex align-items-center justify-content-around">
 					<!-- Season stat leaders by category -->
-					@if($showSeasonStat->get()->isNotEmpty())
+					@if($showSeasonStat->isNotEmpty())
 						<!-- Get the scoring leaders -->
 						<div class="blue-gradient">
 							<table class="table white-text">
@@ -213,10 +213,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($showSeasonStat->scoringLeaders(5)->get() as $playerStat)
+									@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
 										<tr class="white-text">
-											<td>{{ $playerStat->team_name }}</td>
-											<td>{{ $playerStat->player_name }}</td>
+											<td>{{ $playerStat->player->team_name }}</td>
+											<td>{{ $playerStat->player->player_name }}</td>
 											<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
 										</tr>
 									@endforeach
@@ -235,10 +235,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($showSeasonStat->reboundingLeaders(5)->get() as $playerStat)
+									@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
 										<tr class="white-text">
-											<td>{{ $playerStat->team_name }}</td>
-											<td>{{ $playerStat->player_name }}</td>
+											<td>{{ $playerStat->player->team_name }}</td>
+											<td>{{ $playerStat->player->player_name }}</td>
 											<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
 										</tr>
 									@endforeach
@@ -257,10 +257,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($showSeasonStat->assistingLeaders(5)->get() as $playerStat)
+									@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
 										<tr class="white-text">
-											<td>{{ $playerStat->team_name }}</td>
-											<td>{{ $playerStat->player_name }}</td>
+											<td>{{ $playerStat->player->team_name }}</td>
+											<td>{{ $playerStat->player->player_name }}</td>
 											<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
 										</tr>
 									@endforeach
@@ -279,10 +279,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($showSeasonStat->stealingLeaders(5)->get() as $playerStat)
+									@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
 										<tr class="white-text">
-											<td>{{ $playerStat->team_name }}</td>
-											<td>{{ $playerStat->player_name }}</td>
+											<td>{{ $playerStat->player->team_name }}</td>
+											<td>{{ $playerStat->player->player_name }}</td>
 											<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
 										</tr>
 									@endforeach
@@ -301,10 +301,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($showSeasonStat->blockingLeaders(5)->get() as $playerBlocks)
+									@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
 										<tr class="white-text">
-											<td>{{ $playerBlocks->team_name }}</td>
-											<td>{{ $playerBlocks->player_name }}</td>
+											<td>{{ $playerBlocks->player->team_name }}</td>
+											<td>{{ $playerBlocks->player->player_name }}</td>
 											<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
 										</tr>
 									@endforeach
