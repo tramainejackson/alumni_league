@@ -48,7 +48,7 @@ class LeagueStat extends Model
 	*/
     public function player()
     {
-        return $this->belongsTo('App\LeaguePlayer');
+        return $this->belongsTo('App\LeaguePlayer', 'league_player_id');
     }
 	
 	/**
@@ -67,7 +67,7 @@ class LeagueStat extends Model
 	public function scopeScoringLeaders($query, $limit) {
 		return $query->select(DB::raw(self::get_formatted_stats()))
 		->groupBy('league_player_id')
-		->orderBy('PPG', 'desc')
+		->orderBy('TPTS', 'desc')
 		->limit($limit);
 	}
 	
@@ -116,15 +116,14 @@ class LeagueStat extends Model
 	public function scopeAllTeamStats($query) {
 		return $query->join('league_standings', 'league_stats.league_teams_id', '=', 'league_standings.league_teams_id')
 		->join('league_teams', 'league_stats.league_teams_id', '=', 'league_teams.id')
-		->select(DB::raw("DISTINCT
-			SUM(points) AS TPTS,
+		->select(DB::raw("team_points AS TPTS,
 			SUM(threes_made) AS TTHR,
 			SUM(ft_made) AS TFTS,
 			SUM(assist) AS TASS,
 			SUM(rebounds) AS TRBD,
 			SUM(steals) AS TSTL,
 			SUM(blocks) AS TBLK,
-			FORMAT(SUM(points)/team_games, 1) AS PPG,
+			FORMAT(team_points/team_games, 1) AS PPG,
 			FORMAT(SUM(threes_made)/team_games, 1) AS TPG,
 			FORMAT(SUM(ft_made)/team_games, 1) AS FTPG,
 			FORMAT(SUM(assist)/team_games, 1) AS APG,
@@ -133,6 +132,7 @@ class LeagueStat extends Model
 			FORMAT(SUM(blocks)/team_games, 1) AS BPG,
 			league_standings.league_teams_id,
 			league_standings.team_name,
+			team_games,
 			team_wins,
 			team_losses,
 			team_games,

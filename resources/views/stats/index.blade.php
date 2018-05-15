@@ -34,8 +34,8 @@
 								</thead>
 								<tbody>
 									@foreach($showSeason->stats()->scoringLeaders(5)->get() as $scoringLeader)
-										<tr>
-											<td class='playerNameTD'>{{ $scoringLeader->player_name }}</td>
+										<tr data-toggle="modal" data-target="#player_card">
+											<td class='playerNameTD'>#{{ $scoringLeader->player->jersey_num . ' ' . $scoringLeader->player->player_name }}</td>
 											<td class='totalPointsTD'>{{ $scoringLeader->TPTS }}</td>
 											<td class='pointsPGTD'>{{ $scoringLeader->PPG }}</td>
 											<td class='totalThreesTD' hidden>{{ $scoringLeader->TTHR }}</td>
@@ -50,8 +50,7 @@
 											<td class='stealsPGTD' hidden>{{ $scoringLeader->SPG }}</td>
 											<td class='totalBlocksTD' hidden>{{ $scoringLeader->TBLK }}</td>
 											<td class='blocksPGTD' hidden>{{ $scoringLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $scoringLeader->team_name }}</td>
-											<td class='jerseyNumTD' hidden># {{ $scoringLeader->jersey_num }}</td>
+											<td class='teamNameTD' hidden>{{ $scoringLeader->player->team_name }}</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -68,8 +67,8 @@
 								</thead>
 								<tbody>
 									@foreach($showSeason->stats()->assistingLeaders(5)->get() as $assistLeader)
-										<tr>
-											<td class='playerNameTD'>{{ $assistLeader->player_name }}</td>
+										<tr data-toggle="modal" data-target="#player_card">
+											<td class='playerNameTD'>#{{ $assistLeader->player->jersey_num . ' ' . $assistLeader->player->player_name }}</td>
 											<td class='totalPointsTD' hidden>{{ $assistLeader->TPTS }}</td>
 											<td class='pointsPGTD' hidden>{{ $assistLeader->PPG }}</td>
 											<td class='totalThreesTD' hidden>{{ $assistLeader->TTHR }}</td>
@@ -84,8 +83,7 @@
 											<td class='stealsPGTD' hidden>{{ $assistLeader->SPG }}</td>
 											<td class='totalBlocksTD' hidden>{{ $assistLeader->TBLK }}</td>
 											<td class='blocksPGTD' hidden>{{ $assistLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $assistLeader->team_name }}</td>
-											<td class='jerseyNumTD' hidden>#&nbsp;{{ $assistLeader->jersey_num }}</td>
+											<td class='teamNameTD' hidden>{{ $assistLeader->player->team_name }}</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -102,8 +100,8 @@
 								</thead>
 								<tbody>
 									@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $reboundsLeader)
-										<tr>
-											<td class='playerNameTD'>{{ $reboundsLeader->player_name }}</td>
+										<tr data-toggle="modal" data-target="#player_card">
+											<td class='playerNameTD'>#{{ $reboundsLeader->player->jersey_num . ' ' . $reboundsLeader->player->player_name }}</td>
 											<td class='totalPointsTD' hidden>{{ $reboundsLeader->TPTS }}</td>
 											<td class='pointsPGTD' hidden>{{ $reboundsLeader->PPG }}</td>
 											<td class='totalThreesTD' hidden>{{ $reboundsLeader->TTHR }}</td>
@@ -118,8 +116,7 @@
 											<td class='stealsPGTD' hidden>{{ $reboundsLeader->SPG }}</td>
 											<td class='totalBlocksTD' hidden>{{ $reboundsLeader->TBLK }}</td>
 											<td class='blocksPGTD' hidden>{{ $reboundsLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $reboundsLeader->team_name }}</td>
-											<td class='jerseyNumTD' hidden>#&nbsp;{{ $reboundsLeader->jersey_num }}</td>
+											<td class='teamNameTD' hidden>{{ $reboundsLeader->player->team_name }}</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -136,8 +133,8 @@
 								</thead>
 								<tbody>
 									@foreach($showSeason->stats()->stealingLeaders(5)->get() as $stealsLeader)
-										<tr>
-											<td class='playerNameTD'>{{ $stealsLeader->player_name }}</td>
+										<tr data-toggle="modal" data-target="#player_card">
+											<td class='playerNameTD'>#{{ $stealsLeader->player->jersey_num . '  ' . $stealsLeader->player->player_name }}</td>
 											<td class='totalPointsTD' hidden>{{ $stealsLeader->TPTS }}</td>
 											<td class='pointsPGTD' hidden>{{ $stealsLeader->PPG }}</td>
 											<td class='totalThreesTD' hidden>{{ $stealsLeader->TTHR }}</td>
@@ -152,8 +149,7 @@
 											<td class='stealsPGTD'>{{ $stealsLeader->SPG }}</td>
 											<td class='totalBlocksTD' hidden>{{ $stealsLeader->TBLK }}</td>
 											<td class='blocksPGTD' hidden>{{ $stealsLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $stealsLeader->team_name }}</td>
-											<td class='jerseyNumTD' hidden>#&nbsp;{{ $stealsLeader->jersey_num }}</td>
+											<td class='teamNameTD' hidden>{{ $stealsLeader->player->team_name }}</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -170,8 +166,8 @@
 								</thead>
 								<tbody>
 									@foreach($showSeason->stats()->blockingLeaders(5)->get() as $blocksLeader)
-										<tr>
-											<td class='playerNameTD'>{{ $blocksLeader->player_name }}</td>
+										<tr data-toggle="modal" data-target="#player_card">
+											<td class='playerNameTD'>#{{ $blocksLeader->player->jersey_num . ' ' . $blocksLeader->player->player_name }}</td>
 											<td class='totalPointsTD' hidden>{{ $blocksLeader->TPTS }}</td>
 											<td class='pointsPGTD' hidden>{{ $blocksLeader->PPG }}</td>
 											<td class='totalThreesTD' hidden>{{ $blocksLeader->TTHR }}</td>
@@ -186,33 +182,38 @@
 											<td class='stealsPGTD' hidden>{{ $blocksLeader->SPG }}</td>
 											<td class='totalBlocksTD'>{{ $blocksLeader->TBLK }}</td>
 											<td class='blocksPGTD'>{{ $blocksLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $blocksLeader->team_name }}</td>
-											<td class='jerseyNumTD' hidden>#@nbsp;{{ $blocksLeader->jersey_num }}</td>
+											<td class='teamNameTD' hidden>{{ $blocksLeader->player->team_name }}</td>
 										</tr>
 									@endforeach
 								</tbody>
 							</table>
 						</div>
 					</div>
-
 					<div class="hidden" id="player_stats">
 						<table class="table table-responsive-sm" id="player_stats_table">
 							<thead>
 								<tr>
 									<th></th>
-									<th>Total Points</th><th>Points p/g</th>
-									<th>3's</th><th>3's p/g</th>
-									<th>FT</th><th>FT's p/g</th>
-									<th>Assists</th><th>Assists p/g</th>
-									<th>Rebounds</th><th>Rebounds p/g</th>
-									<th>Steals</th><th>Steals p/g</th>
-									<th>Blocks</th><th>Blocks p/g</th>
+									<th>Total Points</th>
+									<th>PPG</th>
+									<th>3's</th>
+									<th>3's PG</th>
+									<th>FT</th>
+									<th>FTPG</th>
+									<th>Assists</th>
+									<th>APG</th>
+									<th>Rebounds</th>
+									<th>RPG</th>
+									<th>Steals</th>
+									<th>SPG</th>
+									<th>Blocks</th>
+									<th>BPG</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach($allPlayers->get() as $showPlayer)
-									<tr>
-										<td class='playerNameTD'>{{ $showPlayer->player_name }}</td>
+									<tr data-toggle="modal" data-target="#player_card">
+										<td class='playerNameTD'>#{{ $showPlayer->player->jersey_num . ' ' . $showPlayer->player->player_name }}</td>
 										<td class='totalPointsTD'>{{ $showPlayer->TPTS }}</td>
 										<td class='pointsPGTD'>{{ $showPlayer->PPG }}</td>
 										<td class='totalThreesTD'>{{ $showPlayer->TTHR }}</td>
@@ -227,8 +228,7 @@
 										<td class='stealsPGTD'>{{ $showPlayer->SPG }}</td>
 										<td class='totalBlocksTD'>{{ $showPlayer->TBLK }}</td>
 										<td class='blocksPGTD'>{{ $showPlayer->BPG }}</td>
-										<td class='teamNameTD' hidden>{{ $showPlayer->team_name }}</td>
-										<td class='jerseyNumTD' hidden>#&nbsp;{{ $showPlayer->jersey_num }}</td>
+										<td class='teamNameTD' hidden>{{ $showPlayer->player->team_name }}</td>
 									</tr>
 								@endforeach
 							</tbody>
@@ -237,39 +237,44 @@
 
 					<div class="hidden" id="team_stats">
 						<table class="table table-responsive-sm" id="team_stats_table">
-							<tr>
-								<th></th>
-								<th>Total Points</th><th>Points p/g</th>
-								<th>3's</th><th>3's p/g</th>
-								<th>FT</th><th>FT's p/g</th>
-								<th>Assists</th><th>Assists p/g</th>
-								<th>Rebounds</th><th>Rebounds p/g</th>
-								<th>Steals</th><th>Steals p/g</th>
-								<th>Blocks</th><th>Blocks p/g</th>
-							</tr>
-							@foreach($allTeams->get() as $showTeam)
+							<thead>
 								<tr>
-									<td class='teamNameTD'>{{ $showTeam->team_name }}</td>
-									<td class='totalPointsTD'>{{ $showTeam->TPTS }}</td>
-									<td class='pointsPGTD'>{{ $showTeam->PPG }}</td>
-									<td class='totalThreesTD'>{{ $showTeam->TTHR }}</td>
-									<td class='threesPGTD'>{{ $showTeam->TPG }}</td>
-									<td class='totalFTTD'>{{ $showTeam->TFTS }}</td>
-									<td class='freeThrowsPGTD'>{{ $showTeam->FTPG }}</td>
-									<td class='totalAssTD'>{{ $showTeam->TASS }}</td>
-									<td class='assistPGTD'>{{ $showTeam->APG }}</td>
-									<td class='totalRebTD'>{{ $showTeam->TRBD }}</td>
-									<td class='rebPGTD'>{{ $showTeam->RPG }}</td>
-									<td class='totalStealsTD'>{{ $showTeam->TSTL }}</td>
-									<td class='stealsPGTD'>{{ $showTeam->SPG }}</td>
-									<td class='totalBlocksTD'>{{ $showTeam->TBLK }}</td>
-									<td class='blocksPGTD'>{{ $showTeam->BPG }}</td>
-									<td class='totalWinsTD' hidden>{{ $showTeam->team_wins }}</td>
-									<td class='totalLossesTD' hidden>{{ $showTeam->team_losses }}</td>
-									<td class='totalGamesTD' hidden>{{ $showTeam->team_games }}</td>
-									<td class='teamPicture' hidden>{{ $showTeam->team_picture }}</td>
+									<th></th>
+									<th>Total Points</th>
+									<th>PPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Points Per Game Are Calculated From The Game Results"></i></th>
+									<th>3's PG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="3's Per Game Are Calculated From The Player Stats"></i></th>
+									<th>FT's PG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Free Throws Per Game Are Calculated From The Player Stats"></i></th>
+									<th>APG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Assist Per Game Are Calculated From The Player Stats"></i></th>
+									<th>RPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Rebounds Per Game Are Calculated From The Player Stats"></i></th>
+									<th>SPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Steals Per Game Are Calculated From The Player Stats"></i></th>
+									<th>BPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Blocks Per Game Are Calculated From The Player Stats"></i></th>
 								</tr>
-							@endforeach
+							</thead>
+							<tbody>
+								@foreach($allTeams->get() as $showTeam)
+									<tr data-toggle="modal" data-target="#team_card">
+										<td class='teamNameTD'>{{ $showTeam->team_name }}</td>
+										<td class='totalPointsTD'>{{ $showTeam->TPTS }}</td>
+										<td class='pointsPGTD'>{{ $showTeam->PPG }}</td>
+										<td class='threesPGTD'>{{ $showTeam->TPG }}</td>
+										<td class='freeThrowsPGTD'>{{ $showTeam->FTPG }}</td>
+										<td class='assistPGTD'>{{ $showTeam->APG }}</td>
+										<td class='rebPGTD'>{{ $showTeam->RPG }}</td>
+										<td class='stealsPGTD'>{{ $showTeam->SPG }}</td>
+										<td class='blocksPGTD'>{{ $showTeam->BPG }}</td>
+										<td class='totalThreesTD' hidden>{{ $showTeam->TTHR }}</td>
+										<td class='totalFTTD' hidden>{{ $showTeam->TFTS }}</td>
+										<td class='totalAssTD' hidden>{{ $showTeam->TASS }}</td>
+										<td class='totalRebTD' hidden>{{ $showTeam->TRBD }}</td>
+										<td class='totalStealsTD' hidden>{{ $showTeam->TSTL }}</td>
+										<td class='totalBlocksTD' hidden>{{ $showTeam->TBLK }}</td>
+										<td class='totalWinsTD' hidden>{{ $showTeam->team_wins }}</td>
+										<td class='totalLossesTD' hidden>{{ $showTeam->team_losses }}</td>
+										<td class='totalGamesTD' hidden>{{ $showTeam->team_games }}</td>
+										<td class='teamPicture' hidden>{{ $showTeam->team_picture }}</td>
+									</tr>
+								@endforeach
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -280,46 +285,116 @@
 				@endforeach
 			</div>
 		</div>
-		<div class="row">
-			<div id="card_overlay"></div>
-			<div id="player_card">
-				<div id="player_card_content">
-					<div class="playerCardHeader">
-						<span class="closeCard">X</span><h2 class="jerseyNumPlayerCard"></h2><h2 class="playerNamePlayerCard"></h2>
+		
+		<!-- Modal Cards -->
+		<div class="">
+			<!-- Player Card -->
+			<div class="modal fade" id="player_card" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<!--Card-->
+						<div class="card black white-text">
+							<!--Card image-->
+							<div class="view playerCardHeader gradient-card-header blue-gradient">
+								<div class="card-header-title">
+									<h2 class="playerNamePlayerCard"></h2>
+								
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+							<!--Card content-->
+							<div class="card-body black white-text text-center playerCardStats container-fluid">
+								<div class="row">
+									<div class="col-4 playerCardStatsLI">
+										<b>Team Name:</b> <span class="teamNameVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Points:</b> <span class="perGamePointsVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Assist:</b> <span class="perGameAssistVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Rebounds:</b> <span class="perGameReboundsVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Steals:</b> <span class="perGameStealsVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Blocks:</b> <span class="perGameBlocksVal"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--/.Card-->
 					</div>
-					<div class="playerCardStats"> 
-						<ul>
-							<li class="playerCardStatsLI"><b>Team Name:</b> <span class="teamNameVal"></span></li>
-							<li class="playerCardStatsLI"><b>Points:</b> <span class="perGamePointsVal"></span></li>
-							<li class="playerCardStatsLI"><b>Assist:</b> <span class="perGameAssistVal"></span></li>
-							<li class="playerCardStatsLI"><b>Rebounds:</b> <span class="perGameReboundsVal"></span></li>
-							<li class="playerCardStatsLI"><b>Steals:</b> <span class="perGameStealsVal"></span></li>
-							<li class="playerCardStatsLI"><b>Blocks:</b> <span class="perGameBlocksVal"></span></li>
-						</ul>
-					</div>	
 				</div>
 			</div>
-			<div id="team_card">
-				<div id="team_card_content">
-					<div class="teamCardHeader">
-						<span class="closeCard">X</span>
-						<div id="bgrdBlur"></div>
-					</div>
-					<div class="teamCardStats"> 
-						<ul>
-							<li class="teamCardStatsLI"><b>Team:</b> <span class="teamNameTeamCard"></span></li>
-							<li class="teamCardStatsLI"><b>Record:</b> <span class="teamWinsVal"></span> - <span class="teamLossesVal"></span></li>
-							<li class="teamCardStatsLI"><b>Points:</b> <span class="totalTeamPointsVal"></span></li>
-							<li class="teamCardStatsLI"><b>Assist:</b> <span class="perGameTeamAssistVal"></span></li>
-							<li class="teamCardStatsLI"><b>Rebounds:</b> <span class="perGameTeamReboundsVal"></span></li>
-							<li class="teamCardStatsLI"><b>Steals:</b> <span class="perGameTeamStealsVal"></span></li>
-							<li class="teamCardStatsLI"><b>Blocks:</b> <span class="perGameTeamBlocksVal"></span></li>
-							<li class="teamCardStatsLI"><b>Points P/G:</b> <span class="perGameTeamPointsVal"></span></li>
-							<li class="teamCardStatsLI"><b>Assist P/G:</b> <span class="totalTeamAssistVal"></span></li>
-							<li class="teamCardStatsLI"><b>Rebounds P/G:</b> <span class="totalTeamReboundsVal"></span></li>
-							<li class="teamCardStatsLI"><b>Steals P/G:</b> <span class="totalTeamStealsVal"></span></li>
-							<li class="teamCardStatsLI"><b>Blocks P/G:</b> <span class="totalTeamBlocksVal"></span></li>
-						</ul>
+			
+			<!-- Team Card -->
+			<div class="modal fade" id="team_card" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content"  id="team_card_content">
+						<!--Card-->
+						<div class="card black white-text">
+							<!--Card image-->
+							<div class="view teamCardHeader">
+								<img src="" class="img-fluid" alt="photo">
+								<a href="#">
+									<div class="mask rgba-white-slight">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								</a>
+							</div>
+							<!--Card content-->
+							<div class="card-body text-center">
+								<div class="modal-body teamCardStats container-fluid">
+									<div class="row">
+										<div class="col-4 teamCardStatsLI">
+											<b>Team:&nbsp;</b><span class="teamNameTeamCard"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Record:</b> <span class="teamWinsVal"></span> - <span class="teamLossesVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Points:</b> <span class="totalTeamPointsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Assist:</b> <span class="perGameTeamAssistVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Rebounds:</b> <span class="perGameTeamReboundsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Steals:</b> <span class="perGameTeamStealsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Blocks:</b> <span class="perGameTeamBlocksVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>PPG:</b> <span class="perGameTeamPointsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>APG:</b> <span class="totalTeamAssistVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>RPG:</b> <span class="totalTeamReboundsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>SPG:</b> <span class="totalTeamStealsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>BPG:</b> <span class="totalTeamBlocksVal"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--/.Card-->
 					</div>
 				</div>
 			</div>

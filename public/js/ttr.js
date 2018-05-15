@@ -149,17 +149,13 @@ $(document).ready(function() {
 	});
 	
 //Variables being used often
-	var windowHeight = window.innerHeight;
 	var playerID, teamID, gameID;
-	var username = $(".loggedInUser").text();
-	var loginAttempt = 0;
 	var modalField = {
 		modalTitle:$("#modal_title"),
 		modalContent:$("#modal_content"),
 		modalConfirmBtn:$("#confirmBtn"),
 		modalCancelBtn:$("#cancelBtn"),
-		modalOKBtn:$("#okBtn"),
-		modalLoginDiv:$("#loginDiv")
+		modalOKBtn:$("#okBtn")
 	};
 	
 	var $statCategories = new Array($("#league_leaders"), 
@@ -168,10 +164,6 @@ $(document).ready(function() {
 	);
 	
 	var $teamNames = $(".teamName");
-	
-//Reorder the games to be in order by date
-	var gamesOrder = [Number($("#game_week_select option").attr("id"))];
-		gamesOrder.sort();
 	
 //Add active class to current stat category button
 	$("body").on("click", ".statCategoryBtn", function(e)
@@ -202,24 +194,16 @@ $(document).ready(function() {
 			$(this).children(".stealsPGTD").text(),
 			$(this).children(".totalBlocksTD").text(),
 			$(this).children(".blocksPGTD").text(),
-			$(this).children(".teamNameTD").text(),
-			$(this).children(".jerseyNumTD").text()
+			$(this).children(".teamNameTD").text()
 		];
 		
 		$(".playerNamePlayerCard").text(playerStats[0]);
-		$(".jerseyNumPlayerCard").text(playerStats[16]);
 		$(".teamNameVal").text(playerStats[15]);
 		$(".perGamePointsVal").text(playerStats[2]);
 		$(".perGameAssistVal").text(playerStats[8]);
 		$(".perGameReboundsVal").text(playerStats[10]);
 		$(".perGameStealsVal").text(playerStats[12]);
 		$(".perGameBlocksVal").text(playerStats[14]);
-		$("#player_card").css({"top":topShelf+"px"});
-		$("#player_card, #card_overlay").fadeIn();
-		$(".closeCard, #card_overlay").on("click", function()
-		{
-			$("#player_card, #card_overlay").fadeOut();
-		});
 	});
 	
 //Add team stats to team card and display	
@@ -261,14 +245,7 @@ $(document).ready(function() {
 		$(".totalTeamStealsVal").text(teamStats[12]);
 		$(".perGameTeamBlocksVal").text(teamStats[13]);
 		$(".totalTeamBlocksVal").text(teamStats[14]);
-		$(".teamCardHeader").css({"backgroundImage":"url('"+teamStats[18]+"')"})
-		$("#card_overlay").css({"min-height":windowHeight+"px"});
-		$("#team_card").css({top:topShelf+"px"});
-		$("#team_card, #card_overlay").fadeIn();
-		$(".closeCard, #card_overlay").on("click", function()
-		{
-			$("#team_card, #card_overlay").fadeOut();
-		});				
+		$(".teamCardHeader img").attr('src',teamStats[18]);
 	});
 	
 //Add new player field to current fieldset

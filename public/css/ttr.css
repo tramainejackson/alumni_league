@@ -1039,51 +1039,10 @@ button#league_rules_btn {
     font-size: 140%;
 }
 /*Player and Team Card Information*/
-div#player_card, div#team_card {
-    position: absolute;
-	display: none;
-    background-color: black;
-    top: 5%;
-    left: 25%;
-    width: 50%;
-    color: white;
-	z-index: 4;
-}
-div#card_overlay {
-    position: absolute;
-	display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: black;
-    opacity: 0.9;
-    z-index: 3;
-}
-div#bgrdBlur {
-    position: absolute;
-    bottom: 0%;
-    display: table;
-    width: 100%;
-    padding: 3% 0%;
-    background: linear-gradient(rgba(255, 255, 255, 0), black 100%, black);
-}
-div#player_card_content, div#team_card_content {
-	position: relative;
-}
-.playerCardHeader {
-    background: linear-gradient(blue, blue, black);
-	position: relative;
-}
-.teamCardHeader {
-    display: table;
-    width: 100%;
-    padding: 14% 0%;
-    background-position: center center;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-	position: relative;
-}
+div#player_card, div#team_card {}
+
+.teamCardHeader {}
+
 h2.playerNamePlayerCard, h2.jerseyNumPlayerCard {
     display: inline-block;
 }
@@ -1117,9 +1076,15 @@ span.closeCard:hover {
     margin: 3.5% 11%;
     text-align: center;
 }
-li.teamCardStatsLI span {
+
+.teamCardStatsLI span, .playerCardStatsLI span {
     color: #B3B3B3;
 }
+
+.teamCardStatsLI, .playerCardStatsLI {
+	margin: 20px 0px;
+}
+
 /*Adding new players, teams, to stats and schedule admin page */
 div#add_player, div#add_team, div#edit_team, div#edit_stats, div#edit_schedule, div#edit_teams_info {
 	display:none;

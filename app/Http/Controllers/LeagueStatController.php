@@ -36,10 +36,9 @@ class LeagueStatController extends Controller
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		$seasonTeams = $showSeason->league_teams;
-		
-		$seasonStats = $showSeason->stats();		
-		$allPlayers = $seasonStats->allFormattedStats();
-		$allTeams = $seasonStats->allTeamStats();
+			
+		$allPlayers = $showSeason->stats()->allFormattedStats();
+		$allTeams = $showSeason->stats()->allTeamStats();
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 
 		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks'));
