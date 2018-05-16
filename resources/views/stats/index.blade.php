@@ -271,7 +271,7 @@
 										<td class='totalWinsTD' hidden>{{ $showTeam->team_wins }}</td>
 										<td class='totalLossesTD' hidden>{{ $showTeam->team_losses }}</td>
 										<td class='totalGamesTD' hidden>{{ $showTeam->team_games }}</td>
-										<td class='teamPicture' hidden>{{ $showTeam->team_picture }}</td>
+										<td class='teamPicture' hidden>{{ $showTeam->team_picture != null ? $showTeam->team_picture : $defaultImg }}</td>
 									</tr>
 								@endforeach
 							</tbody>

@@ -13,6 +13,8 @@
 /public/js/modules/*
 /public/js/mdb*
 /public/music/*
+/public/*.jpg
+/public/*.png
 /storage/*.key
 /vendor
 /.idea

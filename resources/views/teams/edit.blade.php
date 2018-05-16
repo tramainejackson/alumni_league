@@ -14,7 +14,7 @@
 				<div class="card card-cascade mb-4 reverse wider">
 					<!--Card image-->
 					<div class="view">
-						<img src="/images/commissioner.jpg" class="img-fluid" alt="photo">
+						<img src="{{ $league_team->team_picture != null ? $league_team->lg_photo() : $defaultImg }}" class="img-fluid mx-auto" alt="photo">
 					</div>
 					<!--Card content-->
 					<div class="card-body">
@@ -22,19 +22,43 @@
 						<h2 class="card-title h2-responsive text-center">{{ $league_team->team_name }}</h2>
 						
 						<!-- Create Form -->
-						{!! Form::open(['action' => ['LeagueTeamController@update', $league_team->id], 'method' => 'PATCH']) !!}
+						{!! Form::open(['action' => ['LeagueTeamController@update', $league_team->id], 'method' => 'PATCH', 'files' => true]) !!}
 							<!-- Team Info -->
 							<div class="">
-								<div class="md-form">
-									<input type="text" name="team_name" class="form-control" value="{{ $league_team->team_name }}" />
-									<label for="team_name">Team Name</label>
+								<div class="row">
+									<div class="col">
+										<div class="md-form">
+											<input type="text" name="team_name" class="form-control" value="{{ $league_team->team_name }}" />
+											<label for="team_name">Team Name</label>
+										</div>
+										
+										@if($errors->has('team_name'))
+											<div class="md-form-errors red-text">
+												<p class=""><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;{{ $errors->first('team_name') }}</p>
+											</div>
+										@endif
+									</div>
+									<div class="col">
+										<div class="md-form">
+											<div class="file-field">
+												<div class="btn btn-primary btn-sm float-left">
+													<span>Choose file</span>
+													<input type="file" name="team_photo" />
+												</div>
+												<div class="file-path-wrapper">
+													<input class="file-path validate" type="text" placeholder="Change Team Picture" />
+												</div>
+											</div>
+										</div>
+										
+										@if($errors->has('team_photo'))
+											<div class="md-form-errors red-text">
+												<p class=""><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;{{ $errors->first('team_photo') }}</p>
+											</div>
+										@endif
+									</div>
 								</div>
 								
-								@if($errors->has('team_name'))
-									<div class="md-form-errors red-text">
-										<p class=""><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;{{ $errors->first('team_name') }}</p>
-									</div>
-								@endif
 								
 								<div class="input-form">
 									<label for="fee_paid" class="d-block">League Fee Paid</label>

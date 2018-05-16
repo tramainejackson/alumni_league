@@ -12,6 +12,7 @@ use App\LeagueStat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class LeagueStatController extends Controller
 {
@@ -40,8 +41,15 @@ class LeagueStatController extends Controller
 		$allPlayers = $showSeason->stats()->allFormattedStats();
 		$allTeams = $showSeason->stats()->allTeamStats();
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
+		
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+		)->save('default_img.jpg');
+		$defaultImg = asset('default_img.jpg');
 
-		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks'));
+		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg'));
     }
 	
 	/**

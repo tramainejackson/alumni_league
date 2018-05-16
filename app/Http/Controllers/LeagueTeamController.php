@@ -12,6 +12,7 @@ use App\LeagueStat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class LeagueTeamController extends Controller
 {
@@ -36,8 +37,16 @@ class LeagueTeamController extends Controller
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		$seasonTeams = $showSeason->league_teams;
+		
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+				$constraint->upsize();
+			}
+		)->save('default_img.jpg');
+		$defaultImg = asset('default_img.jpg');
 
-		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams'));
+		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
     }
 	
 	/**
@@ -50,8 +59,15 @@ class LeagueTeamController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-
-		return view('teams.create', compact('showSeason', 'activeSeasons'));
+		
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+		)->save('default_img.jpg');
+		$defaultImg = asset('default_img.jpg');
+		
+		return view('teams.create', compact('showSeason', 'activeSeasons', 'defaultImg'));
     }
 	
 	/**
@@ -90,8 +106,15 @@ class LeagueTeamController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
+		
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+		)->save('default_img.jpg');
+		$defaultImg = asset('default_img.jpg');
 
-		return view('teams.edit', compact('league_team', 'showSeason'));
+		return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg'));
     }
 	
 	/**
@@ -101,6 +124,11 @@ class LeagueTeamController extends Controller
     */
     public function update(Request $request, LeagueTeam $league_team)
     {
+		$this->validate($request, [
+			'team_name' => 'required',
+			'team_photo' => 'nullable|image',
+		]);
+		
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 
@@ -111,6 +139,50 @@ class LeagueTeamController extends Controller
 		$team_home_games = $league_team->home_games;
 		$team_away_games = $league_team->away_games;
 
+		// Store picture if one was uploaded
+		if($request->hasFile('team_photo')) {
+			$newImage = $request->file('team_photo');
+			
+			// Check to see if images is too large
+			if($newImage->getError() == 1) {
+				$fileName = $request->file('team_photo')[0]->getClientOriginalName();
+				$error .= "<li class='errorItem'>The file " . $fileName . " is too large and could not be uploaded</li>";
+			} elseif($newImage->getError() == 0) {
+				$image = Image::make($newImage->getRealPath())->orientate();
+				$path = $newImage->store('public/images');
+				
+				if($image->save(storage_path('app/'. $path))) {
+					// prevent possible upsizing
+					// Create a larger version of the image
+					// and save to large image folder
+					$image->resize(1700, null, function ($constraint) {
+						$constraint->aspectRatio();
+					});
+					
+					
+					if($image->save(storage_path('app/'. str_ireplace('images', 'images/lg', $path)))) {
+						// Get the height of the current large image
+						// $addImage->lg_height = $image->height();
+						
+						// Create a smaller version of the image
+						// and save to large image folder
+						$image->resize(544, null, function ($constraint) {
+							$constraint->aspectRatio();
+						});
+						
+						if($image->save(storage_path('app/'. str_ireplace('images', 'images/sm', $path)))) {
+							// Get the height of the current small image
+							// $addImage->sm_height = $image->height();
+						}
+					}
+				}
+				
+				$league_team->team_picture = str_ireplace('public', 'storage', $path);
+			} else {
+				$error .= "<li class='errorItem'>The file " . $fileName . " may be corrupt and could not be uploaded</li>";
+			}
+		}
+			
 		if($league_team->save()) {
 			// Add new players
 			if(isset($request->new_player_name)) {

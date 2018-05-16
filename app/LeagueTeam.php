@@ -67,7 +67,7 @@ class LeagueTeam extends Model
     }
 	
 	/**
-	* Get the league for the team object.
+	* Get the season for the team object.
 	*/
     public function season()
     {
@@ -75,11 +75,27 @@ class LeagueTeam extends Model
     }
 	
 	/**
-	* Get the contact players the team object.
+	* Get the standings for the team object.
 	*/
     public function standings()
     {
         return $this->hasOne('App\LeagueStanding');
+    }
+	
+	/**
+	* Get the large team picture.
+	*/
+    public function lg_photo()
+    {
+        return asset(str_ireplace('images', 'images/lg', $this->team_picture));
+    }
+	
+	/**
+	* Get the small team picture.
+	*/
+    public function sm_photo()
+    {
+        return asset(str_ireplace('images', 'images/sm', $this->team_picture));
     }
 	
 	/**

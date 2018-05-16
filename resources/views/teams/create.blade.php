@@ -4,7 +4,7 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3">
+			<div class="col col-md-3 mt-3 text-center">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_teams.create', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-md-8">
+			<div class="col-12 col-md-5 mx-auto">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
@@ -21,7 +21,7 @@
 				<div class="card card-cascade mb-4 reverse wider">
 					<!--Card image-->
 					<div class="view">
-						<img src="/images/commissioner.jpg" class="img-fluid" alt="photo">
+						<img src="{{ $defaultImg }}" class="img-fluid mx-auto" alt="photo">
 					</div>
 					<!--Card content-->
 					<div class="card-body">
@@ -60,7 +60,7 @@
 				</div>
 				<!--/.Card-->
 			</div>
-			<div class="col-md mt-3">
+			<div class="col col-md-3 mt-3 text-center">
 				<a href="{{ route('league_teams.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
 			</div>
 		</div>

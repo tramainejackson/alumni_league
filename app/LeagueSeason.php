@@ -59,6 +59,14 @@ class LeagueSeason extends Model
     }
 	
 	/**
+	* Get the pictures for the league season object.
+	*/
+    public function pictures()
+    {
+        return $this->hasMany('App\LeaguePicture');
+    }
+	
+	/**
      * Scope a query to only include active seasons.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
