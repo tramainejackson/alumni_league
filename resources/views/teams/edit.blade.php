@@ -146,6 +146,7 @@
 							</div>
 							<div class="md-form">
 								<button class="btn blue lighten-1" type="submit">Update Team Information</button>
+								<button class="btn red darken-1" type="button" data-toggle="modal" data-target="#delete_team">Delete Team</button>
 							</div>
 						{!! Form::close() !!}
 					</div>
@@ -154,6 +155,30 @@
 			</div>
 			<div class="col-md mt-3">
 				<a href="{{ route('league_teams.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="modal fade" id="delete_team" tabindex="-1" role="dialog" aria-labelledby="deleteTeam" aria-hidden="true" data-backdrop="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="h2-responsive">Delete Team</h2>
+						</div>
+						<div class="modal-body">
+							<!-- Delete Form -->
+							{!! Form::open(['action' => ['LeagueTeamController@destroy', $league_team->id], 'method' => 'DELETE']) !!}
+								<div class="">
+									<h4 class="h4-responsive">Deleting this team will delete all of it's games on the schedule and remove all the stats already entered.<br/><br/>Are you sure you want to delete this team?</h4>
+									
+									<div class="d-flex justify-content-between align-items-center">
+										<button type="submit" class="btn btn-success">Confirm</button>
+										<button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">Cancel</button>
+									</div>
+								</div>
+							{!! Form::close() !!}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -89,11 +89,17 @@ class LeagueTeamController extends Controller
 		$team = $showSeason->league_teams()->create([
 			'team_name' => ucwords(strtolower($request->team_name)),
 			'fee_paid' => $request->fee_paid,
-			'leagues_profile_id' => $showSeason->league_profile->id,
 		]);
 
 		if($team) {
-			return redirect()->action('LeagueTeamController@edit', ['team' => $team->id])->with('status', 'New Team Added Successfully');
+			$teamStandings = new LeagueStanding();
+			$teamStandings->league_season_id = $team->league_season_id;
+			$teamStandings->league_team_id = $team->id;
+			$teamStandings->team_name = $team->team_name;
+			
+			if($teamStandings->save()) {
+				return redirect()->action('LeagueTeamController@edit', ['team' => $team->id])->with('status', 'New Team Added Successfully');
+			}
 		} else {}
     }
 	
@@ -262,6 +268,48 @@ class LeagueTeamController extends Controller
 			// Update player stats
 			return redirect()->back()->with('status', 'Team Updated');
 		}
+    }
+	
+	/**
+     * Show the application create team page.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function destroy(Request $request, LeagueTeam $league_team)
+    {
+		// Delete team
+		if($league_team->delete()) {
+			// Delete team players
+			if($league_team->players) {
+				// Delete each player
+				foreach($league_team->players as $player) {
+					if($player->stats) {
+						foreach($player->stats as $playerStat) {
+							$playerStat->delete();
+						}
+					}
+					
+					$player->delete();
+				}
+				
+				// Delete team standings
+				if($league_team->standings->delete()) {
+					// Delete team games
+					if($league_team->home_games->merge($league_team->away_games)) {
+						// Delete each game
+						foreach($league_team->home_games->merge($league_team->away_games) as $game) {
+							if($game->result) {
+								$game->result->delete();
+							}
+
+							$game->delete();
+						}
+						
+						return redirect()->action('LeagueTeamController@index')->with('status', 'Team Deleted Successfully');
+					}
+				}
+			}
+		} else {}
     }
 	
 	/**

@@ -140,12 +140,12 @@ class LeagueScheduleController extends Controller
     }
 	
 	/**
-     * Store a new week on the schedule.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update_week(Request $request, $week)
-    {
+	 * Update a week on the schedule.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update_week(Request $request, $week)
+	{
 		// dd($request);
 		// Get the season to show
 		$showSeason = $this->find_season(request());
@@ -270,8 +270,126 @@ class LeagueScheduleController extends Controller
 		$showSeason->standings()->standingUpdate();
 
 		return redirect()->back()->with('status', 'Week ' . $week . ' updated successfully');
-    }
+	}
 	
+	/**
+	 * Update a game on the schedule.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function update_game(Request $request)
+	{
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
+		$game		= LeagueSchedule::find($request->edit_game_id);
+		$awayTeam	= LeagueTeam::find($request->edit_away_team);
+		$homeTeam 	= LeagueTeam::find($request->edit_home_team);
+		$time 		= new Carbon($request->edit_game_time);
+		$date 		= '';
+		
+		if($request->edit_date_picker_submit != null) {
+			$date = new Carbon($request->edit_date_picker_submit);
+		} else {
+			$date = explode('-', $request->edit_date_picker);
+			$date = Carbon::create($date['2'], $date[0], $date[1]);
+		}
+
+		// Check if any games are set to forfeit
+		// If there are check and see if this game id is
+		// in either the home or away array
+		$awayForfeit = isset($request->away_forfeit) ? $request->away_forfeit : null;
+		$homeForfeit = isset($request->home_forfeit) ? $request->home_forfeit : null;
+		
+		$game->league_season_id	= $showSeason->id;
+		$game->away_team_id 	= $awayTeam->id;
+		$game->away_team 		= $awayTeam->team_name;
+		$game->home_team_id 	= $homeTeam->id;
+		$game->home_team 		= $homeTeam->team_name;
+		$game->game_time 		= $time->toTimeString();
+		$game->game_date 		= $date->toDateString();
+		
+		if($game->save()) {
+			$result = '';
+			
+			// Update game result row if it exist
+			if(LeagueScheduleResult::where('league_schedule_id', $game->id)->first()) {
+				$result = LeagueScheduleResult::where('league_schedule_id', $game->id)->first();
+			} else {
+				$result = new LeagueScheduleResult();
+			}
+			
+			$result->league_schedule_id = $game->id;
+			$result->league_season_id = $showSeason->id;
+			$result->home_team_score = $request->edit_home_score;
+			$result->away_team_score = $request->edit_away_score;
+			$result->forfeit = 'N';
+			$result->game_complete = 'N';
+				
+			// If forfeit
+			if($homeForfeit != null || $awayForfeit != null) {
+				$result->forfeit = 'Y';
+				$result->game_complete = 'Y';
+				$result->home_team_score = null;
+				$result->away_team_score = null;
+				
+				if($awayForfeit != null) {
+					$result->winning_team_id = $homeTeam->id;
+					$result->losing_team_id = $awayTeam->id;
+				} else {
+					$result->losing_team_id = $homeTeam->id;
+					$result->winning_team_id = $awayTeam->id;
+				}
+			} else {
+				if($result->home_team_score > 0 || $result->away_team_score > 0) {
+					if($result->home_team_score > $result->away_team_score) {
+						$result->winning_team_id = $homeTeam->id;
+						$result->losing_team_id = $awayTeam->id;
+					} else {
+						$result->losing_team_id = $homeTeam->id;
+						$result->winning_team_id = $awayTeam->id;
+					}
+					
+					$result->game_complete = 'Y';
+				}
+			}
+					
+			if($result->save()) {}
+			
+		} else {}
+
+		// Update the standings after updating all the games
+		$showSeason->standings()->standingUpdate();
+
+		return redirect()->back()->with('status', 'Game updated successfully');
+	}
+
+	/**
+	 * Show individual game for deletion
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show(LeagueSchedule $league_schedule)
+	{
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
+		return view('schedule.show', compact('league_schedule', 'showSeason'));
+	}
+	
+	/**
+	 * Delete game
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function destroy(LeagueSchedule $league_schedule)
+	{
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
+		return view('schedule.show', compact('league_schedule', 'showSeason'));
+	}
+
 	/**
      * Check for a query string and get the current season.
      *

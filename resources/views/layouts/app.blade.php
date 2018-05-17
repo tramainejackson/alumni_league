@@ -12,7 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>ToTheRec</title>
+    <title>{{ config('app.name', 'ToTheRec') }}</title>
 
     <!-- Styles -->
 	<!-- Font Awesome -->
@@ -38,7 +38,7 @@
         <nav class="navbar navbar-expand-lg justify-content-between">
 
 			<!-- Branding Image -->
-			<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'Laravel') }}</a>
+			<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'ToTheRec') }}</a>
 	
 			<!-- SideNav slide-out button -->
 			<button type="button" data-activates="slide-out" class="btn btn-primary p-3 button-collapse navbar-toggler" data-toggle="collapse" data-target="#app-navbar-collapse" aria-controls="app-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">

@@ -32,13 +32,15 @@ Route::get('/league_standings', 'HomeController@standings')->name('league_standi
 
 Route::get('/league_info', 'HomeController@info')->name('league_info');
 
-Route::post('league_schedule/add_game/', 'LeagueScheduleController@add_game');
+Route::post('/league_schedule/add_game/', 'LeagueScheduleController@add_game');
 
-Route::post('league_schedule/add_week/', 'LeagueScheduleController@add_week');
+Route::post('/league_schedule/add_week/', 'LeagueScheduleController@add_week');
 
-Route::patch('league_schedule/{week}/', 'LeagueScheduleController@update_week');
+Route::patch('/league_schedule/{week}/', 'LeagueScheduleController@update_week');
 
-Route::get('league_stat', 'LeagueStatController@index')->name('league_stat.index');
+Route::patch('/update_game/', 'LeagueScheduleController@update_game');
+
+Route::get('/league_stat', 'LeagueStatController@index')->name('league_stat.index');
 
 Route::get('league_stat/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stat.edit_week');
 

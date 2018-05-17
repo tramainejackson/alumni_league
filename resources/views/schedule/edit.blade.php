@@ -32,7 +32,7 @@
 									<div class="d-flex align-items-center justify-content-between">
 										<div class="d-flex align-items-center justify-content-center">
 											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration}}</h2>
-											<button class="btn btn-sm btn-rounded orange darken-1" type="button" data-toggle="modal" data-target="#remove_game">Remove Game</button>
+											<a href="{{ route('league_schedule.show', ['league_schedule' => $game->id]) }}" class="btn btn-sm btn-rounded orange darken-1" type="button">Remove Game</a>
 										</div>
 										
 										<!-- Forfeit Toggle -->

@@ -4,10 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
 class LeagueScheduleResult extends Model
 {
+	use SoftDeletes;
+	
 	/**
      * The attributes that are mass assignable.
      *

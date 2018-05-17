@@ -17,6 +17,15 @@ class LeagueStanding extends Model
      */
     protected $dates = ['deleted_at'];
 	
+	/**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'team_name', 'leagues_season_id',
+    ];
+	
 	public function __construct() {
 		
 	}
@@ -50,6 +59,7 @@ class LeagueStanding extends Model
 	*/
 	public function scopeSeasonStandings($query) {
 		return $query->select(DB::raw("*, ROUND(team_wins/team_games, 2) AS winPERC"))
+		->where('deleted_at', null)
 		->orderBy('winPERC', 'desc')
 		->orderBy('team_wins', 'desc')
 		->orderBy('team_losses', 'asc');
@@ -67,7 +77,7 @@ class LeagueStanding extends Model
 			$teamWins = 0;
 			$teamLosses = 0;
 			$teamForfeits = 0;
-			$team = LeagueTeam::find($teamStanding->league_teams_id);
+			$team = LeagueTeam::find($teamStanding->league_team_id);
 			$homeGames = $team->home_games()->get();
 			$awayGames = $team->away_games()->get();
 

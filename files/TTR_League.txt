@@ -5,6 +5,7 @@ Add parameters if users have no active season
 Add a calendar for the games schedule
 Add some animation
 Do complete season function
+Remove individual player
 Add players to stats db when new game is created
 Done: If team name changes, change team name on scheduled games and standings
 Done: Allow adding of a new season

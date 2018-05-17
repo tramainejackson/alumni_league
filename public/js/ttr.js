@@ -123,10 +123,67 @@ $(document).ready(function() {
 	// page
 	$('body').on('click', '.editGameBtn', function(e) {
 		var gameInfo = $(this).parents('tr');
-		console.log(gameInfo.children(".awayTeamData").text());
-		console.log(gameInfo.children(".homeTeamData").text());
-		console.log(gameInfo.children(".awayTeamScoreData").text().trim());
-		console.log(gameInfo.children(".homeTeamScoreData").text().trim());
+		var editModal = $('#edit_game_modal');
+		
+		// Destroy the mdb select
+		$(editModal).find('select[name="edit_away_team"], select[name="edit_home_team"]').material_select('destroy');
+		
+		// Add the names of the teams and their team ID to the forfeit buttons
+		// and respective input checkbox value
+		editModal.find('button.awayForfeitBtn, button.homeForfeitBtn').removeClass('red active').addClass('stylish-color-dark');
+		editModal.find('button.awayForfeitBtn input, button.homeForfeitBtn input').removeClass('red active').removeAttr('checked');
+		editModal.find('button.awayForfeitBtn span.awayForfeitBtnTeamName')
+			.text(gameInfo.children("td.awayTeamData").find('span.awayTeamNameData').text() + ' Forfeit');
+		editModal.find('button.awayForfeitBtn input')
+			.val(gameInfo.children("td.awayTeamData").find('span.awayTeamIDData').text());
+		editModal.find('button.homeForfeitBtn span.homeForfeitBtnTeamName')
+			.text(gameInfo.children("td.homeTeamData").find('span.homeTeamNameData').text() + ' Forfeit');
+		editModal.find('button.homeForfeitBtn input')
+			.val(gameInfo.children("td.homeTeamData").find('span.homeTeamIDData').text());
+		
+		// Take values from week schedule row and add
+		// to the edit game modal
+		editModal.find('input[name="edit_date_picker"]')
+			.val(gameInfo.children("td.gameDateData").text());
+		editModal.find('input[name="edit_game_time"]')
+			.val(gameInfo.children("td.gameTimeData").text());
+		editModal.find('input[name="edit_game_id"]')
+			.val(Number(gameInfo.children("td.gameIDData").text()));
+		$('select[name="edit_away_team"] option').each(function() {
+			if($(this).text() == gameInfo.children("td.awayTeamData").find('span.awayTeamNameData').text()) {
+				$(this).attr('selected', true);
+			}
+		});
+		
+		$('select[name="edit_home_team"] option').each(function() {
+			if($(this).text() == gameInfo.children("td.homeTeamData").find('span.homeTeamNameData').text()) {
+				$(this).attr('selected', true);
+			}
+		});
+		
+		// If game is a forfeit then make the button selected
+		// and make the game scores 0
+		// Else add the scores if any available
+		if(gameInfo.children("td.awayTeamData").find('.awayTeamScoreData').hasClass('forfeitData')) {
+			editModal.find('input[name="edit_away_score"], input[name="edit_home_score"]')
+				.val('');
+			if(gameInfo.children("td.awayTeamData").find('.awayTeamScoreData').text() == 'Forfeit') {
+				editModal.find('button.awayForfeitBtn').toggleClass('red stylish-color-dark active');
+				editModal.find('button.awayForfeitBtn input').attr('checked', true);
+			} else {
+				editModal.find('button.homeForfeitBtn').toggleClass('red stylish-color-dark active');
+				editModal.find('button.homeForfeitBtn input').attr('checked', true);
+			}
+		} else {
+			editModal.find('input[name="edit_away_score"]')
+				.val(gameInfo.children("td.awayTeamData").find('span.awayTeamScoreData').text());
+			editModal.find('input[name="edit_home_score"]')
+				.val(gameInfo.children("td.homeTeamData").find('span.homeTeamScoreData').text());
+		}
+		
+		// Initialize the mdb select
+		$(editModal).find('select[name="edit_away_team"], select[name="edit_home_team"]')
+			.material_select();
 	});
 	
 	// Add a new player row on the team edit page
@@ -171,7 +228,12 @@ $(document).ready(function() {
 		$(newGame).find('select').addClass('.mdb-select').material_select();
 	});
 	
-	//Add active class to current stat category button
+	// Clear all the stats for a particular game on the stats edit page
+	$('body').on('click', '.clearStatsBtn', function() {
+		$(this).parents('.card').find('input').val('');
+	});
+	
+	// Add active class to current stat category button
 	$("body").on("click", ".statCategoryBtn", function(e)
 	{
 		e.preventDefault();
@@ -211,7 +273,7 @@ $(document).ready(function() {
 		$(".perGameBlocksVal").text(playerStats[14]);
 	});
 	
-//Add team stats to team card and display	
+	//Add team stats to team card and display	
 	$("body").on("click", "#team_stats tr:not(:first)", function(e)
 	{	
 		var teamStats = [
@@ -252,6 +314,7 @@ $(document).ready(function() {
 		$(".teamCardHeader img").attr('src',teamStats[18]);
 	});
 	
+// Change the scores background color
 	$("body").on("change", ".awayTeamScore, .homeTeamScore", function(e){
 		if($(this).attr("class") == "awayTeamScore teamScore")
 		{
@@ -308,39 +371,6 @@ $(document).ready(function() {
 				$(home_score).css({backgroundColor:"yellow", color:"initial"});
 				$(home_name).css({backgroundColor:"yellow", color:"initial"});
 			}
-		}
-		
-	});
-
-//Remove players added with the add player button
-	$("body").on("click", "button.removeNewEditPlayer", function(e){
-		e.preventDefault();
-		$(this).prevUntil("button").remove();
-		$(this).remove();
-	});
-	
-//Check schedule for errors before bringing up modal
-	$("body").on("click", "#submit_edit_schedule, #submit_new_schedule, #editAllGames", function(e){
-		e.preventDefault();
-		var weekNum = $(".weekNumSchedule:visible").text();
-		$(modalField.modalTitle).text("Confirm");
-		$(modalField.modalCancelBtn).text("Cancel Edit");
-		$(modalField.modalConfirmBtn).text("Send Schedule");
-		
-		if($(this).attr("id") == "submit_new_schedule")	{
-			$(modalField.modalContent).text("Games without a date will not be added. Are you sure that you want to add week(s) to the schedule?");
-			$(modalField.modalConfirmBtn).addClass("confirmNewSchedule");
-			$("#admin_overlay, #admin_modal").fadeIn("slow", function(){});
-		}
-		else if($(this).attr("id") == "submit_edit_schedule") {
-			$(modalField.modalContent).text("Games without a date will not be added. Are you sure that you want to edit week "+weekNum+"'s schedule?");
-			$(modalField.modalConfirmBtn).addClass("confirmEditSchedule");
-			$("#admin_overlay, #admin_modal").fadeIn("slow", function(){});
-		}
-		else {
-			$(".weekScheduleTable:visible input, .weekScheduleTable:visible select").removeClass("disabledBtn").removeAttr("disabled");
-			$(".weekScheduleTable:visible button").addClass("disabledBtn").attr("disabled", true);
-			$("#submit_edit_schedule").fadeIn();
 		}
 	});
 });
