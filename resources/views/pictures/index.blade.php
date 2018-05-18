@@ -32,7 +32,7 @@
 									
 									<div class="mask flex-center flex-column rgba-red-strong">
 										<p class="coolText4 p-2">{{ $picture->description != null ? $picture->description : 'No Description' }}</p>
-										<a href="{{ route('league_pictures.edit', ['league_picture' => $picture->id]) }}" class="btn btn-rounded blue white-text">Edit Description</a>
+										<a href="{{ request()->query() == null ? route('league_pictures.edit', ['league_picture' => $picture->id]) : route('league_pictures.edit', ['league_picture' => $picture->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded blue white-text">Edit Picture</a>
 									</div>
 								</div>
 							</div>

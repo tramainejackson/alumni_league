@@ -30,7 +30,7 @@
 					
 					<!-- League season info -->
 					<div class="">
-						{!! Form::open(['action' => ['LeagueProfileController@update', $showSeason->league_profile->id], 'method' => 'PATCH', 'files' => true]) !!}
+						{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
 							<div class="updateLeagueForm">
 								<div class="md-form">
 									<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
@@ -45,7 +45,7 @@
 												<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 											</div>
 											
-											<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_profile->leagues_fee }}"  step="0.01" />
+											<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_fee }}"  step="0.01" placeholder="League Entry Fee" />
 											
 											<div class="input-group-prepend">
 												<span class="input-group-text">Per Team</span>
@@ -61,7 +61,7 @@
 												<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 											</div>
 											
-											<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->league_profile->ref_fee }}" step="0.01" />
+											<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->ref_fee }}" step="0.01" placeholder="Ref Fee" />
 											
 											<div class="input-group-prepend">
 												<span class="input-group-text">Per Game</span>

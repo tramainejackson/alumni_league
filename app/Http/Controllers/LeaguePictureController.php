@@ -73,7 +73,7 @@ class LeaguePictureController extends Controller
 		$league_picture->description = $request->description;
 		
 		if($league_picture->save()) {
-			return redirect()->action('LeaguePictureController@index')->with('status', 'Picture Description Updated Successfully');
+			return redirect()->action('LeaguePictureController@index', ['season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'Picture Description Updated Successfully');
 		}
     }
 	
@@ -178,6 +178,22 @@ class LeaguePictureController extends Controller
 		}
 
 		return redirect()->action('LeaguePictureController@index')->with('status', $counter . ' image(s) uploaded successfully');
+    }
+	
+	/**
+     * Delete picture.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(LeaguePicture $league_picture)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		
+		if($league_picture->delete()) {
+			return redirect()->action('LeaguePictureController@index', ['season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'Picture Deleted Successfully');
+		}
+
     }
 	
 	/**

@@ -114,13 +114,14 @@
 														<input type="text" name="player_phone[]" class="form-control" value="{{ $player->phone }}" placeholder="Enter Player Phone" />
 													</td>
 													<td class="">
-														<a href="#" class="btn btn-sm red darken-1 white-text rounded w-100">Remove</a>
+														<button data-target="#delete_player" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deletePlayerBtn">Remove</button>
+														<input type="text" class="hidden" value="{{ $player->id }}" hidden />
 													</td>
 												</tr>
 											@endforeach
 										@else
 											<tr class="">
-												<th colspan="5" class="text-center">No Players Added for this team yes</th>
+												<th colspan="6" class="text-center">No Players Added for this team yes</th>
 											</tr>
 										@endif
 										<tr class="newPlayerRow hidden" hidden>
@@ -154,7 +155,7 @@
 				<!--/.Card-->
 			</div>
 			<div class="col-md mt-3">
-				<a href="{{ route('league_teams.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
+				<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
 			</div>
 		</div>
 		<div class="row">
@@ -169,6 +170,28 @@
 							{!! Form::open(['action' => ['LeagueTeamController@destroy', $league_team->id], 'method' => 'DELETE']) !!}
 								<div class="">
 									<h4 class="h4-responsive">Deleting this team will delete all of it's games on the schedule and remove all the stats already entered.<br/><br/>Are you sure you want to delete this team?</h4>
+									
+									<div class="d-flex justify-content-between align-items-center">
+										<button type="submit" class="btn btn-success">Confirm</button>
+										<button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">Cancel</button>
+									</div>
+								</div>
+							{!! Form::close() !!}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade" id="delete_player" tabindex="-2" role="dialog" aria-labelledby="deletePlayer" aria-hidden="true" data-backdrop="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h2 class="h2-responsive"></h2>
+						</div>
+						<div class="modal-body">
+							<!-- Delete Form -->
+							{!! Form::open(['action' => ['LeaguePlayerController@destroy', null], 'method' => 'DELETE']) !!}
+								<div class="">
+									<h4 class="h4-responsive">Deleting this player will delete all of his/her stats already entered.<br/><br/>Are you sure you want to delete this player?</h4>
 									
 									<div class="d-flex justify-content-between align-items-center">
 										<button type="submit" class="btn btn-success">Confirm</button>

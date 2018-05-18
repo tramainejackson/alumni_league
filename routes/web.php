@@ -38,6 +38,10 @@ Route::post('/league_schedule/add_week/', 'LeagueScheduleController@add_week');
 
 Route::patch('/league_schedule/{week}/', 'LeagueScheduleController@update_week');
 
+Route::delete('/league_schedule/{week}/', 'LeagueScheduleController@delete_week');
+
+Route::delete('/delete_game/{league_schedule}/', 'LeagueScheduleController@delete_game');
+
 Route::patch('/update_game/', 'LeagueScheduleController@update_game');
 
 Route::get('/league_stat', 'LeagueStatController@index')->name('league_stat.index');

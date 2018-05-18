@@ -28,7 +28,7 @@
 						<!--Title-->
 						<h2 class="card-title h2-responsive text-center">Create New Team</h2>
 						<!-- Create Form -->
-						{!! Form::open(['action' => ['LeagueTeamController@store'], 'method' => 'POST']) !!}
+						{!! Form::open(['action' => ['LeagueTeamController@store', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
 							<div class="md-form">
 								<input type="text" name="team_name" class="form-control" value="{{ old('team_name') }}" />
 								<label for="team_name">Team Name</label>
@@ -61,7 +61,7 @@
 				<!--/.Card-->
 			</div>
 			<div class="col col-md-3 mt-3 text-center">
-				<a href="{{ route('league_teams.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
+				<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Teams</a>
 			</div>
 		</div>
 	</div>

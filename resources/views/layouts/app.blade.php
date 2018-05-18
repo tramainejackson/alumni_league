@@ -92,7 +92,7 @@
 							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ route('league_info') }}">League Info</a>
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Info</a>
 						</li>
 					@endif
 				</ul>
@@ -139,12 +139,11 @@
 		@if(session('status'))
 			<!-- Add return message -->
 			<div class="returnMessage">
-				<ul class="flashMessage">{!! session('status') !!}</ul>
+				<h3 class="h3-responsive flashMessage hidden">{{ session('status') }}</h3>
 			</div>
 		@endif
+		
         @yield('content')
-
-		@include("modal")
 		
 		@include('footer')
     </div>

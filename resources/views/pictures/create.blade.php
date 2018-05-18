@@ -24,7 +24,7 @@
 				</div>
 
 				<!-- Create Form -->
-				{!! Form::open(['action' => ['LeaguePictureController@store'], 'method' => 'POST', 'files' => true]) !!}
+				{!! Form::open(['action' => ['LeaguePictureController@store', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST', 'files' => true]) !!}
 					<div class="md-form">
 						<div class="file-field">
 							<div class="btn btn-primary btn-sm float-left">
@@ -47,7 +47,9 @@
 					</div>
 				{!! Form::close() !!}
 			</div>
-			<div class="col col-md-3 mt-3 text-center"></div>
+			<div class="col col-md-3 mt-3 text-center">
+				<a href="{{ request()->query() == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Pictures</a>
+			</div>
 		</div>
 	</div>
 @endsection

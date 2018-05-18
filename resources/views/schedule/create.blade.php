@@ -18,16 +18,16 @@
 				</div>
 				<div class="my-4">
 					<h2 class="h2-responsive text-center">Create New Week</h2>
-					<h4 class="h4-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;You currently have {{ $weekCount > 0 ? $weekCount : '0' }} weeks showing. This will add week {{ ($weekCount + 1) }} to the schedule&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h4>
+					<h4 class="h4-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;You currently have {{ $weekCount->count() > 0 ? $weekCount->count() : '0' }} weeks showing. This will add week {{ ($weekCount->count() + 1) }} to the schedule&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h4>
 				</div>
 				
-				{!! Form::open(['action' => ['LeagueScheduleController@add_week'], 'method' => 'POST']) !!}
-					@if($showSeason->league_teams->count() > 0 && $weekCount > 0)
+				{!! Form::open(['action' => ['LeagueScheduleController@add_week', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
+					@if($showSeason->league_teams->count() > 0)
 						@for($i=1; $i <= round($showSeason->league_teams->count() / 2); $i++)
 							<!--Card-->
 							<div class="card mb-4">
 								<!--Title-->
-								<h2 class="card-title h2-responsive text-center my-2">Game {{ $i }} for week {{ ($weekCount + 1) }}</h2>
+								<h2 class="card-title h2-responsive text-center my-2">Game {{ $i }} for week {{ ($weekCount->count() + 1) }}</h2>
 								<!--Card content-->
 								<div class="card-body">
 									<!-- Create Form -->
@@ -87,10 +87,11 @@
 				{!! Form::close() !!}
 			</div>
 			<div class="col-md mt-3">
+				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Games</a>
 				@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
 					@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
 					<div class="">
-						<h3 class="">Week {{ $week->season_week }}</h3>	
+						<h3 class="">Week {{ $loop->iteration }}</h3>	
 						<p class="">{{ $gamesCount }} games scheduled</p>
 					</div>
 				@endforeach

@@ -16,7 +16,7 @@
 				<div class="my-4 d-flex align-items-center justify-content-center">
 					<button class="btn btn-rounded btn-sm green darken-1 white-text mx-4" id="edit_page_add_game" type="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Game</button>
 					
-					<h2 class="h2-responsive text-center m-2">Edit Week {{ $weekGames->first()->season_week }}</h2>
+					<h2 class="h2-responsive text-center m-2">Edit Week</h2>
 					
 					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>
 				</div>
@@ -202,42 +202,6 @@
 						<div class="md-form">
 							<button class="btn btn-lg blue lighten-1" type="submit">Update Week Games</button>
 						</div>
-						
-						<div class="removeModals">
-							<!-- Remove Week Modal -->
-							<div class="modal fade" id="remove_week" tabindex="-1" role="dialog" aria-labelledby="removeWeek" aria-hidden="true" data-backdrop="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h2 class="h2-responsive">Remove Week</h2>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<p class="">Show all games scheduled for week and if resulted or not</p>
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<!-- Remove Game Modal -->
-							<div class="modal fade" id="remove_game" tabindex="-1" role="dialog" aria-labelledby="removeGame" aria-hidden="true" data-backdrop="true">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h2 class="h2-responsive">Remove Game</h2>
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<p class="">Show all games scheduled for week and if resulted or not</p>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
 					@else
 						<div class="my-5 text-center">
 							<h2 class="h2-responsive red-text coolText4"><i class="fa fa-warning" aria-hidden="true"></i>&nbsp;You do not have any teams added to this season. Please add some teams before creating a schedule&nbsp;<i class="fa fa-warning" aria-hidden="true"></i></h2>
@@ -249,19 +213,64 @@
 			<div class="col-md mt-3">
 				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
 				
+				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Games</a>
+				
 				<table class="table table-hover table-striped mt-3">
 					<tbody>
 						@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
 						@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
 							<tr class="{{ $week->season_week == $thisWeek ? 'white-text blue' : '' }}">
 								<td class="text-center">
-									<span class="w-100 d-block font-weight-bold text-underline">Week {{ $week->season_week }}</span>
+									<span class="w-100 d-block font-weight-bold text-underline">Week {{ $loop->iteration }}</span>
 									<span class="">{{ $gamesCount }} games scheduled</span>
 								</td>
 							</tr>
 						@endforeach
 					</tbody>
 				</table>
+			</div>
+			<div class="removeModals">
+				<!-- Remove Week Modal -->
+				<div class="modal fade" id="remove_week" tabindex="-1" role="dialog" aria-labelledby="removeWeek" aria-hidden="true" data-backdrop="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h2 class="h2-responsive">Remove Week</h2>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								{!! Form::open(['action' => ['LeagueScheduleController@delete_week', $weekGames->first()->season_week], 'method' => 'DELETE']) !!}
+									<h3 class="h3-responsive">Removing this week will delete all of the games from the calendar and any player stats for the games.<br/><br/>Are you sure you want to delete this whole week?</h3>
+									
+									<div class="d-flex align-items-center justify-content-between">
+										<button class="btn btn-success" type="submit">Confirm</button>
+										<button class="btn btn-warning" data-dismiss="modal"type="submit">Cancel</button>
+									</div>
+								{!! Form::close() !!}
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Remove Game Modal -->
+				<div class="modal fade" id="remove_game" tabindex="-1" role="dialog" aria-labelledby="removeGame" aria-hidden="true" data-backdrop="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h2 class="h2-responsive">Remove Game</h2>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								
+									<p class="">Show all games scheduled for week and if resulted or not</p>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

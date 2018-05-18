@@ -47,7 +47,7 @@ class LeaguePlayer extends Model
 	*/
     public function league_team()
     {
-        return $this->belongsTo('App\PlayerProfile');
+        return $this->belongsTo('App\LeagueTeam');
     }
 	
 	/**

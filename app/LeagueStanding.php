@@ -78,50 +78,54 @@ class LeagueStanding extends Model
 			$teamLosses = 0;
 			$teamForfeits = 0;
 			$team = LeagueTeam::find($teamStanding->league_team_id);
-			$homeGames = $team->home_games()->get();
-			$awayGames = $team->away_games()->get();
+			$homeGames = $team->home_games()->get()->isNotEmpty() ? $team->home_games()->get() : null;
+			$awayGames = $team->away_games()->get()->isNotEmpty() ? $team->away_games()->get() : null;
 
 			// Results when the away team
-			foreach($awayGames as $game) {
-				if($game->result()->get()->first()) {
-					$result = $game->result()->get()->first();
-					
-					if($result->game_complete == 'Y') {
-						if($result->winning_team_id == $game->away_team_id) {
-							$teamWins++;
-						} else {
-							$teamLosses++;
-						}
+			if($awayGames != null) {
+				foreach($awayGames as $game) {
+					if($game->result()->get()->first()) {
+						$result = $game->result()->get()->first();
 						
-						if($result->forfeit == 'Y') {
-							if($result->losing_team_id == $game->away_team_id) {
-								$teamForfeits++;
+						if($result->game_complete == 'Y') {
+							if($result->winning_team_id == $game->away_team_id) {
+								$teamWins++;
+							} else {
+								$teamLosses++;
 							}
-						} else {
-							$teamPoints += $result->away_team_score;
+							
+							if($result->forfeit == 'Y') {
+								if($result->losing_team_id == $game->away_team_id) {
+									$teamForfeits++;
+								}
+							} else {
+								$teamPoints += $result->away_team_score;
+							}
 						}
 					}
 				}
 			}
 			
 			// Results when the home team
-			foreach($homeGames as $game) {
-				if($game->result()->get()->first()) {
-					$result = $game->result()->get()->first();
-					
-					if($result->game_complete == 'Y') {
-						if($result->winning_team_id == $game->home_team_id) {
-							$teamWins++;
-						} else {
-							$teamLosses++;
-						}
+			if($homeGames != null) {
+				foreach($homeGames as $game) {
+					if($game->result()->get()->first()) {
+						$result = $game->result()->get()->first();
 						
-						if($result->forfeit == 'Y') {
-							if($result->losing_team_id == $game->home_team_id) {
-								$teamForfeits++;
+						if($result->game_complete == 'Y') {
+							if($result->winning_team_id == $game->home_team_id) {
+								$teamWins++;
+							} else {
+								$teamLosses++;
 							}
-						} else {
-							$teamPoints += $result->home_team_score;
+							
+							if($result->forfeit == 'Y') {
+								if($result->losing_team_id == $game->home_team_id) {
+									$teamForfeits++;
+								}
+							} else {
+								$teamPoints += $result->home_team_score;
+							}
 						}
 					}
 				}

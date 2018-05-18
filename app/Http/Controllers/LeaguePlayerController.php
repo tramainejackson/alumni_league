@@ -66,4 +66,42 @@ class LeaguePlayerController extends Controller
     {
         return view('about', compact(''));
     }
+	
+	/**
+     * Remove a individual player from the team.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function destroy(Request $request, LeaguePlayer $league_player)
+    {
+		// Delete Player
+		if($league_player->delete()) {
+			if($league_player->stats) {
+				foreach($league_player->stats as $playerStat) {
+					$playerStat->delete();
+				}
+				
+				return redirect()->back()->with('status', 'Player Deleted Successfully');
+			}
+		}
+    }
+	
+	/**
+     * Check for a query string and get the current season.
+     *
+     * @return seaon
+    */
+	public function find_season(Request $request) {
+		$league = Auth::user()->leagues_profiles->first();
+		
+		$showSeason = '';
+		
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
+		
+		return $showSeason;
+	}
 }

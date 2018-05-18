@@ -42,7 +42,7 @@ class LeagueSeasonController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {		
 		$season = new LeagueSeason();
 		$season->leagues_profile_id = $request->query('league');
 		$season->season = $request->season;
@@ -58,6 +58,27 @@ class LeagueSeasonController extends Controller
     }
 	
 	/**
+     * Store a new season for the logged in league.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
+		$showSeason->comp_group = $request->comp_group;
+		$showSeason->age_group = $request->age_group;
+		$showSeason->league_fee = $request->leagues_fee;
+		$showSeason->ref_fee = $request->ref_fee;
+		$showSeason->location = $request->leagues_address;
+		
+		if($showSeason->save()) {
+			return redirect()->back()->with(['status' => 'Season Updated Successfully']);
+		}
+    }
+	
+	/**
      * Show the application about us page for public.
      *
      * @return \Illuminate\Http\Response
@@ -66,4 +87,23 @@ class LeagueSeasonController extends Controller
     {
         
     }
+	
+	/**
+     * Check for a query string and get the current season.
+     *
+     * @return seaon
+    */
+	public function find_season(Request $request) {
+		$league = Auth::user()->leagues_profiles->first();
+		
+		$showSeason = '';
+		
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
+		
+		return $showSeason;
+	}
 }

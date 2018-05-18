@@ -54,7 +54,7 @@ class LeagueScheduleController extends Controller
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 
-		$weekCount = $showSeason->games->max('season_week');
+		$weekCount = $showSeason->games()->getScheduleWeeks()->get();
 		
 		return view('schedule.create', compact('showSeason', 'activeSeasons', 'showSeason', 'weekCount'));
     }
@@ -273,6 +273,37 @@ class LeagueScheduleController extends Controller
 	}
 	
 	/**
+	 * Delete week
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function delete_week($week)
+	{
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$weekGames = LeagueSchedule::getWeekGames($week)->get();
+
+		foreach($weekGames as $weekGame) {
+			if($weekGame->delete()) {
+				if($weekGame->result) {
+					if($weekGame->result->delete()) {}
+				}
+				
+				if($weekGame->stats) {
+					foreach($weekGame->player_stats as $stats) {
+						$stats->delete();
+					}
+				}
+			}
+		}
+		
+		// Update the standings after updating all the games
+		$showSeason->standings()->standingUpdate();
+		
+		return redirect()->action('LeagueScheduleController@index', ['season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'Week ' . $week . ' Deleted Successfully');
+	}
+	
+	/**
 	 * Update a game on the schedule.
 	 *
 	 * @return \Illuminate\Http\Response
@@ -365,6 +396,35 @@ class LeagueScheduleController extends Controller
 	}
 
 	/**
+	 * Delete game
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function delete_game(LeagueSchedule $league_schedule)
+	{
+		// dd($league_schedule);
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+
+		if($league_schedule->delete()) {
+			if($league_schedule->result) {
+				if($league_schedule->result->delete()) {}
+			}
+			
+			if($league_schedule->stats) {
+				foreach($league_schedule->player_stats as $stats) {
+					$stats->delete();
+				}
+			}
+		}
+		
+		// Update the standings after updating all the games
+		$showSeason->standings()->standingUpdate();
+		
+		return redirect()->action('LeagueScheduleController@edit', ['week' => $league_schedule->season_week, 'season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'Game Deleted Successfully');
+	}
+	
+	/**
 	 * Show individual game for deletion
 	 *
 	 * @return \Illuminate\Http\Response
@@ -373,21 +433,12 @@ class LeagueScheduleController extends Controller
 	{
 		// Get the season to show
 		$showSeason = $this->find_season(request());
+		$allStats = $league_schedule->player_stats()->get();
+		$result = $league_schedule->result ? $league_schedule->result : null;
+		$homeTeam = $league_schedule->home_team_obj;
+		$awayTeam = $league_schedule->away_team_obj;
 
-		return view('schedule.show', compact('league_schedule', 'showSeason'));
-	}
-	
-	/**
-	 * Delete game
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(LeagueSchedule $league_schedule)
-	{
-		// Get the season to show
-		$showSeason = $this->find_season(request());
-
-		return view('schedule.show', compact('league_schedule', 'showSeason'));
+		return view('schedule.show', compact('league_schedule', 'allStats', 'showSeason', 'result', 'homeTeam', 'awayTeam'));
 	}
 
 	/**

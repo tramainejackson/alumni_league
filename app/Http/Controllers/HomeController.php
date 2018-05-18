@@ -32,20 +32,13 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-		$league = Auth::user()->leagues_profiles->first();
-		$completedSeasons = $league->seasons()->completed()->get();
-		$activeSeasons = $league->seasons()->active()->get();
-		$ageGroups = explode(' ', $league->age);
-		$compGroups = explode(' ', $league->comp);
-		
 		// Get the season to show
-		$showSeason = '';
-
-		if($request->query('season') != null && $request->query('year') != null) {
-			$showSeason = $league->seasons()->active()->find($request->query('season'));
-		} else {
-			$showSeason = $league->seasons()->active()->first();
-		}
+		$showSeason = $this->find_season(request());
+		
+		$completedSeasons = $showSeason->league_profile->seasons()->completed()->get();
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		$ageGroups = explode(' ', $showSeason->league_profile->age);
+		$compGroups = explode(' ', $showSeason->league_profile->comp);
 
 		$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
 		$showSeasonStat = $showSeason->stats()->get();
@@ -95,19 +88,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function standings(Request $request)
+    public function standings()
     {
-		$league = Auth::user()->leagues_profiles->first();
-		$activeSeasons = $league->seasons()->active()->get();
-
 		// Get the season to show
-		$showSeason = '';
-
-		if($request->query('season') != null && $request->query('year') != null) {
-			$showSeason = $league->seasons()->active()->find($request->query('season'));
-		} else {
-			$showSeason = $league->seasons()->active()->first();
-		}
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 
 		$standings = $showSeason != null ? $showSeason->standings()->seasonStandings()->get() : null;
 
@@ -122,8 +107,29 @@ class HomeController extends Controller
     public function info()
     {
 		$league = Auth::user()->leagues_profiles->first();
-		$showSeason = $league->seasons()->active()->first();
+
+		// Get the season to show
+		$showSeason = $this->find_season(request());
 
         return view('info', compact('league', 'showSeason'));
     }
+	
+	/**
+     * Check for a query string and get the current season.
+     *
+     * @return seaon
+    */
+	public function find_season(Request $request) {
+		$league = Auth::user()->leagues_profiles->first();
+		
+		$showSeason = '';
+		
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
+		
+		return $showSeason;
+	}
 }

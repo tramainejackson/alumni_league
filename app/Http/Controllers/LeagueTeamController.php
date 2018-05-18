@@ -80,10 +80,8 @@ class LeagueTeamController extends Controller
 		$this->validate($request, [
 			'team_name' => 'required',
 		]);
-		
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		
 		// Create a new team for the selected season
 		$team = $showSeason->league_teams()->create([
@@ -98,7 +96,7 @@ class LeagueTeamController extends Controller
 			$teamStandings->team_name = $team->team_name;
 			
 			if($teamStandings->save()) {
-				return redirect()->action('LeagueTeamController@edit', ['team' => $team->id])->with('status', 'New Team Added Successfully');
+				return redirect()->action('LeagueTeamController@edit', ['team' => $team->id, 'season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'New Team Added Successfully');
 			}
 		} else {}
     }
@@ -112,7 +110,7 @@ class LeagueTeamController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		
+
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
 				$constraint->aspectRatio();
@@ -271,12 +269,32 @@ class LeagueTeamController extends Controller
     }
 	
 	/**
-     * Show the application create team page.
+     * Remove a whole team.
      *
      * @return \Illuminate\Http\Response
     */
     public function destroy(Request $request, LeagueTeam $league_team)
     {
+		// Get the season to show
+		$league = Auth::user()->leagues_profiles->first();
+		$showSeason = '';
+		
+		if(isset(parse_url($request->session()->previousUrl())['query'])) {
+			$previousURL = parse_url($request->session()->previousUrl())['query'];
+			$queryStr = explode('&', $previousURL);
+			$queryArr = array();
+			
+			foreach($queryStr as $arr) {
+				$arr = explode('=', $arr);
+				$arr = array($arr[0] => $arr[1]);
+				$queryArr = array_merge($queryArr, $arr);
+			}
+			
+			$showSeason = $league->seasons()->active()->find($queryArr['season']);
+		} else {
+			$showSeason = $league->seasons()->active()->first();
+		}
+
 		// Delete team
 		if($league_team->delete()) {
 			// Delete team players
@@ -305,8 +323,11 @@ class LeagueTeamController extends Controller
 							$game->delete();
 						}
 						
-						return redirect()->action('LeagueTeamController@index')->with('status', 'Team Deleted Successfully');
+						return redirect()->action('LeagueTeamController@index', ['season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'Team Deleted Successfully');
 					}
+					
+					// Update the standings after updating all the games
+					$showSeason->standings()->standingUpdate();
 				}
 			}
 		} else {}

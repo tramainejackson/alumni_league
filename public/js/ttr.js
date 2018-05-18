@@ -43,7 +43,8 @@ $(document).ready(function() {
 
 	// Remove flash message if there is one after 8 seconds
 	if($('.flashMessage').length == 1) {
-		$('.flashMessage').animate({top:'+=' + ($('nav').height() + 150) + 'px'});
+		toastr["success"]($('.flashMessage').text());
+		
 		setTimeout(function(){
 			$('.flashMessage').animate({top:'-150px'}, function(){
 				$('.flashMessage').remove();
@@ -226,6 +227,16 @@ $(document).ready(function() {
 		
 		// Initialize datetimepicker
 		$(newGame).find('select').addClass('.mdb-select').material_select();
+	});
+	
+	// Delete the player from the team
+	$('body').on('click', '.deletePlayerBtn', function() {
+		var playerID = $(this).next().val();
+		var deleteURL = window.location.protocol + '//' + window.location.hostname  + ':' + window.location.port + '/' + 'league_players/' + playerID;
+		var playerName = $(this).parents('tr').find('input[name="player_name[]"]').val();
+
+		$('#delete_player form').attr('action', deleteURL);
+		$('#delete_player .modal-header h2').text('Delete Player ' + playerName);
 	});
 	
 	// Clear all the stats for a particular game on the stats edit page

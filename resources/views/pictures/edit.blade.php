@@ -34,7 +34,7 @@
 
 							<div class="md-form">
 								<button class="btn blue lighten-1" type="submit">Update Description</button>
-								<button class="btn red darken-1 white-text" type="button">Delete Picture</button>
+								<button class="btn red darken-1 white-text" data-toggle="modal" data-target="#delete_picture" type="button">Delete Picture</button>
 							</div>
 						{!! Form::close() !!}
 					</div>
@@ -42,7 +42,30 @@
 				<!--/.Card-->
 			</div>
 			<div class="col-md-3 mt-3">
-				<a href="{{ route('league_pictures.create') }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Picture</a>
+				<a href="{{ request()->query() == null ? route('league_pictures.create') : route('league_pictures.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Picture</a>
+				
+				<a href="{{ request()->query() == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Pictures</a>
+			</div>
+		</div>
+		<div class="modal fade" id="delete_picture" tabindex="-1" role="dialog" aria-labelledby="deletePicture" aria-hidden="true" data-backdrop="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h2 class="h2-responsive">Delete Picture</h2>
+					</div>
+					<div class="modal-body">
+						<h4 class="">Are you sure you want to delete this picture?</h4>
+						
+						<div class="">
+							{!! Form::open(['action' => ['LeaguePictureController@destroy', $league_picture->id], 'method' => 'DELETE']) !!}
+								<div class="d-flex align-items-center justify-content-between">
+									<button type="submit" class="btn btn-success">Confirm</button>
+									<button type="button" class="btn btn-warning" data-dismiss="modal" aria-label="Close">Cancel</button>
+								</div>
+							{!! Form::close() !!}
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
