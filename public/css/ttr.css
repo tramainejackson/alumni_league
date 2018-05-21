@@ -70,12 +70,11 @@ button:hover {
 }  
 /*************************/
 
-.welcomeVideo .col {
-    padding: 0px;
-}
-
-.welcomeVideo .col .jumbotron {
-    padding: 0px;
+#leagues_landing_page > .view {
+	background-image: url(/images/home_bball_gym.png);
+	background-repeat:no-repeat;
+	background-size: cover;
+	background-position: center center;
 }
 
 .navbar {
@@ -83,11 +82,11 @@ button:hover {
 }
 
 .top-nav-collapse {
-    background-color: #4285F4;
+    background-color: darkgray;
 }
 
-.twitterHeader {
-	color: #1b95e0;
+.top-nav-collapse .navbar-brand {
+	color: whitesmoke;
 }
 
 #mainBody {

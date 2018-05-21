@@ -1,7 +1,7 @@
 <footer class="black d-flex justify-content-center align-items-center">
 	<!-- Contact form -->
 	{!! Form::open(['action' => ['HomeController@store'], 'method' => 'POST']) !!}
-		<p class="h4 text-center mb-4">Wite to us</p>
+		<p class="h4 text-center mb-4">Write to us</p>
 
 		<!-- input text -->
 		<div class="md-form">
