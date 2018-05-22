@@ -23,7 +23,7 @@ class LeagueProfile extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id',
+        'user_id', 'name', 'commish', 'address', 'phone', 'leagues_email',
     ];
 	
 	/**

@@ -209,7 +209,15 @@ class LeaguePictureController extends Controller
 		if($request->query('season') != null && $request->query('year') != null) {
 			$showSeason = $league->seasons()->active()->find($request->query('season'));
 		} else {
-			$showSeason = $league->seasons()->active()->first();
+			if($league->seasons()->get()->count() == 1) {
+				if($league->seasons()->active()->first()) {
+					$showSeason = $league->seasons()->active()->first();
+				} else {
+					$showSeason = $league->seasons()->first();
+				}
+			} else {
+				$showSeason = $league->seasons()->active()->first();
+			}
 		}
 		
 		return $showSeason;

@@ -7,8 +7,8 @@
 @endsection
 
 @section('content')
-	<div class="view" style="background-image: url('/images/login_page_pic.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-		<div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+	<div class="view" style="background-image: url('/images/sports_office.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+		<div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-8">
@@ -20,66 +20,130 @@
 								
 								<div class="">
 									{!! Form::open(['route' => ['register'], 'method' => 'POST']) !!}
-										<div class="">
-											<h2 class="text-muted"><u>Registration Type</u></h2>
-											
-											<div class="d-flex align-items-center justify-content-around profileSelection">
-												<button type="button" class="btn btn-lg green active">Player Profile
-													<input type="checkbox" name="player_profile" class="hidden" value="Y" checked hidden />
-												</button>
-												<button type="button" class="btn btn-lg grey">League Profile
-													<input type="checkbox" name="league_profile" class="hidden" value="Y" hidden />
-												</button>
+										<div class="row">
+											<div class="col">
+												<div class="md-form{{ $errors->has('name') ? ' has-error' : '' }}">
+													<i class="fa fa-user prefix grey-text"></i>
+													
+													<input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
+
+													<label for="username" class="">Username</label>
+													
+													@if ($errors->has('username'))
+														<span class="help-block">
+															<strong>{{ $errors->first('username') }}</strong>
+														</span>
+													@endif
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form{{ $errors->has('email') ? ' has-error' : '' }}">
+													<i class="fa fa-envelope prefix grey-text"></i>
+													
+													<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+
+													<label for="email" class="">E-Mail Address</label>
+													
+													@if ($errors->has('email'))
+														<span class="help-block">
+															<strong>{{ $errors->first('email') }}</strong>
+														</span>
+													@endif
+												</div>
 											</div>
 										</div>
-										<div class="md-form{{ $errors->has('name') ? ' has-error' : '' }}">
-											<i class="fa fa-user prefix grey-text"></i>
-											
-											<input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required>
 
-											<label for="username" class="">Username</label>
-											
-											@if ($errors->has('username'))
-												<span class="help-block">
-													<strong>{{ $errors->first('username') }}</strong>
-												</span>
-											@endif
+										<div class="row">
+											<div class="col">
+												<div class="md-form{{ $errors->has('commish_name') ? ' has-error' : '' }}">
+													<i class="fa fa-lock prefix grey-text"></i>
+													
+													<input id="commish_name" type="text" class="form-control" name="commish_name" required>
+
+													<label for="commish_name" class="">Your Name</label>
+													
+													@if ($errors->has('commish_name'))
+														<span class="help-block">
+															<strong>{{ $errors->first('commish_name') }}</strong>
+														</span>
+													@endif
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form{{ $errors->has('league_name') ? ' has-error' : '' }}">
+													<i class="fa fa-lock prefix grey-text"></i>
+													
+													<input id="league_name" type="text" class="form-control" name="league_name" required>
+
+													<label for="league_name" class="">League Name</label>
+													
+													@if ($errors->has('league_name'))
+														<span class="help-block">
+															<strong>{{ $errors->first('league_name') }}</strong>
+														</span>
+													@endif
+												</div>
+											</div>
+										</div>
+										
+										<div class="row">
+											<div class="col">
+												<div class="md-form{{ $errors->has('league_phone') ? ' has-error' : '' }}">
+													<i class="fa fa-lock prefix grey-text"></i>
+													
+													<input id="league_phone" type="text" class="form-control" name="league_phone">
+
+													<label for="league_phone" class="">League Phone</label>
+													
+													@if ($errors->has('league_phone'))
+														<span class="help-block">
+															<strong>{{ $errors->first('league_phone') }}</strong>
+														</span>
+													@endif
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form{{ $errors->has('league_address') ? ' has-error' : '' }}">
+													<i class="fa fa-lock prefix grey-text"></i>
+													
+													<input id="league_address" type="text" class="form-control" name="league_address">
+
+													<label for="league_address" class="">League Address</label>
+													
+													@if ($errors->has('league_address'))
+														<span class="help-block">
+															<strong>{{ $errors->first('league_address') }}</strong>
+														</span>
+													@endif
+												</div>
+											</div>
 										</div>
 
-										<div class="md-form{{ $errors->has('email') ? ' has-error' : '' }}">
-											<i class="fa fa-envelope prefix grey-text"></i>
-											
-											<input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+										<div class="row">
+											<div class="col">
+												<div class="md-form{{ $errors->has('password') ? ' has-error' : '' }}">
+													<i class="fa fa-lock prefix grey-text"></i>
+													
+													<input id="password" type="password" class="form-control" name="password" required>
 
-											<label for="email" class="">E-Mail Address</label>
-											
-											@if ($errors->has('email'))
-												<span class="help-block">
-													<strong>{{ $errors->first('email') }}</strong>
-												</span>
-											@endif
-										</div>
+													<label for="password" class="">Password</label>
+													
+													@if ($errors->has('password'))
+														<span class="help-block">
+															<strong>{{ $errors->first('password') }}</strong>
+														</span>
+													@endif
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form">
+													<i class="fa fa-lock prefix red-text"></i>
+													
+													<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
 
-										<div class="md-form{{ $errors->has('password') ? ' has-error' : '' }}">
-											<i class="fa fa-lock prefix grey-text"></i>
-											
-											<input id="password" type="password" class="form-control" name="password" required>
-
-											<label for="password" class="">Password</label>
-											
-											@if ($errors->has('password'))
-												<span class="help-block">
-													<strong>{{ $errors->first('password') }}</strong>
-												</span>
-											@endif
-										</div>
-
-										<div class="md-form">
-											<i class="fa fa-lock prefix red-text"></i>
-											
-											<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-
-											<label for="password-confirm" class="">Confirm Password</label>
+													<label for="password-confirm" class="">Confirm Password</label>
+												</div>
+											</div>
 										</div>
 
 										<div class="md-form">
@@ -101,8 +165,7 @@
 							</div>
 							<div class="white-text">
 								<div class="mb-3 registrationTypeDesc">
-									<p class="mt-3"><span class="rgba-indigo-strong px-1">Player Profile:</span> Create a player profile if you want to showcase your stats and videos of you handling business on the court.</p>
-									<p class="mt-3"><span class="rgba-cyan-strong px-1">League Profile:</span> Create a league profile to promote your league to gain more traction and get the word out about your league. We also have online stat tracking so your teams/players can see their stats online.</p>
+									<p class="mt-3">Create a league profile to promote your league to gain more traction and get the word out about your league. We also have online stat tracking so your teams/players can see their stats online.</p>
 								</div>
 							</div>
 						</div>

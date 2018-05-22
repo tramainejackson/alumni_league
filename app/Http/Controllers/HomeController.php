@@ -70,7 +70,12 @@ class HomeController extends Controller
      */
     public function about()
     {
-        return view('about', compact(''));
+		if(Auth::check()) {
+			// Get the season to show
+			$showSeason = $this->find_season(request());
+		}
+		
+        return view('about', compact('showSeason'));
     }
 	
 	/**
@@ -120,16 +125,25 @@ class HomeController extends Controller
      * @return seaon
     */
 	public function find_season(Request $request) {
-		$league = Auth::user()->leagues_profiles->first();
-		
-		$showSeason = '';
-		
-		if($request->query('season') != null && $request->query('year') != null) {
-			$showSeason = $league->seasons()->active()->find($request->query('season'));
-		} else {
-			$showSeason = $league->seasons()->active()->first();
+		if(Auth::check()) {
+			$league = Auth::user()->leagues_profiles->first();
+			$showSeason = '';
+			
+			if($request->query('season') != null && $request->query('year') != null) {
+				$showSeason = $league->seasons()->active()->find($request->query('season'));
+			} else {
+				if($league->seasons()->get()->count() == 1) {
+					if($league->seasons()->active()->first()) {
+						$showSeason = $league->seasons()->active()->first();
+					} else {
+						$showSeason = $league->seasons()->first();
+					}
+				} else {
+					$showSeason = $league->seasons()->active()->first();
+				}
+			}
+			
+			return $showSeason;
 		}
-		
-		return $showSeason;
 	}
 }

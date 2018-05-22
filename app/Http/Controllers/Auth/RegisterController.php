@@ -50,9 +50,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:50|unique:users',
+            'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'commish_name' => 'required|string',
+            'league_name' => 'required|string',
         ]);
     }
 
@@ -64,23 +66,32 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-		// dd(isset($data['league_profile']));
+		// dd($data);
 		$user = User::create([
             'username' => $data['username'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'type' => 'commish',
         ]);
-		
-		if(isset($data['player_profile'])) {
-			PlayerProfile::create([
-				'user_id' => $user->id
-			]);
-		} else {
-			LeagueProfile::create([
-				'user_id' => $user->id
-			]);
-		}
 
-		return $user;
+		if($user) {
+			$league = $user->leagues_profiles()->create([
+				'name' => $data['league_name'],
+				'commish' => $data['commish_name'],
+				'phone' => $data['league_phone'],
+				'address' => $data['league_address'],
+			]);
+			
+			if($league) {
+				$league->seasons()->create([
+					'active' => 'N',
+					'completed' => 'N',
+					'paid' => 'N',
+					'location' => $data['league_address'],
+				]);
+				
+				return $user;
+			}
+		}
     }
 }

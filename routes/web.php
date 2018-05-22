@@ -19,7 +19,6 @@ Auth::routes();
 
 /* Overwrite the default login controller */
 	Route::post('/login', 'Auth\LoginController@authenticate');
-	Route::get('/login', 'Auth\LoginController@index')->name('login');
 /* Overwrite the default login controller */
 
 Route::get('/', 'HomeController@about')->name('welcome');
@@ -61,6 +60,8 @@ Route::resource('league_pictures', 'LeaguePictureController');
 Route::resource('league_profile', 'LeagueProfileController');
 
 Route::resource('league_season', 'LeagueSeasonController');
+
+Route::post('create_playoffs', 'LeagueSeasonController@create_playoffs');
 
 /** MDB Templates **/
 Route::get('/templates/about_us', 'TemplateController@about_us');

@@ -19,7 +19,7 @@
 								<!--Card Body-->
 									<div class="card-body">
 										<!--Title-->
-										<h1 class="card-title coolText1 text-center">{{ $league->leagues_name }}</h1>
+										<h1 class="card-title coolText1 text-center">{{ $league->name }}</h1>
 									</div>
 								<!--./Card Body/.-->
 								
@@ -43,7 +43,7 @@
 					</div>
 					<div class="updateLeagueForm">
 						<div class="md-form">
-							<input type="text" name="leagues_name" class="form-control" id="leagues_name" value="{{ $league->leagues_name }}" />
+							<input type="text" name="leagues_name" class="form-control" id="leagues_name" value="{{ $league->name }}" />
 							
 							<label for="leagues_name">League Name</label>
 						</div>
@@ -58,7 +58,7 @@
 							<label for="leagues_address">League Address</label>
 						</div>
 						<div class="md-form">
-							<input type="text" name="leagues_phone" class="form-control" id="leagues_phone" placeholder="Phone" value="{{ $league->leagues_phone }}" />
+							<input type="text" name="leagues_phone" class="form-control" id="leagues_phone" placeholder="Phone" value="{{ $league->phone }}" />
 
 							<label for="leagues_phone">League Phone</label>
 						</div>
@@ -77,7 +77,7 @@
 								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 							</div>
 							
-							<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $league->leagues_fee }}"  step="0.01" />
+							<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $league->leagues_fee }}" step="0.01" placeholder="League Entry Fee" />
 							
 							<div class="input-group-prepend">
 								<span class="input-group-text">Per Team</span>
@@ -90,7 +90,7 @@
 								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 							</div>
 							
-							<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $league->ref_fee }}" step="0.01" />
+							<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $league->ref_fee }}" step="0.01" placeholder="League Referee Fee" />
 							
 							<div class="input-group-prepend">
 								<span class="input-group-text">Per Game</span>
@@ -98,6 +98,11 @@
 							
 							<label for="ref_fee">Ref Fee</label>
 						</div>
+						
+						<div class="section text-center">
+							<h2 class="h2-responsive coolText4">Select Your Leagues Ages and Competition Levels</h2>
+						</div>
+						
 						<div class="md-form mb-5">
 							@php $ages = find_all_ages(); @endphp
 							@php $ageArray =  explode(" ", $league->age); @endphp

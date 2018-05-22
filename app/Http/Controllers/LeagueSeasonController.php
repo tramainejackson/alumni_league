@@ -62,6 +62,24 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function create_playoffs(Request $request, LeagueSeason $league_season)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		
+		$showSeason->create_playoff_settings();
+		// dd($showSeason);
+		
+		if($season->save()) {
+			return redirect()->back()->with(['status' => 'New Season Added Successfully']);
+		}
+    }
+	
+	/**
+     * Store a new season for the logged in league.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request)
     {
 		// Get the season to show
