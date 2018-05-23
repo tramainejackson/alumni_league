@@ -39,6 +39,12 @@ Route::patch('/league_schedule/{week}/', 'LeagueScheduleController@update_week')
 
 Route::delete('/league_schedule/{week}/', 'LeagueScheduleController@delete_week');
 
+Route::get('/edit_playoffs/playins/', 'LeagueScheduleController@edit_playins')->name('edit_playins');
+
+Route::get('/edit_playoffs/round/{round}', 'LeagueScheduleController@edit_round')->name('edit_round');
+
+Route::post('/edit_playoffs/', 'LeagueScheduleController@update_playoff_week')->name('update_playoff_week');
+
 Route::delete('/delete_game/{league_schedule}/', 'LeagueScheduleController@delete_game');
 
 Route::patch('/update_game/', 'LeagueScheduleController@update_game');

@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-12 mt-3">
 				@foreach($seasonScheduleWeeks as $edit_week)
-					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $edit_week->season_week]) : route('league_stat.edit_week', ['week' => $edit_week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_week->season_week == $week ? ' disabled' : '' }}"{{ $edit_week->season_week == $week ? ' disabled' : '' }}>Week {{ $edit_week->season_week }} Stats</a>
+					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $edit_week->season_week]) : route('league_stat.edit_week', ['week' => $edit_week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_week->season_week == $week ? ' disabled' : '' }}"{{ $edit_week->season_week == $week ? ' disabled' : '' }}>Week {{ $loop->iteration }} Stats</a>
 				@endforeach
 			</div>
 			<div class="col-12">
@@ -15,7 +15,7 @@
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
 				<div class="text-center">
-					<h3 class="h3-responsive">Week {{ $week }} Stats</h3>
+					<h3 class="h3-responsive">Week Stats</h3>
 				</div>
 				
 				@if($weekGames->count() > 0)
@@ -28,7 +28,7 @@
 									<!--Title-->
 									<div class="d-flex align-items-center justify-content-between">
 										<div class="d-flex align-items-center justify-content-center">
-											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration}}</h2>
+											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration }}</h2>
 											<button class="btn btn-sm btn-rounded orange darken-1 clearStatsBtn" type="button">Clear Game Stats</button>
 										</div>
 										

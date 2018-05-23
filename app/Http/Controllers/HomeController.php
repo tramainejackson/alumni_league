@@ -46,7 +46,11 @@ class HomeController extends Controller
 		$showSeasonUnpaidTeams = $showSeason->league_teams()->unpaid();
 		$showSeasonPlayers = $showSeason->league_players;
 		
-		return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));
+		if($showSeason->is_playoffs == 'Y') {
+			return view('playoffs.index');
+		} else {
+			return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));			
+		}
     }
 	
 	/**

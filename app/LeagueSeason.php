@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\LeagueSchedule;
 
 class LeagueSeason extends Model
 {
@@ -139,8 +140,10 @@ class LeagueSeason extends Model
 	**/
 	public function create_playoff_settings()
 	{
+		$this->is_playoffs = 'Y';
 		$seasonPlayoffs = $this->playoffs;
-		$totalPlayoffTeams = $teams = $this->league_teams->count();
+		$totalPlayoffTeams = $this->league_teams;
+		$teams = $totalPlayoffTeams->count();
 		$checkSchedule = $this->games->count();
 
 		$target = 0;
@@ -189,7 +192,7 @@ class LeagueSeason extends Model
 				$seasonPlayoffs->playin_games = "Y";
 				$seasonPlayoffs->playin_games_complete = "N";
 			}
-			dd($seasonPlayoffs);
+
 			$seasonPlayoffs->save();
 			
 			// Create playoff schedule
@@ -200,11 +203,12 @@ class LeagueSeason extends Model
 				$totalPlayInGames = $totalPlayoffTeams->count() / 2;
 				
 				for($x=0; $x < $totalPlayInGames; $x++) {
-					$playoffSchedule = new \App\Game();
+					$playoffSchedule = new LeagueSchedule();
 					$playInSeeds--;
 					$homeSeed = $awaySeed = $playInSeeds;
 					$homeTeam = $totalPlayoffTeams->shift();
 					$awayTeam = $totalPlayoffTeams->pop();
+					$playoffSchedule->league_season_id = $this->id;
 					$playoffSchedule->home_team = $homeTeam->team_name;
 					$playoffSchedule->home_team_id = $homeTeam->id;
 					$playoffSchedule->away_team = $awayTeam->team_name;
@@ -229,9 +233,8 @@ class LeagueSeason extends Model
 				}
 				
 			} else {
-				// dd($totalPlayoffTeams);
 				while($totalPlayoffTeams->isNotEmpty()) {
-					$playoffSchedule = new \App\Game();
+					$playoffSchedule = new LeagueSchedule();
 					$homeSeed++;
 					$awaySeed--;
 					$homeTeam = $totalPlayoffTeams->shift();
@@ -261,14 +264,24 @@ class LeagueSeason extends Model
 					}
 				}
 			}
+			
+			if($this->save()) {
+				return 'Playoffs Started and Schedule Generated';
+			}
 		} else {
 			$seasonPlayoffs->total_rounds = NULL;
 			$seasonPlayoffs->teams_with_bye = NULL;
 			$seasonPlayoffs->playin_games = "N";
 			$seasonPlayoffs->playin_games_complete = "Y";
-			$seasonPlayoffs->champion = NULL;
-			$seasonPlayoffs->champion_id = NULL;
-			$seasonPlayoffs->save();
+			
+			if($seasonPlayoffs->save()) {
+				$this->champion_id = NULL;
+				$this->is_playoffs = 'N';
+				
+				if($this->save()) {
+					return 'Not enough teams to create a playoff schedule';
+				}
+			}
 		}
 	}
 }

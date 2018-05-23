@@ -51,7 +51,7 @@ class LeagueStanding extends Model
 	*/
     public function team()
     {
-        return $this->belongsTo('App\LeagueTeam');
+        return $this->belongsTo('App\LeagueTeam', 'league_team_id');
     }
 	
 	/**

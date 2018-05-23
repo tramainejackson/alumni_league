@@ -37,10 +37,18 @@ class LeagueScheduleController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-		
-		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks();
 
-		return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
+		if($showSeason->is_playoffs == 'Y') {
+			$playoffRounds = $showSeason->games()->playoffRounds()->get();
+			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
+			$playInGames = $showSeason->games()->playoffPlayinGames();
+
+			return view('playoffs.schedule', compact('showSeason', 'activeSeasons', 'playInGames', 'nonPlayInGames', 'playoffRounds'));
+		} else {
+			$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks();
+			
+			return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
+		}
     }
 	
 	/**
@@ -72,6 +80,34 @@ class LeagueScheduleController extends Controller
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
 		
 		return view('schedule.edit', compact('showSeason', 'weekGames', 'thisWeek'));
+    }
+	
+	/**
+     * Edit the schedule for a particular week.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function edit_playins()
+    {
+		// Get the season to show
+		$showSeason	= $this->find_season(request());
+		$weekGames 	= $showSeason->games()->playoffPlayinGames()->get();
+		
+		return view('playoffs.edit', compact('showSeason', 'weekGames'));
+    }
+	
+	/**
+     * Edit the schedule for a playoff round selected.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function edit_round($round)
+    {
+		// Get the season to show
+		$showSeason	= $this->find_season(request());
+		$weekGames 	= $showSeason->games()->roundGames($round)->get();
+
+		return view('playoffs.edit_round', compact('showSeason', 'weekGames', 'round'));
     }
 	
 	/**
@@ -423,6 +459,100 @@ class LeagueScheduleController extends Controller
 		
 		return redirect()->action('LeagueScheduleController@edit', ['week' => $league_schedule->season_week, 'season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'Game Deleted Successfully');
 	}
+	
+	/**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Game  $game
+     * @return \Illuminate\Http\Response
+     */
+    public function update_playoff_week(Request $request)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$playoffRound = isset($request->round_id) ? $request->round_id : null;
+
+		// Update all the games which are previously scheduled
+		foreach($request->game_id as $key => $game_id) {
+			$game		= LeagueSchedule::find($game_id);
+			$awayTeam	= LeagueTeam::find($request->away_team[$key]);
+			$homeTeam 	= LeagueTeam::find($request->home_team[$key]);
+			$time 		= new Carbon($request->game_time[$key]);
+			$date 		= $request->date_picker[($key*2)+1];
+
+			// Check if any games are set to forfeit
+			// If there are check and see if this game id is
+			// in either the home or away array
+			$awayForfeit = isset($request->away_forfeit) ? in_array($game->id, $request->away_forfeit) ? : null : null;
+			$homeForfeit = isset($request->home_forfeit) ? in_array($game->id, $request->home_forfeit) ? : null : null;
+			
+			$game->league_season_id = $showSeason->id;
+			$game->away_team_id = $awayTeam->id;
+			$game->away_team = $awayTeam->team_name;
+			$game->home_team_id = $homeTeam->id;
+			$game->home_team = $homeTeam->team_name;
+			$game->game_time = $time->toTimeString();
+			$game->game_date = $date;
+
+			if($game->save()) {
+				$result = '';
+				
+				// Update game result row if it exist
+				if(LeagueScheduleResult::where('league_schedule_id', $game_id)->first()) {
+					$result = LeagueScheduleResult::where('league_schedule_id', $game_id)->first();
+				} else {
+					$result = new LeagueScheduleResult();
+				}
+				
+				$result->league_schedule_id = $game_id;
+				$result->league_season_id = $showSeason->id;
+				$result->home_team_score = $request->home_score[$key];
+				$result->away_team_score = $request->away_score[$key];
+				$result->forfeit = 'N';
+				$result->game_complete = 'N';
+					
+				// If forfeit
+				if($homeForfeit != null || $awayForfeit != null) {
+					$result->forfeit = 'Y';
+					$result->game_complete = 'Y';
+					$result->home_team_score = null;
+					$result->away_team_score = null;
+					
+					if($awayForfeit != null) {
+						$result->winning_team_id = $homeTeam->id;
+						$result->losing_team_id = $awayTeam->id;
+					} else {
+						$result->losing_team_id = $homeTeam->id;
+						$result->winning_team_id = $awayTeam->id;
+					}
+				} else {
+					if($result->home_team_score > 0 || $result->away_team_score > 0) {
+						if($result->home_team_score > $result->away_team_score) {
+							$result->winning_team_id = $homeTeam->id;
+							$result->losing_team_id = $awayTeam->id;
+						} else {
+							$result->losing_team_id = $homeTeam->id;
+							$result->winning_team_id = $awayTeam->id;
+						}
+						
+						$result->game_complete = 'Y';
+					}
+				}
+						
+				if($result->save()) {
+					if(isset($request->round_id)) {
+						$game->complete_round($playoffRound);
+					} else {
+						$game->complete_playins();
+					}
+				}
+				
+			} else {}
+		}
+		
+		return redirect()->action('LeagueScheduleController@index');
+    }
 	
 	/**
 	 * Show individual game for deletion
