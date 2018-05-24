@@ -15,6 +15,7 @@
 			<div class="col-12 col-md-5 mx-auto">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h3 class="h-responsive">Total Teams: {{ $totalTeams }}</h3>
 				</div>
 				
 				<!--Card-->

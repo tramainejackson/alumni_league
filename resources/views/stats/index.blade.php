@@ -16,268 +16,275 @@
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
-				<div id="league_stat_categories" class="d-flex align-items-center justify-content-around">
-					<button type="button" class="btn statCategoryBtn activeBtn" id="league_leaders_btn">League Leaders</button>
-					<button type="button" class="btn statCategoryBtn" id="player_stats_btn">Player Stats</button>
-					<button type="button" class="btn statCategoryBtn" id="team_stats_btn">Team Stats</button>
-				</div>
-				<div id="league_stats">
-					<div id="league_leaders">
-						<div class="leagueLeadersCategory" id="league_leaders_points">
-							<table class="table table-responsive-sm" id="points_category">
+				
+				@if($checkStats)
+					<div id="league_stat_categories" class="d-flex align-items-center justify-content-around">
+						<button type="button" class="btn statCategoryBtn activeBtn" id="league_leaders_btn">League Leaders</button>
+						<button type="button" class="btn statCategoryBtn" id="player_stats_btn">Player Stats</button>
+						<button type="button" class="btn statCategoryBtn" id="team_stats_btn">Team Stats</button>
+					</div>
+					<div id="league_stats">
+						<div id="league_leaders">
+							<div class="leagueLeadersCategory" id="league_leaders_points">
+								<table class="table table-responsive-sm" id="points_category">
+									<thead>
+										<tr class="leagueLeadersCategoryFR">
+											<th></th>
+											<th>Total Points</th>
+											<th>Points Per Game</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->scoringLeaders(5)->get() as $scoringLeader)
+											<tr data-toggle="modal" data-target="#player_card">
+												<td class='playerNameTD'>#{{ $scoringLeader->player->jersey_num . ' ' . $scoringLeader->player->player_name }}</td>
+												<td class='totalPointsTD'>{{ $scoringLeader->TPTS }}</td>
+												<td class='pointsPGTD'>{{ $scoringLeader->PPG }}</td>
+												<td class='totalThreesTD' hidden>{{ $scoringLeader->TTHR }}</td>
+												<td class='threesPGTD' hidden>{{ $scoringLeader->TPG }}</td>
+												<td class='totalFTTD' hidden>{{ $scoringLeader->TFTS }}</td>
+												<td class='freeThrowsPGTD' hidden>{{ $scoringLeader->FTPG }}</td>
+												<td class='totalAssTD' hidden>{{ $scoringLeader->TASS }}</td>
+												<td class='assistPGTD' hidden>{{ $scoringLeader->APG }}</td>
+												<td class='totalRebTD' hidden>{{ $scoringLeader->TRBD }}</td>
+												<td class='rebPGTD' hidden>{{ $scoringLeader->RPG }}</td>
+												<td class='totalStealsTD' hidden>{{ $scoringLeader->TSTL }}</td>
+												<td class='stealsPGTD' hidden>{{ $scoringLeader->SPG }}</td>
+												<td class='totalBlocksTD' hidden>{{ $scoringLeader->TBLK }}</td>
+												<td class='blocksPGTD' hidden>{{ $scoringLeader->BPG }}</td>
+												<td class='teamNameTD' hidden>{{ $scoringLeader->player->team_name }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							<div class="leagueLeadersCategory" id="league_leaders_assist">
+								<table class="table table-responsive-sm" id="assist_category">
+									<thead>
+										<tr class="leagueLeadersCategoryFR">
+											<th></th>
+											<th>Total Assists</th>
+											<th>Assist Per Game</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->assistingLeaders(5)->get() as $assistLeader)
+											<tr data-toggle="modal" data-target="#player_card">
+												<td class='playerNameTD'>#{{ $assistLeader->player->jersey_num . ' ' . $assistLeader->player->player_name }}</td>
+												<td class='totalPointsTD' hidden>{{ $assistLeader->TPTS }}</td>
+												<td class='pointsPGTD' hidden>{{ $assistLeader->PPG }}</td>
+												<td class='totalThreesTD' hidden>{{ $assistLeader->TTHR }}</td>
+												<td class='threesPGTD' hidden>{{ $assistLeader->TPG }}</td>
+												<td class='totalFTTD' hidden>{{ $assistLeader->TFTS }}</td>
+												<td class='freeThrowsPGTD' hidden>{{ $assistLeader->FTPG }}</td>
+												<td class='totalAssTD'>{{ $assistLeader->TASS }}</td>
+												<td class='assistPGTD'>{{ $assistLeader->APG }}</td>
+												<td class='totalRebTD' hidden>{{ $assistLeader->TRBD }}</td>
+												<td class='rebPGTD' hidden>{{ $assistLeader->RPG }}</td>
+												<td class='totalStealsTD' hidden>{{ $assistLeader->TSTL }}</td>
+												<td class='stealsPGTD' hidden>{{ $assistLeader->SPG }}</td>
+												<td class='totalBlocksTD' hidden>{{ $assistLeader->TBLK }}</td>
+												<td class='blocksPGTD' hidden>{{ $assistLeader->BPG }}</td>
+												<td class='teamNameTD' hidden>{{ $assistLeader->player->team_name }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							<div class="leagueLeadersCategory" id="league_leaders_rebounds">
+								<table class="table table-responsive-sm" id="rebounds_category">
+									<thead>
+										<tr class="leagueLeadersCategoryFR">
+											<th></th>
+											<th>Total Rebounds</th>
+											<th>Rebounds Per Game</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $reboundsLeader)
+											<tr data-toggle="modal" data-target="#player_card">
+												<td class='playerNameTD'>#{{ $reboundsLeader->player->jersey_num . ' ' . $reboundsLeader->player->player_name }}</td>
+												<td class='totalPointsTD' hidden>{{ $reboundsLeader->TPTS }}</td>
+												<td class='pointsPGTD' hidden>{{ $reboundsLeader->PPG }}</td>
+												<td class='totalThreesTD' hidden>{{ $reboundsLeader->TTHR }}</td>
+												<td class='threesPGTD' hidden>{{ $reboundsLeader->TPG }}</td>
+												<td class='totalFTTD' hidden>{{ $reboundsLeader->TFTS }}</td>
+												<td class='freeThrowsPGTD' hidden>{{ $reboundsLeader->FTPG }}</td>
+												<td class='totalAssTD' hidden>{{ $reboundsLeader->TASS }}</td>
+												<td class='assistPGTD' hidden>{{ $reboundsLeader->APG }}</td>
+												<td class='totalRebTD'>{{ $reboundsLeader->TRBD }}</td>
+												<td class='rebPGTD'>{{ $reboundsLeader->RPG }}</td>
+												<td class='totalStealsTD' hidden>{{ $reboundsLeader->TSTL }}</td>
+												<td class='stealsPGTD' hidden>{{ $reboundsLeader->SPG }}</td>
+												<td class='totalBlocksTD' hidden>{{ $reboundsLeader->TBLK }}</td>
+												<td class='blocksPGTD' hidden>{{ $reboundsLeader->BPG }}</td>
+												<td class='teamNameTD' hidden>{{ $reboundsLeader->player->team_name }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							<div class="leagueLeadersCategory" id="league_leaders_steals">
+								<table class="table table-responsive-sm" id="steals_category">
+									<thead>
+										<tr class="leagueLeadersCategoryFR">
+											<th></th>
+											<th>Total Steals</th>
+											<th>Steals Per Game</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->stealingLeaders(5)->get() as $stealsLeader)
+											<tr data-toggle="modal" data-target="#player_card">
+												<td class='playerNameTD'>#{{ $stealsLeader->player->jersey_num . '  ' . $stealsLeader->player->player_name }}</td>
+												<td class='totalPointsTD' hidden>{{ $stealsLeader->TPTS }}</td>
+												<td class='pointsPGTD' hidden>{{ $stealsLeader->PPG }}</td>
+												<td class='totalThreesTD' hidden>{{ $stealsLeader->TTHR }}</td>
+												<td class='threesPGTD' hidden>{{ $stealsLeader->TPG }}</td>
+												<td class='totalFTTD' hidden>{{ $stealsLeader->TFTS }}</td>
+												<td class='freeThrowsPGTD' hidden>{{ $stealsLeader->FTPG }}</td>
+												<td class='totalAssTD' hidden>{{ $stealsLeader->TASS }}</td>
+												<td class='assistPGTD' hidden>{{ $stealsLeader->APG }}</td>
+												<td class='totalRebTD' hidden>{{ $stealsLeader->TRBD }}</td>
+												<td class='rebPGTD' hidden>{{ $stealsLeader->RPG }}</td>
+												<td class='totalStealsTD'>{{ $stealsLeader->TSTL }}</td>
+												<td class='stealsPGTD'>{{ $stealsLeader->SPG }}</td>
+												<td class='totalBlocksTD' hidden>{{ $stealsLeader->TBLK }}</td>
+												<td class='blocksPGTD' hidden>{{ $stealsLeader->BPG }}</td>
+												<td class='teamNameTD' hidden>{{ $stealsLeader->player->team_name }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							<div class="leagueLeadersCategory" id="league_leaders_blocks">
+								<table class="table table-responsive-sm" id="blocks_category">
+									<thead>
+										<tr class="leagueLeadersCategoryFR">
+											<th></th>
+											<th>Total Blocks</th>
+											<th>Blocks Per Game</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->blockingLeaders(5)->get() as $blocksLeader)
+											<tr data-toggle="modal" data-target="#player_card">
+												<td class='playerNameTD'>#{{ $blocksLeader->player->jersey_num . ' ' . $blocksLeader->player->player_name }}</td>
+												<td class='totalPointsTD' hidden>{{ $blocksLeader->TPTS }}</td>
+												<td class='pointsPGTD' hidden>{{ $blocksLeader->PPG }}</td>
+												<td class='totalThreesTD' hidden>{{ $blocksLeader->TTHR }}</td>
+												<td class='threesPGTD' hidden>{{ $blocksLeader->TPG }}</td>
+												<td class='totalFTTD' hidden>{{ $blocksLeader->TFTS }}</td>
+												<td class='freeThrowsPGTD' hidden>{{ $blocksLeader->FTPG }}</td>
+												<td class='totalAssTD' hidden>{{ $blocksLeader->TASS }}</td>
+												<td class='assistPGTD' hidden>{{ $blocksLeader->APG }}</td>
+												<td class='totalRebTD' hidden>{{ $blocksLeader->TRBD }}</td>
+												<td class='rebPGTD' hidden>{{ $blocksLeader->RPG }}</td>
+												<td class='totalStealsTD' hidden>{{ $blocksLeader->TSTL }}</td>
+												<td class='stealsPGTD' hidden>{{ $blocksLeader->SPG }}</td>
+												<td class='totalBlocksTD'>{{ $blocksLeader->TBLK }}</td>
+												<td class='blocksPGTD'>{{ $blocksLeader->BPG }}</td>
+												<td class='teamNameTD' hidden>{{ $blocksLeader->player->team_name }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="hidden" id="player_stats">
+							<table class="table table-responsive-sm" id="player_stats_table">
 								<thead>
-									<tr class="leagueLeadersCategoryFR">
+									<tr>
 										<th></th>
 										<th>Total Points</th>
-										<th>Points Per Game</th>
+										<th>PPG</th>
+										<th>3's</th>
+										<th>3's PG</th>
+										<th>FT</th>
+										<th>FTPG</th>
+										<th>Assists</th>
+										<th>APG</th>
+										<th>Rebounds</th>
+										<th>RPG</th>
+										<th>Steals</th>
+										<th>SPG</th>
+										<th>Blocks</th>
+										<th>BPG</th>
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($showSeason->stats()->scoringLeaders(5)->get() as $scoringLeader)
+									@foreach($allPlayers->get() as $showPlayer)
 										<tr data-toggle="modal" data-target="#player_card">
-											<td class='playerNameTD'>#{{ $scoringLeader->player->jersey_num . ' ' . $scoringLeader->player->player_name }}</td>
-											<td class='totalPointsTD'>{{ $scoringLeader->TPTS }}</td>
-											<td class='pointsPGTD'>{{ $scoringLeader->PPG }}</td>
-											<td class='totalThreesTD' hidden>{{ $scoringLeader->TTHR }}</td>
-											<td class='threesPGTD' hidden>{{ $scoringLeader->TPG }}</td>
-											<td class='totalFTTD' hidden>{{ $scoringLeader->TFTS }}</td>
-											<td class='freeThrowsPGTD' hidden>{{ $scoringLeader->FTPG }}</td>
-											<td class='totalAssTD' hidden>{{ $scoringLeader->TASS }}</td>
-											<td class='assistPGTD' hidden>{{ $scoringLeader->APG }}</td>
-											<td class='totalRebTD' hidden>{{ $scoringLeader->TRBD }}</td>
-											<td class='rebPGTD' hidden>{{ $scoringLeader->RPG }}</td>
-											<td class='totalStealsTD' hidden>{{ $scoringLeader->TSTL }}</td>
-											<td class='stealsPGTD' hidden>{{ $scoringLeader->SPG }}</td>
-											<td class='totalBlocksTD' hidden>{{ $scoringLeader->TBLK }}</td>
-											<td class='blocksPGTD' hidden>{{ $scoringLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $scoringLeader->player->team_name }}</td>
+											<td class='playerNameTD'>#{{ $showPlayer->player->jersey_num . ' ' . $showPlayer->player->player_name }}</td>
+											<td class='totalPointsTD'>{{ $showPlayer->TPTS }}</td>
+											<td class='pointsPGTD'>{{ $showPlayer->PPG }}</td>
+											<td class='totalThreesTD'>{{ $showPlayer->TTHR }}</td>
+											<td class='threesPGTD'>{{ $showPlayer->TPG }}</td>
+											<td class='totalFTTD'>{{ $showPlayer->TFTS }}</td>
+											<td class='freeThrowsPGTD'>{{ $showPlayer->FTPG }}</td>
+											<td class='totalAssTD'>{{ $showPlayer->TASS }}</td>
+											<td class='assistPGTD'>{{ $showPlayer->APG }}</td>
+											<td class='totalRebTD'>{{ $showPlayer->TRBD }}</td>
+											<td class='rebPGTD'>{{ $showPlayer->RPG }}</td>
+											<td class='totalStealsTD'>{{ $showPlayer->TSTL }}</td>
+											<td class='stealsPGTD'>{{ $showPlayer->SPG }}</td>
+											<td class='totalBlocksTD'>{{ $showPlayer->TBLK }}</td>
+											<td class='blocksPGTD'>{{ $showPlayer->BPG }}</td>
+											<td class='teamNameTD' hidden>{{ $showPlayer->player->team_name }}</td>
 										</tr>
 									@endforeach
 								</tbody>
 							</table>
 						</div>
-						<div class="leagueLeadersCategory" id="league_leaders_assist">
-							<table class="table table-responsive-sm" id="assist_category">
-								<thead>
-									<tr class="leagueLeadersCategoryFR">
-										<th></th>
-										<th>Total Assists</th>
-										<th>Assist Per Game</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($showSeason->stats()->assistingLeaders(5)->get() as $assistLeader)
-										<tr data-toggle="modal" data-target="#player_card">
-											<td class='playerNameTD'>#{{ $assistLeader->player->jersey_num . ' ' . $assistLeader->player->player_name }}</td>
-											<td class='totalPointsTD' hidden>{{ $assistLeader->TPTS }}</td>
-											<td class='pointsPGTD' hidden>{{ $assistLeader->PPG }}</td>
-											<td class='totalThreesTD' hidden>{{ $assistLeader->TTHR }}</td>
-											<td class='threesPGTD' hidden>{{ $assistLeader->TPG }}</td>
-											<td class='totalFTTD' hidden>{{ $assistLeader->TFTS }}</td>
-											<td class='freeThrowsPGTD' hidden>{{ $assistLeader->FTPG }}</td>
-											<td class='totalAssTD'>{{ $assistLeader->TASS }}</td>
-											<td class='assistPGTD'>{{ $assistLeader->APG }}</td>
-											<td class='totalRebTD' hidden>{{ $assistLeader->TRBD }}</td>
-											<td class='rebPGTD' hidden>{{ $assistLeader->RPG }}</td>
-											<td class='totalStealsTD' hidden>{{ $assistLeader->TSTL }}</td>
-											<td class='stealsPGTD' hidden>{{ $assistLeader->SPG }}</td>
-											<td class='totalBlocksTD' hidden>{{ $assistLeader->TBLK }}</td>
-											<td class='blocksPGTD' hidden>{{ $assistLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $assistLeader->player->team_name }}</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-						<div class="leagueLeadersCategory" id="league_leaders_rebounds">
-							<table class="table table-responsive-sm" id="rebounds_category">
-								<thead>
-									<tr class="leagueLeadersCategoryFR">
-										<th></th>
-										<th>Total Rebounds</th>
-										<th>Rebounds Per Game</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $reboundsLeader)
-										<tr data-toggle="modal" data-target="#player_card">
-											<td class='playerNameTD'>#{{ $reboundsLeader->player->jersey_num . ' ' . $reboundsLeader->player->player_name }}</td>
-											<td class='totalPointsTD' hidden>{{ $reboundsLeader->TPTS }}</td>
-											<td class='pointsPGTD' hidden>{{ $reboundsLeader->PPG }}</td>
-											<td class='totalThreesTD' hidden>{{ $reboundsLeader->TTHR }}</td>
-											<td class='threesPGTD' hidden>{{ $reboundsLeader->TPG }}</td>
-											<td class='totalFTTD' hidden>{{ $reboundsLeader->TFTS }}</td>
-											<td class='freeThrowsPGTD' hidden>{{ $reboundsLeader->FTPG }}</td>
-											<td class='totalAssTD' hidden>{{ $reboundsLeader->TASS }}</td>
-											<td class='assistPGTD' hidden>{{ $reboundsLeader->APG }}</td>
-											<td class='totalRebTD'>{{ $reboundsLeader->TRBD }}</td>
-											<td class='rebPGTD'>{{ $reboundsLeader->RPG }}</td>
-											<td class='totalStealsTD' hidden>{{ $reboundsLeader->TSTL }}</td>
-											<td class='stealsPGTD' hidden>{{ $reboundsLeader->SPG }}</td>
-											<td class='totalBlocksTD' hidden>{{ $reboundsLeader->TBLK }}</td>
-											<td class='blocksPGTD' hidden>{{ $reboundsLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $reboundsLeader->player->team_name }}</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-						<div class="leagueLeadersCategory" id="league_leaders_steals">
-							<table class="table table-responsive-sm" id="steals_category">
-								<thead>
-									<tr class="leagueLeadersCategoryFR">
-										<th></th>
-										<th>Total Steals</th>
-										<th>Steals Per Game</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($showSeason->stats()->stealingLeaders(5)->get() as $stealsLeader)
-										<tr data-toggle="modal" data-target="#player_card">
-											<td class='playerNameTD'>#{{ $stealsLeader->player->jersey_num . '  ' . $stealsLeader->player->player_name }}</td>
-											<td class='totalPointsTD' hidden>{{ $stealsLeader->TPTS }}</td>
-											<td class='pointsPGTD' hidden>{{ $stealsLeader->PPG }}</td>
-											<td class='totalThreesTD' hidden>{{ $stealsLeader->TTHR }}</td>
-											<td class='threesPGTD' hidden>{{ $stealsLeader->TPG }}</td>
-											<td class='totalFTTD' hidden>{{ $stealsLeader->TFTS }}</td>
-											<td class='freeThrowsPGTD' hidden>{{ $stealsLeader->FTPG }}</td>
-											<td class='totalAssTD' hidden>{{ $stealsLeader->TASS }}</td>
-											<td class='assistPGTD' hidden>{{ $stealsLeader->APG }}</td>
-											<td class='totalRebTD' hidden>{{ $stealsLeader->TRBD }}</td>
-											<td class='rebPGTD' hidden>{{ $stealsLeader->RPG }}</td>
-											<td class='totalStealsTD'>{{ $stealsLeader->TSTL }}</td>
-											<td class='stealsPGTD'>{{ $stealsLeader->SPG }}</td>
-											<td class='totalBlocksTD' hidden>{{ $stealsLeader->TBLK }}</td>
-											<td class='blocksPGTD' hidden>{{ $stealsLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $stealsLeader->player->team_name }}</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-						<div class="leagueLeadersCategory" id="league_leaders_blocks">
-							<table class="table table-responsive-sm" id="blocks_category">
-								<thead>
-									<tr class="leagueLeadersCategoryFR">
-										<th></th>
-										<th>Total Blocks</th>
-										<th>Blocks Per Game</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach($showSeason->stats()->blockingLeaders(5)->get() as $blocksLeader)
-										<tr data-toggle="modal" data-target="#player_card">
-											<td class='playerNameTD'>#{{ $blocksLeader->player->jersey_num . ' ' . $blocksLeader->player->player_name }}</td>
-											<td class='totalPointsTD' hidden>{{ $blocksLeader->TPTS }}</td>
-											<td class='pointsPGTD' hidden>{{ $blocksLeader->PPG }}</td>
-											<td class='totalThreesTD' hidden>{{ $blocksLeader->TTHR }}</td>
-											<td class='threesPGTD' hidden>{{ $blocksLeader->TPG }}</td>
-											<td class='totalFTTD' hidden>{{ $blocksLeader->TFTS }}</td>
-											<td class='freeThrowsPGTD' hidden>{{ $blocksLeader->FTPG }}</td>
-											<td class='totalAssTD' hidden>{{ $blocksLeader->TASS }}</td>
-											<td class='assistPGTD' hidden>{{ $blocksLeader->APG }}</td>
-											<td class='totalRebTD' hidden>{{ $blocksLeader->TRBD }}</td>
-											<td class='rebPGTD' hidden>{{ $blocksLeader->RPG }}</td>
-											<td class='totalStealsTD' hidden>{{ $blocksLeader->TSTL }}</td>
-											<td class='stealsPGTD' hidden>{{ $blocksLeader->SPG }}</td>
-											<td class='totalBlocksTD'>{{ $blocksLeader->TBLK }}</td>
-											<td class='blocksPGTD'>{{ $blocksLeader->BPG }}</td>
-											<td class='teamNameTD' hidden>{{ $blocksLeader->player->team_name }}</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div class="hidden" id="player_stats">
-						<table class="table table-responsive-sm" id="player_stats_table">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Total Points</th>
-									<th>PPG</th>
-									<th>3's</th>
-									<th>3's PG</th>
-									<th>FT</th>
-									<th>FTPG</th>
-									<th>Assists</th>
-									<th>APG</th>
-									<th>Rebounds</th>
-									<th>RPG</th>
-									<th>Steals</th>
-									<th>SPG</th>
-									<th>Blocks</th>
-									<th>BPG</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($allPlayers->get() as $showPlayer)
-									<tr data-toggle="modal" data-target="#player_card">
-										<td class='playerNameTD'>#{{ $showPlayer->player->jersey_num . ' ' . $showPlayer->player->player_name }}</td>
-										<td class='totalPointsTD'>{{ $showPlayer->TPTS }}</td>
-										<td class='pointsPGTD'>{{ $showPlayer->PPG }}</td>
-										<td class='totalThreesTD'>{{ $showPlayer->TTHR }}</td>
-										<td class='threesPGTD'>{{ $showPlayer->TPG }}</td>
-										<td class='totalFTTD'>{{ $showPlayer->TFTS }}</td>
-										<td class='freeThrowsPGTD'>{{ $showPlayer->FTPG }}</td>
-										<td class='totalAssTD'>{{ $showPlayer->TASS }}</td>
-										<td class='assistPGTD'>{{ $showPlayer->APG }}</td>
-										<td class='totalRebTD'>{{ $showPlayer->TRBD }}</td>
-										<td class='rebPGTD'>{{ $showPlayer->RPG }}</td>
-										<td class='totalStealsTD'>{{ $showPlayer->TSTL }}</td>
-										<td class='stealsPGTD'>{{ $showPlayer->SPG }}</td>
-										<td class='totalBlocksTD'>{{ $showPlayer->TBLK }}</td>
-										<td class='blocksPGTD'>{{ $showPlayer->BPG }}</td>
-										<td class='teamNameTD' hidden>{{ $showPlayer->player->team_name }}</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
 
-					<div class="hidden" id="team_stats">
-						<table class="table table-responsive-sm" id="team_stats_table">
-							<thead>
-								<tr>
-									<th></th>
-									<th>Total Points</th>
-									<th>PPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Points Per Game Are Calculated From The Game Results"></i></th>
-									<th>3's PG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="3's Per Game Are Calculated From The Player Stats"></i></th>
-									<th>FT's PG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Free Throws Per Game Are Calculated From The Player Stats"></i></th>
-									<th>APG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Assist Per Game Are Calculated From The Player Stats"></i></th>
-									<th>RPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Rebounds Per Game Are Calculated From The Player Stats"></i></th>
-									<th>SPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Steals Per Game Are Calculated From The Player Stats"></i></th>
-									<th>BPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Blocks Per Game Are Calculated From The Player Stats"></i></th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($allTeams->get() as $showTeam)
-									<tr data-toggle="modal" data-target="#team_card">
-										<td class='teamNameTD'>{{ $showTeam->team_name }}</td>
-										<td class='totalPointsTD'>{{ $showTeam->TPTS }}</td>
-										<td class='pointsPGTD'>{{ $showTeam->PPG }}</td>
-										<td class='threesPGTD'>{{ $showTeam->TPG }}</td>
-										<td class='freeThrowsPGTD'>{{ $showTeam->FTPG }}</td>
-										<td class='assistPGTD'>{{ $showTeam->APG }}</td>
-										<td class='rebPGTD'>{{ $showTeam->RPG }}</td>
-										<td class='stealsPGTD'>{{ $showTeam->SPG }}</td>
-										<td class='blocksPGTD'>{{ $showTeam->BPG }}</td>
-										<td class='totalThreesTD' hidden>{{ $showTeam->TTHR }}</td>
-										<td class='totalFTTD' hidden>{{ $showTeam->TFTS }}</td>
-										<td class='totalAssTD' hidden>{{ $showTeam->TASS }}</td>
-										<td class='totalRebTD' hidden>{{ $showTeam->TRBD }}</td>
-										<td class='totalStealsTD' hidden>{{ $showTeam->TSTL }}</td>
-										<td class='totalBlocksTD' hidden>{{ $showTeam->TBLK }}</td>
-										<td class='totalWinsTD' hidden>{{ $showTeam->team_wins }}</td>
-										<td class='totalLossesTD' hidden>{{ $showTeam->team_losses }}</td>
-										<td class='totalGamesTD' hidden>{{ $showTeam->team_games }}</td>
-										<td class='teamPicture' hidden>{{ $showTeam->team_picture != null ? $showTeam->team_picture : $defaultImg }}</td>
+						<div class="hidden" id="team_stats">
+							<table class="table table-responsive-sm" id="team_stats_table">
+								<thead>
+									<tr>
+										<th></th>
+										<th>Total Points</th>
+										<th>PPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Points Per Game Are Calculated From The Game Results"></i></th>
+										<th>3's PG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="3's Per Game Are Calculated From The Player Stats"></i></th>
+										<th>FT's PG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Free Throws Per Game Are Calculated From The Player Stats"></i></th>
+										<th>APG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Assist Per Game Are Calculated From The Player Stats"></i></th>
+										<th>RPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Rebounds Per Game Are Calculated From The Player Stats"></i></th>
+										<th>SPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Steals Per Game Are Calculated From The Player Stats"></i></th>
+										<th>BPG&nbsp;<i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="Blocks Per Game Are Calculated From The Player Stats"></i></th>
 									</tr>
-								@endforeach
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									@foreach($allTeams->get() as $showTeam)
+										<tr data-toggle="modal" data-target="#team_card">
+											<td class='teamNameTD'>{{ $showTeam->team_name }}</td>
+											<td class='totalPointsTD'>{{ $showTeam->TPTS }}</td>
+											<td class='pointsPGTD'>{{ $showTeam->PPG }}</td>
+											<td class='threesPGTD'>{{ $showTeam->TPG }}</td>
+											<td class='freeThrowsPGTD'>{{ $showTeam->FTPG }}</td>
+											<td class='assistPGTD'>{{ $showTeam->APG }}</td>
+											<td class='rebPGTD'>{{ $showTeam->RPG }}</td>
+											<td class='stealsPGTD'>{{ $showTeam->SPG }}</td>
+											<td class='blocksPGTD'>{{ $showTeam->BPG }}</td>
+											<td class='totalThreesTD' hidden>{{ $showTeam->TTHR }}</td>
+											<td class='totalFTTD' hidden>{{ $showTeam->TFTS }}</td>
+											<td class='totalAssTD' hidden>{{ $showTeam->TASS }}</td>
+											<td class='totalRebTD' hidden>{{ $showTeam->TRBD }}</td>
+											<td class='totalStealsTD' hidden>{{ $showTeam->TSTL }}</td>
+											<td class='totalBlocksTD' hidden>{{ $showTeam->TBLK }}</td>
+											<td class='totalWinsTD' hidden>{{ $showTeam->team_wins }}</td>
+											<td class='totalLossesTD' hidden>{{ $showTeam->team_losses }}</td>
+											<td class='totalGamesTD' hidden>{{ $showTeam->team_games }}</td>
+											<td class='teamPicture' hidden>{{ $showTeam->team_picture != null ? $showTeam->team_picture : $defaultImg }}</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
 					</div>
-				</div>
+				@else
+					<div class="text-center">
+						<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no stats added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+					</div>
+				@endif
 			</div>
 			<div class="col-md mt-3">
 				@foreach($seasonScheduleWeeks as $week)

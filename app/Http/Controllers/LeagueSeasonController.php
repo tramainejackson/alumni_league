@@ -77,6 +77,24 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function complete_season(LeagueSeason $league_season)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		
+		$showSeason->completed = 'Y';
+		$showSeason->active = 'N';
+		
+		if($showSeason->save()) {
+			return redirect()->action('HomeController@index')->with(['status' => 'Season Completed']);
+		}
+    }
+	
+	/**
+     * Store a new season for the logged in league.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function update(Request $request)
     {
 		// Get the season to show

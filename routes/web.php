@@ -69,6 +69,8 @@ Route::resource('league_season', 'LeagueSeasonController');
 
 Route::post('create_playoffs', 'LeagueSeasonController@create_playoffs');
 
+Route::post('complete_season', 'LeagueSeasonController@complete_season');
+
 /** MDB Templates **/
 Route::get('/templates/about_us', 'TemplateController@about_us');
 Route::get('/templates/blog_post', 'TemplateController@blog_post');

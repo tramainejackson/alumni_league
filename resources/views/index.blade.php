@@ -28,84 +28,90 @@
 						<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 					</div>
 
-					<!-- League season info -->
-					<div class="">
-						{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
-							<div class="updateLeagueForm">
-								<div class="md-form">
-									<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
+					<!--Card-->
+					<div class="card">
+						<!--Card content-->
+						<div class="card-body text-center">
+							<!-- League season info -->
+							<div class="">
+								{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
+									<div class="updateLeagueForm">
+										<div class="md-form">
+											<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
 
-									<label for="leagues_address">Address</label>
-								</div>
-								
-								<div class="row">
-									<div class="col">
-										<div class="md-form input-group">
-											<div class="input-group-prepend">
-												<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-											</div>
-											
-											<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_fee }}"  step="0.01" placeholder="League Entry Fee" />
-											
-											<div class="input-group-prepend">
-												<span class="input-group-text">Per Team</span>
-											</div>
-											
-											<label for="leagues_fee">Entry Fee</label>
+											<label for="leagues_address">Address</label>
 										</div>
-									</div>
-									
-									<div class="col">
-										<div class="md-form input-group mb-5">
-											<div class="input-group-prepend">
-												<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+										
+										<div class="row">
+											<div class="col">
+												<div class="md-form input-group">
+													<div class="input-group-prepend">
+														<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+													</div>
+													
+													<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_fee }}"  step="0.01" placeholder="League Entry Fee" />
+													
+													<div class="input-group-prepend">
+														<span class="input-group-text">Per Team</span>
+													</div>
+													
+													<label for="leagues_fee">Entry Fee</label>
+												</div>
 											</div>
 											
-											<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->ref_fee }}" step="0.01" placeholder="Ref Fee" />
-											
-											<div class="input-group-prepend">
-												<span class="input-group-text">Per Game</span>
+											<div class="col">
+												<div class="md-form input-group mb-5">
+													<div class="input-group-prepend">
+														<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+													</div>
+													
+													<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->ref_fee }}" step="0.01" placeholder="Ref Fee" />
+													
+													<div class="input-group-prepend">
+														<span class="input-group-text">Per Game</span>
+													</div>
+													
+													<label for="ref_fee">Ref Fee</label>
+												</div>
 											</div>
-											
-											<label for="ref_fee">Ref Fee</label>
 										</div>
-									</div>
-								</div>
-								
-								<div class="row">
-									<div class="col">
+										
+										<div class="row">
+											<div class="col">
+												<div class="md-form">
+													<select class="mdb-select" name="age_group">
+														@foreach($ageGroups as $ageGroup)
+															<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
+														@endforeach
+													</select>
+													
+													<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
+												</div>
+											</div>
+											<div class="col">
+												<div class="md-form">
+													<select class="mdb-select" name="comp_group">
+														@foreach($compGroups as $compGroup)
+															<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
+														@endforeach
+													</select>
+													
+													<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
+												</div>
+											</div>
+										</div>
+										
 										<div class="md-form">
-											<select class="mdb-select" name="age_group">
-												@foreach($ageGroups as $ageGroup)
-													<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
-												@endforeach
-											</select>
-											
-											<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
+											<button type="submit" class="btn btn-lg green m-0" id="">Update League</button>
+											<button type="button" class="btn btn-lg cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
 										</div>
 									</div>
-									<div class="col">
-										<div class="md-form">
-											<select class="mdb-select" name="comp_group">
-												@foreach($compGroups as $compGroup)
-													<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
-												@endforeach
-											</select>
-											
-											<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
-										</div>
-									</div>
-								</div>
-								
-								<div class="md-form">
-									<button type="submit" class="btn btn-lg green m-0" id="">Update League</button>
-									<button type="button" class="btn btn-lg cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
-								</div>
+								{!! Form::close() !!}
 							</div>
-						{!! Form::close() !!}
+							<!--./ League season info /.-->
+						</div>
 					</div>
-					<!--./ League season info /.-->
-					
+					<!--/.Card-->
 				@else
 					<div class="coolText4 py-3 px-5">
 						<h1 class="h1-responsive text-justify">Welcome to ToTheRec Leagues home page. Here you will be able to see your schedule, stats, and information for the selected season at a glance.<br/><br/>It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.</h1>
@@ -160,7 +166,9 @@
 										</div>
 									@endforeach
 								@else
-									<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
+									<div class="col text-center">
+										<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
+									</div>
 								@endif
 							</div>
 						</div>

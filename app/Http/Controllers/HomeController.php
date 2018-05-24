@@ -39,16 +39,23 @@ class HomeController extends Controller
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		$ageGroups = explode(' ', $showSeason->league_profile->age);
 		$compGroups = explode(' ', $showSeason->league_profile->comp);
-
-		$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
-		$showSeasonStat = $showSeason->stats()->get();
-		$showSeasonTeams = $showSeason->league_teams;
-		$showSeasonUnpaidTeams = $showSeason->league_teams()->unpaid();
-		$showSeasonPlayers = $showSeason->league_players;
 		
 		if($showSeason->is_playoffs == 'Y') {
-			return view('playoffs.index');
+			$allGames = $showSeason->games;
+			$allTeams = $showSeason->teams;
+			$playoffSettings = $showSeason->playoffs;
+			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames()->get();
+			$playInGames = $showSeason->games()->playoffPlayinGames()->get();
+	
+			return view('playoffs.index', compact('ageGroups', 'compGroups', 'completedSeasons', 'activeSeasons', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
 		} else {
+
+			$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
+			$showSeasonStat = $showSeason->stats()->get();
+			$showSeasonTeams = $showSeason->league_teams;
+			$showSeasonUnpaidTeams = $showSeason->league_teams()->unpaid();
+			$showSeasonPlayers = $showSeason->league_players;
+			
 			return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));			
 		}
     }

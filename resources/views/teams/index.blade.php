@@ -71,7 +71,50 @@
 					</div>
 				@else
 					<div class="">
-						<h3 class="h3-responsive text-center">There are no teams added for this season yet</h3>
+						<h1 class="h1-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no teams added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+						
+						<!--Card-->
+						<div class="card card-cascade mb-4 reverse wider">
+							<!--Card image-->
+							<div class="view">
+								<img src="{{ $defaultImg }}" class="img-fluid mx-auto" alt="photo">
+							</div>
+							<!--Card content-->
+							<div class="card-body">
+								<!--Title-->
+								<h2 class="card-title h2-responsive text-center">Create New Team</h2>
+								<!-- Create Form -->
+								{!! Form::open(['action' => ['LeagueTeamController@store', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
+									<div class="md-form">
+										<input type="text" name="team_name" class="form-control" value="{{ old('team_name') }}" />
+										<label for="team_name">Team Name</label>
+									</div>
+									
+									@if($errors->has('team_name'))
+										<div class="md-form-errors red-text">
+											<p class=""><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;{{ $errors->first('team_name') }}</p>
+										</div>
+									@endif
+									
+									<div class="input-form">
+										<label for="fee_paid" class="d-block">League Fee Paid</label>
+										<div class="">
+											<button class="btn inputSwitchToggle green active" type="button">Yes
+												<input type="checkbox" name="fee_paid" class="hidden" value="Y" checked hidden />
+											</button>
+											
+											<button class="btn inputSwitchToggle grey" type="button">No
+												<input type="checkbox" name="fee_paid" class="hidden" value="N" hidden />
+											</button>
+										</div>
+									</div>
+									<div class="md-form text-center">
+										<button type="submit" class="btn blue lighten-1">Create Team</button>
+									</div>
+								{!! Form::close() !!}
+							</div>
+						</div>
+						<!--/.Card-->
 					</div>
 				@endif
 			</div>

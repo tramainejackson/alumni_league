@@ -14,7 +14,7 @@ class PlayoffSetting extends Model
 	*/
     public function season()
     {
-        return $this->belongsTo('App\LeagueSeason');
+        return $this->belongsTo('App\LeagueSeason', 'league_season_id');
     }
 	
 	/**

@@ -41,6 +41,7 @@ class LeagueStatController extends Controller
 		$allPlayers = $showSeason->stats()->allFormattedStats();
 		$allTeams = $showSeason->stats()->allTeamStats();
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
+		$checkStats = $showSeason->stats()->allFormattedStats()->get()->isNotEmpty();
 		
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
@@ -49,7 +50,7 @@ class LeagueStatController extends Controller
 		)->save('default_img.jpg');
 		$defaultImg = asset('default_img.jpg');
 
-		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg'));
+		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
     }
 	
 	/**

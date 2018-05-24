@@ -1,32 +1,9 @@
 @extends('layouts.app')
 
 @section('additional_scripts')
-	<!--Google Maps-->
-	<script src="https://maps.google.com/maps/api/js"></script>
 	<script type="text/javascript">
 		$('nav').addClass('fixed-top scrolling-navbar');
 		$('footer').remove();
-		
-		// Regular map
-		function regular_map() {
-			var var_location = new google.maps.LatLng(39.9526, -75.1652);
-
-			var var_mapoptions = {
-				center: var_location,
-				zoom: 14
-			};
-
-			var var_map = new google.maps.Map(document.getElementById("map-container-8"),
-				var_mapoptions);
-
-			var var_marker = new google.maps.Marker({
-				position: var_location,
-				map: var_map,
-				title: "Philadelphia"
-			});
-		}
-
-		google.maps.event.addDomListener(window, 'load', regular_map);
 	</script>
 @endsection
 
@@ -211,5 +188,5 @@
 				{!! Form::close() !!}
 			</div>
 		</div>
-	</section> 
+	</section>
 @endsection

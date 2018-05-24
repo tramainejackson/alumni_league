@@ -26,7 +26,7 @@
 									<tr class="indigo darken-2 white-text">
 										<th class="text-center" colspan="6">
 											<h2 class="h2-responsive position-relative my-3">
-												<span>Round {{ $round->round }} Games</span>
+												<span>{{ $round->round == $playoffSettings->total_rounds ? 'Championship Game' : 'Round ' . $round->round . ' Games' }}</span>
 												<a href="{{ request()->query() == null ? route('edit_round', ['round' => $round->round]) : route('edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
 											</h2>
 										</th>
@@ -39,7 +39,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($nonPlayInGames->get() as $game)
+									@foreach($showSeason->games()->roundGames($round->round)->get() as $game)
 										<tr>
 											@if($game->result)
 												<td class="awayTeamData"><span class="awayTeamNameData">{{ $game->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $game->away_team_obj->id }}</span>
@@ -163,7 +163,19 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-md mt-3 text-right"></div>
+			<div class="col-md mt-3 text-center">
+				@if($showSeason->champion_id != null)
+					@php $championTeam = App\LeagueTeam::find($showSeason->champion_id); @endphp
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col">
+								<h1 class="">Champion</h1>
+								<h2 class="">{{ $championTeam->team_name }}</h2>
+							</div>
+						</div>
+					</div>
+				@endif
+			</div>
 		</div>
 		
 		<!-- Edit game modal -->

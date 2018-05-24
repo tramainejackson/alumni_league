@@ -70,6 +70,61 @@ button:hover {
 }  
 /*************************/
 
+/*
+ *  Flex Layout Specifics
+*/
+main{
+	display:flex;
+	flex-direction:row;
+}
+
+.round{
+	display:flex;
+	flex-direction:column;
+	justify-content:center;
+	list-style:none;
+	padding:0;
+}
+
+.round .spacer{ flex-grow:1; }
+.round .spacer:first-child,
+.round .spacer:last-child{ flex-grow:0.5; }
+
+.round .game-spacer{
+	flex-grow:1;
+}
+
+/*
+ *  General Styles
+*/
+
+li.game{
+  padding-left:20px;
+}
+
+li.game.winner{
+	font-weight:bold;
+	background: linear-gradient(#00800000, green, #00800000);
+}
+
+li.game span{
+	float:right;
+	margin-right:5px;
+}
+
+li.game-top{ 
+	border-bottom:1px solid #aaa; 
+}
+
+li.game-spacer{ 
+	border-right:1px solid #aaa;
+	min-height:40px;
+}
+
+li.game-bottom{ 
+	border-top:1px solid #aaa;
+}
+
 #leagues_landing_page > .view {
 	background-image: url(/images/home_bball_gym.png);
 	background-repeat:no-repeat;

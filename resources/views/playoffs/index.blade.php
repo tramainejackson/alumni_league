@@ -21,96 +21,397 @@
 					@endif
 				</div>
 			</div>
-			<div class="col-7 pb-3">
+			<div class="col-8 pb-3">
 				<!-- Show league season info -->
-				@if($showSeason->paid == 'Y')
-					<div class="text-center coolText1">
-						<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
-					</div>
+				<div class="text-center coolText1">
+					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-4 coolText4">It's Playoff Time</h1>
+					<button class="btn btn-rounded cyan accent-1 black-text coolText4" type="button" data-toggle="modal" data-target="#complete_season">Complete Season</button>
+				</div>
 
-					<!-- League season info -->
-					<div class="">
-						{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
-							<div class="updateLeagueForm">
-								<div class="md-form">
-									<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
+				@php
+					$settings = $playoffSettings;
+					$games = $allGames;
+					$teams = $allTeams;
+				@endphp
 
-									<label for="leagues_address">Address</label>
-								</div>
-								
-								<div class="row">
-									<div class="col">
-										<div class="md-form input-group">
-											<div class="input-group-prepend">
-												<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-											</div>
+				<div class="view_schedule">
+					@if($settings->season->champion_id != null)
+						@php $champTeam = \App\LeagueTeam::find($settings->season->champion_id); @endphp
+						<div class="col col-12 p-5 text-center champDiv">
+							<div class="">
+								<h3 class="display-2">2018 Champions</h3>
+							</div>
+							<div class="">
+								<h4 class="display-3 mb-4">{{ $champTeam->team_name }}</h4>
+							</div>
+						</div>
+					@endif
+					
+					@if($settings->playin_games == 'N')
+						@php $x = 1; @endphp
+						@php $rounds = $settings->total_rounds; @endphp
+						@php $teams = $teams->count(); @endphp
+
+						@if($rounds > 0)
+							<div class="row playoffBracket">
+								<div class="col">
+									<main id="tournament">
+										@while($rounds > 0)
+											@php $totalGames = ($teams/2); @endphp
+											<ul class="round round-{{ $x }}">
+												<!--- Get games that are for round x from database --->
+												@php $playoffSchedule = \App\Game::where('round', $x)->get(); @endphp
+												@if($playoffSchedule->isNotEmpty())
+													@while($playoffSchedule->isNotEmpty())
+														@php $roundGames = $playoffSchedule->count(); @endphp
+														@if($roundGames == ($teams/2))
+															<?php if($roundGames == 1) { ?>
+																<?php $playoffs = $playoffSchedule->shift(); ?>
+
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom{{ $playoffs->winning_team_id == $playoffs->away_team_id ? ' winner' : '' }}">{{ $playoffs->away_seed . ") " . $playoffs->away_team }} <span>{{ $playoffs->away_team_score }}</span></li>
+															<?php } else { ?>
+																<?php $playoffs = $playoffSchedule->shift(); ?>
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom{{ $playoffs->winning_team_id == $playoffs->away_team_id ? ' winner' : '' }}">{{ $playoffs->away_seed . ") " . $playoffs->away_team }} <span>{{ $playoffs->away_team_score }}</span></li>
+															<?php } ?>
+														@elseif(fmod(count($playoffSchedule),2) == 0)
+															<?php $findGameIndex = (count($playoffSchedule) / 2); ?>
+															
+															<?php if($findGameIndex == 1) { ?>
+																<?php $playoffs = $playoffSchedule->splice($findGameIndex,1)->first(); ?>
+																<?php $playoffs2 = $playoffSchedule->splice(($findGameIndex-1),1)->first(); ?>
+
+																<?php if($x > 1) { ?>
+																	<li class="spacer">&nbsp;</li>											
+																	<li class="game game-top{{ $playoffs->winning_team_id == $playoffs->away_team_id ? ' winner' : '' }}">{{ $playoffs->away_seed . ") " . $playoffs->away_team }} <span>{{ $playoffs->away_team_score }}</span></li>
+																	<li class="game game-spacer">&nbsp;</li>
+															<li class="game game-bottom{{ $playoffs->winning_team_id == $playoffs->home_team_id ? ' winner' : '' }}">{{ $playoffs->home_seed . ") " . $playoffs->home_team }} <span>{{ $playoffs->home_team_score }}</span></li>
+																	
+																	<li class="spacer">&nbsp;</li>
+																	
+																	<li class="game game-top <?php echo $playoffs2->winning_team_id == $playoffs2->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->away_seed . ") " . $playoffs2->away_team; ?> <span><?php echo $playoffs2->away_team_score; ?></span></li>
+																	<li class="game game-spacer">&nbsp;</li>
+																	<li class="game game-bottom{{ $playoffs2->winning_team_id == $playoffs2->home_team_id ? ' winner' : '' }}">{{ $playoffs2->home_seed . ") " . $playoffs2->home_team }} <span>{{ $playoffs2->home_team_score }}</span></li>
+																<?php } else { ?>
+																	<li class="spacer">&nbsp;</li>
+																	
+																	<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+																	<li class="game game-spacer">&nbsp;</li>
+																	<li class="game game-bottom{{ $playoffs->winning_team_id == $playoffs->away_team_id ? ' winner' : '' }}">{{ $playoffs->away_seed . ") " . $playoffs->away_team }} <span>{{ $playoffs->away_team_score }}</span></li>
+																	
+																	<li class="spacer">&nbsp;</li>
+																	
+																	<li class="game game-top <?php echo $playoffs2->winning_team_id == $playoffs2->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->home_seed . ") " . $playoffs2->home_team; ?> <span><?php echo $playoffs2->home_team_score; ?></span></li>
+																	<li class="game game-spacer">&nbsp;</li>
+																	<li class="game game-bottom{{ $playoffs2->winning_team_id == $playoffs2->away_team_id ? ' winner' : '' }}">{{ $playoffs2->away_seed . ") " . $playoffs2->away_team }} <span>{{ $playoffs2->away_team_score }}</span></li>
+																<?php } ?>
+															<?php } else { ?>
+																<?php $playoffs = $playoffSchedule->splice($findGameIndex,1)->first(); ?>
+																<?php $playoffs2 = $playoffSchedule->splice(($findGameIndex-1),1)->first(); ?>
+
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+																
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs2->winning_team_id == $playoffs2->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->home_seed . ") " . $playoffs2->home_team; ?> <span><?php echo $playoffs2->home_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs2->winning_team_id == $playoffs2->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->away_seed . ") " . $playoffs2->away_team; ?> <span><?php echo $playoffs2->away_team_score; ?></span></li>
+															<?php } ?>
+														@else
+															<?php $playoffs = $playoffSchedule->pop(); ?>
+														
+															<?php if($x > 1) { ?>
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+															<?php } else { ?>
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+															<?php } ?>
+														@endif
+													@endwhile
+												@else
+													@for($i=0; $i < $totalGames; $i++)
+														<li class="spacer">&nbsp;</li>
+														
+														<li class="game game-top">TBD<span></span></li>
+														<li class="game game-spacer">&nbsp;</li>
+														<li class="game game-bottom">TBD<span></span></li>
+													@endfor
+												@endif
+												<li class="spacer">&nbsp;</li>
+											</ul>
 											
-											<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_fee }}"  step="0.01" placeholder="League Entry Fee" />
-											
-											<div class="input-group-prepend">
-												<span class="input-group-text">Per Team</span>
-											</div>
-											
-											<label for="leagues_fee">Entry Fee</label>
-										</div>
-									</div>
-									
-									<div class="col">
-										<div class="md-form input-group mb-5">
-											<div class="input-group-prepend">
-												<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-											</div>
-											
-											<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->ref_fee }}" step="0.01" placeholder="Ref Fee" />
-											
-											<div class="input-group-prepend">
-												<span class="input-group-text">Per Game</span>
-											</div>
-											
-											<label for="ref_fee">Ref Fee</label>
-										</div>
-									</div>
-								</div>
-								
-								<div class="row">
-									<div class="col">
-										<div class="md-form">
-											<select class="mdb-select" name="age_group">
-												@foreach($ageGroups as $ageGroup)
-													<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
-												@endforeach
-											</select>
-											
-											<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
-										</div>
-									</div>
-									<div class="col">
-										<div class="md-form">
-											<select class="mdb-select" name="comp_group">
-												@foreach($compGroups as $compGroup)
-													<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
-												@endforeach
-											</select>
-											
-											<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
-										</div>
-									</div>
-								</div>
-								
-								<div class="md-form">
-									<button type="submit" class="btn btn-lg green m-0" id="">Update League</button>
-									<button type="button" class="btn btn-lg cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
+											@php $teams = ($teams/2); @endphp
+											@php $rounds--; @endphp
+											@php $x++; @endphp
+										@endwhile
+									</main>
 								</div>
 							</div>
-						{!! Form::close() !!}
+						@else
+							<div class="row">
+								<div class="col">
+									<h3 class="text-center text-light">The tournament has not be generated yet</h3>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									@include('bracketology')
+								</div>
+							</div>
+						@endif
+						
+					@elseif($settings->playin_games_complete == 'Y' && $settings->playin_games == 'Y')
+						@php $x = 1; @endphp
+						@php $rounds = $settings->total_rounds; @endphp
+						@php $teams = $settings->total_teams - $playInGames->count(); @endphp
+
+						@if($nonPlayInGames->isNotEmpty())
+							@for($i=$rounds; $i >= 0; $i--)
+								@php $roundGames = \App\LeagueSchedule::roundGames($i)->orderBy('home_seed')->get(); @endphp	
+								@if($roundGames->isNotEmpty())
+									<div class="row">
+										<div class="col ">
+											@if($i != $rounds)
+												<h2 class="roundHeader text-center p-3 my-3">Round {{ $i }} Games</h2>
+											@else
+												<h2 class="roundHeader text-center p-3 my-3">Championship Game</h2>
+											@endif
+										</div>
+									</div>
+									<div class="row">
+										@foreach($roundGames as $game)
+											<div class="col col-4 my-3">
+												<div class="card">
+													<div class="card-header {{ $game->game_complete == 'Y' ? 'bg-success text-white' : 'bg-danger text-white'}}">
+														<h2 class="text-center">Round {{ $game->round }} Game</h2>
+													</div>
+													<div class="card-body">
+														<p class="text-center">{{ $game->away_team}} vs {{ $game->home_team}}</p>
+														
+														@if($game->game_complete == "Y")
+															@if($game->forfeit == "Y")
+																<p class="text-center"><?php echo $game->losing_team_id == $game->home_team_id ? $game->home_team . " loss due to forfeit" : $game->away_team . " loss due to forfeit"; ?></p>
+															@else
+																<p class="text-center"><?php echo $game->losing_team_id == $game->home_team_id ? $game->away_team . " with the win over " . $game->home_team . " " . $game->away_team_score . " - " . $game->home_team_score : $game->home_team . " beat " . $game->away_team . " " . $game->home_team_score . " - " . $game->away_team_score; ?></p>
+															@endif
+														@endif
+													</div>
+												</div>
+											</div>
+										@endforeach	
+									</div>
+								@endif
+							@endfor
+						@endif
+						
+						@if($playInGames->isNotEmpty())
+							<div class="row">
+								<div class="col col-12">
+									<h2 class="roundHeader text-center p-3 my-3">Play In Games</h2>
+								</div>
+								@foreach($playInGames as $game)
+									<div class="col col-4 my-3">
+										<div class="card">
+											<div class="card-header {{ $game->game_complete == 'Y' ? 'bg-success text-white' : 'bg-danger text-white'}}">
+												<h2 class="text-center">Play In Game</h2>
+											</div>
+											<div class="card-body">
+												<p class="text-center">{{ $game->away_team}} vs {{ $game->home_team}}</p>
+												
+												@if($game->game_complete == "Y")
+													<?php if($game->forfeit == "Y") { ?>
+														<p class="text-center"><?php echo $game->losing_team_id == $game->home_team_id ? $game->home_team . " loss due to forfeit" : $game->away_team . " loss due to forfeit"; ?></p>
+													<?php } else { ?>
+														<p class="text-center"><?php echo $game->losing_team_id == $game->home_team_id ? $game->away_team . " with the win over " . $game->home_team . " " . $game->away_team_score . " - " . $game->home_team_score : $game->home_team . " beat " . $game->away_team . " " . $game->home_team_score . " - " . $game->away_team_score; ?></p>
+													<?php } ?>
+												@endif
+											</div>
+										</div>
+									</div>
+								@endforeach	
+							</div>
+						@endif
+
+						<div class="row playoffBracket">
+							<div class="col">
+								<main id="tournament">
+									@while($rounds > 0)
+										@php $totalGames = ($teams/2); @endphp
+										<ul class="round round-{{ $x }}">
+											<!--- Get games that are for round x from database --->
+											@php $playoffSchedule = \App\LeagueSchedule::roundGames($x)->orderBy('home_seed')->get(); @endphp
+	
+											@if($playoffSchedule->isNotEmpty())
+												@while($playoffSchedule->isNotEmpty())
+													@php $roundGames = $playoffSchedule->count(); @endphp
+													@if($roundGames == ($teams/2))
+														<?php if($roundGames == 1) { ?>
+															<?php $playoffs = $playoffSchedule->shift(); ?>
+
+															<li class="spacer">&nbsp;</li>
+															
+															<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+															<li class="game game-spacer">&nbsp;</li>
+															<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+														<?php } else { ?>
+															<?php $playoffs = $playoffSchedule->shift(); ?>
+															<li class="spacer">&nbsp;</li>
+															
+															<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+															<li class="game game-spacer">&nbsp;</li>
+															<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+														<?php } ?>
+													@elseif(fmod(count($playoffSchedule),2) == 0)
+														<?php $findGameIndex = (count($playoffSchedule) / 2); ?>
+														
+														<?php if($findGameIndex == 1) { ?>
+															<?php $playoffs = $playoffSchedule->splice($findGameIndex,1)->first(); ?>
+															<?php $playoffs2 = $playoffSchedule->splice(($findGameIndex-1),1)->first(); ?>
+
+															<?php if($x > 1) { ?>
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+																
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs2->winning_team_id == $playoffs2->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->away_seed . ") " . $playoffs2->away_team; ?> <span><?php echo $playoffs2->away_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs2->winning_team_id == $playoffs2->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->home_seed . ") " . $playoffs2->home_team; ?> <span><?php echo $playoffs2->home_team_score; ?></span></li>
+															<?php } else { ?>
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+																
+																<li class="spacer">&nbsp;</li>
+																
+																<li class="game game-top <?php echo $playoffs2->winning_team_id == $playoffs2->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->home_seed . ") " . $playoffs2->home_team; ?> <span><?php echo $playoffs2->home_team_score; ?></span></li>
+																<li class="game game-spacer">&nbsp;</li>
+																<li class="game game-bottom <?php echo $playoffs2->winning_team_id == $playoffs2->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->away_seed . ") " . $playoffs2->away_team; ?> <span><?php echo $playoffs2->away_team_score; ?></span></li>
+															<?php } ?>
+														<?php } else { ?>
+															<?php $playoffs = $playoffSchedule->splice($findGameIndex,1)->first(); ?>
+															<?php $playoffs2 = $playoffSchedule->splice(($findGameIndex-1),1)->first(); ?>
+
+															<li class="spacer">&nbsp;</li>
+															
+															<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+															<li class="game game-spacer">&nbsp;</li>
+															<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+															
+															<li class="spacer">&nbsp;</li>
+															
+															<li class="game game-top <?php echo $playoffs2->winning_team_id == $playoffs2->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->home_seed . ") " . $playoffs2->home_team; ?> <span><?php echo $playoffs2->home_team_score; ?></span></li>
+															<li class="game game-spacer">&nbsp;</li>
+															<li class="game game-bottom <?php echo $playoffs2->winning_team_id == $playoffs2->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs2->away_seed . ") " . $playoffs2->away_team; ?> <span><?php echo $playoffs2->away_team_score; ?></span></li>
+														<?php } ?>
+													@else
+														<?php $playoffs = $playoffSchedule->pop(); ?>
+													
+														<?php if($x > 1) { ?>
+															<li class="spacer">&nbsp;</li>
+															
+															<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+															<li class="game game-spacer">&nbsp;</li>
+															<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+														<?php } else { ?>
+															<li class="spacer">&nbsp;</li>
+															
+															<li class="game game-top <?php echo $playoffs->winning_team_id == $playoffs->home_team_id ? "winner" : ""; ?>"><?php echo $playoffs->home_seed . ") " . $playoffs->home_team; ?> <span><?php echo $playoffs->home_team_score; ?></span></li>
+															<li class="game game-spacer">&nbsp;</li>
+															<li class="game game-bottom <?php echo $playoffs->winning_team_id == $playoffs->away_team_id ? "winner" : ""; ?>"><?php echo $playoffs->away_seed . ") " . $playoffs->away_team; ?> <span><?php echo $playoffs->away_team_score; ?></span></li>
+														<?php } ?>
+													@endif
+												@endwhile
+											@else
+												@for($i=0; $i < $totalGames; $i++)
+													<li class="spacer">&nbsp;</li>
+													
+													<li class="game game-top">TBD<span></span></li>
+													<li class="game game-spacer">&nbsp;</li>
+													<li class="game game-bottom">TBD<span></span></li>
+												@endfor
+											@endif
+											<li class="spacer">&nbsp;</li>
+										</ul>
+										
+										@php $teams = ($teams/2); @endphp
+										@php $rounds--; @endphp
+										@php $x++; @endphp
+									@endwhile
+								</main>
+							</div>
+						</div>
+					@elseif($settings->playin_games_complete == 'N' && $settings->playin_games == 'Y')
+						@php $playInGames = \App\Game::where('playin_game', 'Y')->get(); @endphp
+						@if($playInGames->isNotEmpty())
+							<div class="divClass">
+								<div class="col">
+									<p class="text-center text-warning">*Once playin games complete, tournament bracket will be posted</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col col-12">
+									<h2 class="roundHeader text-center p-3 my-3">Play In Games</h2>
+								</div>
+								
+								@foreach($playInGames as $game)
+									<div class="col col-4 my-3">
+										<div class="card">
+											<div class="card-header {{ $game->game_complete == 'Y' ? 'bg-success text-white' : 'bg-danger text-white'}}">
+												<h2 class="text-center">Play In Game</h2>
+											</div>
+											<div class="card-body">
+												<p class="text-center">{{ $game->away_team}} vs {{ $game->home_team}}</p>
+												
+												@if($game->game_complete == "Y")
+													@if($game->forfeit == "Y")
+														<p class="text-center">{{ $game->losing_team_id == $game->home_team_id ? $game->home_team . " loss due to forfeit" : $game->away_team . " loss due to forfeit" }}</p>
+													@else
+														<p class="text-center">{{ $game->losing_team_id == $game->home_team_id ? $game->away_team . " with the win over " . $game->home_team . " " . $game->away_team_score . " - " . $game->home_team_score : $game->home_team . " beat " . $game->away_team . " " . $game->home_team_score . " - " . $game->away_team_score }}</p>
+													@endif
+												@endif
+											</div>
+										</div>
+									</div>
+								@endforeach	
+							</div>
+						@endif
+						<div class="row playoffBracket">
+							<div class="col">
+								@include('bracketology')
+							</div>
+						</div>
+					@endif
+					<div class="row">
+						<div class="col">
+							<p class="">*Single game elimination for every round.</p>
+						</div>
 					</div>
-					<!--./ League season info /.-->
-					
-				@else
-					<div class="coolText4 py-3 px-5">
-						<h1 class="h1-responsive text-justify">Welcome to ToTheRec Leagues home page. Here you will be able to see your schedule, stats, and information for the selected season at a glance.<br/><br/>It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.</h1>
-					</div>
-				@endif
+				</div>
 			</div>
 			
 			<!--Column will include seasons (archieved and current)-->
@@ -131,203 +432,6 @@
 				@endif
 			</div>
 		</div>
-		
-		@if($showSeason->paid == 'Y')
-			<div class="row">
-				<!-- League season schedule snap shot -->
-				<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
-					<div class="my-5 d-flex align-items-center justify-content-center flex-column">
-						<div class="d-flex w-100 justify-content-center align-items-center">
-							<h1 class="h1-responsive">Upcoming Schedule</h1>
-							<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">Full Schedule</a>
-						</div>
-						
-						<div class="container-fluid">
-							<div class="row">
-								@if($showSeasonSchedule->isNotEmpty())
-									@foreach($showSeasonSchedule as $upcomingGame)
-										<div class="card col-6 col-md-6 col-lg-4 col-lg-3 my-2">
-											<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
-											<div class="card-body text-center">
-												<p class="">{{ $upcomingGame->home_team }}</p>
-												<p class="">vs</p>
-												<p class="">{{ $upcomingGame->away_team }}</p>
-											</div>
-											<div class="card-footer px-1 d-flex align-items-center justify-content-around">
-												<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
-												<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
-											</div>
-										</div>
-									@endforeach
-								@else
-									<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
-								@endif
-							</div>
-						</div>
-					</div>
-				</div>
-				<!--./ League season schedule snap shot /.-->
-				
-				<!-- League season teams snap shot -->
-				<div class="col-8 mx-auto my-5">
-					<div class="d-flex w-100 justify-content-center align-items-center">
-						<h1 class="h1-responsive">Quick Teams</h1>
-						<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Teams</a>
-					</div>
-					<div class="my-5 d-flex align-items-center justify-content-around">
-						@if($showSeasonTeams->isNotEmpty())
-							<p class="">
-								<label>Total Teams:&nbsp;<label>
-								<span class="text-muted text-underline font-weight-bold">{{ $showSeasonTeams->count() }}</span>
-							</p>
-							<p class="">
-								<label>Total Players:&nbsp;<label>
-								<span class="text-muted text-underline font-weight-bold">{{ $showSeasonPlayers->count() }}</span>
-							</p>
-							<p class="">
-								<label>Unpaid Teams:&nbsp;<label>
-								<span class="text-muted text-underline font-weight-bold">{{ $showSeasonUnpaidTeams->count() }}</span>
-							</p>
-						@else
-							<h3 class="h3-responsive">No teams showing for this season</h3>
-						@endif
-					</div>
-				</div>
-				<!--./ League season teams snap shot /.-->
-				
-				<!-- League season stats snap shot -->
-				<div class="col-8 mx-auto my-5">
-					<div class="d-flex w-100 justify-content-center align-items-center">
-						<h1 class="h1-responsive">Quick Stats</h1>
-						<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Stats</a>
-					</div>
-					<div class="my-5 d-flex align-items-center justify-content-around">
-						<!-- Season stat leaders by category -->
-						@if($showSeasonStat->isNotEmpty())
-							<!-- Get the scoring leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>PPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the rebounding leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>RPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the assisting leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>APG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the stealing leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>SPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the blocking leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>BPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
-											<tr class="white-text">
-												<td>{{ $playerBlocks->player->team_name }}</td>
-												<td>{{ $playerBlocks->player->player_name }}</td>
-												<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-						@else
-							<h3 class="h3-responsive">There are no stats added for this league yet</h3>
-						@endif
-					</div>
-				</div>
-				<!--./ League season stats snap shot /.-->
-				
-				<!-- League season standings -->
-				<div class="">
-					
-				</div>
-				<!--./ League season standings /.-->
-			</div>
-		@else
-		@endif
 		
 		<!--New Season Modal-->
 		<div class="modal fade" id="newSeasonForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -445,24 +549,24 @@
 			</div>
 		</div>
 		
-		<!-- Complete season and start playoffs modal -->
-		<div class="modal fade" id="start_playoffs" tabindex="-1" role="dialog" aria-labelledby="startPlayoffs" aria-hidden="true" data-backdrop="true">
+		<!-- Complete season -->
+		<div class="modal fade coolText4" id="complete_season" tabindex="-1" role="dialog" aria-labelledby="completeSeason" aria-hidden="true" data-backdrop="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h1 class="">Start Playoffs</h1>
+						<h1 class="">Complete Season</h1>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<p class="red-text">**Starting the playoffs will complete your season for you and generate a playoff schedule based on the current standings. This cannot be reversed once accepted**</p>
+						<p class="red-text"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;Completing your season will add this season to the archives and remove it as an active season&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></p>
 						
-						<h2 class="h2-responsive my-5">Are you sure you want to start this seasons playoffs?</h2>
+						<h2 class="h2-responsive my-5">Are you sure you want to complete this seasons?</h2>
 						
 						<div class="d-flex align-items-center justify-content-between">
-							<button class="btn btn-lg green" type="button" onclick="event.preventDefault(); document.getElementById('create_playoff_form').submit();">Yes</button>
-								{!! Form::open(['action' => ['LeagueSeasonController@create_playoffs', 'season' => $showSeason->id, 'year' => $showSeason->year], 'id' => 'create_playoff_form', 'method' => 'POST']) !!}
+							<button class="btn btn-lg green" type="button" onclick="event.preventDefault(); document.getElementById('complete_season_form').submit();">Yes</button>
+								{!! Form::open(['action' => ['LeagueSeasonController@complete_season', 'season' => $showSeason->id, 'year' => $showSeason->year], 'id' => 'complete_season_form', 'method' => 'POST']) !!}
 								{!! Form::close() !!}
 							<button class="btn btn-lg btn-warning" type="button" data-dismiss="modal" aria-label="Close">No</button>
 						</div>

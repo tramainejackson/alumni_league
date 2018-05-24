@@ -59,6 +59,7 @@ class LeagueTeamController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		$totalTeams = $showSeason->league_teams->count();
 		
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
@@ -67,7 +68,7 @@ class LeagueTeamController extends Controller
 		)->save('default_img.jpg');
 		$defaultImg = asset('default_img.jpg');
 		
-		return view('teams.create', compact('showSeason', 'activeSeasons', 'defaultImg'));
+		return view('teams.create', compact('showSeason', 'activeSeasons', 'defaultImg', 'totalTeams'));
     }
 	
 	/**

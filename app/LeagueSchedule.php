@@ -143,14 +143,20 @@ class LeagueSchedule extends Model
 						$homeTeam = $games->shift();
 						$awayTeam = $games->pop();
 						
-						$playoffSchedule->home_team = $homeTeam->winning_team_id == $homeTeam->home_team_id ? $homeTeam->home_team : $homeTeam->away_team;
-						$playoffSchedule->home_team_id = $homeTeam->winning_team_id;
-						$playoffSchedule->away_team = $awayTeam->winning_team_id == $awayTeam->home_team_id ? $awayTeam->home_team : $awayTeam->away_team;
-						$playoffSchedule->away_team_id = $awayTeam->winning_team_id;
-						$playoffSchedule->round = $newRound;
 						$playoffSchedule->home_seed = $homeTeam->winning_team_id == $homeTeam->home_team_id ? $homeTeam->home_seed : $homeTeam->away_seed;
 						$playoffSchedule->away_seed = $awayTeam->winning_team_id == $awayTeam->home_team_id ? $awayTeam->home_seed : $awayTeam->away_seed;
+						
+						// Get the 2 winning teams team object
+						$homeTeam = LeagueTeam::find($homeTeam->winning_team_id);
+						$awayTeam = LeagueTeam::find($homeTeam->winning_team_id);
+						
+						$playoffSchedule->home_team = $homeTeam->team_name;
+						$playoffSchedule->away_team = $awayTeam->team_name;
+						$playoffSchedule->home_team_id = $homeTeam->id;
+						$playoffSchedule->away_team_id = $awayTeam->id;
+
 						$playoffSchedule->league_season_id = $settings->league_season_id;
+						$playoffSchedule->round = $newRound;
 						
 						if($playoffSchedule->save()) {}
 					}
@@ -291,7 +297,7 @@ class LeagueSchedule extends Model
 		->where([
 			["season_week", null],
 			["playin_game", 'N'],
-			["round", '<>', null],
+			["round", '>', 0],
 		])
 		->groupBy("round");
 	}

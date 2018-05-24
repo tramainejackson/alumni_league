@@ -18,7 +18,6 @@
 						<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 					</div>
 					<div class="text-center coolText4">
-						<h3 class="h3-responsive">League Pictures</h3>
 						@if($seasonPictures->isNotEmpty())
 							<h4 class="">Total: <span class="text-muted text-underline">{{ $seasonPictures->count() }}</span></h4>
 						@endif
@@ -40,8 +39,8 @@
 							@endforeach
 						</div>
 					@else
-						<div class="mt-3">
-							<h3 class="h3-responsive text-center">There are no pictures added for this season yet</h3>
+						<div class="text-center">
+							<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no pictures added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
 						</div>
 					@endif
 				</div>

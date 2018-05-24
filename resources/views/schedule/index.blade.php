@@ -96,7 +96,7 @@
 					@endforeach
 				@else
 					<div class="text-center">
-						<p class="">There is no schedule for the selected season</p>
+						<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There is no schedule for the selected season&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
 					</div>
 				@endif
 			</div>
