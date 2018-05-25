@@ -13,12 +13,15 @@
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
-				<div class="my-4 d-flex align-items-center justify-content-center">
+				<div class="mt-4 mb-2 d-flex align-items-center justify-content-center">
 					<button class="btn btn-rounded btn-sm green darken-1 white-text mx-4" id="edit_page_add_game" type="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Game</button>
 					
 					<h2 class="h2-responsive text-center m-2">Edit Week</h2>
 					
-					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>
+					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>					
+				</div>
+				<div class="text-center mb-4">
+					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $weekGames->first()->season_week]) : route('league_stat.edit_week', ['week' => $weekGames->first()->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded cyan darken-1" type="button">Edit Week Stats</a>
 				</div>
 
 				{!! Form::open(['action' => ['LeagueScheduleController@update_week', $weekGames->first()->season_week], 'class' => 'updateWeekForm', 'method' => 'PATCH']) !!}
@@ -32,7 +35,7 @@
 									<div class="d-flex align-items-center justify-content-between">
 										<div class="d-flex align-items-center justify-content-center">
 											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration}}</h2>
-											<a href="{{ route('league_schedule.show', ['league_schedule' => $game->id]) }}" class="btn btn-sm btn-rounded orange darken-1" type="button">Remove Game</a>
+											<a href="{{ request()->query() == null ? route('league_schedule.show', ['league_schedule' => $game->id]) : route('league_schedule.show', ['league_schedule' => $game->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded orange darken-1" type="button">Remove Game</a>
 										</div>
 										
 										<!-- Forfeit Toggle -->

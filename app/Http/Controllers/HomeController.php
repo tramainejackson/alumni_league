@@ -42,7 +42,7 @@ class HomeController extends Controller
 		
 		if($showSeason->is_playoffs == 'Y') {
 			$allGames = $showSeason->games;
-			$allTeams = $showSeason->teams;
+			$allTeams = $showSeason->league_teams;
 			$playoffSettings = $showSeason->playoffs;
 			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames()->get();
 			$playInGames = $showSeason->games()->playoffPlayinGames()->get();

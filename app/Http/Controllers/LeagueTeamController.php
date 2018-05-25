@@ -227,6 +227,7 @@ class LeagueTeamController extends Controller
 					}
 				}
 			}
+			
 			// Updates team players
 			if($team_players) {
 				foreach($team_players as $key => $player) {

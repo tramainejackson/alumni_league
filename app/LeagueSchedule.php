@@ -359,6 +359,17 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to get all the games on the schedule for particular week.
 	*/
+	public function scopeGetRoundGames($query, $round) 
+	{
+		return $query->where([
+			["round", $round],
+			["season_week", null],
+		])->orderBy('game_date')->orderBy('game_time');
+	}
+	
+	/**
+	* Scope a query to get all the games on the schedule for particular week.
+	*/
 	public function scopeGetTeamGames($query, $teamID) 
 	{
 		return $query->where("home_team_id", $teamID)

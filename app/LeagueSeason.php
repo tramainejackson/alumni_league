@@ -377,20 +377,8 @@ class LeagueSeason extends Model
 					$playoffSchedule->home_seed = $homeSeed;
 					$playoffSchedule->away_seed = $awaySeed;
 					$playoffSchedule->playin_game = "Y";
-					if($playoffSchedule->save()) {
-						// $playoffSchedule->set_game_id($database->insert_id());
-						// $playoffSchedule->id = $database->insert_id();
-						
-						// if($playoffSchedule->save()) {
-							// // Add players from both teams to the stats table
-							// $newStats = new League_Stats();
-							// if($newStats->add_new_stats($playoffSchedule->get_league_id(), $playoffSchedule->get_game_id(), $playoffSchedule->get_home_team_id(), $playoffSchedule->get_away_team_id(), "NULL", "Y")) {
-								// // $message->success("<li>All players have been added for stat keeping</li>");
-							// } else {
-								// // $message->error("<li>Players not added for stat keeping</li>");
-							// }
-						// }
-					}
+					
+					if($playoffSchedule->save()) {}
 				}
 				
 			} else {
@@ -401,6 +389,7 @@ class LeagueSeason extends Model
 					$homeTeam = $totalPlayoffTeams->shift();
 					$awayTeam = $totalPlayoffTeams->pop();
 					
+					$playoffSchedule->league_season_id = $this->id;
 					$playoffSchedule->home_team = $homeTeam->team_name;
 					$playoffSchedule->home_team_id = $homeTeam->id;
 					$playoffSchedule->away_team = $awayTeam->team_name;
@@ -409,20 +398,8 @@ class LeagueSeason extends Model
 					$playoffSchedule->away_seed = $awaySeed;
 					$playoffSchedule->playin_game = "N";
 					$playoffSchedule->round = $round;
-					if($playoffSchedule->save()) {
-						// $playoffSchedule->set_game_id($database->insert_id());
-						// $playoffSchedule->id = $database->insert_id();
-						
-						// if($playoffSchedule->save()) {
-							// // Add players from both teams to the stats table
-							// $newStats = new League_Stats();
-							// if($newStats->add_new_stats($playoffSchedule->get_league_id(), $playoffSchedule->get_game_id(), $playoffSchedule->get_home_team_id(), $playoffSchedule->get_away_team_id(), $round, "Y")) {
-								// // $message->success("<li>All players have been added for stat keeping</li>");
-							// } else {
-								// // $message->error("<li>Players not added for stat keeping</li>");
-							// }
-						// }
-					}
+					
+					if($playoffSchedule->save()) {}
 				}
 			}
 			

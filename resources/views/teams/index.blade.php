@@ -119,7 +119,7 @@
 				@endif
 			</div>
 
-			<div class="col-md mt-3">
+			<div class="col-md mt-3 text-right">
 				<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
 			</div>
 		</div>

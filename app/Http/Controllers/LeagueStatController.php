@@ -49,8 +49,17 @@ class LeagueStatController extends Controller
 			}
 		)->save('default_img.jpg');
 		$defaultImg = asset('default_img.jpg');
+		
+		if($showSeason->is_playoffs == 'Y') {
+			$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
+			$playInGames = $showSeason->games()->playoffPlayinGames();
+			$playoffSettings = $showSeason->playoffs;
 
-		return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+			return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+		} else {
+			return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+		}
     }
 	
 	/**
@@ -66,6 +75,21 @@ class LeagueStatController extends Controller
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
 
 		return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames'));
+    }
+	
+	/**
+     * Show the stats to be edited for selected week.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_round(Request $request, $round)
+    {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+		$roundGames	= $showSeason->games()->getRoundGames($round)->get();
+
+		return view('playoffs.stat', compact('playoffRounds', 'showSeason', 'round', 'roundGames'));
     }
 	
 	/**

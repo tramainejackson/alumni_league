@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md" id="">
+			<div class="col-md mt-3" id="">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_standings', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
@@ -13,13 +13,13 @@
 				@endif
 			</div>
 			<div class="col-12 col-md-8">
-				@if($showSeason)
-					<div class="text-center coolText1">
-						<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
-					</div>
-				@else
-					<h1 class="h1-responsive">Sorry We Were Unable To Find Any Standings For This Season</h1>
-				@endif
+				<div class="text-center coolText1">
+					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					
+					@if($showSeason->is_playoffs == 'Y')
+						<h1 class="display-4 coolText4">It's Playoff Time</h1>
+					@endif
+				</div>
 
 				@if($standings != null && $standings->isNotEmpty())
 					<div class="text-center coolText4 mt-3">
@@ -40,10 +40,10 @@
 								@foreach($standings as $showStandings)
 									<tr>
 										<td>{{ $showStandings->team_name }}</td>
-										<td>{{ $showStandings->team_wins }}</td>
-										<td>{{ $showStandings->team_losses }}</td>
-										<td>{{ $showStandings->team_forfeits }}</td>
-										<td>{{ $showStandings->winPERC }}</td>
+										<td>{{ $showStandings->team_wins == null ? '0' : $showStandings->team_wins }}</td>
+										<td>{{ $showStandings->team_losses == null ? '0' : $showStandings->team_losses }}</td>
+										<td>{{ $showStandings->team_forfeits == null ? '0' : $showStandings->team_forfeits }}</td>
+										<td>{{ $showStandings->winPERC == null ? '0.00' : $showStandings->winPERC }}</td>
 									</tr>
 								@endforeach
 							</tbody>

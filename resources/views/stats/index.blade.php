@@ -15,6 +15,10 @@
 			<div class="col-12 col-md-8">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					
+					@if($showSeason->is_playoffs == 'Y')
+						<h1 class="display-4 coolText4">It's Playoff Time</h1>
+					@endif
 				</div>
 				
 				@if($checkStats)
@@ -256,23 +260,23 @@
 									@foreach($allTeams->get() as $showTeam)
 										<tr data-toggle="modal" data-target="#team_card">
 											<td class='teamNameTD'>{{ $showTeam->team_name }}</td>
-											<td class='totalPointsTD'>{{ $showTeam->TPTS }}</td>
-											<td class='pointsPGTD'>{{ $showTeam->PPG }}</td>
-											<td class='threesPGTD'>{{ $showTeam->TPG }}</td>
-											<td class='freeThrowsPGTD'>{{ $showTeam->FTPG }}</td>
-											<td class='assistPGTD'>{{ $showTeam->APG }}</td>
-											<td class='rebPGTD'>{{ $showTeam->RPG }}</td>
-											<td class='stealsPGTD'>{{ $showTeam->SPG }}</td>
-											<td class='blocksPGTD'>{{ $showTeam->BPG }}</td>
-											<td class='totalThreesTD' hidden>{{ $showTeam->TTHR }}</td>
-											<td class='totalFTTD' hidden>{{ $showTeam->TFTS }}</td>
-											<td class='totalAssTD' hidden>{{ $showTeam->TASS }}</td>
-											<td class='totalRebTD' hidden>{{ $showTeam->TRBD }}</td>
-											<td class='totalStealsTD' hidden>{{ $showTeam->TSTL }}</td>
-											<td class='totalBlocksTD' hidden>{{ $showTeam->TBLK }}</td>
-											<td class='totalWinsTD' hidden>{{ $showTeam->team_wins }}</td>
-											<td class='totalLossesTD' hidden>{{ $showTeam->team_losses }}</td>
-											<td class='totalGamesTD' hidden>{{ $showTeam->team_games }}</td>
+											<td class='totalPointsTD'>{{ $showTeam->TPTS  == null ? 0 : $showTeam->TPTS }}</td>
+											<td class='pointsPGTD'>{{ $showTeam->PPG  == null ? 0.00 : $showTeam->PPG }}</td>
+											<td class='threesPGTD'>{{ $showTeam->TPG  == null ? 0.00 : $showTeam->TPG }}</td>
+											<td class='freeThrowsPGTD'>{{ $showTeam->FTPG  == null ? 0.00 : $showTeam->FTPG }}</td>
+											<td class='assistPGTD'>{{ $showTeam->APG  == null ? 0.00 : $showTeam->APG }}</td>
+											<td class='rebPGTD'>{{ $showTeam->RPG  == null ? 0.00 : $showTeam->RPG }}</td>
+											<td class='stealsPGTD'>{{ $showTeam->SPG  == null ? 0.00 : $showTeam->SPG }}</td>
+											<td class='blocksPGTD'>{{ $showTeam->BPG  == null ? 0.00 : $showTeam->BPG }}</td>
+											<td class='totalThreesTD' hidden>{{ $showTeam->TTHR  == null ? 0 : $showTeam->TTHR }}</td>
+											<td class='totalFTTD' hidden>{{ $showTeam->TFTS  == null ? 0 : $showTeam->TFTS }}</td>
+											<td class='totalAssTD' hidden>{{ $showTeam->TASS  == null ? 0 : $showTeam->TASS }}</td>
+											<td class='totalRebTD' hidden>{{ $showTeam->TRBD  == null ? 0 : $showTeam->TRBD }}</td>
+											<td class='totalStealsTD' hidden>{{ $showTeam->TSTL  == null ? 0 : $showTeam->TSTL }}</td>
+											<td class='totalBlocksTD' hidden>{{ $showTeam->TBLK  == null ? 0 : $showTeam->TBLK }}</td>
+											<td class='totalWinsTD' hidden>{{ $showTeam->team_wins  == null ? 0 : $showTeam->team_wins }}</td>
+											<td class='totalLossesTD' hidden>{{ $showTeam->team_losses  == null ? 0 : $showTeam->team_losses }}</td>
+											<td class='totalGamesTD' hidden>{{ $showTeam->team_games  == null ? 0 : $showTeam->team_games }}</td>
 											<td class='teamPicture' hidden>{{ $showTeam->team_picture != null ? $showTeam->team_picture : $defaultImg }}</td>
 										</tr>
 									@endforeach
@@ -286,10 +290,16 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-md mt-3">
-				@foreach($seasonScheduleWeeks as $week)
-					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">Week {{ $loop->iteration }} Stats</a>
-				@endforeach
+			<div class="col-md mt-3 text-right">
+				@if($showSeason->is_playoffs == 'Y')
+					@foreach($playoffRounds as $round)
+						<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $round->round]) : route('league_stat.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+					@endforeach
+				@else
+					@foreach($seasonScheduleWeeks as $week)
+						<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">Week {{ $loop->iteration }} Stats</a>
+					@endforeach
+				@endif
 			</div>
 		</div>
 		

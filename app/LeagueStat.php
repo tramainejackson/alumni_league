@@ -52,6 +52,16 @@ class LeagueStat extends Model
     }
 	
 	/**
+	* Get the contact players the team object.
+	*/
+    public function scopeTeams($query)
+    {
+        return $query->select('league_teams_id')
+		->groupBy('league_teams_id')
+		->get();
+    }
+	
+	/**
 	* Scope a query to get the scoring leaders for this league.
 	*/
 	public function scopeStealingLeaders($query, $limit) {

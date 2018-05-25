@@ -53,6 +53,8 @@ Route::get('/league_stat', 'LeagueStatController@index')->name('league_stat.inde
 
 Route::get('league_stat/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stat.edit_week');
 
+Route::get('league_stat/edit_round/{round}', 'LeagueStatController@edit_round')->name('league_stat.edit_round');
+
 Route::patch('league_stat/edit_week/{week}', 'LeagueStatController@update');
 
 Route::resource('league_schedule', 'LeagueScheduleController');

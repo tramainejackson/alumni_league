@@ -135,6 +135,29 @@ class LeagueScheduleController extends Controller
 		$newGame->game_date = $request->date_picker_submit;
 		
 		if($newGame->save()) {
+			// Add home and away players stats
+			foreach($awayTeam->players as $awayPlayer) {
+				$newPlayerStat = new LeagueStat();
+				$newPlayerStat->league_teams_id = $awayTeam->id;
+				$newPlayerStat->league_season_id = $showSeason->id;
+				$newPlayerStat->league_schedule_id = $newGame->id;
+				$newPlayerStat->league_player_id = $awayPlayer->id;
+				$newPlayerStat->game_played = 0;
+				
+				if($newPlayerStat->save()) {}
+			}
+			
+			foreach($homeTeam->players as $homePlayer) {
+				$newPlayerStat = new LeagueStat();
+				$newPlayerStat->league_teams_id = $homeTeam->id;
+				$newPlayerStat->league_season_id = $showSeason->id;
+				$newPlayerStat->league_schedule_id = $newGame->id;
+				$newPlayerStat->league_player_id = $homePlayer->id;
+				$newPlayerStat->game_played = 0;
+				
+				if($newPlayerStat->save()) {}
+			}
+				
 			return redirect()->back()->with('status', 'Game Added Successfully');
 		} else {}
     }
@@ -170,6 +193,29 @@ class LeagueScheduleController extends Controller
 			
 			if($newGame->save()) {
 				$newGameCount++;
+
+				// Add home and away players stats
+				foreach($awayTeam->players as $awayPlayer) {
+					$newPlayerStat = new LeagueStat();
+					$newPlayerStat->league_teams_id = $awayTeam->id;
+					$newPlayerStat->league_season_id = $showSeason->id;
+					$newPlayerStat->league_schedule_id = $newGame->id;
+					$newPlayerStat->league_player_id = $awayPlayer->id;
+					$newPlayerStat->game_played = 0;
+					
+					if($newPlayerStat->save()) {}
+				}
+				
+				foreach($homeTeam->players as $homePlayer) {
+					$newPlayerStat = new LeagueStat();
+					$newPlayerStat->league_teams_id = $homeTeam->id;
+					$newPlayerStat->league_season_id = $showSeason->id;
+					$newPlayerStat->league_schedule_id = $newGame->id;
+					$newPlayerStat->league_player_id = $homePlayer->id;
+					$newPlayerStat->game_played = 0;
+					
+					if($newPlayerStat->save()) {}
+				}
 			} else {}
 		}
 
@@ -254,6 +300,95 @@ class LeagueScheduleController extends Controller
 			$game->game_date = $date;
 			
 			if($game->save()) {
+				// If stats exist then check if teams were changed
+				// If teams were changed then remove team that was changed and 
+				// add new players
+				if($game->player_stats->isNotEmpty()) {
+					$currentTeamID1 = $game->player_stats()->teams()[0]->league_teams_id;
+					$currentTeamID2 = $game->player_stats()->teams()[1]->league_teams_id;
+					
+					// Remove team players if they do not 
+					// match either team that was saved
+					// for this game
+					if($currentTeamID1 != $awayTeam->id && $currentTeamID1 != $homeTeam->id) {
+						$removeTeam = LeagueTeam::find($currentTeamID1);
+						$removeStats = $game->player_stats()->where([
+							['league_teams_id', $currentTeamID1],
+							['deleted_at', null],
+						])->get();
+						
+						foreach($removeStats as $removeTeamPlayerStat) {
+							if($removeTeamPlayerStat->delete()) {}
+						}
+					}
+					
+					// Remove team players if they do not match either team that was saved
+					// for this game
+					if($currentTeamID2 != $awayTeam->id && $currentTeamID2 != $homeTeam->id) {
+						$removeTeam = LeagueTeam::find($currentTeamID2);
+						$removeStats = $game->player_stats()->where([
+							['league_teams_id', $currentTeamID2],
+							['deleted_at', null],
+						])->get();
+						
+						foreach($removeStats as $removeTeamPlayerStat) {
+							if($removeTeamPlayerStat->delete()) {}
+						}
+					}
+					
+					// Add away team players if they do not already have stats 
+					// added for this week
+					if($currentTeamID1 != $awayTeam->id && $currentTeamID2 != $awayTeam->id) {
+						foreach($awayTeam->players as $awayPlayer) {
+							$newPlayerStat = new LeagueStat();
+							$newPlayerStat->league_teams_id = $awayTeam->id;
+							$newPlayerStat->league_season_id = $showSeason->id;
+							$newPlayerStat->league_schedule_id = $game->id;
+							$newPlayerStat->league_player_id = $awayPlayer->id;
+							$newPlayerStat->game_played = 0;
+							
+							if($newPlayerStat->save()) {}
+						}
+					}
+					
+					// Add home team players if they do not already have stats 
+					// added for this week
+					if($currentTeamID1 != $homeTeam->id && $currentTeamID2 != $homeTeam->id) {
+						foreach($homeTeam->players as $homePlayer) {
+							$newPlayerStat = new LeagueStat();
+							$newPlayerStat->league_teams_id = $homeTeam->id;
+							$newPlayerStat->league_season_id = $showSeason->id;
+							$newPlayerStat->league_schedule_id = $game->id;
+							$newPlayerStat->league_player_id = $homePlayer->id;
+							$newPlayerStat->game_played = 0;
+							
+							if($newPlayerStat->save()) {}
+						}
+					}
+				} else {
+					foreach($awayTeam->players as $awayPlayer) {
+						$newPlayerStat = new LeagueStat();
+						$newPlayerStat->league_teams_id = $awayTeam->id;
+						$newPlayerStat->league_season_id = $showSeason->id;
+						$newPlayerStat->league_schedule_id = $game->id;
+						$newPlayerStat->league_player_id = $awayPlayer->id;
+						$newPlayerStat->game_played = 0;
+						
+						if($newPlayerStat->save()) {}
+					}
+					
+					foreach($homeTeam->players as $homePlayer) {
+						$newPlayerStat = new LeagueStat();
+						$newPlayerStat->league_teams_id = $homeTeam->id;
+						$newPlayerStat->league_season_id = $showSeason->id;
+						$newPlayerStat->league_schedule_id = $game->id;
+						$newPlayerStat->league_player_id = $homePlayer->id;
+						$newPlayerStat->game_played = 0;
+						
+						if($newPlayerStat->save()) {}
+					}
+				}
+				
 				$result = '';
 				
 				// Update game result row if it exist
@@ -379,6 +514,94 @@ class LeagueScheduleController extends Controller
 		
 		if($game->save()) {
 			$result = '';
+
+			// If stats exist then check if teams were changed
+			// If teams were changed then remove team that was changed and 
+			// add new players
+			if($game->player_stats->isNotEmpty()) {
+				$currentTeamID1 = $game->player_stats()->teams()[0]->league_teams_id;
+				$currentTeamID2 = $game->player_stats()->teams()[1]->league_teams_id;
+				// Remove team players if they do not match either team that was saved
+				// for this game
+				if($currentTeamID1 != $awayTeam->id && $currentTeamID1 != $homeTeam->id) {
+					$removeTeam = LeagueTeam::find($currentTeamID1);
+					$removeStats = $game->player_stats()->where([
+						['league_teams_id', $currentTeamID1],
+						['deleted_at', null],
+					])->get();
+					
+					foreach($removeStats as $removeTeamPlayerStat) {
+						if($removeTeamPlayerStat->delete()) {}
+					}
+				}
+				
+				// Remove team players if they do not match either team that was saved
+				// for this game
+				if($currentTeamID2 != $awayTeam->id && $currentTeamID2 != $homeTeam->id) {
+					$removeTeam = LeagueTeam::find($currentTeamID2);
+					$removeStats = $game->player_stats()->where([
+						['league_teams_id', $currentTeamID2],
+						['deleted_at', null],
+					])->get();
+					
+					foreach($removeStats as $removeTeamPlayerStat) {
+						if($removeTeamPlayerStat->delete()) {}
+					}
+				}
+				
+				// Add away team players if they do not already have stats 
+				// added for this week
+				if($currentTeamID1 != $awayTeam->id && $currentTeamID2 != $awayTeam->id) {
+					foreach($awayTeam->players as $awayPlayer) {
+						$newPlayerStat = new LeagueStat();
+						$newPlayerStat->league_teams_id = $awayTeam->id;
+						$newPlayerStat->league_season_id = $showSeason->id;
+						$newPlayerStat->league_schedule_id = $game->id;
+						$newPlayerStat->league_player_id = $awayPlayer->id;
+						$newPlayerStat->game_played = 0;
+						
+						if($newPlayerStat->save()) {}
+					}
+				}
+				
+				// Add home team players if they do not already have stats 
+				// added for this week
+				if($currentTeamID1 != $homeTeam->id && $currentTeamID2 != $homeTeam->id) {
+					foreach($homeTeam->players as $homePlayer) {
+						$newPlayerStat = new LeagueStat();
+						$newPlayerStat->league_teams_id = $homeTeam->id;
+						$newPlayerStat->league_season_id = $showSeason->id;
+						$newPlayerStat->league_schedule_id = $game->id;
+						$newPlayerStat->league_player_id = $homePlayer->id;
+						$newPlayerStat->game_played = 0;
+						
+						if($newPlayerStat->save()) {}
+					}
+				}
+				
+			} else {
+				foreach($awayTeam->players as $awayPlayer) {
+					$newPlayerStat = new LeagueStat();
+					$newPlayerStat->league_teams_id = $awayTeam->id;
+					$newPlayerStat->league_season_id = $showSeason->id;
+					$newPlayerStat->league_schedule_id = $game->id;
+					$newPlayerStat->league_player_id = $awayPlayer->id;
+					$newPlayerStat->game_played = 0;
+					
+					if($newPlayerStat->save()) {}
+				}
+				
+				foreach($homeTeam->players as $homePlayer) {
+					$newPlayerStat = new LeagueStat();
+					$newPlayerStat->league_teams_id = $homeTeam->id;
+					$newPlayerStat->league_season_id = $showSeason->id;
+					$newPlayerStat->league_schedule_id = $game->id;
+					$newPlayerStat->league_player_id = $homePlayer->id;
+					$newPlayerStat->game_played = 0;
+					
+					if($newPlayerStat->save()) {}
+				}
+			}
 			
 			// Update game result row if it exist
 			if(LeagueScheduleResult::where('league_schedule_id', $game->id)->first()) {

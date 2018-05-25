@@ -1,11 +1,13 @@
 ------------------------------------------------------
 					ToTheRec Leagues
 ------------------------------------------------------
+Fix bracketet
+Fix Seeding when lower seeds win
+Get team per game stats
 Add a calendar for the games schedule
 Add some animation
-Fix Seeding when lower seeds win
-Add players to stats db when new game is created
-Add stats pages for playoffs
+Done: Add players to stats db when new game is created
+Done: Add stats pages for playoffs
 Done: Fix footer
 Done: Do complete season function
 Done: Do start playoffs function

@@ -78,9 +78,9 @@
 														@endif
 													</td>
 												@else
-													<td class="awayTeamData">{{ $game->away_team }}</td>
+													<td class="awayTeamData"><span class="awayTeamNameData">{{ $game->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $game->away_team_obj->id }}</span></td>
 													<td>vs</td>
-													<td class="homeTeamData">{{ $game->home_team }}</td>
+													<td class="homeTeamData"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span></td>
 												@endif
 												
 												<td class="gameTimeData">{{ $game->game_time() }}</td>
