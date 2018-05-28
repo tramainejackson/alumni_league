@@ -114,7 +114,7 @@ class LeagueSeason extends Model
 	*
 	*/
 	public function complete_round($round=0) {
-		$games = LeagueSchedule::roundGames($round)->get();
+		$games = $this->games()->roundGames($round)->get();
 		$completeGames = 0;
 		$newRound = ($round + 1);
 
@@ -165,7 +165,30 @@ class LeagueSeason extends Model
 						$playoffSchedule->league_season_id = $settings->league_season_id;
 						$playoffSchedule->round = $newRound;
 						
-						if($playoffSchedule->save()) {}
+						if($playoffSchedule->save()) {
+							// Add home and away players stats
+							foreach($awayTeam->players as $awayPlayer) {
+								$newPlayerStat = new LeagueStat();
+								$newPlayerStat->league_teams_id = $awayTeam->id;
+								$newPlayerStat->league_season_id = $this->id;
+								$newPlayerStat->league_schedule_id = $playoffSchedule->id;
+								$newPlayerStat->league_player_id = $awayPlayer->id;
+								$newPlayerStat->game_played = 0;
+								
+								if($newPlayerStat->save()) {}
+							}
+							
+							foreach($homeTeam->players as $homePlayer) {
+								$newPlayerStat = new LeagueStat();
+								$newPlayerStat->league_teams_id = $homeTeam->id;
+								$newPlayerStat->league_season_id = $this->id;
+								$newPlayerStat->league_schedule_id = $playoffSchedule->id;
+								$newPlayerStat->league_player_id = $homePlayer->id;
+								$newPlayerStat->game_played = 0;
+								
+								if($newPlayerStat->save()) {}
+							}
+						}
 					}
 				} else {					
 					$this->champion_id = $game->result->winning_team_id;
@@ -182,8 +205,8 @@ class LeagueSeason extends Model
 	*
 	*/
 	public function complete_playins() {
-		$games 	= LeagueSchedule::playoffPlayinGames()->get();
-		$roundGames = LeagueSchedule::playoffRounds()->get();
+		$games 	= $this->games()->playoffPlayinGames()->get();
+		$roundGames = $this->games()->playoffRounds()->get();
 		$completeGames = 0;
 		$newRound = 1;
 		
@@ -256,7 +279,30 @@ class LeagueSeason extends Model
 					// $playoffSchedule->game_time = "12:00";
 					// $playoffSchedule->game_date = date("Y-m-d");
 
-					if($playoffSchedule->save()) {}
+					if($playoffSchedule->save()) {
+						// Add home and away players stats
+						foreach($awayTeam->players as $awayPlayer) {
+							$newPlayerStat = new LeagueStat();
+							$newPlayerStat->league_teams_id = $awayTeam->id;
+							$newPlayerStat->league_season_id = $showSeason->id;
+							$newPlayerStat->league_schedule_id = $newGame->id;
+							$newPlayerStat->league_player_id = $awayPlayer->id;
+							$newPlayerStat->game_played = 0;
+							
+							if($newPlayerStat->save()) {}
+						}
+						
+						foreach($homeTeam->players as $homePlayer) {
+							$newPlayerStat = new LeagueStat();
+							$newPlayerStat->league_teams_id = $homeTeam->id;
+							$newPlayerStat->league_season_id = $showSeason->id;
+							$newPlayerStat->league_schedule_id = $newGame->id;
+							$newPlayerStat->league_player_id = $homePlayer->id;
+							$newPlayerStat->game_played = 0;
+							
+							if($newPlayerStat->save()) {}
+						}
+					}
 					
 					$homeSeed++;
 					$awaySeed--;
@@ -399,7 +445,30 @@ class LeagueSeason extends Model
 					$playoffSchedule->playin_game = "N";
 					$playoffSchedule->round = $round;
 					
-					if($playoffSchedule->save()) {}
+					if($playoffSchedule->save()) {
+						// Add home and away players stats
+						foreach($awayTeam->players as $awayPlayer) {
+							$newPlayerStat = new LeagueStat();
+							$newPlayerStat->league_teams_id = $awayTeam->id;
+							$newPlayerStat->league_season_id = $showSeason->id;
+							$newPlayerStat->league_schedule_id = $newGame->id;
+							$newPlayerStat->league_player_id = $awayPlayer->id;
+							$newPlayerStat->game_played = 0;
+							
+							if($newPlayerStat->save()) {}
+						}
+						
+						foreach($homeTeam->players as $homePlayer) {
+							$newPlayerStat = new LeagueStat();
+							$newPlayerStat->league_teams_id = $homeTeam->id;
+							$newPlayerStat->league_season_id = $showSeason->id;
+							$newPlayerStat->league_schedule_id = $newGame->id;
+							$newPlayerStat->league_player_id = $homePlayer->id;
+							$newPlayerStat->game_played = 0;
+							
+							if($newPlayerStat->save()) {}
+						}
+					}
 				}
 			}
 			

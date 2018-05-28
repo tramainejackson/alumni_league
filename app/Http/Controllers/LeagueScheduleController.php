@@ -484,7 +484,6 @@ class LeagueScheduleController extends Controller
 	{
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-
 		$game		= LeagueSchedule::find($request->edit_game_id);
 		$awayTeam	= LeagueTeam::find($request->edit_away_team);
 		$homeTeam 	= LeagueTeam::find($request->edit_home_team);
@@ -649,8 +648,16 @@ class LeagueScheduleController extends Controller
 			
 		} else {}
 
-		// Update the standings after updating all the games
-		$showSeason->standings()->standingUpdate();
+		if($game->is_playoff_game()) {
+			if($game->is_playin_game()) {
+				$showSeason->complete_playins();
+			} else {
+				$showSeason->complete_round($game->round);
+			}
+		} else {
+			// Update the standings after updating all the games
+			$showSeason->standings()->standingUpdate();
+		}
 
 		return redirect()->back()->with('status', 'Game updated successfully');
 	}

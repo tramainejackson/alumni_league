@@ -1,7 +1,7 @@
 ------------------------------------------------------
 					ToTheRec Leagues
 ------------------------------------------------------
-Fix bracketet
+Fix bracket
 Fix Seeding when lower seeds win
 Get team per game stats
 Add a calendar for the games schedule

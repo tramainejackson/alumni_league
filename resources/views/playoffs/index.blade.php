@@ -61,7 +61,7 @@
 											@php $totalGames = ($teams/2); @endphp
 											<ul class="round round-{{ $x }}">
 												<!--- Get games that are for round x from database --->
-												@php $playoffSchedule = \App\LeagueSchedule::roundGames($x)->orderBy('home_seed')->get(); @endphp
+												@php $playoffSchedule = $showSeason->games()->roundGames($x)->orderBy('home_seed')->get(); @endphp
 												@if($playoffSchedule->isNotEmpty())
 													@while($playoffSchedule->isNotEmpty())
 														@php $roundGames = $playoffSchedule->count(); @endphp

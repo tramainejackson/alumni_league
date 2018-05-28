@@ -103,6 +103,34 @@ class LeagueSchedule extends Model
 	
 	/*
 	*
+	* Check and see if the game is a playoff game
+	*
+	*/
+	public function is_playoff_game()
+	{
+		if($this->season_week == null && ($this->playin_game != null || $this->round != null)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/*
+	*
+	* Check and see if the game is a playoff playin game
+	*
+	*/
+	public function is_playin_game()
+	{
+		if($this->season_week == null && $this->playin_game == 'Y') {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/*
+	*
 	* Complete non playin games playoff games round
 	*
 	*/
