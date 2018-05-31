@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('additional_scripts')
+	<script type="text/javascript">
+		if(window.location.href.indexOf("new_season") > 0) {
+			setTimeout(function() {
+				$('#newSeasonForm').modal('show');
+			}, 500);
+		}
+	</script>
+@endsection
+
 @section('content')
 	@include('include.functions')
 	
@@ -14,7 +24,7 @@
 					@if($activeSeasons->isNotEmpty())
 						<div class="col">
 							@foreach($activeSeasons as $activeSeason)
-								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
+								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block" type="button">{{ $activeSeason->name }}</a>
 							@endforeach
 						</div>
 					@else
@@ -22,99 +32,105 @@
 				</div>
 			</div>
 			<div class="col-7 pb-3">
-				<!-- Show league season info -->
-				@if($showSeason->paid == 'Y')
-					<div class="text-center coolText1">
-						<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
-					</div>
+				@if(!isset($allComplete))
+					<!-- Show league season info -->
+					@if($showSeason->paid == 'Y')
+						<div class="text-center coolText1">
+							<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+						</div>
 
-					<!--Card-->
-					<div class="card">
-						<!--Card content-->
-						<div class="card-body text-center">
-							<!-- League season info -->
-							<div class="">
-								{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
-									<div class="updateLeagueForm">
-										<div class="md-form">
-											<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
+						<!--Card-->
+						<div class="card">
+							<!--Card content-->
+							<div class="card-body text-center">
+								<!-- League season info -->
+								<div class="">
+									{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
+										<div class="updateLeagueForm">
+											<div class="md-form">
+												<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
 
-											<label for="leagues_address">Address</label>
-										</div>
-										
-										<div class="row">
-											<div class="col">
-												<div class="md-form input-group">
-													<div class="input-group-prepend">
-														<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+												<label for="leagues_address">Address</label>
+											</div>
+											
+											<div class="row">
+												<div class="col">
+													<div class="md-form input-group">
+														<div class="input-group-prepend">
+															<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+														</div>
+														
+														<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_fee }}"  step="0.01" placeholder="League Entry Fee" />
+														
+														<div class="input-group-prepend">
+															<span class="input-group-text">Per Team</span>
+														</div>
+														
+														<label for="leagues_fee">Entry Fee</label>
 													</div>
-													
-													<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_fee }}"  step="0.01" placeholder="League Entry Fee" />
-													
-													<div class="input-group-prepend">
-														<span class="input-group-text">Per Team</span>
+												</div>
+												
+												<div class="col">
+													<div class="md-form input-group mb-5">
+														<div class="input-group-prepend">
+															<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+														</div>
+														
+														<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->ref_fee }}" step="0.01" placeholder="Ref Fee" />
+														
+														<div class="input-group-prepend">
+															<span class="input-group-text">Per Game</span>
+														</div>
+														
+														<label for="ref_fee">Ref Fee</label>
 													</div>
-													
-													<label for="leagues_fee">Entry Fee</label>
 												</div>
 											</div>
 											
-											<div class="col">
-												<div class="md-form input-group mb-5">
-													<div class="input-group-prepend">
-														<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+											<div class="row">
+												<div class="col">
+													<div class="md-form">
+														<select class="mdb-select" name="age_group">
+															@foreach($ageGroups as $ageGroup)
+																<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
+															@endforeach
+														</select>
+														
+														<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
 													</div>
-													
-													<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->ref_fee }}" step="0.01" placeholder="Ref Fee" />
-													
-													<div class="input-group-prepend">
-														<span class="input-group-text">Per Game</span>
+												</div>
+												<div class="col">
+													<div class="md-form">
+														<select class="mdb-select" name="comp_group">
+															@foreach($compGroups as $compGroup)
+																<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
+															@endforeach
+														</select>
+														
+														<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
 													</div>
-													
-													<label for="ref_fee">Ref Fee</label>
 												</div>
 											</div>
-										</div>
-										
-										<div class="row">
-											<div class="col">
-												<div class="md-form">
-													<select class="mdb-select" name="age_group">
-														@foreach($ageGroups as $ageGroup)
-															<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
-														@endforeach
-													</select>
-													
-													<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
-												</div>
-											</div>
-											<div class="col">
-												<div class="md-form">
-													<select class="mdb-select" name="comp_group">
-														@foreach($compGroups as $compGroup)
-															<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
-														@endforeach
-													</select>
-													
-													<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
-												</div>
+											
+											<div class="md-form">
+												<button type="submit" class="btn btn-lg green m-0" id="">Update League</button>
+												<button type="button" class="btn btn-lg cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
 											</div>
 										</div>
-										
-										<div class="md-form">
-											<button type="submit" class="btn btn-lg green m-0" id="">Update League</button>
-											<button type="button" class="btn btn-lg cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
-										</div>
-									</div>
-								{!! Form::close() !!}
+									{!! Form::close() !!}
+								</div>
+								<!--./ League season info /.-->
 							</div>
-							<!--./ League season info /.-->
 						</div>
-					</div>
-					<!--/.Card-->
+						<!--/.Card-->
+					@else
+						<div class="coolText4 py-3 px-5">
+							<h1 class="h1-responsive text-justify">Welcome to ToTheRec Leagues home page. Here you will be able to see your schedule, stats, and information for the selected season at a glance.<br/><br/>It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.</h1>
+						</div>
+					@endif
 				@else
 					<div class="coolText4 py-3 px-5">
-						<h1 class="h1-responsive text-justify">Welcome to ToTheRec Leagues home page. Here you will be able to see your schedule, stats, and information for the selected season at a glance.<br/><br/>It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.</h1>
+						<h1 class="h1-responsive text-justify">It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.<br/><br/>You can always see past seasons by selecting the links under the completed season section to the right</h1>
 					</div>
 				@endif
 			</div>
@@ -127,7 +143,7 @@
 				@if($completedSeasons->isNotEmpty())
 					@foreach($completedSeasons as $completedSeason)
 						<div class="text-center">
-							<a href="#" class="">{{ ucfirst($completedSeason->season) . ' ' . $completedSeason->year }}</a>
+							<a href="#" class="btn btn-rounded btn-lg purple darken-2 d-block">{{ ucfirst($completedSeason->name) }}</a>
 						</div>
 					@endforeach
 				@else
@@ -138,202 +154,205 @@
 			</div>
 		</div>
 		
-		@if($showSeason->paid == 'Y')
-			<div class="row">
-				<!-- League season schedule snap shot -->
-				<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
-					<div class="my-5 d-flex align-items-center justify-content-center flex-column">
-						<div class="d-flex w-100 justify-content-center align-items-center">
-							<h1 class="h1-responsive">Upcoming Schedule</h1>
-							<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">Full Schedule</a>
-						</div>
-						
-						<div class="container-fluid">
-							<div class="row">
-								@if($showSeasonSchedule->isNotEmpty())
-									@foreach($showSeasonSchedule as $upcomingGame)
-										<div class="card col-6 col-md-6 col-lg-4 col-lg-3 my-2">
-											<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
-											<div class="card-body text-center">
-												<p class="">{{ $upcomingGame->home_team }}</p>
-												<p class="">vs</p>
-												<p class="">{{ $upcomingGame->away_team }}</p>
+		@if(!isset($allComplete))
+			@if($showSeason->paid == 'Y')
+				<div class="row">
+					<!-- League season schedule snap shot -->
+					<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
+						<div class="my-5 d-flex align-items-center justify-content-center flex-column">
+							<div class="d-flex w-100 justify-content-center align-items-center">
+								<h1 class="h1-responsive">Upcoming Schedule</h1>
+								<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">Full Schedule</a>
+							</div>
+							
+							<div class="container-fluid">
+								<div class="row">
+									@if($showSeasonSchedule->isNotEmpty())
+										@foreach($showSeasonSchedule as $upcomingGame)
+											<div class="card col-6 col-md-6 col-lg-4 col-lg-3 my-2">
+												<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
+												<div class="card-body text-center">
+													<p class="">{{ $upcomingGame->home_team }}</p>
+													<p class="">vs</p>
+													<p class="">{{ $upcomingGame->away_team }}</p>
+												</div>
+												<div class="card-footer px-1 d-flex align-items-center justify-content-around">
+													<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
+													<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+												</div>
 											</div>
-											<div class="card-footer px-1 d-flex align-items-center justify-content-around">
-												<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
-												<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
-											</div>
+										@endforeach
+									@else
+										<div class="col text-center">
+											<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
 										</div>
-									@endforeach
-								@else
-									<div class="col text-center">
-										<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
-									</div>
-								@endif
+									@endif
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<!--./ League season schedule snap shot /.-->
-				
-				<!-- League season teams snap shot -->
-				<div class="col-8 mx-auto my-5">
-					<div class="d-flex w-100 justify-content-center align-items-center">
-						<h1 class="h1-responsive">Quick Teams</h1>
-						<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Teams</a>
-					</div>
-					<div class="my-5 d-flex align-items-center justify-content-around">
-						@if($showSeasonTeams->isNotEmpty())
-							<p class="">
-								<label>Total Teams:&nbsp;<label>
-								<span class="text-muted text-underline font-weight-bold">{{ $showSeasonTeams->count() }}</span>
-							</p>
-							<p class="">
-								<label>Total Players:&nbsp;<label>
-								<span class="text-muted text-underline font-weight-bold">{{ $showSeasonPlayers->count() }}</span>
-							</p>
-							<p class="">
-								<label>Unpaid Teams:&nbsp;<label>
-								<span class="text-muted text-underline font-weight-bold">{{ $showSeasonUnpaidTeams->count() }}</span>
-							</p>
-						@else
-							<h3 class="h3-responsive">No teams showing for this season</h3>
-						@endif
-					</div>
-				</div>
-				<!--./ League season teams snap shot /.-->
-				
-				<!-- League season stats snap shot -->
-				<div class="col-8 mx-auto my-5">
-					<div class="d-flex w-100 justify-content-center align-items-center">
-						<h1 class="h1-responsive">Quick Stats</h1>
-						<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Stats</a>
-					</div>
-					<div class="my-5 d-flex align-items-center justify-content-around">
-						<!-- Season stat leaders by category -->
-						@if($showSeasonStat->isNotEmpty())
-							<!-- Get the scoring leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>PPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the rebounding leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>RPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the assisting leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>APG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the stealing leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>SPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-							
-							<!-- Get the blocking leaders -->
-							<div class="blue-gradient">
-								<table class="table white-text">
-									<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>BPG</th>
-										</tr>
-									</thead>
-									<tbody>
-										@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
-											<tr class="white-text">
-												<td>{{ $playerBlocks->player->team_name }}</td>
-												<td>{{ $playerBlocks->player->player_name }}</td>
-												<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
-									</tbody>
-								</table>
-							</div>
-						@else
-							<h3 class="h3-responsive">There are no stats added for this league yet</h3>
-						@endif
-					</div>
-				</div>
-				<!--./ League season stats snap shot /.-->
-				
-				<!-- League season standings -->
-				<div class="">
+					<!--./ League season schedule snap shot /.-->
 					
+					<!-- League season teams snap shot -->
+					<div class="col-8 mx-auto my-5">
+						<div class="d-flex w-100 justify-content-center align-items-center">
+							<h1 class="h1-responsive">Quick Teams</h1>
+							<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Teams</a>
+						</div>
+						<div class="my-5 d-flex align-items-center justify-content-around">
+							@if($showSeasonTeams->isNotEmpty())
+								<p class="">
+									<label>Total Teams:&nbsp;<label>
+									<span class="text-muted text-underline font-weight-bold">{{ $showSeasonTeams->count() }}</span>
+								</p>
+								<p class="">
+									<label>Total Players:&nbsp;<label>
+									<span class="text-muted text-underline font-weight-bold">{{ $showSeasonPlayers->count() }}</span>
+								</p>
+								<p class="">
+									<label>Unpaid Teams:&nbsp;<label>
+									<span class="text-muted text-underline font-weight-bold">{{ $showSeasonUnpaidTeams->count() }}</span>
+								</p>
+							@else
+								<h3 class="h3-responsive">No teams showing for this season</h3>
+							@endif
+						</div>
+					</div>
+					<!--./ League season teams snap shot /.-->
+					
+					<!-- League season stats snap shot -->
+					<div class="col-8 mx-auto my-5">
+						<div class="d-flex w-100 justify-content-center align-items-center">
+							<h1 class="h1-responsive">Quick Stats</h1>
+							<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Stats</a>
+						</div>
+						<div class="my-5 d-flex align-items-center justify-content-around">
+							<!-- Season stat leaders by category -->
+							@if($showSeasonStat->isNotEmpty())
+								<!-- Get the scoring leaders -->
+								<div class="blue-gradient">
+									<table class="table white-text">
+										<thead>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>PPG</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+								
+								<!-- Get the rebounding leaders -->
+								<div class="blue-gradient">
+									<table class="table white-text">
+										<thead>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>RPG</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+								
+								<!-- Get the assisting leaders -->
+								<div class="blue-gradient">
+									<table class="table white-text">
+										<thead>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>APG</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+								
+								<!-- Get the stealing leaders -->
+								<div class="blue-gradient">
+									<table class="table white-text">
+										<thead>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>SPG</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+								
+								<!-- Get the blocking leaders -->
+								<div class="blue-gradient">
+									<table class="table white-text">
+										<thead>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>BPG</th>
+											</tr>
+										</thead>
+										<tbody>
+											@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
+												<tr class="white-text">
+													<td>{{ $playerBlocks->player->team_name }}</td>
+													<td>{{ $playerBlocks->player->player_name }}</td>
+													<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+							@else
+								<h3 class="h3-responsive">There are no stats added for this league yet</h3>
+							@endif
+						</div>
+					</div>
+					<!--./ League season stats snap shot /.-->
+					
+					<!-- League season standings -->
+					<div class="">
+						
+					</div>
+					<!--./ League season standings /.-->
 				</div>
-				<!--./ League season standings /.-->
-			</div>
+			@else
+			@endif
 		@else
 		@endif
 		
@@ -341,7 +360,7 @@
 		<div class="modal fade" id="newSeasonForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
-					{!! Form::open(['action' => ['LeagueSeasonController@store', 'league' => $showSeason->league_profile->id], 'method' => 'POST']) !!}
+					{!! Form::open(['action' => ['LeagueSeasonController@store', 'league' => !isset($allComplete) ? $showSeason->league_profile->id : $showSeason->id], 'method' => 'POST']) !!}
 						<div class="modal-header text-center">
 							<h4 class="modal-title w-100 font-weight-bold">New Season</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -349,6 +368,11 @@
 							</button>
 						</div>
 						<div class="modal-body mx-3">
+							<div class="md-form">
+								<input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter A Name For The Season" />
+								
+								<label data-error="wrong" data-success="right" for="name" class="blue-text">Name</label>
+							</div>
 							<div class="row">
 								<div class="col-6">
 									<div class="md-form">
@@ -385,7 +409,7 @@
 											<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 										</div>
 										
-										<input type="number" name="league_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_profile->leagues_fee == null ? 0.00 : $showSeason->league_profile->leagues_fee }}" step="0.01" placeholder="League Entry Fee" required />
+										<input type="number" name="league_fee" class="form-control" id="league_fee" value="{{ !isset($allComplete) ? $showSeason->league_profile->leagues_fee == null ? 0.00 : $showSeason->league_profile->leagues_fee : $showSeason->leagues_fee == null ? 0.00 : $showSeason->leagues_fee }}" step="0.01" placeholder="League Entry Fee" required />
 										
 										<div class="input-group-prepend">
 											<span class="input-group-text">Per Team</span>
@@ -400,7 +424,7 @@
 											<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 										</div>
 										
-										<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->league_profile->ref_fee == null ? 0.00 : $showSeason->league_profile->ref_fee }}" step="0.01" placeholder="League Referee Fee" required />
+										<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ !isset($allComplete) ? $showSeason->league_profile->ref_fee == null ? 0.00 : $showSeason->league_profile->ref_fee : $showSeason->ref_fee == null ? 0.00 : $showSeason->ref_fee }}" step="0.01" placeholder="League Referee Fee" required />
 										
 										<div class="input-group-prepend">
 											<span class="input-group-text">Per Game</span>
@@ -440,7 +464,7 @@
 							</div>
 							
 							<div class="md-form">
-								<input type="text" name="location" class="form-control" value="{{ old('location') ? old('location') : $showSeason->league_profile->address }}" />
+								<input type="text" name="location" class="form-control" value="{{ old('location') ? old('location') : !isset($allComplete) ? $showSeason->league_profile->address : $showSeason->address }}" />
 								
 								<label data-error="wrong" data-success="right" for="age_group">Games Location</label>
 							</div>

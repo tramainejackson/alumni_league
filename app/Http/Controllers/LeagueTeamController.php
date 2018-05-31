@@ -35,8 +35,9 @@ class LeagueTeamController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-		$seasonTeams = $showSeason->league_teams;
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
+		$seasonTeams = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_teams;
+		$allComplete = 'Y';
 		
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
@@ -46,7 +47,11 @@ class LeagueTeamController extends Controller
 		)->save(storage_path('app/public/images/lg/default_img.jpg'));
 		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
+		if($showSeason instanceof \App\LeagueProfile) {
+			return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg', 'allComplete'));
+		} else {	
+			return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
+		}
     }
 	
 	/**
@@ -341,24 +346,25 @@ class LeagueTeamController extends Controller
      * @return seaon
     */
 	public function find_season(Request $request) {
-		$league = Auth::user()->leagues_profiles->first();
-		
-		$showSeason = '';
-		
-		if($request->query('season') != null && $request->query('year') != null) {
-			$showSeason = $league->seasons()->active()->find($request->query('season'));
-		} else {
-			if($league->seasons()->get()->count() == 1) {
-				if($league->seasons()->active()->first()) {
-					$showSeason = $league->seasons()->active()->first();
-				} else {
-					$showSeason = $league->seasons()->first();
-				}
+		if(Auth::check()) {
+			$league = Auth::user()->leagues_profiles->first();
+			$showSeason = '';
+			
+			if($request->query('season') != null && $request->query('year') != null) {
+				$showSeason = $league->seasons()->active()->find($request->query('season'));
 			} else {
-				$showSeason = $league->seasons()->active()->first();
+				if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
+					$showSeason = $league;
+				} else {
+					if($league->seasons()->active()->first()) {
+						$showSeason = $league->seasons()->active()->first();
+					} else {
+						$showSeason = $league->seasons()->first();
+					}
+				}
 			}
+			
+			return $showSeason;
 		}
-		
-		return $showSeason;
 	}
 }

@@ -8,14 +8,14 @@
 				<div class="col-md mt-3">
 					@if($activeSeasons->isNotEmpty())
 						@foreach($activeSeasons as $activeSeason)
-							<a href="{{ route('league_pictures.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
+							<a href="{{ route('league_pictures.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
 						@endforeach
 					@else
 					@endif
 				</div>
 				<div class="col-12 col-md-8">
 					<div class="text-center coolText1">
-						<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 					</div>
 					<div class="text-center coolText4">
 						@if($seasonPictures->isNotEmpty())
@@ -62,7 +62,7 @@
 					</div>
 					<div class="row">
 						<div class="col">
-							<h1 class="h1-responsive text-justify coolText4">Welcome to ToTheRec Leagues home page. Here you will be able to see your pictures for the selected season. You'll be able to upload pictures to showcase all the players from start to finish.<br/><br/>It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.</h1>
+							<h1 class="h1-responsive text-justify coolText4">It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="/home?new_season">here</a> to create a new season.</h1>
 						</div>
 					</div>
 				</div>

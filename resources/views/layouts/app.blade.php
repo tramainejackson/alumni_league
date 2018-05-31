@@ -74,7 +74,7 @@
 				<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
 					@if(!Auth::guest())
 						<li class="nav-item">
-							<a class='league_home nav-link' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ $showSeason->league_profile->name }}</a>
+							<a class='league_home nav-link' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ !isset($allComplete) ? $showSeason->league_profile->name : $showSeason->name }}</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
@@ -115,7 +115,7 @@
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-								{{ $showSeason->league_profile->commish }} <span class="caret"></span>
+								{{ !isset($allComplete) ? $showSeason->league_profile->commish : $showSeason->commish }} <span class="caret"></span>
 							</a>
 
 							<ul class="dropdown-menu" role="menu">

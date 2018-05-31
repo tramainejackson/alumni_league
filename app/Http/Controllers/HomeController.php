@@ -30,15 +30,21 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		
-		$completedSeasons = $showSeason->league_profile->seasons()->completed()->get();
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-		$ageGroups = explode(' ', $showSeason->league_profile->age);
-		$compGroups = explode(' ', $showSeason->league_profile->comp);
+
+		$completedSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->completed()->get() : $showSeason->league_profile->seasons()->completed()->get();
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
+		$ageGroups = $showSeason instanceof \App\LeagueProfile ? explode(' ', $showSeason->age) : explode(' ', $showSeason->league_profile->age);
+		$compGroups = $showSeason instanceof \App\LeagueProfile ? explode(' ', $showSeason->comp) : explode(' ', $showSeason->league_profile->comp);
+		$showSeasonSchedule = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->games()->upcomingGames()->get();
+		$showSeasonStat = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->stats()->get();
+		$showSeasonTeams = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_teams;
+		$showSeasonUnpaidTeams = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_teams()->unpaid();
+		$showSeasonPlayers = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_players;
+		$allComplete = 'Y';
 		
 		if($showSeason->is_playoffs == 'Y') {
 			$allGames = $showSeason->games;
@@ -49,14 +55,11 @@ class HomeController extends Controller
 	
 			return view('playoffs.index', compact('ageGroups', 'compGroups', 'completedSeasons', 'activeSeasons', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
 		} else {
-
-			$showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
-			$showSeasonStat = $showSeason->stats()->get();
-			$showSeasonTeams = $showSeason->league_teams;
-			$showSeasonUnpaidTeams = $showSeason->league_teams()->unpaid();
-			$showSeasonPlayers = $showSeason->league_players;
-			
-			return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));			
+			if($showSeason instanceof \App\LeagueProfile) {
+				return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams', 'allComplete'));			
+			} else {
+				return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));			
+			}
 		}
     }
 	
@@ -108,11 +111,16 @@ class HomeController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
+		$allComplete = 'Y';
+		
+		$standings = $showSeason instanceof \App\LeagueProfile ? null : $showSeason->standings()->seasonStandings()->get();
 
-		$standings = $showSeason != null ? $showSeason->standings()->seasonStandings()->get() : null;
-
-        return view('standings', compact('activeSeasons', 'standings', 'league', 'showSeason'));
+		if($showSeason instanceof \App\LeagueProfile) {
+			return view('standings', compact('activeSeasons', 'standings', 'league', 'showSeason', 'allComplete'));
+		} else {
+			return view('standings', compact('activeSeasons', 'standings', 'league', 'showSeason'));
+		}
     }
 	
 	/**
@@ -122,12 +130,20 @@ class HomeController extends Controller
      */
     public function info()
     {
-		$league = Auth::user()->leagues_profiles->first();
-
 		// Get the season to show
 		$showSeason = $this->find_season(request());
+		$league = null;
+		
+		if($showSeason instanceof \App\LeagueProfile) {
+			$league = $showSeason;
+			$allComplete = 'Y';
 
-        return view('info', compact('league', 'showSeason'));
+			return view('info', compact('league', 'showSeason', 'allComplete'));			
+		} else {
+			$league = $showSeason->league_profile;
+
+			return view('info', compact('league', 'showSeason'));			
+		}
     }
 	
 	/**
@@ -143,14 +159,14 @@ class HomeController extends Controller
 			if($request->query('season') != null && $request->query('year') != null) {
 				$showSeason = $league->seasons()->active()->find($request->query('season'));
 			} else {
-				if($league->seasons()->get()->count() == 1) {
+				if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
+					$showSeason = $league;
+				} else {
 					if($league->seasons()->active()->first()) {
 						$showSeason = $league->seasons()->active()->first();
 					} else {
 						$showSeason = $league->seasons()->first();
 					}
-				} else {
-					$showSeason = $league->seasons()->active()->first();
 				}
 			}
 			
