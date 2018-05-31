@@ -13,6 +13,7 @@ use App\LeaguePicture;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class LeaguePictureController extends Controller
@@ -44,8 +45,8 @@ class LeaguePictureController extends Controller
 				$constraint->aspectRatio();
 				$constraint->upsize();
 			}
-		)->save('default_img.jpg');
-		$defaultImg = asset('default_img.jpg');
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
 		return view('pictures.index', compact('showSeason', 'activeSeasons', 'seasonPictures', 'defaultImg'));
     }

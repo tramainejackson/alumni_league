@@ -47,8 +47,8 @@ class LeagueStatController extends Controller
 		Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
 				$constraint->aspectRatio();
 			}
-		)->save('default_img.jpg');
-		$defaultImg = asset('default_img.jpg');
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 		
 		if($showSeason->is_playoffs == 'Y') {
 			$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();

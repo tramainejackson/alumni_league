@@ -43,8 +43,8 @@ class LeagueTeamController extends Controller
 				$constraint->aspectRatio();
 				$constraint->upsize();
 			}
-		)->save('default_img.jpg');
-		$defaultImg = asset('default_img.jpg');
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
 		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
     }
