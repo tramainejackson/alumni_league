@@ -4,21 +4,21 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3">
+			<div class="col-md mt-3 d-none d-md-block">
 				<h2 class="h2-responsive text-underline">Check List</h2>
 				<p class="text-justify font-small">*Make Sure All Games Have Teams, Date, and Time Selected*</p>
 				<p class="text-justify font-small">*Forfeited Games Will Not Have Team Scores*</p>
 			</div>
 			<div class="col-12 col-md-8">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
-				<div class="mt-4 mb-2 d-flex align-items-center justify-content-center">
-					<button class="btn btn-rounded btn-sm green darken-1 white-text mx-4" id="edit_page_add_game" type="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Game</button>
+				<div class="mt-4 mb-2 d-flex flex-column flex-md-row align-items-center justify-content-center">
+					<button class="btn btn-rounded btn-sm green darken-1 white-text mx-4 order-1" id="edit_page_add_game" type="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Game</button>
 					
 					<h2 class="h2-responsive text-center m-2">Edit Week</h2>
 					
-					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>					
+					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4 order-2" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>					
 				</div>
 				<div class="text-center mb-4">
 					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $weekGames->first()->season_week]) : route('league_stat.edit_week', ['week' => $weekGames->first()->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded cyan darken-1" type="button">Edit Week Stats</a>
@@ -32,8 +32,8 @@
 								<!--Card content-->
 								<div class="card-body">
 									<!--Title-->
-									<div class="d-flex align-items-center justify-content-between">
-										<div class="d-flex align-items-center justify-content-center">
+									<div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+										<div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
 											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration}}</h2>
 											<a href="{{ request()->query() == null ? route('league_schedule.show', ['league_schedule' => $game->id]) : route('league_schedule.show', ['league_schedule' => $game->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded orange darken-1" type="button">Remove Game</a>
 										</div>
@@ -42,10 +42,10 @@
 										<div class="d-flex flex-column align-items-center">
 											<p class="m-0">Forfeit</p>
 											<div class="">
-												<button class="btn btn-sm awayForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->away_team }} Forfeit
+												<button class="btn btn-sm d-block w-100 awayForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->away_team }} Forfeit
 													<input type="checkbox" name="away_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' checked' : '' : '' }} />
 												</button>
-												<button class="btn btn-sm homeForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->home_team }} Forfeit
+												<button class="btn btn-sm d-block w-100 homeForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->home_team }} Forfeit
 													<input type="checkbox" name="home_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' checked' : '' : '' }} />
 												</button>
 											</div>
@@ -54,7 +54,7 @@
 									<!-- Create Form -->
 									<div class="my-2">
 										<div class="row">
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form">
 													<select class="mdb-select" name="away_team[]">
 														<option value="" disabled selected>Choose your option</option>
@@ -65,7 +65,7 @@
 													<label for="away_team">Away Team</label>
 												</div>
 											</div>
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form">
 													<select class="mdb-select" name="home_team[]">
 														<option value="" disabled selected>Choose your option</option>
@@ -135,7 +135,7 @@
 								<!-- Create Form -->
 								<div class="my-2">
 									<div class="row">
-										<div class="col">
+										<div class="col-12 col-md">
 											<div class="md-form">
 												<select class="" name="new_away_team[]" disabled>
 													<option value="" disabled selected>Choose your option</option>
@@ -146,7 +146,7 @@
 												<label for="away_team">Away Team</label>
 											</div>
 										</div>
-										<div class="col">
+										<div class="col-12 col-md">
 											<div class="md-form">
 												<select class="" name="new_home_team[]" disabled>
 													<option value="" disabled selected>Choose your option</option>
@@ -213,12 +213,12 @@
 					@endif
 				{!! Form::close() !!}
 			</div>
-			<div class="col-md mt-3">
-				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
+			<div class="col-md mt-3 text-center text-md-right order-first order-md-0">
+				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">Add New Week</a>
 				
-				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Games</a>
+				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">All Games</a>
 				
-				<table class="table table-hover table-striped mt-3">
+				<table class="table table-hover table-striped mt-3 d-none d-md-block">
 					<tbody>
 						@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
 						@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp

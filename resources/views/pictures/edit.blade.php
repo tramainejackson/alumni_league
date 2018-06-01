@@ -4,10 +4,10 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md-3 mt-3"></div>
-			<div class="col-12 col-md-4 mx-auto">
+			<div class="col-md-2 mt-3 mr-auto"></div>
+			<div class="col-12 col-md-6 mx-auto">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
 				
 				<!--Card-->
@@ -41,10 +41,10 @@
 				</div>
 				<!--/.Card-->
 			</div>
-			<div class="col-md-3 mt-3">
-				<a href="{{ request()->query() == null ? route('league_pictures.create') : route('league_pictures.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Picture</a>
+			<div class="col-md-2 mt-3 ml-auto order-first order-md-0">
+				<a href="{{ request()->query() == null ? route('league_pictures.create') : route('league_pictures.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">Add New Picture</a>
 				
-				<a href="{{ request()->query() == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Pictures</a>
+				<a href="{{ request()->query() == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">All Pictures</a>
 			</div>
 		</div>
 		<div class="modal fade" id="delete_picture" tabindex="-1" role="dialog" aria-labelledby="deletePicture" aria-hidden="true" data-backdrop="true">

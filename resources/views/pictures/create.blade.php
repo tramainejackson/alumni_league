@@ -4,17 +4,17 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col col-md-3 mt-3 text-center">
+			<div class="col col-md d-none d-md-block mt-3 text-center">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_teams.create', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
+						<a href="{{ route('league_teams.create', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-md-5 mx-auto">
+			<div class="col-12 col-md-7 mx-auto">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
 				<div class="text-center coolText4">
 					<h3 class="h3-responsive">League Pictures</h3>
@@ -47,8 +47,8 @@
 					</div>
 				{!! Form::close() !!}
 			</div>
-			<div class="col col-md-3 mt-3 text-center">
-				<a href="{{ request()->query() == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Pictures</a>
+			<div class="col col-md mt-3 text-center order-first order-md-0">
+				<a href="{{ request()->query() == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">All Pictures</a>
 			</div>
 		</div>
 	</div>

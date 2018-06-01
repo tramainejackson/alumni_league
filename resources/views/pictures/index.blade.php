@@ -5,10 +5,10 @@
 		@if($showSeason->active == 'Y' && $showSeason->paid == 'Y')
 			<div class="row">
 				<!--Column will include buttons for creating a new season-->
-				<div class="col-md mt-3">
+				<div class="col-md mt-3 d-none d-md-block">
 					@if($activeSeasons->isNotEmpty())
 						@foreach($activeSeasons as $activeSeason)
-							<a href="{{ route('league_pictures.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
+							<a href="{{ route('league_pictures.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block" type="button">{{ $activeSeason->name }}</a>
 						@endforeach
 					@else
 					@endif
@@ -26,7 +26,7 @@
 					@if($seasonPictures->isNotEmpty())
 						<div class="row">
 							@foreach($seasonPictures as $picture)
-								<div class="col-4 my-2">
+								<div class="col-12 col-md-4 my-2">
 									<div class="view overlay" style="min-height:initial !important;">
 										<img alt="picture" src="{{ $picture->sm_photo() }}" class="img-fluid" />
 										
@@ -45,8 +45,8 @@
 					@endif
 				</div>
 
-				<div class="col-md mt-3 text-center">
-					<a href="{{ request()->query() == null ? route('league_pictures.create') : route('league_pictures.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Pictures</a>
+				<div class="col-md mt-3 text-center order-first order-md-0">
+					<a href="{{ request()->query() == null ? route('league_pictures.create') : route('league_pictures.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">Add New Pictures</a>
 				</div>
 			</div>
 		@else

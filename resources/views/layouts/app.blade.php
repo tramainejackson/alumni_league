@@ -48,15 +48,49 @@
 
 			<!-- Sidebar navigation -->
 			<div id="slide-out" class="side-nav fixed">
+				<div class="">
+					<img src="{{ $showSeason->league_profile->leagues_picture != null ? asset($showSeason->league_profile->leagues_picture) : '/images/commissioner.jpg' }}" class="img-fluid" />
+				</div>
 				<ul class="custom-scrollbar">
 					<!--/. Side navigation links -->
 					
 					@if (Auth::guest())
 					@else
-						<li class="">
-							<a href="{{ route('logout') }}"
-								onclick="event.preventDefault();
-										 document.getElementById('logout-form').submit();">
+						<li class="nav-item">
+							<a class='league_home nav-link' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ !isset($allComplete) ? $showSeason->league_profile->name : $showSeason->name }}</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Standings</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Stats</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Teams</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
+						</li>
+						<li class="nav-item">
+							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Info</a>
+						</li>
+						@if(!isset($allComplete))
+							<li class="nav-item" id="archivedItems">
+								<a data-toggle="collapse" data-parent="#archivedItems" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Archives</a>
+								
+								<div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#archivedItems">
+									@foreach($showSeason->league_profile->seasons()->completed()->get() as $completedSeason)
+										<a class="dropdown-item" href="#">Action</a>
+									@endforeach
+								</div>
+							</li>
+						@endif
+						<li class="nav-item">
+							<a class='nav-link' href="{{ route('logout') }}"
+								onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 								Logout
 							</a>
 

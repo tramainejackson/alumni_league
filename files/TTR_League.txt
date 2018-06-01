@@ -2,10 +2,10 @@
 					ToTheRec Leagues
 ------------------------------------------------------
 Fix Seeding when lower seeds win
-Allow naming of seasons
 Get team per game stats
 Add a calendar for the games schedule
 Add some animation
+Done: Allow naming of seasons
 Done: Fix bracket
 Done: Add players to stats db when new game is created
 Done: Add stats pages for playoffs

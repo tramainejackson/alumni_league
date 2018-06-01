@@ -12,7 +12,7 @@
 			</div>
 			<div class="col-12">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
 				<div class="text-center">
 					<h3 class="h3-responsive">Week Stats</h3>
@@ -26,8 +26,8 @@
 								<!--Card content-->
 								<div class="card-body">
 									<!--Title-->
-									<div class="d-flex align-items-center justify-content-between">
-										<div class="d-flex align-items-center justify-content-center">
+									<div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+										<div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
 											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration }}</h2>
 											<button class="btn btn-sm btn-rounded orange darken-1 clearStatsBtn" type="button">Clear Game Stats</button>
 										</div>
@@ -38,8 +38,8 @@
 												<button class="btn btn-outline-mdb-color" type="button"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i>{{ $game->game_time() }}</button>
 											</div>
 											<div class="btn-group" role="group" aria-label="Game Time and Date">
-												<button class="btn btn-outline-mdb-color" type="button"><span class="blue-grey border px-2 py-1 rounded-circle white-text">{{ $game->result ? $game->result->away_team_score != null ? $game->result->away_team_score : '0' : '' }}</span>&nbsp;{{ $game->away_team }}</button>
-												<button class="btn btn-outline-mdb-color" type="button"><span class="blue-grey border px-2 py-1 rounded-circle white-text">{{ $game->result ? $game->result->home_team_score != null ? $game->result->home_team_score : '0' : '' }}</span>&nbsp;{{ $game->home_team }}</button>
+												<button class="btn btn-outline-mdb-color" type="button"><span class="blue-grey border px-2 py-1 rounded-circle white-text d-block d-md-inline">{{ $game->result ? $game->result->away_team_score != null ? $game->result->away_team_score : '0' : '' }}</span>&nbsp;{{ $game->away_team }}</button>
+												<button class="btn btn-outline-mdb-color" type="button"><span class="blue-grey border px-2 py-1 rounded-circle white-text d-block d-md-inline">{{ $game->result ? $game->result->home_team_score != null ? $game->result->home_team_score : '0' : '' }}</span>&nbsp;{{ $game->home_team }}</button>
 											</div>
 										</div>
 									</div>
@@ -48,11 +48,11 @@
 										<!-- Edit Form -->
 										<div class="my-2">
 											<div class="row">
-												<div class="col-12">
-													<table class="table table-striped table-sm table-fixed">
+												<div class="col-12 table-wrapper mb-3">
+													<table class="table table-striped table-sm table-fixed table-responsive-sm">
 														<thead>
 															<tr class="blue darken-3 white-text text-center">
-																<th>{{ $game->away_team_obj->team_name }}</th>
+																<th class="text-nowrap">{{ $game->away_team_obj->team_name }}</th>
 																<th>Points</th>
 																<th>Assists</th>
 																<th>Rebounds</th>
@@ -64,7 +64,7 @@
 															@foreach($game->away_team_obj->players as $away_player)
 																@php $playerStat = $away_player->stats->where('league_schedule_id', $game->id)->first(); @endphp
 																<tr>
-																	<td class="text-center">{{ '#' . $away_player->jersey_num . ' ' . $away_player->player_name }}</td>
+																	<td class="text-center text-nowrap">{{ '#' . $away_player->jersey_num . ' ' . $away_player->player_name }}</td>
 																	<td>
 																		<div class="input-group">
 																			<div class="input-group-prepend">
@@ -113,11 +113,11 @@
 														</tbody>
 													</table>
 												</div>
-												<div class="col-12">
-													<table class="table table-striped table-sm table-fixed">
+												<div class="col-12 table-wrapper">
+													<table class="table table-striped table-sm table-fixed table-responsive-sm">
 														<thead>
 															<tr class="blue-grey white-text text-center">
-																<th>{{ $game->home_team_obj->team_name }}</th>
+																<th class="text-nowrap">{{ $game->home_team_obj->team_name }}</th>
 																<th>Points</th>
 																<th>Assists</th>
 																<th>Rebounds</th>
@@ -129,7 +129,7 @@
 															@foreach($game->home_team_obj->players as $home_player)
 																@php $playerStat = $home_player->stats->where('league_schedule_id', $game->id)->first(); @endphp
 																<tr>
-																	<td class="text-center">{{ '#' . $home_player->jersey_num . ' ' . $home_player->player_name }}</td>
+																	<td class="text-center text-nowrap">{{ '#' . $home_player->jersey_num . ' ' . $home_player->player_name }}</td>
 																	<td>
 																		<div class="input-group">
 																			<div class="input-group-prepend">

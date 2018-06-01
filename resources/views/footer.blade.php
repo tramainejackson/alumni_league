@@ -1,5 +1,5 @@
 <hr/>
-<footer class="d-flex justify-content-center align-items-center">
+<footer class="d-flexjustify-content-center align-items-center">
 	<!--Section: Contact v.2-->
 	<section class="section container pb-5">
 		<div class="card">
@@ -13,7 +13,7 @@
 				<!-- Contact form -->
 				{!! Form::open(['action' => ['HomeController@store'], 'class' => 'w-100', 'method' => 'POST']) !!}
 					<div class="row align-items-stretch d-flex justify-content-center">
-						<div class="col-6">
+						<div class="col-12 col-md-6">
 							<!-- input text -->
 							<div class="md-form">
 								<i class="fa fa-user prefix"></i>
@@ -51,7 +51,7 @@
 							</div>
 						</div>
 
-						<div class="col-6 d-flex align-items-center justify-content-center">
+						<div class="d-none col-6 d-flex-md align-items-center justify-content-center">
 							<ul class="contact-icons">
 								<li class="py-3"><i class="fa fa-map-marker fa-2x"></i>
 									<p>Philadelphia, PA 19140, USA</p>

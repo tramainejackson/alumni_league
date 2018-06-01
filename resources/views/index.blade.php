@@ -31,7 +31,7 @@
 					@endif
 				</div>
 			</div>
-			<div class="col-7 pb-3">
+			<div class="col-12 col-md-7 pb-3">
 				@if(!isset($allComplete))
 					<!-- Show league season info -->
 					@if($showSeason->paid == 'Y')
@@ -48,13 +48,17 @@
 									{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
 										<div class="updateLeagueForm">
 											<div class="md-form">
+												<input type="text" name="name" class="form-control" id="leagues_season_name" placeholder="Name" value="{{ $showSeason->name }}" />
+
+												<label for="name">Name</label>
+											</div>										<div class="md-form">
 												<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
 
 												<label for="leagues_address">Address</label>
 											</div>
 											
 											<div class="row">
-												<div class="col">
+												<div class="col-12 col-md">
 													<div class="md-form input-group">
 														<div class="input-group-prepend">
 															<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
@@ -70,7 +74,7 @@
 													</div>
 												</div>
 												
-												<div class="col">
+												<div class="col-12 col-md">
 													<div class="md-form input-group mb-5">
 														<div class="input-group-prepend">
 															<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
@@ -88,7 +92,7 @@
 											</div>
 											
 											<div class="row">
-												<div class="col">
+												<div class="col-12 col-md">
 													<div class="md-form">
 														<select class="mdb-select" name="age_group">
 															@foreach($ageGroups as $ageGroup)
@@ -99,7 +103,7 @@
 														<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
 													</div>
 												</div>
-												<div class="col">
+												<div class="col-12 col-md">
 													<div class="md-form">
 														<select class="mdb-select" name="comp_group">
 															@foreach($compGroups as $compGroup)
@@ -136,7 +140,7 @@
 			</div>
 			
 			<!--Column will include seasons (archieved and current)-->
-			<div class="col py-3">
+			<div class="col py-3 d-none d-md-block">
 				<!--Show completed season if any available-->
 				<h2 class="text-center h2-responsive">Completed Seasons</h2>
 				
@@ -160,16 +164,16 @@
 					<!-- League season schedule snap shot -->
 					<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
 						<div class="my-5 d-flex align-items-center justify-content-center flex-column">
-							<div class="d-flex w-100 justify-content-center align-items-center">
+							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-md-row">
 								<h1 class="h1-responsive">Upcoming Schedule</h1>
-								<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">Full Schedule</a>
+								<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">Full Schedule</a>
 							</div>
 							
 							<div class="container-fluid">
 								<div class="row">
 									@if($showSeasonSchedule->isNotEmpty())
 										@foreach($showSeasonSchedule as $upcomingGame)
-											<div class="card col-6 col-md-6 col-lg-4 col-lg-3 my-2">
+											<div class="card col-12 col-md-6 col-lg-4 col-lg-3 my-2">
 												<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
 												<div class="card-body text-center">
 													<p class="">{{ $upcomingGame->home_team }}</p>
@@ -195,9 +199,9 @@
 					
 					<!-- League season teams snap shot -->
 					<div class="col-8 mx-auto my-5">
-						<div class="d-flex w-100 justify-content-center align-items-center">
+						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-md-row">
 							<h1 class="h1-responsive">Quick Teams</h1>
-							<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Teams</a>
+							<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Teams</a>
 						</div>
 						<div class="my-5 d-flex align-items-center justify-content-around">
 							@if($showSeasonTeams->isNotEmpty())
@@ -222,15 +226,15 @@
 					
 					<!-- League season stats snap shot -->
 					<div class="col-8 mx-auto my-5">
-						<div class="d-flex w-100 justify-content-center align-items-center">
+						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-md-row">
 							<h1 class="h1-responsive">Quick Stats</h1>
-							<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient position-absolute m-0" style="right:0px;">All Stats</a>
+							<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 						</div>
-						<div class="my-5 d-flex align-items-center justify-content-around">
+						<div class="my-5 row">
 							<!-- Season stat leaders by category -->
 							@if($showSeasonStat->isNotEmpty())
 								<!-- Get the scoring leaders -->
-								<div class="blue-gradient">
+								<div class="blue-gradient col m-1">
 									<table class="table white-text">
 										<thead>
 											<tr>
@@ -252,7 +256,7 @@
 								</div>
 								
 								<!-- Get the rebounding leaders -->
-								<div class="blue-gradient">
+								<div class="blue-gradient col m-1">
 									<table class="table white-text">
 										<thead>
 											<tr>
@@ -274,7 +278,7 @@
 								</div>
 								
 								<!-- Get the assisting leaders -->
-								<div class="blue-gradient">
+								<div class="blue-gradient col m-1">
 									<table class="table white-text">
 										<thead>
 											<tr>
@@ -296,7 +300,7 @@
 								</div>
 								
 								<!-- Get the stealing leaders -->
-								<div class="blue-gradient">
+								<div class="blue-gradient col m-1">
 									<table class="table white-text">
 										<thead>
 											<tr>
@@ -318,7 +322,7 @@
 								</div>
 								
 								<!-- Get the blocking leaders -->
-								<div class="blue-gradient">
+								<div class="blue-gradient col m-1">
 									<table class="table white-text">
 										<thead>
 											<tr>

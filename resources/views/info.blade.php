@@ -8,7 +8,7 @@
 			<div class="col-12 col-md-8 mx-auto leagueContactInfo">
 				{!! Form::open(['action' => ['LeagueProfileController@update', $league->id], 'method' => 'PATCH', 'files' => true]) !!}
 					<div class="row">
-						<div class="col-5 my-3 mx-auto">
+						<div class="col-12 col-md-5 my-3 mx-auto">
 							<div id="update_pic" class="card card-cascade mx-auto">
 								<!--Card Image-->
 									<div class="view" style="min-height: initial !important;">
@@ -123,7 +123,7 @@
 							@php $compArray =  explode(" ", $league->comp); @endphp
 							<div class="row">
 								@foreach($getComp as $comp)
-									<div class="col-6 col-lg-3">
+									<div class="col-12 col-md-6 col-lg-3">
 										<button class="btn btn-lg gray mx-0 w-100 compBtnSelect{{ in_array($comp, $compArray) ? ' orange' : '' }}" type="button">{{ str_ireplace("_", " ", ucwords($comp)) }}
 											<input type="checkbox" class="hidden" name="leagues_comp[]" value="{{ $comp }}" hidden{{ in_array($comp, $compArray) ? ' checked ' : '' }}/>
 										</button>

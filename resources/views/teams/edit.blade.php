@@ -7,7 +7,7 @@
 			<div class="col-md mt-3"></div>
 			<div class="col-12 col-md-8">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
 				
 				<!--Card-->
@@ -26,7 +26,7 @@
 							<!-- Team Info -->
 							<div class="">
 								<div class="row">
-									<div class="col">
+									<div class="col-12 col-md">
 										<div class="md-form">
 											<input type="text" name="team_name" class="form-control" value="{{ $league_team->team_name }}" />
 											<label for="team_name">Team Name</label>
@@ -38,7 +38,7 @@
 											</div>
 										@endif
 									</div>
-									<div class="col">
+									<div class="col-12 col-md order-first order-md-0 p-0">
 										<div class="md-form">
 											<div class="file-field">
 												<div class="btn btn-primary btn-sm float-left">
@@ -74,22 +74,23 @@
 								</div>
 							</div>
 							
+							<hr class="d-block d-md-none" />
 							<!-- Team Players Info -->
 							<div class="mt-4 position-relative">
-								<div class="d-flex align-items-center justify-content-center">
+								<div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
 									<h3 class="text-center my-0 mx-auto">{{ $league_team->team_name }} Players</h3>
-									<button class="btn btn-floating green position-absolute right addPlayerBtn" type="button">
+									<button class="btn btn-floating green addPlayerBtn" type="button">
 										<i class="fa fa-plus-circle" aria-hidden="true"></i>
 									</button>
 								</div>
-								<table class="table table-hover table-striped" id="team_players_table">
+								<table class="table table-hover table-striped table-responsive-sm" id="team_players_table">
 									<thead>
 										<tr>
 											<th>Captain</th>
 											<th>Jersey Num.</th>
-											<th>Player Name</th>
-											<th>Email Address</th>
-											<th>Phone</th>
+											<th class="text-nowrap">Player Name</th>
+											<th class="text-nowrap">Email Address</th>
+											<th class="text-nowrap">Phone</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -154,7 +155,9 @@
 				</div>
 				<!--/.Card-->
 			</div>
-			<div class="col-md mt-3">
+			<div class="col col-md-3 mt-3 text-center text-md-right order-first order-md-0">
+				<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Teams</a>
+				
 				<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
 			</div>
 		</div>

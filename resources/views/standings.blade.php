@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3" id="">
+			<div class="col-md mt-3 d-none d-md-block" id="">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_standings', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
@@ -27,7 +27,7 @@
 							<p class=""><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;Standings are not editable. They are automatically compiled from the games results&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></p>
 						</div>
 						<div id="league_standings">
-							<table id="league_standings_table" class="table text-center table-striped">
+							<table id="league_standings_table" class="table text-center table-striped table-responsive-sm">
 								<thead>
 									<tr>
 										<th>Team Name</th>

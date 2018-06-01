@@ -4,7 +4,7 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3">
+			<div class="col col-md d-none d-md-block mt-3">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
@@ -21,7 +21,7 @@
 						@foreach($seasonScheduleWeeks->get() as $showWeekInfo)
 							@php $seasonWeekGames = $showSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
 							<div class='leagues_schedule text-center mb-5'>
-								<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table'>
+								<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table table-responsive-sm'>
 									<thead>
 										<tr class="indigo darken-2 white-text">
 											<th class="text-center" colspan="6">
@@ -47,7 +47,7 @@
 											@foreach($seasonWeekGames as $game)
 												<tr>
 													@if($game->result)
-														<td class="awayTeamData"><span class="awayTeamNameData">{{ $game->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $game->away_team_obj->id }}</span>
+														<td class="awayTeamData text-nowrap"><span class="awayTeamNameData">{{ $game->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $game->away_team_obj->id }}</span>
 															@if($game->result->winning_team_id == $game->away_team_id)
 																@if($game->result->forfeit == 'Y')
 																	<span class="badge badge-pill green darken-2 ml-3 forfeitData awayTeamScoreData">Winner</span>
@@ -63,7 +63,7 @@
 															@endif
 														</td>
 														<td>vs</td>
-														<td class="homeTeamData"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span>
+														<td class="homeTeamData text-nowrap"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span>
 															@if($game->result->winning_team_id == $game->home_team_id)
 																@if($game->result->forfeit == 'Y')
 																	<span class="badge badge-pill green darken-2 ml-3 forfeitData homeTeamScoreData">Winner</span>
@@ -79,13 +79,13 @@
 															@endif
 														</td>
 													@else
-														<td class="awayTeamData"><span class="awayTeamNameData">{{ $game->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $game->away_team_obj->id }}</span></td>
+														<td class="awayTeamData text-nowrap"><span class="awayTeamNameData">{{ $game->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $game->away_team_obj->id }}</span></td>
 														<td>vs</td>
-														<td class="homeTeamData"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span></td>
+														<td class="homeTeamData text-nowrap"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span></td>
 													@endif
 													
-													<td class="gameTimeData">{{ $game->game_time() }}</td>
-													<td class="gameDateData">{{ $game->game_date() }}</td>
+													<td class="gameTimeData text-nowrap">{{ $game->game_time() }}</td>
+													<td class="gameDateData text-nowrap">{{ $game->game_date() }}</td>
 													<td class="gameIDData" hidden>{{ $game->id }}</td>
 													<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
 												</tr>
@@ -106,7 +106,7 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-md mt-3 text-right">
+			<div class="col-md mt-3 text-center text-md-right order-first order-md-0">
 				@if(!isset($allComplete))
 					<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
 					<a href="#" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
