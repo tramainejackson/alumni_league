@@ -137,16 +137,17 @@ class HomeController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$league = null;
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
 		
 		if($showSeason instanceof \App\LeagueProfile) {
 			$league = $showSeason;
 			$allComplete = 'Y';
 
-			return view('info', compact('league', 'showSeason', 'allComplete'));			
+			return view('info', compact('league', 'showSeason', 'allComplete', 'activeSeasons'));			
 		} else {
 			$league = $showSeason->league_profile;
 
-			return view('info', compact('league', 'showSeason'));			
+			return view('info', compact('league', 'showSeason', 'activeSeasons'));			
 		}
     }
 	
@@ -159,7 +160,6 @@ class HomeController extends Controller
 		if(Auth::check()) {
 			$league = Auth::user()->leagues_profiles->first();
 			$showSeason = '';
-			
 			if($request->query('season') != null && $request->query('year') != null) {
 				$showSeason = $league->seasons()->active()->find($request->query('season'));
 			} else {
@@ -169,7 +169,11 @@ class HomeController extends Controller
 					if($league->seasons()->active()->first()) {
 						$showSeason = $league->seasons()->active()->first();
 					} else {
-						$showSeason = $league->seasons()->first();
+						if($league->seasons()->first()) {
+							$showSeason = $league->seasons()->first();
+						} else {
+							$showSeason = $league;
+						}
 					}
 				}
 			}

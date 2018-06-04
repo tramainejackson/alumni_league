@@ -222,7 +222,11 @@ class LeaguePictureController extends Controller
 					if($league->seasons()->active()->first()) {
 						$showSeason = $league->seasons()->active()->first();
 					} else {
-						$showSeason = $league->seasons()->first();
+						if($league->seasons()->first()) {
+							$showSeason = $league->seasons()->first();
+						} else {
+							$showSeason = $league;
+						}
 					}
 				}
 			}

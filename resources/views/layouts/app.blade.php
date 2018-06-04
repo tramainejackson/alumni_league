@@ -50,7 +50,7 @@
 				<div class="">
 					@if (Auth::guest())
 					@else
-						<img src="{{ isset($allComplete) ? $showSeason->league_profile->picture != null ? asset($showSeason->league_profile->picture) : '/images/commissioner.jpg' : $showSeason->picture != null ? asset($showSeason->picture) : '/images/commissioner.jpg' }}" class="img-fluid" />
+						<img src="{{ !isset($allComplete) ? $showSeason->league_profile->picture != null ? asset($showSeason->league_profile->picture) : '/images/commissioner.jpg' : $showSeason->picture != null ? asset($showSeason->picture) : '/images/commissioner.jpg' }}" class="img-fluid" />
 					@endif
 				</div>
 				<ul class="custom-scrollbar nav navbar-nav">

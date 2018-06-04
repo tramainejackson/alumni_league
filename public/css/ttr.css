@@ -357,6 +357,10 @@ text-align: -webkit-center;
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
+.side-nav.fixed {
+    overflow-y: scroll;
+}
+
 .maine_modal, .leagues_modal, .recs_modal {
 	width: 70%;
 	border: 2px solid green;

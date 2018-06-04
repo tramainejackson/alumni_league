@@ -12,11 +12,12 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-md-8">
-				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
-				</div>
+			<div class="col-12 col-lg-8">
 				@if(!isset($allComplete))
+					<div class="text-center coolText1">
+						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+					</div>
+					
 					@if($seasonScheduleWeeks->get()->isNotEmpty())
 						@foreach($seasonScheduleWeeks->get() as $showWeekInfo)
 							@php $seasonWeekGames = $showSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp

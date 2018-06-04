@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-md-8">
+			<div class="col-12 col-lg-8">
 				@if(!isset($allComplete))
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>

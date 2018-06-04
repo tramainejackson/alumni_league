@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/league_info';
 
     /**
      * Create a new controller instance.
@@ -83,12 +83,13 @@ class RegisterController extends Controller
 			]);
 			
 			if($league) {
-				$league->seasons()->create([
-					'active' => 'N',
-					'completed' => 'N',
-					'paid' => 'N',
-					'location' => $data['league_address'],
-				]);
+				// $league->seasons()->create([
+					// 'active' => 'N',
+					// 'completed' => 'N',
+					// 'paid' => 'N',
+					// 'active' => 'Y',
+					// 'location' => $data['league_address'],
+				// ]);
 				
 				return $user;
 			}
