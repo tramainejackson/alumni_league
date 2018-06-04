@@ -18,16 +18,17 @@
 		</div>
 		<div class="container-fluid">
 			<div class="row align-items-stretch text-center mt-3 mb-5 coolText4">
-				<div class="col-6 mt-5 mx-auto">
+				<div class="col-12 col-md-6 mt-5 mx-auto">
 					<h2 class="h2-responsive">Keep in depth stats for all the players in the league. Teams and players will be able to see league leaders and their team stats as the season progresses.</h2>
 					<img src="/images/stats_screen_shot.png" class="img-fluid z-depth-4 rounded" />
 				</div>
 				<div class="col-12 my-5"></div>
-				<div class="col-5 mx-auto">
+				<div class="col-12 col-md-5 mx-auto">
 					<h2 class="h2-responsive">Standings are a breeze. Automatically updated with game results</h2>
 					<img src="/images/standings_screen_shot.png" class="img-fluid z-depth-4 rounded" />
 				</div>
-				<div class="col-5 mx-auto">
+				<div class="d-block d-md-none col-12 my-5"></div>
+				<div class="col-12 col-md-5 mx-auto">
 					<h2 class="h2-responsive">Easily manage all your leagues games and their results in minutes</h2>
 					<img src="/images/schedule_screen_shot.png" class="img-fluid z-depth-4 rounded" />
 				</div>
@@ -38,12 +39,12 @@
 			<div class="container pt-5">
 				<div class="row">
 					<div class="col mt-5 coolText4 wow fadeInUpBig" data-wow-delay="0.5s">
-						<h1 class="rounded p-4 text-center white">Get started by creating an account for your league. Have your league up and running in minutes.</h1>
+						<h1 class="rounded p-4 text-center white h1-responsive">Get started by creating an account for your league. Have your league up and running in minutes.</h1>
 					</div>
 				</div>
 				<div  class="row">
 					<!--Card-->
-					<div class="card mb-5 col p-0 mx-5 wow fadeInUpBig" data-wow-delay="0.5s">
+					<div class="card mb-5 col p-0 mx-1 mx-md-5 wow fadeInUpBig" data-wow-delay="0.5s">
 						<!--Card image-->
 						<div class="view gradient-card-header peach-gradient text-center py-3 coolText4">
 							<h2 class="">Register</h2>
@@ -52,7 +53,7 @@
 						<div class="card-body">
 							<!-- Contact form -->
 							{!! Form::open(['action' => ['HomeController@store'], 'method' => 'POST']) !!}
-								<div class="col-8 mx-auto">
+								<div class="col-12 col-md-8 mx-auto">
 									<!-- input text -->
 									<div class="md-form">
 										<i class="fa fa-user prefix"></i>
@@ -126,7 +127,7 @@
 				<!-- Contact form -->
 				{!! Form::open(['action' => ['HomeController@store'], 'class' => 'w-100', 'method' => 'POST']) !!}
 					<div class="row align-items-stretch d-flex justify-content-center">
-						<div class="col-6">
+						<div class="col-12 col-md-6">
 							<!-- input text -->
 							<div class="md-form">
 								<i class="fa fa-user prefix"></i>
@@ -164,7 +165,7 @@
 							</div>
 						</div>
 
-						<div class="col-6 d-flex align-items-center justify-content-center">
+						<div class="d-none col-6 d-flex-md align-items-center justify-content-center">
 							<ul class="contact-icons">
 								<li class="py-3"><i class="fa fa-map-marker fa-2x"></i>
 									<p>Philadelphia, PA 19140, USA</p>

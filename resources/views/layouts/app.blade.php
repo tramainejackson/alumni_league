@@ -53,10 +53,21 @@
 						<img src="{{ isset($allComplete) ? $showSeason->league_profile->picture != null ? asset($showSeason->league_profile->picture) : '/images/commissioner.jpg' : $showSeason->picture != null ? asset($showSeason->picture) : '/images/commissioner.jpg' }}" class="img-fluid" />
 					@endif
 				</div>
-				<ul class="custom-scrollbar">
+				<ul class="custom-scrollbar nav navbar-nav">
 					<!--/. Side navigation links -->
 					
 					@if (Auth::guest())
+						<!-- Logins -->
+						<li class="nav-item">
+							<a href="{{ route('login') }}" class="nav-link btn indigo">Login
+								<i class="fa fa-user" aria-hidden="true"></i>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{ route('register') }}" class="nav-link btn indigo lighten-1">Register
+								<i class="fa fa-user" aria-hidden="true"></i>
+							</a>
+						</li>
 					@else
 						<li class="nav-item">
 							<a class='league_home nav-link' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ !isset($allComplete) ? $showSeason->league_profile->name : $showSeason->name }}</a>
@@ -114,7 +125,7 @@
 											<ul class="list-unstyled">
 												@foreach($showSeason->league_profile->seasons()->completed()->get() as $completedSeason)
 													<li class="">
-														<a class="dropdown-item" href="#">Action</a>
+														<a class="dropdown-item" href="#">{{ $completedSeason->name }}</a>
 													</li>
 												@endforeach
 											</ul>
@@ -138,6 +149,7 @@
 				</ul>
 			</div>
 			<!--/. Sidebar navigation -->
+			
 			<div class="d-none d-lg-flex" id="">
 				<!-- Right Side Of Navbar -->
 				<ul class="nav navbar-nav navbar-right" id='leagues_menu'>

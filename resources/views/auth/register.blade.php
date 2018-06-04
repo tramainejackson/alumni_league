@@ -21,7 +21,7 @@
 								<div class="">
 									{!! Form::open(['route' => ['register'], 'method' => 'POST']) !!}
 										<div class="row">
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form{{ $errors->has('name') ? ' has-error' : '' }}">
 													<i class="fa fa-user prefix grey-text"></i>
 													
@@ -36,7 +36,7 @@
 													@endif
 												</div>
 											</div>
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form{{ $errors->has('email') ? ' has-error' : '' }}">
 													<i class="fa fa-envelope prefix grey-text"></i>
 													
@@ -54,7 +54,7 @@
 										</div>
 
 										<div class="row">
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form{{ $errors->has('commish_name') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
@@ -69,7 +69,7 @@
 													@endif
 												</div>
 											</div>
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form{{ $errors->has('league_name') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
@@ -87,7 +87,7 @@
 										</div>
 										
 										<div class="row">
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form{{ $errors->has('league_phone') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
@@ -102,7 +102,7 @@
 													@endif
 												</div>
 											</div>
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form{{ $errors->has('league_address') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
@@ -120,7 +120,7 @@
 										</div>
 
 										<div class="row">
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form{{ $errors->has('password') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
@@ -135,7 +135,7 @@
 													@endif
 												</div>
 											</div>
-											<div class="col">
+											<div class="col-12 col-md">
 												<div class="md-form">
 													<i class="fa fa-lock prefix red-text"></i>
 													
@@ -158,7 +158,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-4">
+					<div class="col-4 d-none d-md-block">
 						<div class="wow fadeInRight" data-wow-delay="0.3s">
 							<div class="forgotPassword text-center">
 								<h1 class="white-text">New user!</h1>

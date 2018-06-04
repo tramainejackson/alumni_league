@@ -22,7 +22,7 @@
 						<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
 					</div>
 					@if($activeSeasons->isNotEmpty())
-						<div class="col">
+						<div class="col d-none d-md-block">
 							@foreach($activeSeasons as $activeSeason)
 								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block" type="button">{{ $activeSeason->name }}</a>
 							@endforeach

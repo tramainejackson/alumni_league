@@ -2847,9 +2847,17 @@ table.currentMonth {
 		margin: inherit;
 	}
 	
+	#loginPage.view {
+		font-size: 100%;
+	}
+	
 	.table-fixed {
 		table-layout: initial;
 		overflow: initial;
+	}
+	
+	.navbar.scrolling-navbar .navbar-nav>li a {
+	    line-height: 1.5 !important;
 	}
 
 	.match_ups_player_pic1, .match_ups_player_pic2 {
