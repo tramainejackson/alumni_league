@@ -27,6 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('/home', 'HomeController@store');
 
+Route::get('/archives/{season}', 'HomeController@archive')->name('archives');
+
 Route::get('/league_standings', 'HomeController@standings')->name('league_standings');
 
 Route::get('/league_info', 'HomeController@info')->name('league_info');

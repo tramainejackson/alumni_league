@@ -122,7 +122,7 @@
 											@endforeach
 										@else
 											<tr class="">
-												<th colspan="6" class="text-center">No Players Added for this team yes</th>
+												<th colspan="6" class="text-center">No Players Added for this team yet</th>
 											</tr>
 										@endif
 										<tr class="newPlayerRow hidden" hidden>

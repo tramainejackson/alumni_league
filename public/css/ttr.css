@@ -144,6 +144,9 @@ li.game-bottom{
 	color: whitesmoke;
 }
 
+#champion_team_table th, #champion_team_table td {
+	font-size: 145%;
+}
 #mainBody {
 	background-image:url("/totherec/public/images/Basketball-Wallpapers-HD-Pictures2.jpg");
 	background-repeat:no-repeat;
@@ -202,8 +205,7 @@ div[id^="backgroundImage"]::after {
 }
 
 .fullCatLink, .addPlayerBtn {
-	position: absolute;
-	right: 0px;
+    position: relative;
 }
 
 .leaguesFilterOption {
@@ -359,6 +361,20 @@ text-align: -webkit-center;
 
 .side-nav.fixed {
     overflow-y: scroll;
+}
+
+.side-nav.fixed .view {
+    min-height: initial;
+	height: initial;
+}
+
+.side-nav a.btn {
+    display: block;
+    font-size: 0.8rem;
+    height: initial;
+    line-height: initial;
+    padding: 15px;
+	width: -webkit-fill-available;
 }
 
 .maine_modal, .leagues_modal, .recs_modal {
@@ -2829,10 +2845,6 @@ table.currentMonth {
 
 /*Smartphones portrait*/
 @media only screen and (max-device-width:575.99px) {
-	.fullCatLink, .addPlayerBtn {
-		position: relative;
-	}
-	
 	div#league_standings {
 		margin: 5% 1% 2%;
 	}
@@ -2947,6 +2959,10 @@ table.currentMonth {
 		font-size: 110%;
 	}
 
+	.fullCatLink, .addPlayerBtn {
+		position: absolute;
+		right: 0px;
+	}
 
 	#leagues {
 		margin: 100px 10% 4%;

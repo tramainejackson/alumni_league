@@ -10,6 +10,15 @@ class PlayoffSetting extends Model
     use SoftDeletes;
 	
 	/**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id',
+    ];
+	
+	/**
 	* Get the seaon for the playoff settings object.
 	*/
     public function season()

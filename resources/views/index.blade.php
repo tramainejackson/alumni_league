@@ -22,7 +22,7 @@
 						<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
 					</div>
 					@if($activeSeasons->isNotEmpty())
-						<div class="col d-none d-md-block">
+						<div class="col d-none d-lg-block">
 							@foreach($activeSeasons as $activeSeason)
 								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block" type="button">{{ $activeSeason->name }}</a>
 							@endforeach
@@ -31,7 +31,7 @@
 					@endif
 				</div>
 			</div>
-			<div class="col-12 col-md-7 pb-3">
+			<div class="col-12 col-lg-7 pb-3">
 				@if(!isset($allComplete))
 					<!-- Show league season info -->
 					@if($showSeason->paid == 'Y')
@@ -133,21 +133,21 @@
 						</div>
 					@endif
 				@else
-					<div class="coolText4 py-3 px-5">
+					<div class="coolText4 py-3 px-lg-5">
 						<h1 class="h1-responsive text-justify">It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.<br/><br/>You can always see past seasons by selecting the links under the completed season section to the right</h1>
 					</div>
 				@endif
 			</div>
 			
 			<!--Column will include seasons (archieved and current)-->
-			<div class="col py-3 d-none d-md-block">
+			<div class="col py-3 d-none d-lg-block">
 				<!--Show completed season if any available-->
 				<h2 class="text-center h2-responsive">Completed Seasons</h2>
 				
 				@if($completedSeasons->isNotEmpty())
 					@foreach($completedSeasons as $completedSeason)
 						<div class="text-center">
-							<a href="#" class="btn btn-rounded btn-lg purple darken-2 d-block">{{ ucfirst($completedSeason->name) }}</a>
+							<a href="{{ route('archives', ['season' => $completedSeason->id]) }}" class="btn btn-rounded btn-lg purple darken-2 d-block">{{ ucfirst($completedSeason->name) }}</a>
 						</div>
 					@endforeach
 				@else
@@ -164,7 +164,7 @@
 					<!-- League season schedule snap shot -->
 					<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
 						<div class="my-5 d-flex align-items-center justify-content-center flex-column">
-							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-md-row">
+							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 								<h1 class="h1-responsive">Upcoming Schedule</h1>
 								<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">Full Schedule</a>
 							</div>
@@ -199,7 +199,7 @@
 					
 					<!-- League season teams snap shot -->
 					<div class="col-8 mx-auto my-5">
-						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-md-row">
+						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 							<h1 class="h1-responsive">Quick Teams</h1>
 							<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Teams</a>
 						</div>
@@ -226,7 +226,7 @@
 					
 					<!-- League season stats snap shot -->
 					<div class="col-8 mx-auto my-5">
-						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-md-row">
+						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 							<h1 class="h1-responsive">Quick Stats</h1>
 							<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 						</div>

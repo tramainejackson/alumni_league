@@ -9,9 +9,11 @@ use App\LeagueStanding;
 use App\LeaguePlayer;
 use App\LeagueTeam;
 use App\LeagueStat;
+use App\LeagueSeason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class HomeController extends Controller
 {	
@@ -149,6 +151,31 @@ class HomeController extends Controller
 
 			return view('info', compact('league', 'showSeason', 'activeSeasons'));			
 		}
+    }
+	
+	/**
+     * Show the leagues archived season.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function archive(LeagueSeason $season)
+    {
+		// Get the season to show
+		$showSeason = $season;
+		$league = $showSeason->league_profile;
+		$activeSeasons = $league->seasons()->active()->get();
+		$completedSeasons = $league->seasons()->completed()->get();
+		$standings = $showSeason->standings()->seasonStandings()->get();
+		$playersStats = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->stats()->allFormattedStats();
+		
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
+		
+		return view('archives.index', compact('league', 'showSeason', 'activeSeasons', 'completedSeasons', 'standings', 'playersStats', 'defaultImg'));			
     }
 	
 	/**

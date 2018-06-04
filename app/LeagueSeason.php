@@ -105,7 +105,7 @@ class LeagueSeason extends Model
 	*/
     public function champion()
     {
-        return $this->hasOne('App\LeagueTeam', 'champion_id');
+        return $this->hasOne('App\LeagueTeam', 'id', 'champion_id');
     }
 	
 	/*

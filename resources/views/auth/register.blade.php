@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('additional_scripts')
-	<script type="text/javascript">
-		$('nav.navbar').addClass('fixed-top scrolling-navbar');
-	</script>
+	<script type="text/javascript"></script>
 @endsection
 
 @section('content')

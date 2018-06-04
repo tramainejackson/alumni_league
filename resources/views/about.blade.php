@@ -2,7 +2,6 @@
 
 @section('additional_scripts')
 	<script type="text/javascript">
-		$('nav').addClass('fixed-top scrolling-navbar');
 		$('footer').remove();
 	</script>
 @endsection

@@ -56,7 +56,9 @@ class LeagueSeasonController extends Controller
 		$season->paid = 'Y';
 		
 		if($season->save()) {
-			return redirect()->action('HomeController@index')->with(['status' => 'New Season Added Successfully']);
+			if($season->playoffs()->create([])) {
+				return redirect()->action('HomeController@index')->with(['status' => 'New Season Added Successfully']);
+			}
 		}
     }
 	
