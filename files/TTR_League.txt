@@ -5,6 +5,7 @@ Fix Seeding when lower seeds win
 Get team per game stats
 Add a calendar for the games schedule
 Add some animation
+Check the registration
 Done: Allow naming of seasons
 Done: Fix bracket
 Done: Add players to stats db when new game is created

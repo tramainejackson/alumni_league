@@ -33,6 +33,7 @@ $(document).ready(function() {
 	
 	// Dropdown Init
 	$('.dropdown-toggle').dropdown();
+	$('.collapse').collapse()
 	
 	// SideNav Scrollbar Initialization
 	var sideNavScrollbar = document.querySelector('.custom-scrollbar');

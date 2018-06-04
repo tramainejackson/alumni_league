@@ -36,20 +36,22 @@
 
     <div id="app">
         <nav class="navbar navbar-expand-lg justify-content-between">
-
 			<!-- Branding Image -->
 			<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'ToTheRec') }}</a>
-	
+			
 			<!-- SideNav slide-out button -->
 			<button type="button" data-activates="slide-out" class="btn btn-primary p-3 button-collapse navbar-toggler" data-toggle="collapse" data-target="#app-navbar-collapse" aria-controls="app-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="sr-only">Toggle Navigation</span>
 				<i class="fa fa-bars"></i>
 			</button>
-
+			
 			<!-- Sidebar navigation -->
 			<div id="slide-out" class="side-nav fixed">
 				<div class="">
-					<img src="{{ $showSeason->league_profile->leagues_picture != null ? asset($showSeason->league_profile->leagues_picture) : '/images/commissioner.jpg' }}" class="img-fluid" />
+					@if (Auth::guest())
+					@else
+						<img src="{{ isset($allComplete) ? $showSeason->league_profile->picture != null ? asset($showSeason->league_profile->picture) : '/images/commissioner.jpg' : $showSeason->picture != null ? asset($showSeason->picture) : '/images/commissioner.jpg' }}" class="img-fluid" />
+					@endif
 				</div>
 				<ul class="custom-scrollbar">
 					<!--/. Side navigation links -->
@@ -77,14 +79,47 @@
 						<li class="nav-item">
 							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Info</a>
 						</li>
+						@if($activeSeasons->isNotEmpty())
+							<div id="accordion1" class="accordion">
+								<ul class="collapsible collapsible-accordion">
+									<li class="position-relative">
+										<a class="collapsible-header collapsed pl-1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Seasons</a>
+										<i class="fa fa-angle-down rotate-icon"></i>
+									</li>
+								
+									<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion1" class="collapse">
+										<ul class="list-unstyled">
+											
+											@foreach($activeSeasons as $activeSeason)
+												<li class="">
+													<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="" type="button">{{ $activeSeason->name }}</a>
+												</li>
+											@endforeach
+										</ul>
+									</div>
+								</ul>
+							</div>
+						@else
+						@endif
 						@if(!isset($allComplete))
 							<li class="nav-item" id="archivedItems">
-								<a data-toggle="collapse" data-parent="#archivedItems" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Archives</a>
-								
-								<div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#archivedItems">
-									@foreach($showSeason->league_profile->seasons()->completed()->get() as $completedSeason)
-										<a class="dropdown-item" href="#">Action</a>
-									@endforeach
+								<div id="accordion1" class="accordion">
+									<ul class="collapsible collapsible-accordion">
+										<li class="position-relative">
+											<a class="collapsible-header collapsed pl-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Archives</a>
+											<i class="fa fa-angle-down rotate-icon"></i>
+										</li>
+									
+										<div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion2" class="collapse">
+											<ul class="list-unstyled">
+												@foreach($showSeason->league_profile->seasons()->completed()->get() as $completedSeason)
+													<li class="">
+														<a class="dropdown-item" href="#">Action</a>
+													</li>
+												@endforeach
+											</ul>
+										</div>
+									</ul>
 								</div>
 							</li>
 						@endif

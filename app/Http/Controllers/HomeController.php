@@ -84,12 +84,16 @@ class HomeController extends Controller
      */
     public function about()
     {
-		if(Auth::check()) {
-			// Get the season to show
-			$showSeason = $this->find_season(request());
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$allComplete = 'Y';
+
+		if($showSeason instanceof \App\LeagueProfile) {
+			return view('about', compact('showSeason', 'allComplete'));
+		} else {
+			return view('about', compact('showSeason'));
 		}
 		
-        return view('about', compact('showSeason'));
     }
 	
 	/**
