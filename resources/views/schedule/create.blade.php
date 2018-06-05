@@ -4,7 +4,7 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3">
+			<div class="col-md col-lg-3 mt-3 d-none d-lg-block">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_schedule.create', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-md-8">
+			<div class="col-12 col-lg-6">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
@@ -33,7 +33,7 @@
 									<!-- Create Form -->
 									<div class="my-2">
 										<div class="row">
-											<div class="col">
+											<div class="col-12 col-lg">
 												<div class="md-form">
 													<select class="mdb-select" name="away_team[]">
 														<option value="" disabled selected>Choose your option</option>
@@ -44,7 +44,7 @@
 													<label for="away_team">Away Team</label>
 												</div>
 											</div>
-											<div class="col">
+											<div class="col-12 col-lg">
 												<div class="md-form">
 													<select class="mdb-select" name="home_team[]">
 														<option value="" disabled selected>Choose your option</option>
@@ -57,13 +57,13 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col">
+											<div class="col-12 col-lg">
 												<div class="md-form">
 													<input type="text" name="date_picker[]" id="input_gamedate" class="form-control datetimepicker" value="{{ old('game_date') }}" placeholder="Selected Date" />
 													<label for="input_gamedate">Game Date</label>
 												</div>
 											</div>
-											<div class="col">
+											<div class="col-12 col-lg">
 												<div class="md-form">
 													<input type="text" name="game_time[]" id="input_starttime" class="form-control timepicker" value="{{ old('game_time') }}" placeholder="Selected time" />
 													<label for="input_starttime">Game Time</label>
@@ -81,17 +81,19 @@
 					@else
 						<div class="my-5 text-center">
 							<h2 class="h2-responsive red-text coolText4"><i class="fa fa-warning" aria-hidden="true"></i>&nbsp;You do not have any teams added to this season. Please add some teams before creating a schedule&nbsp;<i class="fa fa-warning" aria-hidden="true"></i></h2>
+							
 							<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block">Add Teams</a>
 						</div>
 					@endif
 				{!! Form::close() !!}
 			</div>
-			<div class="col-md mt-3">
-				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">All Games</a>
+			
+			<div class="col-md col-lg-3 mt-3 order-first order-lg-0 text-center">
+				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-lg-block" type="button">All Games</a>
 				
 				@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
 					@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
-					<div class="">
+					<div class="d-none d-lg-block">
 						<h3 class="">Week {{ $loop->iteration }}</h3>	
 						<p class="">{{ $gamesCount }} games scheduled</p>
 					</div>

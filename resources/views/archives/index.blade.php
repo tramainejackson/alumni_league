@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3 d-none d-md-block" id="">
+			<div class="col-md mt-3 d-none d-lg-block" id="">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-lg-8">
+			<div class="col-12 col-xl-8">
 				<div class="text-center coolText4 mt-3">
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
@@ -95,9 +95,14 @@
 				</div>
 				<!--/. Season ending Champion Team Players ./-->
 				
+				<hr/>
+				
 				<!-- Season ending standings -->
-				<div id="">
-					<table id="league_standings_table" class="table text-center table-striped table-responsive-sm">
+				<div class="text-center coolText4 my-4"> 
+					<h2 class="h2-responsive">Season Final Standings</h2>
+				</div>
+				<div id="" class="table-wrapper">
+					<table id="league_standings_table" class="table text-center table-striped table-fixed">
 						<thead>
 							<tr>
 								<th>Team Name</th>
@@ -122,9 +127,14 @@
 				</div>
 				<!--/. Season ending standings ./-->
 				
+				<hr/>
+				
 				<!-- Season ending player stats -->
-				<div class="" id="player_stats">
-					<table class="table table-responsive-sm" id="player_stats_table">
+				<div class="text-center coolText4 my-4"> 
+					<h2 class="h2-responsive">Season Final Stats</h2>
+				</div>
+				<div class="table-wrapper" id="player_stats">
+					<table class="table table-striped" id="player_stats_table">
 						<thead>
 							<tr>
 								<th></th>
@@ -147,7 +157,7 @@
 						<tbody>
 							@foreach($playersStats->get() as $showPlayer)
 								<tr data-toggle="modal" data-target="#player_card" class="text-center">
-									<td class='playerNameTD'>#{{ $showPlayer->player->jersey_num . ' ' . $showPlayer->player->player_name }}</td>
+									<td class='playerNameTD text-nowrap'>#{{ $showPlayer->player->jersey_num . ' ' . $showPlayer->player->player_name }}</td>
 									<td class='totalPointsTD'>{{ $showPlayer->TPTS == null ? 0 : $showPlayer->TPTS }}</td>
 									<td class='pointsPGTD'>{{ $showPlayer->PPG == null ? 0 : $showPlayer->PPG }}</td>
 									<td class='totalThreesTD'>{{ $showPlayer->TTHR == null ? 0 : $showPlayer->TTHR }}</td>
@@ -170,7 +180,7 @@
 				</div>
 				<!--/. Season ending player stats ./-->
 			</div>
-			<div class="col-md mt-3">
+			<div class="col-md mt-3 d-none d-lg-block">
 				@foreach($completedSeasons as $completedSeason)
 					<div class="text-center">
 						<a href="{{ route('archives', ['season' => $completedSeason->id]) }}" class="btn btn-rounded btn-lg purple darken-2 d-block">{{ ucfirst($completedSeason->name) }}</a>

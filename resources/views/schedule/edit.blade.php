@@ -4,17 +4,17 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3 d-none d-md-block">
+			<div class="col col-lg-3 mt-3 d-none d-lg-block">
 				<h2 class="h2-responsive text-underline">Check List</h2>
 				<p class="text-justify font-small">*Make Sure All Games Have Teams, Date, and Time Selected*</p>
 				<p class="text-justify font-small">*Forfeited Games Will Not Have Team Scores*</p>
 			</div>
-			<div class="col-12 col-md-8">
+			<div class="col-12 col-lg-6">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
-				<div class="mt-4 mb-2 d-flex flex-column flex-md-row align-items-center justify-content-center">
-					<button class="btn btn-rounded btn-sm green darken-1 white-text mx-4 order-1" id="edit_page_add_game" type="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Game</button>
+				<div class="mt-4 mb-2 d-flex flex-column flex-lg-row align-items-center justify-content-center">
+					<button class="btn btn-rounded btn-sm green darken-1 white-text mx-4 order-1 order-lg-0" id="edit_page_add_game" type="button"><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Add Game</button>
 					
 					<h2 class="h2-responsive text-center m-2">Edit Week</h2>
 					
@@ -213,24 +213,26 @@
 					@endif
 				{!! Form::close() !!}
 			</div>
-			<div class="col-md mt-3 text-center text-md-right order-first order-md-0">
-				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">Add New Week</a>
+			<div class="col col-lg-3 mt-3 text-center text-xl-right order-first order-lg-0">
+				<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-lg-block" type="button">Add New Week</a>
 				
-				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">All Games</a>
+				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-lg-block" type="button">All Games</a>
 				
-				<table class="table table-hover table-striped mt-3 d-none d-md-block">
-					<tbody>
-						@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
-						@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
-							<tr class="{{ $week->season_week == $thisWeek ? 'white-text blue' : '' }}">
-								<td class="text-center">
-									<span class="w-100 d-block font-weight-bold text-underline">Week {{ $loop->iteration }}</span>
-									<span class="">{{ $gamesCount }} games scheduled</span>
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
+				<div class="table-wrapper">
+					<table class="table table-hover table-striped mt-3 d-none d-lg-table">
+						<tbody>
+							@foreach($showSeason->games()->getScheduleWeeks()->get() as $week)
+							@php $gamesCount = $showSeason->games()->getWeekGames($week->season_week)->get()->count(); @endphp
+								<tr class="{{ $week->season_week == $thisWeek ? 'white-text blue' : '' }}">
+									<td class="text-center">
+										<span class="w-100 d-block font-weight-bold text-underline">Week {{ $loop->iteration }}</span>
+										<span class="">{{ $gamesCount }} games scheduled</span>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="removeModals">
 				<!-- Remove Week Modal -->

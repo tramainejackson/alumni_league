@@ -84,8 +84,9 @@ class LeagueScheduleController extends Controller
 		$showSeason	= $this->find_season(request());
 		$thisWeek 	= $week;
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		
-		return view('schedule.edit', compact('showSeason', 'weekGames', 'thisWeek'));
+		return view('schedule.edit', compact('showSeason', 'weekGames', 'thisWeek', 'activeSeasons'));
     }
 	
 	/**
@@ -674,9 +675,9 @@ class LeagueScheduleController extends Controller
 	 */
 	public function delete_game(LeagueSchedule $league_schedule)
 	{
-		// dd($league_schedule);
 		// Get the season to show
 		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 
 		if($league_schedule->delete()) {
 			if($league_schedule->result) {
@@ -803,8 +804,10 @@ class LeagueScheduleController extends Controller
 		$result = $league_schedule->result ? $league_schedule->result : null;
 		$homeTeam = $league_schedule->home_team_obj;
 		$awayTeam = $league_schedule->away_team_obj;
+		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		
 
-		return view('schedule.show', compact('league_schedule', 'allStats', 'showSeason', 'result', 'homeTeam', 'awayTeam'));
+		return view('schedule.show', compact('league_schedule', 'allStats', 'showSeason', 'result', 'homeTeam', 'awayTeam', 'activeSeasons'));
 	}
 
 	/**

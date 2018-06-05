@@ -4,7 +4,7 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col col-md d-none d-md-block mt-3">
+			<div class="col col-lg d-none d-lg-block mt-3">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-lg-8">
+			<div class="col-12 col-lg-7">
 				@if(!isset($allComplete))
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
@@ -21,8 +21,8 @@
 					@if($seasonScheduleWeeks->get()->isNotEmpty())
 						@foreach($seasonScheduleWeeks->get() as $showWeekInfo)
 							@php $seasonWeekGames = $showSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
-							<div class='leagues_schedule text-center mb-5'>
-								<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table table-responsive-sm'>
+							<div class='leagues_schedule text-center table-wrapper mb-5'>
+								<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table'>
 									<thead>
 										<tr class="indigo darken-2 white-text">
 											<th class="text-center" colspan="6">
@@ -107,9 +107,10 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-md mt-3 text-center text-md-right order-first order-md-0">
+			<div class="col-md col-lg mt-3 text-center text-lg-right order-first order-lg-0">
 				@if(!isset($allComplete))
 					<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
+				
 					<a href="#" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
 				@endif
 			</div>
@@ -133,7 +134,7 @@
 									<!--Card content-->
 									<div class="card-body">
 										<!--Title-->
-										<div class="d-flex align-items-center justify-content-between">
+										<div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
 											<div class="d-flex align-items-center justify-content-center">
 												<h4 class="card-title h4-responsive my-2">Changing this games teams will remove any stats that have been added</h4>
 											</div>
@@ -155,7 +156,7 @@
 										<!-- Edit Form -->
 										<div class="my-2">
 											<div class="row">
-												<div class="col">
+												<div class="col-12 col-lg">
 													<div class="md-form">
 														<select class="mdb-select" name="edit_away_team">
 															<option value="" disabled>Choose your option</option>
@@ -166,7 +167,7 @@
 														<label for="edit_away_team">Away Team</label>
 													</div>
 												</div>
-												<div class="col">
+												<div class="col-12 col-lg">
 													<div class="md-form">
 														<select class="mdb-select" name="edit_home_team">
 															<option value="" disabled>Choose your option</option>
@@ -256,7 +257,7 @@
 									<label for="">Select A Week</label>
 								</div>
 								<div class="row">
-									<div class="col">
+									<div class="col-12 col-lg">
 										<div class="md-form">
 											<select class="mdb-select" name="away_team">
 												<option value="" disabled selected>Choose your option</option>
@@ -267,7 +268,7 @@
 											<label for="away_team">Away Team</label>
 										</div>
 									</div>
-									<div class="col">
+									<div class="col-12 col-lg">
 										<div class="md-form">
 											<select class="mdb-select" name="home_team">
 												<option value="" disabled selected>Choose your option</option>
@@ -280,13 +281,13 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col">
+									<div class="col-12 col-lg">
 										<div class="md-form">
 											<input type="text" name="date_picker" id="input_gamedate" class="form-control datetimepicker" value="{{ old('game_date') }}" placeholder="Selected Date" />
 											<label for="input_gamedate">Game Date</label>
 										</div>
 									</div>
-									<div class="col">
+									<div class="col-12 col-lg">
 										<div class="md-form">
 											<input type="text" name="game_time" id="input_starttime" class="form-control timepicker" value="{{ old('game_time') }}" placeholder="Selected time" />
 											<label for="input_starttime">Game Time</label>

@@ -5,7 +5,7 @@
 		@if($showSeason->active == 'Y' && $showSeason->paid == 'Y')
 			<div class="row">
 				<!--Column will include buttons for creating a new season-->
-				<div class="col-md mt-3 d-none d-md-block">
+				<div class="col col-lg-3 mt-3 d-none d-lg-block">
 					@if($activeSeasons->isNotEmpty())
 						@foreach($activeSeasons as $activeSeason)
 							<a href="{{ route('league_pictures.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block" type="button">{{ $activeSeason->name }}</a>
@@ -13,7 +13,7 @@
 					@else
 					@endif
 				</div>
-				<div class="col-12 col-md-8">
+				<div class="col-12 col-lg-7">
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 					</div>
@@ -26,9 +26,9 @@
 					@if($seasonPictures->isNotEmpty())
 						<div class="row">
 							@foreach($seasonPictures as $picture)
-								<div class="col-12 col-md-4 my-2">
+								<div class="col-12 col-lg-10 col-xl-4 my-2 mx-auto">
 									<div class="view overlay" style="min-height:initial !important;">
-										<img alt="picture" src="{{ $picture->sm_photo() }}" class="img-fluid" />
+										<img alt="picture" src="{{ $picture->sm_photo() }}" class="img-fluid mx-auto" />
 										
 										<div class="mask flex-center flex-column rgba-red-strong">
 											<p class="coolText4 p-2">{{ $picture->description != null ? $picture->description : 'No Description' }}</p>
@@ -45,8 +45,8 @@
 					@endif
 				</div>
 
-				<div class="col-md mt-3 text-center order-first order-md-0">
-					<a href="{{ request()->query() == null ? route('league_pictures.create') : route('league_pictures.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-block" type="button">Add New Pictures</a>
+				<div class="col col-lg-2 mt-3 text-center order-first order-lg-0">
+					<a href="{{ request()->query() == null ? route('league_pictures.create') : route('league_pictures.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-lg-block text-nowrap text-truncate text-center" type="button">Add New Pictures</a>
 				</div>
 			</div>
 		@else

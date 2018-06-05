@@ -4,8 +4,8 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3"></div>
-			<div class="col-12 col-md-8">
+			<div class="col mt-3 d-none d-xl-block"></div>
+			<div class="col-12 col-xl-8 mx-auto">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
@@ -83,68 +83,70 @@
 										<i class="fa fa-plus-circle" aria-hidden="true"></i>
 									</button>
 								</div>
-								<table class="table table-hover table-striped table-responsive-sm" id="team_players_table">
-									<thead>
-										<tr>
-											<th>Captain</th>
-											<th>Jersey Num.</th>
-											<th class="text-nowrap">Player Name</th>
-											<th class="text-nowrap">Email Address</th>
-											<th class="text-nowrap">Phone</th>
-											<th></th>
-										</tr>
-									</thead>
-									<tbody>
-										@if($league_team->players->isNotEmpty())
-											@foreach($league_team->players as $player)
-												<tr class="">
-													<td class="">
-														<input type="checkbox" name="team_captain" class="filled-in" value="captain_{{ $player->id }}" id="captain_{{ $player->id }}"{{ $player->team_captain == 'Y' ? ' checked' : '' }} />
-														<label for="captain_{{ $player->id }}" class="label-table"></label>
-													</td>
-													<td class="">
-														<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" />
-													</td>
-													<td class="">
-														<input type="text" name="player_name[]" class="form-control" value="{{ $player->player_name }}" placeholder="Enter Player Name" />
-													</td>
-													<td class="">
-														<input type="text" name="player_email[]" class="form-control" value="{{ $player->email }}" placeholder="Enter Player Email" />
-													</td>
-													<td class="">
-														<input type="text" name="player_phone[]" class="form-control" value="{{ $player->phone }}" placeholder="Enter Player Phone" />
-													</td>
-													<td class="">
-														<button data-target="#delete_player" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deletePlayerBtn">Remove</button>
-														<input type="text" class="hidden" value="{{ $player->id }}" hidden />
-													</td>
-												</tr>
-											@endforeach
-										@else
-											<tr class="">
-												<th colspan="6" class="text-center">No Players Added for this team yet</th>
+								<div class="table-wrapper">
+									<table class="table table-hover table-striped" id="team_players_table">
+										<thead>
+											<tr>
+												<th>Captain</th>
+												<th>Jersey Num.</th>
+												<th class="text-nowrap">Player Name</th>
+												<th class="text-nowrap">Email Address</th>
+												<th class="text-nowrap">Phone</th>
+												<th></th>
 											</tr>
-										@endif
-										<tr class="newPlayerRow hidden" hidden>
-											<td class="text-center">&nbsp;</td>
-											<td class="">
-												<input type="number" name="new_jers_num[]" class="form-control" value="" placeholder="Enter Jersey #" disabled />
-											</td>
-											<td class="">
-												<input type="text" name="new_player_name[]" class="form-control" value="" placeholder="Enter Player Name" disabled />
-											</td>
-											<td class="">
-												<input type="text" name="new_player_email[]" class="form-control" value="" placeholder="Enter Player Email" disabled />
-											</td>
-											<td class="">
-												<input type="text" name="new_player_phone[]" class="form-control" value="" placeholder="Enter Player Phone" disabled />
-											</td>
-											<td class="">
-												<button class="btn btn-sm orange lighten-1 w-100 my-0 removeNewPlayerRow hidden" type="button">Hide</button>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+										</thead>
+										<tbody>
+											@if($league_team->players->isNotEmpty())
+												@foreach($league_team->players as $player)
+													<tr class="">
+														<td class="">
+															<input type="checkbox" name="team_captain" class="filled-in" value="captain_{{ $player->id }}" id="captain_{{ $player->id }}"{{ $player->team_captain == 'Y' ? ' checked' : '' }} />
+															<label for="captain_{{ $player->id }}" class="label-table"></label>
+														</td>
+														<td class="">
+															<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" />
+														</td>
+														<td class="">
+															<input type="text" name="player_name[]" class="form-control" value="{{ $player->player_name }}" placeholder="Enter Player Name" />
+														</td>
+														<td class="">
+															<input type="text" name="player_email[]" class="form-control" value="{{ $player->email }}" placeholder="Enter Player Email" />
+														</td>
+														<td class="">
+															<input type="text" name="player_phone[]" class="form-control" value="{{ $player->phone }}" placeholder="Enter Player Phone" />
+														</td>
+														<td class="">
+															<button data-target="#delete_player" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deletePlayerBtn">Remove</button>
+															<input type="text" class="hidden" value="{{ $player->id }}" hidden />
+														</td>
+													</tr>
+												@endforeach
+											@else
+												<tr class="">
+													<th colspan="6" class="text-center">No Players Added for this team yet</th>
+												</tr>
+											@endif
+											<tr class="newPlayerRow hidden" hidden>
+												<td class="text-center">&nbsp;</td>
+												<td class="">
+													<input type="number" name="new_jers_num[]" class="form-control" value="" placeholder="Enter Jersey #" disabled />
+												</td>
+												<td class="">
+													<input type="text" name="new_player_name[]" class="form-control" value="" placeholder="Enter Player Name" disabled />
+												</td>
+												<td class="">
+													<input type="text" name="new_player_email[]" class="form-control" value="" placeholder="Enter Player Email" disabled />
+												</td>
+												<td class="">
+													<input type="text" name="new_player_phone[]" class="form-control" value="" placeholder="Enter Player Phone" disabled />
+												</td>
+												<td class="">
+													<button class="btn btn-sm orange lighten-1 w-100 my-0 removeNewPlayerRow hidden" type="button">Hide</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
 							</div>
 							<div class="md-form">
 								<button class="btn blue lighten-1" type="submit">Update Team Information</button>
@@ -155,7 +157,7 @@
 				</div>
 				<!--/.Card-->
 			</div>
-			<div class="col col-md-3 mt-3 text-center text-md-right order-first order-md-0">
+			<div class="col mt-3 text-center text-xl-right order-first order-xl-0">
 				<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Teams</a>
 				
 				<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>

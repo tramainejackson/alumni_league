@@ -123,7 +123,7 @@
 											<ul class="list-unstyled">
 												@foreach($showSeason->league_profile->seasons()->completed()->get() as $completedSeason)
 													<li class="">
-														<a class="dropdown-item" href="#">{{ $completedSeason->name }}</a>
+														<a class="dropdown-item" href="{{ route('archives', ['season' => $completedSeason->id]) }}">{{ $completedSeason->name }}</a>
 													</li>
 												@endforeach
 											</ul>
