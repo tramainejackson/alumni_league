@@ -4,23 +4,23 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3">
+			<div class="col col-lg d-none d-lg-block mt-3">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
+						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-md-8">
+			<div class="col-12 col-lg-8">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 					<h1 class="display-4 coolText4">It's Playoff Time</h1>
 				</div>
 				@if($nonPlayInGames->get()->isNotEmpty())
 					<!-- Playoff Round Games -->
 					@foreach($playoffRounds as $round)
-						<div class='leagues_schedule text-center mb-5'>
+						<div class='leagues_schedule text-center mb-5 table-wrapper'>
 							<table id='week_schedule' class='weekly_schedule table'>
 								<thead>
 									<tr class="indigo darken-2 white-text">
@@ -93,7 +93,7 @@
 			
 				@if($playInGames->get()->isNotEmpty())
 					<!-- Playin Games -->
-					<div class='leagues_schedule text-center mb-5'>
+					<div class='leagues_schedule text-center mb-5 table-wrapper'>
 						<table id='week_schedule' class='weekly_schedule table'>
 							<thead>
 								<tr class="indigo darken-2 white-text">

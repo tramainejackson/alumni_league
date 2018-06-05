@@ -12,19 +12,19 @@
 						<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
 					</div>
 					@if($activeSeasons->isNotEmpty())
-						<div class="col">
+						<div class="col d-none d-lg-block">
 							@foreach($activeSeasons as $activeSeason)
-								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->season . ' ' . $activeSeason->year }}</a>
+								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
 							@endforeach
 						</div>
 					@else
 					@endif
 				</div>
 			</div>
-			<div class="col-8 pb-3">
+			<div class="col-12 col-lg-7 pb-3">
 				<!-- Show league season info -->
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
+					<h1 class="display-3">{{ ucfirst($showSeason->name) . ' ' . $showSeason->year }}</h1>
 					<h1 class="display-4 coolText4">It's Playoff Time</h1>
 					<button class="btn btn-rounded cyan accent-1 black-text coolText4" type="button" data-toggle="modal" data-target="#complete_season">Complete Season</button>
 				</div>
@@ -54,7 +54,7 @@
 						@php $teams = $teams->count(); @endphp
 
 						@if($rounds > 0)
-							<div class="row playoffBracket">
+							<div class="row playoffBracket d-none d-md-block">
 								<div class="col">
 									<main id="tournament">
 										@while($rounds > 0)
@@ -182,27 +182,32 @@
 					@elseif($settings->playin_games_complete == 'Y' && $settings->playin_games == 'Y')
 						@php $x = 1; @endphp
 						@php $rounds = $settings->total_rounds; @endphp
-						@php $teams = $settings->total_teams - $playInGames->count(); @endphp
-
+						@php $teams = $settings->teams_with_bye + $playInGames->count(); @endphp
+						
 						@if($nonPlayInGames->isNotEmpty())
 							@for($i=$rounds; $i >= 0; $i--)
-								@php $roundGames = \App\LeagueSchedule::roundGames($i)->orderBy('home_seed')->get(); @endphp	
+								@php $roundGames = $showSeason->games()->roundGames($i)->orderBy('home_seed')->get(); @endphp	
+							
 								@if($roundGames->isNotEmpty())
 									<div class="row">
-										<div class="col ">
+										<div class="col text-center">
 											@if($i != $rounds)
 												<h2 class="roundHeader text-center p-3 my-3">Round {{ $i }} Games</h2>
+											
+												<a href="{{ request()->query() == null ? route('edit_round', ['round' => $i]) : route('edit_round', ['round' => $i, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit {{ $i }} Round</a>
 											@else
 												<h2 class="roundHeader text-center p-3 my-3">Championship Game</h2>
+											
+												<a href="{{ request()->query() == null ? route('edit_round', ['round' => $i]) : route('edit_round', ['round' => $i, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Championship Game</a>
 											@endif
 										</div>
 									</div>
 									<div class="row">
 										@foreach($roundGames as $game)
-											<div class="col col-4 my-3">
+											<div class="col-12 col-md-6 my-3 mx-auto">
 												<div class="card">
 													<div class="card-header {{ $game->game_complete == 'Y' ? 'bg-success text-white' : 'bg-danger text-white'}}">
-														<h2 class="text-center">Round {{ $game->round }} Game</h2>
+														<h2 class="text-center">{{ $i == $rounds ? 'Championship Game' : 'Round ' .  $game->round . ' Game' }}</h2>
 													</div>
 													<div class="card-body">
 														<p class="text-center">{{ $game->away_team}} vs {{ $game->home_team}}</p>
@@ -225,11 +230,13 @@
 						
 						@if($playInGames->isNotEmpty())
 							<div class="row">
-								<div class="col col-12">
-									<h2 class="roundHeader text-center p-3 my-3">Play In Games</h2>
+								<div class="col col-12 text-center">
+									<h2 class="roundHeader p-3 my-3">Play In Games</h2>
+									
+									<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Playin</a>
 								</div>
 								@foreach($playInGames as $game)
-									<div class="col col-4 my-3">
+									<div class="col-12 col-md-6 my-3 mx-auto">
 										<div class="card">
 											<div class="card-header {{ $game->game_complete == 'Y' ? 'bg-success text-white' : 'bg-danger text-white'}}">
 												<h2 class="text-center">Play In Game</h2>
@@ -251,14 +258,14 @@
 							</div>
 						@endif
 
-						<div class="row playoffBracket">
+						<div class="row playoffBracket d-none d-md-block">
 							<div class="col">
 								<main id="tournament">
 									@while($rounds > 0)
 										@php $totalGames = ($teams/2); @endphp
 										<ul class="round round-{{ $x }}">
 											<!--- Get games that are for round x from database --->
-											@php $playoffSchedule = \App\LeagueSchedule::roundGames($x)->orderBy('home_seed')->get(); @endphp
+											@php $playoffSchedule = $showSeason->games()->roundGames($x)->orderBy('home_seed')->get(); @endphp
 	
 											@if($playoffSchedule->isNotEmpty())
 												@while($playoffSchedule->isNotEmpty())
@@ -366,7 +373,7 @@
 							</div>
 						</div>
 					@elseif($settings->playin_games_complete == 'N' && $settings->playin_games == 'Y')
-						@php $playInGames = \App\Game::where('playin_game', 'Y')->get(); @endphp
+						@php $playInGames = $showSeason->games()->playoffPlayinGames()->get(); @endphp
 						@if($playInGames->isNotEmpty())
 							<div class="divClass">
 								<div class="col">
@@ -374,8 +381,10 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col col-12">
-									<h2 class="roundHeader text-center p-3 my-3">Play In Games</h2>
+								<div class="col col-12 text-center">
+									<h2 class="roundHeader p-3 my-3">Play In Games</h2>
+
+									<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Playin Games</a>
 								</div>
 								
 								@foreach($playInGames as $game)
@@ -400,7 +409,7 @@
 								@endforeach	
 							</div>
 						@endif
-						<div class="row playoffBracket">
+						<div class="row playoffBracket d-none d-md-block">
 							<div class="col">
 								@include('bracketology')
 							</div>
@@ -415,14 +424,14 @@
 			</div>
 			
 			<!--Column will include seasons (archieved and current)-->
-			<div class="col py-3">
+			<div class="col py-3 d-none d-lg-block">
 				<!--Show completed season if any available-->
 				<h2 class="text-center h2-responsive">Completed Seasons</h2>
 				
 				@if($completedSeasons->isNotEmpty())
 					@foreach($completedSeasons as $completedSeason)
 						<div class="text-center">
-							<a href="#" class="">{{ ucfirst($completedSeason->season) . ' ' . $completedSeason->year }}</a>
+							<a href="{{ route('archives', ['season' => $completedSeason->id]) }}" class="btn btn-rounded btn-lg purple darken-2 d-block">{{ ucfirst($completedSeason->name) }}</a>
 						</div>
 					@endforeach
 				@else
@@ -446,7 +455,7 @@
 						</div>
 						<div class="modal-body mx-3">
 							<div class="row">
-								<div class="col-6">
+								<div class="col-12 col-lg">
 									<div class="md-form">
 										<select class="mdb-select" name="season" required>
 											<option value="" disabled selected>Choose A Season</option>
@@ -459,7 +468,7 @@
 										<label data-error="wrong" data-success="right" for="season" class="blue-text">Season</label>
 									</div>
 								</div>
-								<div class="col-6">
+								<div class="col-12 col-lg">
 									<div class="md-form">
 										<select class="mdb-select" name="year" required>
 											<option value="" disabled selected>Choose A Year</option>
@@ -475,7 +484,7 @@
 							</div>
 							
 							<div class="row">
-								<div class="col">
+								<div class="col-12 col-lg">
 									<div class="md-form input-group">
 										<div class="input-group-prepend">
 											<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
@@ -490,7 +499,7 @@
 										<label for="leagues_fee">Entry Fee</label>
 									</div>
 								</div>
-								<div class="col">
+								<div class="col-12 col-lg">
 									<div class="md-form input-group">
 										<div class="input-group-prepend">
 											<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>

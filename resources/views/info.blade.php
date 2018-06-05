@@ -2,17 +2,17 @@
 
 @section('content')
 	@include('include.functions')
-	
+
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12 col-md-10 mx-auto leagueContactInfo">
-				{!! Form::open(['action' => ['LeagueProfileController@update', $league->id], 'method' => 'PATCH', 'files' => true]) !!}
+				{!! Form::open(['action' => ['LeagueProfileController@update', 'league' => $league->id], 'method' => 'PATCH', 'files' => true]) !!}
 					<div class="row">
 						<div class="col-12 col-md-10 col-lg-8 col-xl-6 my-3 mx-auto">
 							<div id="update_pic" class="card card-cascade mx-auto">
 								<!--Card Image-->
 									<div class="view" style="min-height: initial !important;">
-										<img id="current_pic" class="card-img-top" src="{{ $league->leagues_picture != null ? asset($league->leagues_picture) : '/images/commissioner.jpg' }}">
+										<img id="current_pic" class="card-img-top" src="{{ $league->picture != null ? asset($league->picture) : '/images/commissioner.jpg' }}">
 									</div>
 								<!--./Card Image/.-->
 								
@@ -29,7 +29,7 @@
 											<div class="file-field">
 												<div class="btn btn-primary btn-sm float-left">
 													<span class="changeSpan">Change Photo</span>
-													<input type="file" name="file" id="file">
+													<input type="file" name="profile_photo" id="file">
 												</div>
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" placeholder="Upload your file">
@@ -43,14 +43,14 @@
 					</div>
 					<div class="updateLeagueForm">
 						<div class="md-form">
-							<input type="text" name="leagues_name" class="form-control" id="leagues_name" value="{{ $league->name }}" />
+							<input type="text" name="name" class="form-control" id="name" value="{{ $league->name }}" />
 							
-							<label for="leagues_name">League Name</label>
+							<label for="name">League Name</label>
 						</div>
 						<div class="md-form">
-							<input type="text" name="leagues_commish" class="form-control" id="leagues_commish" placeholder="Commissioner" value="{{ $league->commish }}" />
+							<input type="text" name="commish" class="form-control" id="commish" placeholder="Commissioner" value="{{ $league->commish }}" />
 
-							<label for="leagues_commish">Commissioner</label>
+							<label for="commish">Commissioner</label>
 						</div>
 						<div class="md-form">
 							<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $league->address }}" />

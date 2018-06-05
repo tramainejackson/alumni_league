@@ -4,7 +4,7 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col col-lg-3 col-xl mt-3 d-none d-md-block">
+			<div class="col col-lg-3 col-xl mt-3 d-none d-lg-block">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-lg-6 col-xl-8">
+			<div class="col-12 col-md-10 col-lg-6 col-xl-8 mx-auto">
 				@if(!isset($allComplete))
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
@@ -36,7 +36,7 @@
 										<!-- Card content -->
 										<div class="card-body text-center position-relative">
 											<!-- Title -->
-											<h1 class="card-title h1-responsive font-weight-bold">{{ $team->team_name }}</h1>
+											<h1 class="card-title h1-responsive font-weight-bold w-75 mx-auto">{{ $team->team_name }}</h1>
 											<!-- Team Captain Info -->
 											<div class="d-flex flex-column align-items-center">
 												<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
@@ -124,7 +124,7 @@
 					</div>
 				@endif
 			</div>
-			<div class="col col-lg-3 col-xl mt-3 text-center text-md-right order-first order-md-0">
+			<div class="col col-lg-3 col-xl mt-3 text-center text-lg-right order-first order-lg-0">
 				@if(!isset($allComplete))
 					<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
 				@else

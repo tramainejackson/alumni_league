@@ -91,7 +91,7 @@ main{
 .round .spacer:last-child{ flex-grow:0.5; }
 
 .round .game-spacer{
-	flex-grow:1;
+	flex-grow:3;
 }
 
 /*
@@ -2849,8 +2849,12 @@ table.currentMonth {
 		margin: 5% 1% 2%;
 	}
 	
+	.round {
+		font-size: 75%;
+	}
+	
 	.feesButton {
-		left: -16.5%;
+		left: -50px;
 	}
 	
 	.display-3 {

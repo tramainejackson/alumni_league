@@ -44,13 +44,16 @@
 				<span class="sr-only">Toggle Navigation</span>
 				<i class="fa fa-bars"></i>
 			</button>
-			
 			<!-- Sidebar navigation -->
 			<div id="slide-out" class="side-nav fixed">
 				<div class="view">
 					@if (Auth::guest())
 					@else
-						<img src="{{ !isset($allComplete) ? $showSeason->league_profile->picture != null ? asset($showSeason->league_profile->picture) : '/images/commissioner.jpg' : $showSeason->picture != null ? asset($showSeason->picture) : '/images/commissioner.jpg' }}" class="img-fluid" />
+						@if(isset($allComplete))
+							<img src="{{ $showSeason->picture == null ? '/images/commissioner.jpg' : $showSeason->picture }}" class="img-fluid" />
+						@else
+							<img src="{{ $showSeason->league_profile->picture == null ? '/images/commissioner.jpg' : $showSeason->league_profile->picture }}" class="img-fluid" />
+						@endif
 					
 						<div class="mask">
 							<a class='league_home position-absolute bottom btn btn-light-blue' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ !isset($allComplete) ? $showSeason->league_profile->name : $showSeason->name }}</a>

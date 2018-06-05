@@ -54,7 +54,7 @@ class HomeController extends Controller
 			$playoffSettings = $showSeason->playoffs;
 			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames()->get();
 			$playInGames = $showSeason->games()->playoffPlayinGames()->get();
-	
+
 			return view('playoffs.index', compact('ageGroups', 'compGroups', 'completedSeasons', 'activeSeasons', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
 		} else {
 			if($showSeason instanceof \App\LeagueProfile) {
@@ -89,11 +89,12 @@ class HomeController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$allComplete = 'Y';
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
 
 		if($showSeason instanceof \App\LeagueProfile) {
-			return view('about', compact('showSeason', 'allComplete'));
+			return view('about', compact('showSeason', 'allComplete', 'activeSeasons'));
 		} else {
-			return view('about', compact('showSeason'));
+			return view('about', compact('showSeason', 'activeSeasons'));
 		}
 		
     }
