@@ -2856,6 +2856,17 @@ table.currentMonth {
 		margin: 5% 1% 2%;
 	}
 	
+	.aboutPageH1 {
+		font-size: 175% !important;
+	}
+	
+	.aboutPageH2 {
+		font-size: 100% !important;
+	}
+	.aboutPageH3 {
+		font-size: 85% !important;
+	}
+	
 	.round {
 		font-size: 75%;
 	}

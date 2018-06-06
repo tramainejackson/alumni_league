@@ -9,10 +9,10 @@
 @section('content')
 	<div id="leagues_landing_page" class="">
 		<div class="view">
-			<div class="mask d-flex flex-column rgba-blue-light align-items-center justify-content-center white-text coolText3">
-				<h1 class="font-weight-bold display-3 wow fadeInLeft" data-wow-delay="0.4s">Save Time. Get Organized.</h1>
-				<h2 class="wow fadeInRight" data-wow-delay="0.4s">Manage your whole basketball league and keep everything in one location</h2>
-				<h3 class="wow fadeInDown" data-wow-delay="0.4s">Keeps Stats, Standings, Scores and More</h3>
+			<div class="mask d-flex flex-column rgba-blue-light align-items-center justify-content-md-center justify-content-around white-text coolText3 text-center">
+				<h1 class="font-weight-bold display-3 wow fadeInLeft aboutPageH1" data-wow-delay="0.4s">Save Time. Get Organized.</h1>
+				<h2 class="wow fadeInRight aboutPageH2" data-wow-delay="0.4s">Manage your whole basketball league and keep everything in one location</h2>
+				<h3 class="wow fadeInDown aboutPageH3" data-wow-delay="0.4s">Keeps Stats, Standings, Scores and More</h3>
 			</div>	
 		</div>
 		<div class="container-fluid">

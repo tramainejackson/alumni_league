@@ -1,11 +1,16 @@
 @extends('layouts.app')
 
 @section('additional_scripts')
-	<script type="text/javascript"></script>
+	<script type="text/javascript">
+		if(screen.width < 576) {
+			$('.registrationView').removeClass('view');
+			$('.registrationView .mask').addClass('py-5');
+		}
+	</script>
 @endsection
 
 @section('content')
-	<div class="view" style="background-image: url('/images/sports_office.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+	<div class="view registrationView" style="background-image: url('/images/sports_office.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
 		<div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 			<div class="container">
 				<div class="row">

@@ -37,7 +37,11 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg justify-content-between">
 			<!-- Branding Image -->
-			<a class="navbar-brand" href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ config('app.name', 'ToTheRec') }}</a>
+			@if(Auth::guest())
+				<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'ToTheRec') }}</a>
+			@else
+				<a class="navbar-brand" href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ config('app.name', 'ToTheRec') }}</a>
+			@endif
 			
 			<!-- SideNav slide-out button -->
 			<button type="button" data-activates="slide-out" class="btn btn-primary p-3 button-collapse navbar-toggler" data-toggle="collapse" data-target="#app-navbar-collapse" aria-controls="app-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +51,7 @@
 			<!-- Sidebar navigation -->
 			<div id="slide-out" class="side-nav fixed">
 				<div class="view">
-					@if (Auth::guest())
+					@if(Auth::guest())
 					@else
 						@if(isset($allComplete))
 							<img src="{{ asset($showSeason->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->picture) }}" class="img-fluid" />
