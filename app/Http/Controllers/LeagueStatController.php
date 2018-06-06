@@ -78,8 +78,9 @@ class LeagueStatController extends Controller
 		$showSeason = $this->find_season(request());
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
 
-		return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames'));
+		return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames', 'activeSeasons'));
     }
 	
 	/**
@@ -93,8 +94,9 @@ class LeagueStatController extends Controller
 		$showSeason = $this->find_season(request());
 		$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
 		$roundGames	= $showSeason->games()->getRoundGames($round)->get();
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
 
-		return view('playoffs.stat', compact('playoffRounds', 'showSeason', 'round', 'roundGames'));
+		return view('playoffs.stat', compact('playoffRounds', 'showSeason', 'round', 'roundGames', 'activeSeasons'));
     }
 	
 	/**

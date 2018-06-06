@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-12 mt-3">
 				@foreach($playoffRounds as $edit_round)
-					<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $edit_round->round]) : route('league_stat.edit_round', ['round' => $edit_round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_round->round == $round ? ' disabled' : '' }}"{{ $edit_round->round == $round ? ' disabled' : '' }}>Round {{ $round }} Stats</a>
+					<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $edit_round->round]) : route('league_stat.edit_round', ['round' => $edit_round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_round->round == $round ? ' disabled' : '' }}"{{ $edit_round->round == $round ? ' disabled' : '' }}>{{ $edit_round->round != $playoffRounds->count() ? 'Round ' . $edit_round->round  . ' Stats' : 'Championship Game Stats'}}</a>
 				@endforeach
 			</div>
 			<div class="col-12">
@@ -15,7 +15,7 @@
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
 				<div class="text-center">
-					<h3 class="h3-responsive">Round {{ $round }} Stats</h3>
+					<h3 class="h3-responsive">{{ $round != $playoffRounds->count() ? 'Round ' . $round  . ' Stats' : 'Championship Game Stats'}}</h3>
 				</div>
 				
 				@if($roundGames->count() > 0)

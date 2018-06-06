@@ -70,8 +70,8 @@ class LeagueTeamController extends Controller
 		Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
 				$constraint->aspectRatio();
 			}
-		)->save('default_img.jpg');
-		$defaultImg = asset('default_img.jpg');
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 		
 		return view('teams.create', compact('showSeason', 'activeSeasons', 'defaultImg', 'totalTeams'));
     }
@@ -122,8 +122,8 @@ class LeagueTeamController extends Controller
 		Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
 				$constraint->aspectRatio();
 			}
-		)->save('default_img.jpg');
-		$defaultImg = asset('default_img.jpg');
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
 		return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons'));
     }

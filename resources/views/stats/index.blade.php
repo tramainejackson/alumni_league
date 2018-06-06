@@ -4,7 +4,7 @@
 	<div class="container-fluid leagues_page_div">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col col-md d-none d-md-block mt-3">
+			<div class="col col-xl-2 d-none d-lg-block mt-3 order-xl-0">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
 						<a href="{{ route('league_stat.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-lg-8">
+			<div class="col-12 col-xl-8 order-lg-2 order-xl-1">
 				@if(!isset($allComplete))
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
@@ -24,13 +24,13 @@
 					
 					@if($checkStats)
 						<div id="league_stat_categories" class="d-flex flex-column flex-md-row align-items-center justify-content-around">
-							<button type="button" class="btn statCategoryBtn activeBtn" id="league_leaders_btn">League Leaders</button>
-							<button type="button" class="btn statCategoryBtn" id="player_stats_btn">Player Stats</button>
-							<button type="button" class="btn statCategoryBtn" id="team_stats_btn">Team Stats</button>
+							<button type="button" class="btn statCategoryBtn gray activeBtn w-100" id="league_leaders_btn">League Leaders</button>
+							<button type="button" class="btn statCategoryBtn gray w-100" id="player_stats_btn">Player Stats</button>
+							<button type="button" class="btn statCategoryBtn gray w-100" id="team_stats_btn">Team Stats</button>
 						</div>
-						<div id="league_stats">
-							<div id="league_leaders">
-								<div class="leagueLeadersCategory" id="league_leaders_points">
+						<div id="league_stats" class="container-fluid">
+							<div id="league_leaders" class="row">
+								<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_points">
 									<table class="table table-responsive-sm" id="points_category">
 										<thead>
 											<tr class="leagueLeadersCategoryFR">
@@ -63,7 +63,7 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="leagueLeadersCategory" id="league_leaders_assist">
+								<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_assist">
 									<table class="table table-responsive-sm" id="assist_category">
 										<thead>
 											<tr class="leagueLeadersCategoryFR">
@@ -96,7 +96,7 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="leagueLeadersCategory" id="league_leaders_rebounds">
+								<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_rebounds">
 									<table class="table table-responsive-sm" id="rebounds_category">
 										<thead>
 											<tr class="leagueLeadersCategoryFR">
@@ -129,7 +129,7 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="leagueLeadersCategory" id="league_leaders_steals">
+								<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_steals">
 									<table class="table table-responsive-sm" id="steals_category">
 										<thead>
 											<tr class="leagueLeadersCategoryFR">
@@ -162,7 +162,7 @@
 										</tbody>
 									</table>
 								</div>
-								<div class="leagueLeadersCategory" id="league_leaders_blocks">
+								<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_blocks">
 									<table class="table table-responsive-sm" id="blocks_category">
 										<thead>
 											<tr class="leagueLeadersCategoryFR">
@@ -196,8 +196,8 @@
 									</table>
 								</div>
 							</div>
-							<div class="hidden" id="player_stats">
-								<table class="table table-responsive-sm" id="player_stats_table">
+							<div class="hidden table-wrapper" id="player_stats" style="display:none !important; max-height: initial;">
+								<table class="table" id="player_stats_table">
 									<thead>
 										<tr>
 											<th></th>
@@ -242,8 +242,8 @@
 								</table>
 							</div>
 
-							<div class="hidden" id="team_stats">
-								<table class="table table-responsive-sm" id="team_stats_table">
+							<div class="hidden table-wrapper" id="team_stats" style="display:none !important; max-height: initial;">
+								<table class="table" id="team_stats_table">
 									<thead>
 										<tr class='text-center'>
 											<th></th>
@@ -296,14 +296,14 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-md mt-3 text-md-right text-center order-first order-md-0">
+			<div class="col-md col-xl-2 mt-3 text-lg-right text-center order-first order-lg-1 order-xl-2">
 				@if($showSeason->is_playoffs == 'Y')
 					@foreach($playoffRounds as $round)
-						<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $round->round]) : route('league_stat.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+						<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $round->round]) : route('league_stat.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
 					@endforeach
 				@else
 					@foreach($seasonScheduleWeeks as $week)
-						<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text">Week {{ $loop->iteration }} Stats</a>
+						<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
 					@endforeach
 				@endif
 			</div>
