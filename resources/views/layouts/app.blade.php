@@ -50,9 +50,9 @@
 					@if (Auth::guest())
 					@else
 						@if(isset($allComplete))
-							<img src="{{ $showSeason->picture == null ? '/images/commissioner.jpg' : $showSeason->picture }}" class="img-fluid" />
+							<img src="{{ asset($showSeason->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->picture) }}" class="img-fluid" />
 						@else
-							<img src="{{ $showSeason->league_profile->picture == null ? '/images/commissioner.jpg' : $showSeason->league_profile->picture }}" class="img-fluid" />
+							<img src="{{ asset($showSeason->league_profile->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->league_profile->picture) }}" class="img-fluid" />
 						@endif
 					
 						<div class="mask">
@@ -77,26 +77,26 @@
 						</li>
 					@else
 						<li class="nav-item">
-							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
+							<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Standings</a>
+							<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Standings</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Stats</a>
+							<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Stats</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Teams</a>
+							<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Teams</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
+							<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
 						</li>
 						@if($activeSeasons->isNotEmpty())
 							<div id="accordion1" class="accordion">
 								<ul class="collapsible collapsible-accordion">
 									<li class="position-relative">
 										<a class="collapsible-header collapsed pl-1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Seasons</a>
-										<i class="fa fa-angle-down rotate-icon"></i>
+										<i class="fa fa-angle-up rotate-icon"></i>
 									</li>
 								
 									<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion1" class="collapse">
@@ -119,7 +119,7 @@
 									<ul class="collapsible collapsible-accordion">
 										<li class="position-relative">
 											<a class="collapsible-header collapsed pl-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Archives</a>
-											<i class="fa fa-angle-down rotate-icon"></i>
+											<i class="fa fa-angle-up rotate-icon"></i>
 										</li>
 									
 										<div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion2" class="collapse">
@@ -136,7 +136,7 @@
 							</li>
 						@endif
 						<li class="nav-item">
-							<a class='nav-link' href="{{ route('logout') }}"
+							<a class='nav-link white-text' href="{{ route('logout') }}"
 								onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 								Logout
 							</a>

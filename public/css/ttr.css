@@ -68,6 +68,13 @@ button:hover {
 .btn.black-text {
 	color: black !important;
 }  
+
+.side-nav .fa-angle-up.rotate-icon {
+    position: absolute;
+    right: 0;
+    top: .8rem;
+    margin-right: 1.25rem;
+}
 /*************************/
 
 /*
