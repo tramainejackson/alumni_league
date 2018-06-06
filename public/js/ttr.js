@@ -86,7 +86,7 @@ $(document).ready(function() {
 	// (Will toggle on and off. Not related to sibling option. Does not require a selection)
 	$("body").on("click", ".compBtnSelect, .ageBtnSelect", function(e) {
 		if($(this).hasClass('compBtnSelect')) {
-			$(this).toggleClass('orange gray active');
+			$(this).toggleClass('orange grey active');
 			
 			if($(this).children().attr('checked') == 'checked') {
 				$(this).children().removeAttr('checked');
@@ -94,7 +94,7 @@ $(document).ready(function() {
 				$(this).children().attr('checked', 'checked');
 			}
 		} else {
-			$(this).toggleClass('blue gray active');
+			$(this).toggleClass('blue grey active');
 			
 			if($(this).children().attr('checked') == 'checked') {
 				$(this).children().removeAttr('checked');

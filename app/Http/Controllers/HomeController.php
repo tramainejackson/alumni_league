@@ -89,10 +89,9 @@ class HomeController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$allComplete = 'Y';
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
 
 		if($showSeason instanceof \App\LeagueProfile) {
-			return view('about', compact('showSeason', 'allComplete', 'activeSeasons'));
+			return view('about', compact('showSeason', 'allComplete'));
 		} else {
 			return view('about', compact('showSeason', 'activeSeasons'));
 		}
