@@ -99,16 +99,6 @@ class HomeController extends Controller
     }
 	
 	/**
-     * Show the application about us page for public.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
-    {
-        return view('about', compact(''));
-    }
-	
-	/**
      * Show the leagues standings page.
      *
      * @return \Illuminate\Http\Response
@@ -206,6 +196,10 @@ class HomeController extends Controller
 			}
 			
 			return $showSeason;
+		} else {
+			if(session()->has('commish')) {
+				Auth::loginUsingId(session()->get('commish'));
+			}
 		}
 	}
 }
