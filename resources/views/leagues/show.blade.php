@@ -3,20 +3,22 @@
 @section('content')
 	@include('include.functions')
 	
-		<div class="indLeague" style="background-image:url('images/{{ $league->leagues_picture }}');">
+		<div class="" style="">
 			<h1 class="">
-				{{ ucwords($league->leagues_name) }}
-				@if($league->ttr_league == "Y") 
-					<span class="ttrSite">This Leagues Keeps Online Stats. Click <a href="{{ $league->ttr_league_site }}" class="" target="_blank">here</a> to see.</span>
+				{{ ucwords($league->name) }}
+				@if($league->seasons()->active()->count() > 0)
+					@foreach($league->seasons()->active() as $active)
+						<span class="ttrSite">This Leagues Keeps Online Stats. Click <a href="#" class="" target="_blank">here</a> to see.</span>
+					@endforeach	
 				@endif
 			</h1>
 			<div class="indLeaguesInfo">
 				<span>Address:</span>
-				<span class="">{{ $league->leagues_address != "" ? $league->leagues_address : "No Address Listed" }}</span>
+				<span class="">{{ $league->address != "" ? $league->address : "No Address Listed" }}</span>
 			</div>
 			<div class="indLeaguesInfo">
 				<span>Phone #:</span>
-				<span class="">{{ $league->leagues_phone != "" ? $league->leagues_phone : "No Phone Number Listed" }}</span>
+				<span class="">{{ $league->phone != "" ? $league->phone : "No Phone Number Listed" }}</span>
 			</div>
 			<div class="indLeaguesInfo">
 				<span>Email:</span>
@@ -34,38 +36,27 @@
 				<span>Ref Fee:</span>
 				<span class="">{{ $league->ref_fee != null ? $league->ref_fee : "No Ref Fee's Added Yet" }}</span>
 			</div>
-			<div class="indLeaguesInfo compLevelTable">
-				<span>Comp Levels:</span>
-				<div class="container-fluid">
-					<div class="row">
-						@if($league->leagues_comp != "") 
-							<ul class="compLevelsList">
-								@php $levelsArray = explode(" ", $league->leagues_comp); @endphp
-								@for($i=0; $i < count($levelsArray); $i++) 
-									<li class="col-md-4">{{ str_ireplace(" ", "", ucwords(str_ireplace("_", " ", $levelsArray[$i]))) }}</li>
-								@endfor
-							</ul>
-						@else
-							<span class="">{{ $league->leagues_comp }}</span>
-						@endif
-					</div>
+			
+			<div class="col-12 col-xl-6">
+				<h1 class="h1-responsive">Ages</h1>
+				<div class="row">
+					@foreach(find_ages() as $age)
+						<div class="col-6 my-1">
+							<button class="btn btn rounded btn-block{{  str_contains($league->age, $age) ? ' default-color' : ' grey' }}" type="button">{{ str_ireplace('_', ' ', $age) }}</button>
+						</div>
+					@endforeach
 				</div>
 			</div>
-			<div class="indLeaguesInfo ageLevelTable">
-				<span>Age Levels:</span>
-				<div class="container-fluid">
-					<div class="row">
-						@if($league->leagues_comp != "") 
-							<ul class="compLevelsList">
-								@php $agesArray = explode(" ", $league->leagues_age); @endphp
-								@for($i=0; $i < count($agesArray); $i++) 
-									<li class="col-md-4">{{ ucwords(str_ireplace("_", " ", $agesArray[$i])) }}</li>
-								@endfor
-							</ul>
-						@else
-							<span class="">{{ $league->leagues_age }}</span>
-						@endif
-					</div>
+			
+			<div class="col-12 col-xl-6">
+				<h1 class="h1-responsive">Competition</h1>
+				
+				<div class="row">
+					@foreach(find_competitions() as $comp)
+						<div class="col-6 my-1">
+							<button class="btn btn rounded btn-block{{  str_contains($league->comp, $comp) ? ' primary-color' : ' grey' }}" type="button">{{ str_ireplace('_', ' ', $comp) }}</button>
+						</div>
+					@endforeach
 				</div>
 			</div>
 		</div>

@@ -38,7 +38,15 @@
         <nav class="navbar navbar-expand-lg justify-content-between">
 			<!-- Branding Image -->
 			@if(Auth::guest())
-				<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'ToTheRec') }}</a>
+				<div class="d-flex align-items-center">
+					<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'ToTheRec') }}</a>
+					
+					<ul class="nav navbar-nav" id=''>
+						<li class="nav-item">
+							<a class='league_home nav-link' href="{{ route('league_profile.index') }}">Leagues</a>
+						</li>
+					</ul>
+				</div>
 			@else
 				<a class="navbar-brand" href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ config('app.name', 'ToTheRec') }}</a>
 			@endif
@@ -95,6 +103,7 @@
 						<li class="nav-item">
 							<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
 						</li>
+						
 						@if($activeSeasons->isNotEmpty())
 							<div id="accordion1" class="accordion">
 								<ul class="collapsible collapsible-accordion">
@@ -117,6 +126,7 @@
 							</div>
 						@else
 						@endif
+					
 						@if(!isset($allComplete))
 							<li class="nav-item" id="archivedItems">
 								<div id="accordion1" class="accordion">

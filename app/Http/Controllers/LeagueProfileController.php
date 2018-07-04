@@ -10,6 +10,16 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class LeagueProfileController extends Controller
 {
+	/**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+       $this->middleware('auth')->except(['index', 'show']); 
+    }
+	
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +29,14 @@ class LeagueProfileController extends Controller
     {
         $leagues = LeagueProfile::all();
 		
-		return view('leagues.index', compact('leagues'));
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(350, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
+		
+		return view('leagues.index', compact('leagues', 'defaultImg'));
     }
 
     /**
@@ -49,8 +66,19 @@ class LeagueProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(LeagueProfile $league)
+    public function show(Request $request, $league)
     {
+		$league_array = LeagueProfile::all()->toArray();
+		$league_names = array_pluck($league_array, 'name', 'id');
+		
+		foreach($league_names as $id => $name) {
+			$name = str_ireplace(" ", "", strtolower($name));
+			
+			if($league === $name) {
+				$league = LeagueProfile::find($id);
+			}
+		}
+		
 		return view('leagues.show', compact('league'));
     }
 
