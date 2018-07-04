@@ -59,7 +59,7 @@ class LeaguePlayer extends Model
     }
 	
 	/**
-	* Get the league for the team object.
+	* Get the players stats for the season object.
 	*/
     public function stats()
     {

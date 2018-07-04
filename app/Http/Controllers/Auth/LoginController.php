@@ -65,6 +65,10 @@ class LoginController extends Controller
 			if($user->leagues_profiles->where('user_id', Auth::id())->isNotEmpty()) {
 				$league = $user->leagues_profiles->where('user_id', Auth::id())->first();
 				
+				if($user->type == 'commish') {
+					session()->put(['user' => 'commish', 'commish' => $user->id]);
+				}
+				
 				return redirect()->action('HomeController@index');
 			} else {
 				// Log the user with the player profile out and then redirect
