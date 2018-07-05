@@ -19,6 +19,7 @@ Auth::routes();
 
 /* Overwrite the default login controller */
 	Route::post('/login', 'Auth\LoginController@authenticate');
+	Route::post('/login/{user}', 'Auth\LoginController@ttr_user');
 /* Overwrite the default login controller */
 
 Route::get('/', 'HomeController@about')->name('welcome');

@@ -36,7 +36,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout', 'ttr_user']);
     }
 	
 	/**
@@ -80,5 +80,16 @@ class LoginController extends Controller
         } else {
 			return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
 		}
+    }
+
+	/**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function ttr_user($user)
+    {
+		dd($user);
+        return view('auth.login');
     }
 }
