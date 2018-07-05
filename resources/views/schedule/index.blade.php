@@ -107,6 +107,7 @@
 					</div>
 				@endif
 			</div>
+			
 			<div class="col-md col-lg mt-3 text-center text-lg-right order-first order-lg-0">
 				@if(!isset($allComplete))
 					<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>

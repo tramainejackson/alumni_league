@@ -75,6 +75,8 @@ Route::post('create_playoffs', 'LeagueSeasonController@create_playoffs');
 
 Route::post('complete_season', 'LeagueSeasonController@complete_season');
 
+Route::get('league_profile/{league}/{season}', 'LeagueProfileController@show_season')->name('league_profile.season');
+
 /** MDB Templates **/
 Route::get('/templates/about_us', 'TemplateController@about_us');
 Route::get('/templates/blog_post', 'TemplateController@blog_post');

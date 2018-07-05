@@ -59,385 +59,385 @@
     <!--Main Navigation-->
 
     <!--Main Layout-->
-    <main>
+	<main>
 
-        <div class="container">
+		<div class="container">
 
-            <!--Section: Blog v.4-->
-            <section class="text-center section-blog-fw mt-5 pb-3 wow fadeIn">
+			<!--Section: Blog v.4-->
+			<section class="text-center section-blog-fw mt-5 pb-3 wow fadeIn">
 
-                <!--Grid row-->
-                <div class="row">
-                    <div class="col-md-12">
-                        <!--Featured image-->
-                        <div class="card card-cascade wider reverse">
-                            <div class="view overlay">
-                                <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Slides/img%20(134).jpg" alt="Wide sample post image">
-                                <a>
-                                    <div class=""></div>
-                                </a>
-                            </div>
+				<!--Grid row-->
+				<div class="row">
+					<div class="col-md-12">
+						<!--Featured image-->
+						<div class="card card-cascade wider reverse">
+							<div class="view overlay">
+								<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Slides/img%20(134).jpg" alt="Wide sample post image">
+								<a>
+									<div class=""></div>
+								</a>
+							</div>
 
-                            <!--Post data-->
-                            <div class="card-body text-center">
-                                <h2><a><strong>This is title of the news</strong></a></h2>
-                                <p>Written by <a>Abby Madison</a>, 26/08/2016</p>
+							<!--Post data-->
+							<div class="card-body text-center">
+								<h2><a><strong>This is title of the news</strong></a></h2>
+								<p>Written by <a>Abby Madison</a>, 26/08/2016</p>
 
-                                <!--Social shares-->
-                                <div class="social-counters ">
+								<!--Social shares-->
+								<div class="social-counters ">
 
-                                    <!--Facebook-->
-                                    <a class="btn btn-fb ">
-                                        <i class="fa fa-facebook left "></i>
-                                        <span class=" ">Facebook</span>
-                                    </a>
-                                    <span class="counter ">46</span>
+									<!--Facebook-->
+									<a class="btn btn-fb ">
+										<i class="fa fa-facebook left "></i>
+										<span class=" ">Facebook</span>
+									</a>
+									<span class="counter ">46</span>
 
-                                    <!--Twitter-->
-                                    <a class="btn btn-tw ">
-                                        <i class="fa fa-twitter left "></i>
-                                        <span class=" ">Twitter</span>
-                                    </a>
-                                    <span class="counter ">22</span>
+									<!--Twitter-->
+									<a class="btn btn-tw ">
+										<i class="fa fa-twitter left "></i>
+										<span class=" ">Twitter</span>
+									</a>
+									<span class="counter ">22</span>
 
-                                    <!--Dribbble-->
-                                    <a class="btn btn-dribbble ">
-                                        <i class="fa fa-dribbble left "></i>
-                                        <span class=" ">Dribbble</span>
-                                    </a>
-                                    <span class="counter ">31</span>
+									<!--Dribbble-->
+									<a class="btn btn-dribbble ">
+										<i class="fa fa-dribbble left "></i>
+										<span class=" ">Dribbble</span>
+									</a>
+									<span class="counter ">31</span>
 
-                                    <!--Comments-->
-                                    <a class="btn btn-blue-grey ">
-                                        <i class="fa fa-comments-o left "></i>
-                                        <span class=" ">Comments</span>
-                                    </a>
-                                    <span class="counter ">18</span>
+									<!--Comments-->
+									<a class="btn btn-blue-grey ">
+										<i class="fa fa-comments-o left "></i>
+										<span class=" ">Comments</span>
+									</a>
+									<span class="counter ">18</span>
 
-                                </div>
-                                <!--Social shares-->
+								</div>
+								<!--Social shares-->
 
-                            </div>
-                        <!--Post data-->
-                        </div>
+							</div>
+						<!--Post data-->
+						</div>
 
-                        <!--Excerpt-->
-                        <div class="excerpt mt-5 wow fadeIn" data-wow-delay="0.3s">
-                            <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
-                            </p>
+						<!--Excerpt-->
+						<div class="excerpt mt-5 wow fadeIn" data-wow-delay="0.3s">
+							<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+							</p>
 
-                            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus.</p>
+							<p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus.</p>
 
-                            <blockquote class="blockquote mt-4 mb-4">
-                                <p class="mb-0"><em>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus.</em></p>
-                              <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-                            </blockquote>
-
-
-                            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.
-                            </p>
-
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+							<blockquote class="blockquote mt-4 mb-4">
+								<p class="mb-0"><em>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus.</em></p>
+							  <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+							</blockquote>
 
 
-                            <div class="mt-4 d-flex justify-content-end">
-                                <span class="badge pink">Travel</span>
-                                <span class="badge badge-primary mx-1">Adventure</span>
-                                <span class="badge grey mr-1">Photography</span>
-                                <span class="badge badge-info">Education</span>
-                            </div>
+							<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem.
+							</p>
 
-                        </div>
-                    </div>
-                </div>
-               <!--Grid row-->
+							<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
 
-            </section>
-            <!--Section: Blog v.4-->
 
-            <hr class="mb-5 mt-4">
+							<div class="mt-4 d-flex justify-content-end">
+								<span class="badge pink">Travel</span>
+								<span class="badge badge-primary mx-1">Adventure</span>
+								<span class="badge grey mr-1">Photography</span>
+								<span class="badge badge-info">Education</span>
+							</div>
 
-            <!--Section: Blog v.2-->
-            <section class="extra-margins pb-3 wow fadeIn" data-wow-delay="0.3s">
+						</div>
+					</div>
+				</div>
+			   <!--Grid row-->
 
-                <!--Section heading-->
-                <h3 class="text-center font-weight-bold h3 pb-5 pt-3">Recent posts</h3>
+			</section>
+			<!--Section: Blog v.4-->
 
-                <!--Grid row-->
-                <div class="row">
+			<hr class="mb-5 mt-4">
 
-                    <!--Grid column-->
-                    <div class="col-lg-4 col-md-12 mb-4">
+			<!--Section: Blog v.2-->
+			<section class="extra-margins pb-3 wow fadeIn" data-wow-delay="0.3s">
 
-                        <!--Card Light-->
-                        <div class="card">
-                            <!--Card image-->
-                            <div class="view overlay">
-                                <img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20%28147%29.jpg" alt="">
-                                <a>
-                                    <div class="mask rgba-white-slight"></div>
-                                </a>
-                            </div>
-                            <!--/.Card image-->
-                            <!--Card content-->
-                            <div class="card-body">
-                                <!--Social shares button-->
-                                <a class="activator p-3 mr-2"><i class="fa fa-share-alt"></i></a>
-                                <!--Title-->
-                                <h4 class="card-title">Card title</h4>
-                                <hr>
-                                <!--Text-->
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a class="link-text"><h5>Read more <i class="fa fa-chevron-right"></i></h5></a>
-                            </div>
-                            <!--/.Card content-->
-                        </div>
-                        <!--/.Card Light-->
+				<!--Section heading-->
+				<h3 class="text-center font-weight-bold h3 pb-5 pt-3">Recent posts</h3>
 
-                    </div>
-                    <!--Grid column-->
+				<!--Grid row-->
+				<div class="row">
 
-                    <!--Grid column-->
-                    <div class="col-lg-4 col-md-6 mb-4">
+					<!--Grid column-->
+					<div class="col-lg-4 col-md-12 mb-4">
 
-                        <!--Card Light-->
-                        <div class="card">
-                            <!--Card image-->
-                            <div class="view overlay">
-                                <img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20%2850%29.jpg" alt="">
-                                <a>
-                                    <div class="mask rgba-white-slight"></div>
-                                </a>
-                            </div>
-                            <!--/.Card image-->
-                            <!--Card content-->
-                            <div class="card-body">
-                                <!--Social shares button-->
-                                <a class="activator p-3 mr-2"><i class="fa fa-share-alt"></i></a>
-                                <!--Title-->
-                                <h4 class="card-title">Card title</h4>
-                                <hr>
-                                <!--Text-->
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a class="link-text"><h5>Read more <i class="fa fa-chevron-right"></i></h5></a>
-                            </div>
-                            <!--/.Card content-->
-                        </div>
-                        <!--/.Card Light-->
+						<!--Card Light-->
+						<div class="card">
+							<!--Card image-->
+							<div class="view overlay">
+								<img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20%28147%29.jpg" alt="">
+								<a>
+									<div class="mask rgba-white-slight"></div>
+								</a>
+							</div>
+							<!--/.Card image-->
+							<!--Card content-->
+							<div class="card-body">
+								<!--Social shares button-->
+								<a class="activator p-3 mr-2"><i class="fa fa-share-alt"></i></a>
+								<!--Title-->
+								<h4 class="card-title">Card title</h4>
+								<hr>
+								<!--Text-->
+								<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								<a class="link-text"><h5>Read more <i class="fa fa-chevron-right"></i></h5></a>
+							</div>
+							<!--/.Card content-->
+						</div>
+						<!--/.Card Light-->
 
-                    </div>
-                    <!--Grid column-->
+					</div>
+					<!--Grid column-->
 
-                    <!--Grid column-->
-                    <div class="col-lg-4 col-md-6 mb-4">
+					<!--Grid column-->
+					<div class="col-lg-4 col-md-6 mb-4">
 
-                        <!--Card Light-->
-                        <div class="card">
-                            <!--Card image-->
-                            <div class="view overlay">
-                                <img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20%2897%29.jpg" alt="">
-                                <a>
-                                    <div class="mask rgba-white-slight"></div>
-                                </a>
-                            </div>
-                            <!--/.Card image-->
-                            <!--Card content-->
-                            <div class="card-body">
-                                <!--Social shares button-->
-                                <a class="activator p-3 mr-2"><i class="fa fa-share-alt"></i></a>
-                                <!--Title-->
-                                <h4 class="card-title">Card title</h4>
-                                <hr>
-                                <!--Text-->
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                <a class="link-text"><h5>Read more <i class="fa fa-chevron-right"></i></h5></a>
-                            </div>
-                            <!--/.Card content-->
-                        </div>
-                        <!--/.Card Light-->
+						<!--Card Light-->
+						<div class="card">
+							<!--Card image-->
+							<div class="view overlay">
+								<img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20%2850%29.jpg" alt="">
+								<a>
+									<div class="mask rgba-white-slight"></div>
+								</a>
+							</div>
+							<!--/.Card image-->
+							<!--Card content-->
+							<div class="card-body">
+								<!--Social shares button-->
+								<a class="activator p-3 mr-2"><i class="fa fa-share-alt"></i></a>
+								<!--Title-->
+								<h4 class="card-title">Card title</h4>
+								<hr>
+								<!--Text-->
+								<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								<a class="link-text"><h5>Read more <i class="fa fa-chevron-right"></i></h5></a>
+							</div>
+							<!--/.Card content-->
+						</div>
+						<!--/.Card Light-->
 
-                    </div>
-                    <!--Grid column-->
+					</div>
+					<!--Grid column-->
 
-                </div>
-                <!--Grid row-->
+					<!--Grid column-->
+					<div class="col-lg-4 col-md-6 mb-4">
 
-            </section>
-            <!--Section: Blog v.2-->
+						<!--Card Light-->
+						<div class="card">
+							<!--Card image-->
+							<div class="view overlay">
+								<img  class="card-img-top" src="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20%2897%29.jpg" alt="">
+								<a>
+									<div class="mask rgba-white-slight"></div>
+								</a>
+							</div>
+							<!--/.Card image-->
+							<!--Card content-->
+							<div class="card-body">
+								<!--Social shares button-->
+								<a class="activator p-3 mr-2"><i class="fa fa-share-alt"></i></a>
+								<!--Title-->
+								<h4 class="card-title">Card title</h4>
+								<hr>
+								<!--Text-->
+								<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+								<a class="link-text"><h5>Read more <i class="fa fa-chevron-right"></i></h5></a>
+							</div>
+							<!--/.Card content-->
+						</div>
+						<!--/.Card Light-->
 
-            <!--Author box-->
-            <section>
+					</div>
+					<!--Grid column-->
 
-                <div class="jumbotron author-box px-5 py-4 text-center text-md-left wow fadeIn" data-wow-delay="0.3s">
-                    <!--Name-->
-                    <h4 class="font-weight-bold h4 text-center">About author</h4>
-                    <hr>
-                    <div class="row">
-                        <!--Avatar-->
-                        <div class="col-12 col-sm-2">
-                            <img src="http://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg" class="img-fluid rounded-circle z-depth-2">
-                        </div>
-                        <!--Author Data-->
-                        <div class=" col-12 col-sm-10 text-left">
-                            <p><strong>John Doe</strong></p>
-                            <div class="personal-sm pb-3">
-                                <a class="pr-2 fb-ic"><i class="fa fa-facebook"> </i></a>
-                                <a class="pr-2 tw-ic"><i class="fa fa-twitter"> </i></a>
-                                <a class="pr-2 gplus-ic"><i class="fa fa-google-plus"> </i></a>
-                                <a class="pr-2 li-ic"><i class="fa fa-linkedin"> </i></a>
-                            </div>
-                            <p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
-                            <p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint esse nulla quia quam veniam commodi dicta, iusto inventore. Voluptatum pariatur eveniet ea, officiis vitae praesentium beatae quas libero, esse facere.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+				</div>
+				<!--Grid row-->
 
-            </section>
-            <!--/.Author box-->
+			</section>
+			<!--Section: Blog v.2-->
 
-            <!--Section: Comments list-->
-  	        <section class="mb-4 pt-5 wow fadeIn" data-wow-delay="0.3s">
+			<!--Author box-->
+			<section>
 
-  	            <!--Main wrapper-->
-                <div class="comments-list text-center text-md-left mb-5">
-                    <div class="text-center mb-4">
-                        <h3 class="font-weight-bold">Comments
-                            <span class="badge pink">3</span>
-                        </h3>
-                    </div>
-                    <!--First row-->
-                    <div class="row mb-4">
-                        <!--Image column-->
-                        <div class="col-sm-2 col-12 mb-md-0 mb-3">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (9).jpg" class="avatar rounded-circle z-depth-1-half">
-                        </div>
-                        <!--/.Image column-->
-                        <!--Content column-->
-                        <div class="col-sm-10 col-12">
-                            <a>
-                                <h4 class="font-weight-bold">Tom Smith</h4>
-                            </a>
-                            <div class="mt-2">
-                                <ul class="list-unstyled">
-                                    <li class="comment-date">
-                                        <i class="fa fa-clock-o"></i> 05/10/2015</li>
-                                </ul>
-                            </div>
-                            <p class="grey-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
-                                aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                                sint occaecat cupidatat non proident.</p>
-                        </div>
-                        <!--/.Content column-->
-                    </div>
-                    <!--/.First row-->
-                    <!--Second row-->
-                    <div class="row mb-4">
-                        <!--Image column-->
-                        <div class="col-sm-2 col-12 mb-md-0 mb-3">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg" class="avatar rounded-circle z-depth-1-half">
-                        </div>
-                        <!--/.Image column-->
-                        <!--Content column-->
-                        <div class="col-sm-10 col-12">
-                            <a>
-                                <h4 class="font-weight-bold">Marta Tev</h4>
-                            </a>
-                            <div class="mt-2">
-                                <ul class="list-unstyled">
-                                    <li class="comment-date">
-                                        <i class="fa fa-clock-o"></i> 08/10/2015</li>
-                                </ul>
-                            </div>
-                            <p class="grey-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
-                                eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-                                ipsam voluptatem quia voluptas.</p>
-                        </div>
-                        <!--/.Content column-->
-                    </div>
-                    <!--/.Second row-->
-                    <!--Third row-->
-                    <div class="row mb-4">
-                        <!--Image column-->
-                        <div class="col-sm-3 col-md-2 col-12 mb-md-0 mb-3">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="avatar rounded-circle z-depth-1-half">
-                        </div>
-                        <!--/.Image column-->
-                        <!--Content column-->
-                        <div class="col-sm-9 col-md-10 col-12">
-                            <a>
-                                <h4 class="font-weight-bold">Anna Maria</h4>
-                            </a>
-                            <div class="mt-2">
-                                <ul class="list-unstyled">
-                                    <li class="comment-date">
-                                        <i class="fa fa-clock-o"></i> 17/10/2015</li>
-                                </ul>
-                            </div>
-                            <p class="grey-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
-                                corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt
-                                in culpa qui officia.
-                            </p>
-                        </div>
-                        <!--/.Content column-->
-                    </div>
-                    <!--/.Third row-->
-                </div>
-                <!--/.Main wrapper-->
+				<div class="jumbotron author-box px-5 py-4 text-center text-md-left wow fadeIn" data-wow-delay="0.3s">
+					<!--Name-->
+					<h4 class="font-weight-bold h4 text-center">About author</h4>
+					<hr>
+					<div class="row">
+						<!--Avatar-->
+						<div class="col-12 col-sm-2">
+							<img src="http://mdbootstrap.com/img/Photos/Avatars/img%20(32).jpg" class="img-fluid rounded-circle z-depth-2">
+						</div>
+						<!--Author Data-->
+						<div class=" col-12 col-sm-10 text-left">
+							<p><strong>John Doe</strong></p>
+							<div class="personal-sm pb-3">
+								<a class="pr-2 fb-ic"><i class="fa fa-facebook"> </i></a>
+								<a class="pr-2 tw-ic"><i class="fa fa-twitter"> </i></a>
+								<a class="pr-2 gplus-ic"><i class="fa fa-google-plus"> </i></a>
+								<a class="pr-2 li-ic"><i class="fa fa-linkedin"> </i></a>
+							</div>
+							<p>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.</p>
+							<p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint esse nulla quia quam veniam commodi dicta, iusto inventore. Voluptatum pariatur eveniet ea, officiis vitae praesentium beatae quas libero, esse facere.
+							</p>
+						</div>
+					</div>
+				</div>
 
-  	        </section>
-            <!--/Section: Comments list-->
+			</section>
+			<!--/.Author box-->
 
-            <!--Section: Leave a reply (Logged In User)-->
-            <section class="pb-5 mt-5 wow fadeIn" data-wow-delay="0.3s">
+			<!--Section: Comments list-->
+			<section class="mb-4 pt-5 wow fadeIn" data-wow-delay="0.3s">
 
-              <!--Leave a reply form-->
-              <div class="reply-form">
-                  <h3 class="section-heading h3 pt-5">Leave a reply </h3>
-                  <p class="text-center">(Logged In User)</p>
+				<!--Main wrapper-->
+				<div class="comments-list text-center text-md-left mb-5">
+					<div class="text-center mb-4">
+						<h3 class="font-weight-bold">Comments
+							<span class="badge pink">3</span>
+						</h3>
+					</div>
+					<!--First row-->
+					<div class="row mb-4">
+						<!--Image column-->
+						<div class="col-sm-2 col-12 mb-md-0 mb-3">
+							<img src="https://mdbootstrap.com/img/Photos/Avatars/img (9).jpg" class="avatar rounded-circle z-depth-1-half">
+						</div>
+						<!--/.Image column-->
+						<!--Content column-->
+						<div class="col-sm-10 col-12">
+							<a>
+								<h4 class="font-weight-bold">Tom Smith</h4>
+							</a>
+							<div class="mt-2">
+								<ul class="list-unstyled">
+									<li class="comment-date">
+										<i class="fa fa-clock-o"></i> 05/10/2015</li>
+								</ul>
+							</div>
+							<p class="grey-text">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+								aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+								sint occaecat cupidatat non proident.</p>
+						</div>
+						<!--/.Content column-->
+					</div>
+					<!--/.First row-->
+					<!--Second row-->
+					<div class="row mb-4">
+						<!--Image column-->
+						<div class="col-sm-2 col-12 mb-md-0 mb-3">
+							<img src="https://mdbootstrap.com/img/Photos/Avatars/img (20).jpg" class="avatar rounded-circle z-depth-1-half">
+						</div>
+						<!--/.Image column-->
+						<!--Content column-->
+						<div class="col-sm-10 col-12">
+							<a>
+								<h4 class="font-weight-bold">Marta Tev</h4>
+							</a>
+							<div class="mt-2">
+								<ul class="list-unstyled">
+									<li class="comment-date">
+										<i class="fa fa-clock-o"></i> 08/10/2015</li>
+								</ul>
+							</div>
+							<p class="grey-text">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,
+								eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
+								ipsam voluptatem quia voluptas.</p>
+						</div>
+						<!--/.Content column-->
+					</div>
+					<!--/.Second row-->
+					<!--Third row-->
+					<div class="row mb-4">
+						<!--Image column-->
+						<div class="col-sm-3 col-md-2 col-12 mb-md-0 mb-3">
+							<img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="avatar rounded-circle z-depth-1-half">
+						</div>
+						<!--/.Image column-->
+						<!--Content column-->
+						<div class="col-sm-9 col-md-10 col-12">
+							<a>
+								<h4 class="font-weight-bold">Anna Maria</h4>
+							</a>
+							<div class="mt-2">
+								<ul class="list-unstyled">
+									<li class="comment-date">
+										<i class="fa fa-clock-o"></i> 17/10/2015</li>
+								</ul>
+							</div>
+							<p class="grey-text">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque
+								corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt
+								in culpa qui officia.
+							</p>
+						</div>
+						<!--/.Content column-->
+					</div>
+					<!--/.Third row-->
+				</div>
+				<!--/.Main wrapper-->
 
-                  <!--Third row-->
-                  <div class="row">
-                    <!--Image column-->
-                    <div class="col-sm-2 col-12 text-center">
-                      <img src="https://mdbootstrap.com/img/Photos/Avatars/img (33).jpg" alt="Sample avatar image" class="img-fluid avatar rounded-circle z-depth-2">
-                    </div>
-                    <!--/.Image column-->
+			</section>
+			<!--/Section: Comments list-->
 
-                    <!--Content column-->
-                    <div class="col-sm-10 col-12">
-                      <!--Grid row-->
-                      <div class="row">
+			<!--Section: Leave a reply (Logged In User)-->
+			<section class="pb-5 mt-5 wow fadeIn" data-wow-delay="0.3s">
 
-                        <div class="col-12">
-                          <div class="md-form mt-0">
+			  <!--Leave a reply form-->
+			  <div class="reply-form">
+				  <h3 class="section-heading h3 pt-5">Leave a reply </h3>
+				  <p class="text-center">(Logged In User)</p>
 
-                            <textarea type="text" class="form-control md-textarea" id="exampleFormControlTextarea6" rows="3" placeholder="Your message..."></textarea>
-                          </div>
+				  <!--Third row-->
+				  <div class="row">
+					<!--Image column-->
+					<div class="col-sm-2 col-12 text-center">
+					  <img src="https://mdbootstrap.com/img/Photos/Avatars/img (33).jpg" alt="Sample avatar image" class="img-fluid avatar rounded-circle z-depth-2">
+					</div>
+					<!--/.Image column-->
 
-                          <div class="text-center mt-4">
-                            <button class="btn btn-pink btn-rounded">Submit</button>
-                          </div>
+					<!--Content column-->
+					<div class="col-sm-10 col-12">
+					  <!--Grid row-->
+					  <div class="row">
 
-                        </div>
+						<div class="col-12">
+						  <div class="md-form mt-0">
 
-                      </div>
-                      <!--Grid row-->
+							<textarea type="text" class="form-control md-textarea" id="exampleFormControlTextarea6" rows="3" placeholder="Your message..."></textarea>
+						  </div>
 
-                    </div>
+						  <div class="text-center mt-4">
+							<button class="btn btn-pink btn-rounded">Submit</button>
+						  </div>
 
-                  </div>
-                  <!--Third row-->
+						</div>
 
-              </div>
-              <!--/.Leave a reply form-->
+					  </div>
+					  <!--Grid row-->
 
-            </section>
-            <!--/Section: Leave a reply (Logged In User)-->
+					</div>
 
-        </div>
+				  </div>
+				  <!--Third row-->
 
-    </main>
+			  </div>
+			  <!--/.Leave a reply form-->
+
+			</section>
+			<!--/Section: Leave a reply (Logged In User)-->
+
+		</div>
+
+	</main>
     <!--Main Layout-->
 
     <!--Footer-->

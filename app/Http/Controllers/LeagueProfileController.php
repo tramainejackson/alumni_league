@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\LeagueProfile;
+use App\LeagueSeason;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -17,7 +18,7 @@ class LeagueProfileController extends Controller
      */
     public function __construct()
     {
-       $this->middleware('auth')->except(['index', 'show']); 
+       $this->middleware('auth')->except(['index', 'show', 'show_season']); 
     }
 	
     /**
@@ -79,7 +80,75 @@ class LeagueProfileController extends Controller
 			}
 		}
 		
-		return view('leagues.show', compact('league'));
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(350, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
+		
+		return view('leagues.show', compact('league', 'defaultImg'));
+    }
+	
+	/**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show_season(Request $request, $league, $season)
+    {
+		$standings = null;
+		$teams = null;
+		$schedule = null;
+		$playoffRounds = $nonPlayInGames = $playInGames = $playoffSettings = null;
+		$league_array = LeagueProfile::all()->toArray();
+		$league_names = array_pluck($league_array, 'name', 'id');
+		
+		foreach($league_names as $id => $name) {
+			$name = str_ireplace(" ", "", strtolower($name));
+			
+			if($league === $name) {
+				$league = LeagueProfile::find($id);
+				$league_seasons = $league->seasons->toArray();
+				$league_seasons_names = array_pluck($league_seasons, 'name', 'id');
+				
+				foreach($league_seasons_names as $id => $season_name) {
+					$season_name = str_ireplace(" ", "", strtolower($season_name));
+					
+					if($season === $season_name) {
+						$season = LeagueSeason::find($id);
+						$standings = $season->standings;
+						$teams = $season->league_teams;
+						$schedule = $season->games()->getScheduleWeeks();
+						$pictures = $season->pictures;
+						$stats = $season->stats()->allFormattedStats()->get()->isNotEmpty();
+						$allPlayers = $season->stats()->allFormattedStats();
+						$allTeams = $season->stats()->allTeamStats();
+						
+						if($season->is_playoffs == 'Y') {
+							$playoffRounds = $season->games()->playoffRounds()->orderBy('round', 'desc')->get();
+							$nonPlayInGames = $season->games()->playoffNonPlayinGames();
+							$playInGames = $season->games()->playoffPlayinGames();
+							$playoffSettings = $season->playoffs;
+						}
+					}
+				}
+			}
+		}
+		
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(350, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
+		
+		if($season->is_playoffs == 'Y') {
+			return view('leagues.season', compact('league', 'season', 'standings', 'stats', 'teams', 'pictures', 'stats', 'schedule', 'allPlayers', 'allTeams', 'defaultImg', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
+		} else {
+			return view('leagues.season', compact('league', 'season', 'standings', 'stats', 'teams', 'schedule', 'stats', 'pictures', 'allPlayers', 'allTeams', 'defaultImg'));			
+		}
     }
 
     /**
