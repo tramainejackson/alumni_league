@@ -89,7 +89,7 @@ class LoginController extends Controller
      */
     public function ttr_user($user)
     {
-		dd($user);
+		dd(session());
         return view('auth.login');
     }
 }
