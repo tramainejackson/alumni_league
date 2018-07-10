@@ -66,20 +66,6 @@ class HomeController extends Controller
     }
 	
 	/**
-     * Show the application welcome page for public.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function welcome()
-    {
-		$getRecs = RecCenter::all();
-		$getLeagues = LeagueProfile::all();
-		$fireRecs = PlayerProfile::get_fire_recs();
-		
-        return view('welcome', compact('getRecs', 'getLeagues', 'fireRecs'));
-    }
-	
-	/**
      * Show the application about us page for public.
      *
      * @return \Illuminate\Http\Response
