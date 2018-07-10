@@ -3,18 +3,21 @@
 @section('content')
 	@include('include.functions')
 
-	<div class="container-fluid">
+	<div class="container-fluid bgrd1">
 		<div class="row align-items-stretch">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col py-3" id="">
 				<div class="row">
-					<div class="col">
-						<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
+					<div class="col-12">
+						<button class="btn btn-block btn-lg btn-rounded blue white-text mb-2" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
 					</div>
 					@if($activeSeasons->isNotEmpty())
 						<div class="col d-none d-lg-block">
+							<!--Show active season if any available-->
+							<h2 class="text-center h2-responsive">Active Seasons</h2>
+				
 							@foreach($activeSeasons as $activeSeason)
-								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
+								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-block btn-rounded deep-orange white-text my-1" type="button">{{ $activeSeason->name }}</a>
 							@endforeach
 						</div>
 					@else
@@ -574,7 +577,7 @@
 					<script>
 						paypal.Button.render({
 
-							env: 'production', // sandbox | production
+							env: 'sandbox', // sandbox | production
 
 							client: {
 								sandbox:    'AZri7zmZvEDIt-EyO1A1kfvDzygfGcuOjVdowBT1pqqmuZFDhkKq9HG2HSMlkzo5ibNUBFf3-3GsuiGu',

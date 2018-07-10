@@ -10,6 +10,14 @@ html, body, header, .view {
 	font-size: 125%;
 }
 
+.bgrd1 {
+    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url(/images/gym3.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .card .view {
 	min-height: initial !important;
 }
@@ -859,10 +867,6 @@ button#okBtn {
     border: inset cadetblue !important;
 }
 
-.leagues_page_div {}
-
-.leagues_page_div h1 {}
-
 td#leagues_site_td {
 	display: none;
 }
@@ -1663,8 +1667,6 @@ iframe[id^='twitter-widget-'] {
 	/* display: -webkit-box; */
 	/* display: block; */
 }
-
-.leagues_page_div {}
 
 .registrationPage h3 {
 	text-align: center;

@@ -28,6 +28,10 @@ class LeagueProfileController extends Controller
      */
     public function index()
     {
+		// Get the season to show
+		$showSeason = $this->find_season(request());
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
+		$allComplete = 'Y';
         $leagues = LeagueProfile::all();
 		
 		// Resize the default image
@@ -37,7 +41,7 @@ class LeagueProfileController extends Controller
 		)->save(storage_path('app/public/images/lg/default_img.jpg'));
 		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 		
-		return view('leagues.index', compact('leagues', 'defaultImg'));
+		return view('leagues.index', compact('allComplete', 'activeSeasons', 'showSeason', 'leagues', 'defaultImg'));
     }
 
     /**
@@ -250,4 +254,31 @@ class LeagueProfileController extends Controller
     {
         //
     }
+
+	/**
+     * Check for a query string and get the current season.
+     *
+     * @return seaon
+    */
+	public function find_season(Request $request) {
+		$league = Auth::user()->leagues_profiles->first();
+		
+		$showSeason = '';
+		
+		if($request->query('season') != null && $request->query('year') != null) {
+			$showSeason = $league->seasons()->active()->find($request->query('season'));
+		} else {
+			if($league->seasons()->get()->count() == 1) {
+				if($league->seasons()->active()->first()) {
+					$showSeason = $league->seasons()->active()->first();
+				} else {
+					$showSeason = $league->seasons()->first();
+				}
+			} else {
+				$showSeason = $league->seasons()->active()->first();
+			}
+		}
+		
+		return $showSeason;
+	}
 }

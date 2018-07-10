@@ -36,20 +36,21 @@
 
     <div id="app">
         <nav class="navbar navbar-expand-lg justify-content-between">
-			<!-- Branding Image -->
-			@if(Auth::guest())
-				<div class="d-flex align-items-center">
+			<div class="d-flex align-items-center">
+				
+				<!-- Branding Image -->
+				@if(Auth::guest())
 					<a class="navbar-brand" href="{{ route('welcome') }}">{{ config('app.name', 'ToTheRec') }}</a>
-					
-					<ul class="nav navbar-nav" id=''>
-						<li class="nav-item">
-							<a class='league_home nav-link' href="{{ route('league_profile.index') }}">Leagues</a>
-						</li>
-					</ul>
-				</div>
-			@else
-				<a class="navbar-brand" href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ config('app.name', 'ToTheRec') }}</a>
-			@endif
+				@else
+					<a class="navbar-brand" href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ config('app.name', 'ToTheRec') }}</a>
+				@endif
+				
+				<ul class="nav navbar-nav" id=''>
+					<li class="nav-item">
+						<a class='league_home nav-link' href="{{ route('league_profile.index') }}">Leagues</a>
+					</li>
+				</ul>
+			</div>
 			
 			<!-- SideNav slide-out button -->
 			<button type="button" data-activates="slide-out" class="btn btn-primary p-3 button-collapse navbar-toggler" data-toggle="collapse" data-target="#app-navbar-collapse" aria-controls="app-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,7 +171,7 @@
 				<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
 					@if(!Auth::guest())
 						<li class="nav-item">
-							<a class='league_home nav-link' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ !isset($allComplete) ? $showSeason->league_profile->name : $showSeason->name }}</a>
+							<a class='league_home nav-link' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ $showSeason->league_profile->name }}</a>
 						</li>
 						<li class="nav-item">
 							<a class='nav-link' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
@@ -208,7 +209,7 @@
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-								{{ !isset($allComplete) ? $showSeason->league_profile->commish : $showSeason->commish }} <span class="caret"></span>
+								{{ $showSeason->league_profile->commish }} <span class="caret"></span>
 							</a>
 
 							<ul class="dropdown-menu" role="menu">
