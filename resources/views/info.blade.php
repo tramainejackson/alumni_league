@@ -104,7 +104,7 @@
 						</div>
 						
 						<div class="md-form mb-5">
-							@php $ages = find_all_ages(); @endphp
+							@php $ages = find_ages(); @endphp
 							@php $ageArray =  explode(" ", $league->age); @endphp
 							<div class="row">
 								@foreach($ages as $age)

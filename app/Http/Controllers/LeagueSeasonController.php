@@ -44,11 +44,12 @@ class LeagueSeasonController extends Controller
     public function store(Request $request)
     {		
 		$season = new LeagueSeason();
-		$season->league_profile_id = $request->query('league');
+		$season->league_profile_id = $request->league_id;
 		$season->season = $request->season;
 		$season->name = $request->name;
 		$season->year = $request->year;
 		$season->age_group = $request->age_group;
+		$season->comp_group = $request->comp_group;
 		$season->league_fee = $request->league_fee;
 		$season->ref_fee = $request->ref_fee;
 		$season->location = $request->location;
@@ -57,7 +58,9 @@ class LeagueSeasonController extends Controller
 		
 		if($season->save()) {
 			if($season->playoffs()->create([])) {
-				return redirect()->action('HomeController@index')->with(['status' => 'New Season Added Successfully']);
+				$newSeason = $season->id;
+				// return redirect()->action('HomeController@index')->with(['status' => 'New Season Added Successfully']);
+				return [$newSeason, "New Season Added Successfully"];
 			}
 		}
     }

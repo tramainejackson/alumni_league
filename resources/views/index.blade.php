@@ -13,7 +13,7 @@
 @section('content')
 	@include('include.functions')
 	
-	<div class="container-fluid">
+	<div class="container-fluid bgrd3">
 		<div class="row align-items-stretch">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col py-3" id="">
@@ -24,7 +24,7 @@
 					@if($activeSeasons->isNotEmpty())
 						<div class="col d-none d-lg-block">
 							@foreach($activeSeasons as $activeSeason)
-								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block" type="button">{{ $activeSeason->name }}</a>
+								<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 							@endforeach
 						</div>
 					@else
@@ -362,7 +362,7 @@
 		
 		<!--New Season Modal-->
 		<div class="modal fade" id="newSeasonForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
+			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
 					{!! Form::open(['action' => ['LeagueSeasonController@store', 'league' => !isset($allComplete) ? $showSeason->league_profile->id : $showSeason->id], 'method' => 'POST']) !!}
 						<div class="modal-header text-center">

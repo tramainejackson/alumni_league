@@ -1,5 +1,10 @@
 $(document).ready(function() {	
 	
+	$.ajaxSetup({
+		headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')	},
+		cache: false
+	});
+	
 	//Common variables
 	var windowHeight = window.innerHeight;
 	var windowWidth = window.innerWidth;
@@ -53,6 +58,22 @@ $(document).ready(function() {
 			});
 		}, 8000);
 	}
+	
+	// Remove new season info and bring up paypal info
+	$("body").on("click", ".addSeasonBtn", function(e) {
+		// Add form values to paypal info modal
+		$('.payPalCheckoutSeason').text($('.newSeasonInfo select[name="season"]').val() + ' ' + $('.newSeasonInfo select[name="year"]').val());
+		$('.payPalCheckoutSeasonName').text($('.newSeasonInfo input[name="name"]').val());
+		$('.payPalCheckoutSeasonLevel').text($('.newSeasonInfo select[name="age_group"]').val().replace(/_/g, " ") + ' ' + $('.newSeasonInfo select[name="comp_group"]').val());
+		$('.payPalCheckoutSeasonCost').text('League Fee $' + $('.newSeasonInfo input[name="league_fee"]').val() + ' Ref Fee $' + $('.newSeasonInfo input[name="ref_fee"]').val());
+		$('.payPalCheckoutSeasonLocation').text($('.newSeasonInfo input[name="location"]').val());
+		
+		$('.payPalCheckout, .payPalCheckoutBtn').addClass('lightSpeedIn');
+		$(this).add($('.newSeasonInfo')).addClass('lightSpeedOut').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+			$('.payPalCheckout, .payPalCheckoutBtn').removeClass('hidden');
+			$(this).add($('.newSeasonInfo')).addClass('hidden');
+		});
+	});
 	
 	// Toggle value for checked item 
 	// (allows one of 2 options to be selected but required at least one to be selected)
