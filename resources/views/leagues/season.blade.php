@@ -3,34 +3,40 @@
 @section('content')
 	@include('include.functions')
 	
-	<div class="container-fluid">
+	<div class="container-fluid bgrd4">
 		<div class="row py-3">
 			<div class="col-3">
 				<div class="text-center">
+					@if($season->completed == "Y")
+						<button class="btn btn-block orange darken-1 my-1">Season Completed</button>
+					@elseif($season->completed == "N")
+						<button class="btn btn-block green darken-1 my-1">Season Active</button>
+					@endif
+					
 					<img src="{{ $league->picture !== null ? asset($league->picture) : $defaultImg }}" class="img-fluid z-depth-1 rounded-circle" />
 					
 					<div class="my-2">
-						<h2 class="h2-responsive">League: <a class="text-underline" href="{{ route('league_profile.show', ['league' => str_ireplace(" ", "", strtolower($league->name))]) }}">{{ ucwords($league->name) }}</a></h2>
+						<h2 class="h2-responsive white-text">League: <a class="text-underline" href="{{ route('league_profile.show', ['league' => str_ireplace(" ", "", strtolower($league->name))]) }}">{{ ucwords($league->name) }}</a></h2>
 						
-						<h3 class="h3-responsive">Season Name: {{ ucwords($season->name) }}</h3>
+						<h3 class="h3-responsive white-text">Season Name: {{ ucwords($season->name) }}</h3>
 					</div>
 				</div>
 				
 				<ul class="nav md-pills pills-primary flex-column" role="tablist">
 					<li class="nav-item">
-						<a class="nav-link active" data-toggle="tab" href="#season_standings" role="tab">Standings</a>
+						<a class="nav-link active white-text" data-toggle="tab" href="#season_standings" role="tab">Standings</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#season_stats" role="tab">Stats</a>
+						<a class="nav-link white-text" data-toggle="tab" href="#season_stats" role="tab">Stats</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#season_schedule" role="tab">Schedule</a>
+						<a class="nav-link white-text" data-toggle="tab" href="#season_schedule" role="tab">Schedule</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#season_teams" role="tab">Teams</a>
+						<a class="nav-link white-text" data-toggle="tab" href="#season_teams" role="tab">Teams</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#season_pictures" role="tab">Pictures</a>
+						<a class="nav-link white-text" data-toggle="tab" href="#season_pictures" role="tab">Pictures</a>
 					</li>
 				</ul>
 			</div>
@@ -42,18 +48,15 @@
 					<div class="tab-pane fade in show active" id="season_standings" role="tabpanel">
 					
 						@if($standings != null && $standings->isNotEmpty())
-							<div class="text-center coolText4 mt-3">
-								<p class="">{{ $season->name }}</p>
-							</div>
 							<div id="league_standings">
-								<table id="league_standings_table" class="table text-center table-striped table-responsive-sm">
+								<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-hover table-secondary black-text rounded">
 									<thead>
 										<tr>
-											<th>Team Name</th>
-											<th>Wins</th>
-											<th>Losses</th>
-											<th>Forfeits</th>
-											<th>Win/Loss Pct.</th>
+											<th class="font-weight-bold">Team Name</th>
+											<th class="font-weight-bold">Wins</th>
+											<th class="font-weight-bold">Losses</th>
+											<th class="font-weight-bold">Forfeits</th>
+											<th class="font-weight-bold">Win/Loss Pct.</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -68,6 +71,12 @@
 										@endforeach
 									</tbody>
 								</table>
+							</div>
+						@else
+							<div class="view d-flex align-items-center justify-content-center">
+								<div class="rgba-amber-strong p-3 rounded z-depth-2">
+									<h2 class="h2-responsive coolText4 text-center">There are no standings for this season yet</h2>
+								</div>
 							</div>
 						@endif
 					</div>
@@ -340,8 +349,10 @@
 								</div>
 							</div>
 						@else
-							<div class="text-center">
-								<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no stats added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+							<div class="view d-flex align-items-center justify-content-center">
+								<div class="rgba-amber-strong p-3 rounded z-depth-2">
+									<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no stats added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+								</div>
 							</div>
 						@endif
 
@@ -361,7 +372,6 @@
 													<th class="text-center" colspan="6">
 														<h2 class="h2-responsive position-relative my-3">
 															<span>{{ $round->round == $playoffSettings->total_rounds ? 'Championship Game' : 'Round ' . $round->round . ' Games' }}</span>
-															<a href="{{ request()->query() == null ? route('edit_round', ['round' => $round->round]) : route('edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
 														</h2>
 													</th>
 												</tr>
@@ -369,7 +379,6 @@
 													<th class="text-center" colspan="3">Match-Up</th>
 													<th>Time</th>
 													<th>Date</th>
-													<th></th>
 												</tr>
 											</thead>
 											<tbody>
@@ -416,7 +425,6 @@
 														<td class="gameTimeData">{{ $game->game_time == null ? 'N/A' : $game->game_time() }}</td>
 														<td class="gameDateData">{{ $game->game_date == null ? 'N/A' : $game->game_date() }}</td>
 														<td class="gameIDData" hidden>{{ $game->id }}</td>
-														<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
 													</tr>
 												@endforeach
 											</tbody>
@@ -434,7 +442,6 @@
 												<th class="text-center" colspan="6">
 													<h2 class="h2-responsive position-relative my-3">
 														<span>Playoff Playin Games</span>
-														<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
 													</h2>
 												</th>
 											</tr>
@@ -442,7 +449,6 @@
 												<th class="text-center" colspan="3">Match-Up</th>
 												<th>Time</th>
 												<th>Date</th>
-												<th></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -489,7 +495,6 @@
 													<td class="gameTimeData">{{ $game->game_time == null ? 'N/A' : $game->game_time() }}</td>
 													<td class="gameDateData">{{ $game->game_date == null ? 'N/A' : $game->game_date() }}</td>
 													<td class="gameIDData" hidden>{{ $game->id }}</td>
-													<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
 												</tr>
 											@endforeach
 										</tbody>
@@ -499,7 +504,7 @@
 						@endif
 
 						@if($schedule->get()->isNotEmpty())
-							@foreach($schedule->get() as $showWeekInfo)
+							@foreach($schedule->orderBy('season_week', 'desc')->get() as $showWeekInfo)
 								@php $seasonWeekGames = $season->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
 								<div class='leagues_schedule text-center table-wrapper mb-5'>
 									<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table'>
@@ -508,7 +513,6 @@
 												<th class="text-center" colspan="6">
 													<h2 class="h2-responsive position-relative my-3">
 														<span>Week {{ $loop->iteration }} Games</span>
-														<a href="{{ request()->query() == null ? route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week]) : route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
 													</h2>
 												</th>
 											</tr>
@@ -516,7 +520,6 @@
 												<th class="text-center" colspan="3">Match-Up</th>
 												<th>Time</th>
 												<th>Date</th>
-												<th></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -568,7 +571,6 @@
 														<td class="gameTimeData text-nowrap">{{ $game->game_time() }}</td>
 														<td class="gameDateData text-nowrap">{{ $game->game_date() }}</td>
 														<td class="gameIDData" hidden>{{ $game->id }}</td>
-														<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
 													</tr>
 												@endforeach
 											@endif
@@ -577,8 +579,12 @@
 								</div>
 							@endforeach
 						@else
+							<div class="view d-flex align-items-center justify-content-center">
+								<div class="rgba-amber-strong p-3 rounded z-depth-2">
+									<h2 class="coolText4 h2-responsive">The is no schedule added for this season yet</h2>
+								</div>
+							</div>
 						@endif
-
 					</div>
 					<!--/.Schedule Panel-->
 					
@@ -588,8 +594,6 @@
 						@if($teams->isNotEmpty())
 							<div class="row">
 								@foreach($teams as $team)
-									@php $teamCaptain = $team->players()->captain(); @endphp
-
 									<div class="col-12 col-xl-6">
 										<div class="card card-cascade wider my-4">
 											<!-- Card image -->
@@ -601,35 +605,22 @@
 											</div>
 											
 											<!-- Card content -->
-											<div class="card-body text-center position-relative">
+											<div class="card-body text-center position-relative border rounded-bottom z-depth-2">
 												<!-- Title -->
 												<h1 class="card-title h1-responsive font-weight-bold w-75 mx-auto">{{ $team->team_name }}</h1>
-												<!-- Team Captain Info -->
-												<div class="d-flex flex-column align-items-center">
-													<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
-													<div class="d-flex flex-column align-items-center justify-content-center">
-														<p class="m-0">
-															<label class="">Name:&nbsp;</label>
-															<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
-														</p>
-														<p class="m-0">
-															<label class="">Email:&nbsp;</label>
-															<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->email != null ? $teamCaptain->first()->email : 'No email address' : 'No email address' }}</span>
-														</p>
-														<p class="m-0">
-															<label class="">Phone:&nbsp;</label>
-															<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No email address' : 'No email address' }}</span>
-														</p>
-													</div>
-													<div class="">
-														<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1">Edit Team</a>
-													</div>
-												</div>
-												<div class="feesButton">
-													@if($team->fee_paid == 'N')
-														<button class="btn orange darken-2" type="button">Fees Due</button>
+												
+												<!-- Team Players Info -->
+												<div class="">
+													<h3 class="h3-responsive text-underline">Players</h3>
+													@if($team->players->isNotEmpty())
+														@foreach($team->players as $player)
+															<div class="d-flex align-items-center justify-content-center">
+																<p class="pr-2">#{{ $player->jersey_num }}</p>
+																<p class="">{{ $player->player_name }}</p>
+															</div>
+														@endforeach
 													@else
-														<button class="btn green darken-1" type="button">Fees Paid</button>
+														<h4 class="h4-responsive coolText4">No Players Added For This Team Yet</h4>
 													@endif
 												</div>
 											</div>
@@ -638,6 +629,11 @@
 								@endforeach
 							</div>
 						@else
+							<div class="view d-flex align-items-center justify-content-center">
+								<div class="rgba-amber-strong p-3 rounded z-depth-2">
+									<h2 class="h2-responsive coolText4 text-center">There are no teams added for this season yet</h2>
+								</div>
+							</div>
 						@endif
 
 					</div>
@@ -648,23 +644,143 @@
 					
 						@if($pictures->isNotEmpty())
 							<div class="row">
-								@foreach($pictures as $picture)
-									<div class="col-12 col-lg-10 col-xl-4 my-2 mx-auto">
-										<div class="view overlay" style="min-height:initial !important;">
-											<img alt="picture" src="{{ $picture->sm_photo() }}" class="img-fluid mx-auto" />
-											
-											<div class="mask flex-center flex-column rgba-red-strong">
-												<p class="coolText4 p-2">{{ $picture->description != null ? $picture->description : 'No Description' }}</p>
-												<a href="{{ request()->query() == null ? route('league_pictures.edit', ['league_picture' => $picture->id]) : route('league_pictures.edit', ['league_picture' => $picture->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded blue white-text">Edit Picture</a>
-											</div>
-										</div>
+								<div class="col-12">
+									<div id="mdb-lightbox-ui"></div>
+
+									<div class="mdb-lightbox">
+										@foreach($pictures as $picture)
+											<figure class="col-4">
+												<a href="{{ $picture->sm_photo() }}" class="" data-size="1600x1067">
+													<img alt="picture" src="{{ $picture->sm_photo() }}" class="img-fluid" />
+												</a>
+											</figure>
+										@endforeach
 									</div>
-								@endforeach
+								</div>
 							</div>
 						@else
+							<div class="view d-flex align-items-center justify-content-center">
+								<div class="rgba-amber-strong p-3 rounded z-depth-2">
+									<h2 class="h2-responsive coolText4 text-center">There are no pictures for this season yet</h2>
+								</div>
+							</div>
 						@endif
 					</div>
 					<!--/.Pictures Panel-->
+				</div>
+			</div>
+		</div>
+		
+		<!-- Modal Cards -->
+		<div class="">
+			<!-- Player Card -->
+			<div class="modal fade" id="player_card" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<!--Card-->
+						<div class="card black white-text">
+							<!--Card image-->
+							<div class="view playerCardHeader gradient-card-header blue-gradient">
+								<div class="card-header-title">
+									<h2 class="playerNamePlayerCard"></h2>
+								
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+							</div>
+							<!--Card content-->
+							<div class="card-body black white-text text-center playerCardStats container-fluid">
+								<div class="row">
+									<div class="col-4 playerCardStatsLI">
+										<b>Team Name:</b> <span class="teamNameVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Points:</b> <span class="perGamePointsVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Assist:</b> <span class="perGameAssistVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Rebounds:</b> <span class="perGameReboundsVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Steals:</b> <span class="perGameStealsVal"></span>
+									</div>
+									<div class="col-4 playerCardStatsLI">
+										<b>Blocks:</b> <span class="perGameBlocksVal"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--/.Card-->
+					</div>
+				</div>
+			</div>
+			
+			<!-- Team Card -->
+			<div class="modal fade" id="team_card" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content"  id="team_card_content">
+						<!--Card-->
+						<div class="card black white-text">
+							<!--Card image-->
+							<div class="view teamCardHeader">
+								<img src="" class="img-fluid" alt="photo">
+								<a href="#">
+									<div class="mask rgba-white-slight">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+								</a>
+							</div>
+							<!--Card content-->
+							<div class="card-body text-center">
+								<div class="modal-body teamCardStats container-fluid">
+									<div class="row">
+										<div class="col-4 teamCardStatsLI">
+											<b>Team:&nbsp;</b><span class="teamNameTeamCard"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Record:</b> <span class="teamWinsVal"></span> - <span class="teamLossesVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Points:</b> <span class="totalTeamPointsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Assist:</b> <span class="perGameTeamAssistVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Rebounds:</b> <span class="perGameTeamReboundsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Steals:</b> <span class="perGameTeamStealsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>Blocks:</b> <span class="perGameTeamBlocksVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>PPG:</b> <span class="perGameTeamPointsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>APG:</b> <span class="totalTeamAssistVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>RPG:</b> <span class="totalTeamReboundsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>SPG:</b> <span class="totalTeamStealsVal"></span>
+										</div>
+										<div class="col-4 teamCardStatsLI">
+											<b>BPG:</b> <span class="totalTeamBlocksVal"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--/.Card-->
+					</div>
 				</div>
 			</div>
 		</div>

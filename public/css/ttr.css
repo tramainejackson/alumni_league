@@ -501,8 +501,8 @@ div.indLeague div.indLeaguesInfo {
 	padding: 0.2% 0%;
 }
 
-.indLeaguesInfo {
-    margin-right: 2%;
+.indLeaguesInfo p {
+	font-size: 135%;
 }
 
 div.indLeague div.indLeaguesInfo span:nth-of-type(1) {
@@ -940,23 +940,23 @@ button.statCategoryBtn {
 	border-radius: 5px;
 }
 div#league_leaders_blocks {
-    background-color: #7AA5F5;
+    background-color: rgba(122, 165, 245, 0.8);
     color: white;
 }
 div#league_leaders_steals {
-    background-color: #2E57A2;
+    background-color: rgba(46, 87, 162, 0.8);
     color: white;
 }
 div#league_leaders_rebounds {
-    background-color: rgba(22, 99, 241, 0.79);
+    background-color: rgba(22, 99, 241, 0.8);
     color: white;
 }
 div#league_leaders_assist {
-    background-color: #2F5FB7;
+    background-color: rgba(47, 95, 183, 0.8);
     color: white;
 }
 div#league_leaders_points {
-    background-color: rgb(63, 124, 234);
+    background-color: rgba(63, 124, 234, 0.8);
     color: white;
 }
 

@@ -10,11 +10,15 @@
 				<div class="col-12 col-md-8 mx-auto">
 					<div class="card card-image mb-3" style="background-image: url({{ $league->picture != null ? asset($league->picture) : $defaultImg }});">
 						<div class="text-white text-left d-flex flex-column align-items-center rgba-black-strong p-2 p-lg-5">
-							<div class="">
+							<div class="row">
 								@if($league->seasons->isNotEmpty())
-									<button class="btn" type="button">Active {{ $league->seasons()->active()->count() }}</button> 
+									<div class="col-8 mx-auto">
+										<button class="btn btn-block green darken-1" type="button">Active Seasons <span class="badge-dark badge-pill">{{ $league->seasons()->active()->count() }}</span></button> 
+									</div>
 									
-									<button class="btn" type="button">Completed {{ $league->seasons()->completed()->count() }}</button>
+									<div class="col-8 mx-auto my-1">
+										<button class="btn btn-block red darken-1" type="button">Completed Seasons <span class="badge-dark badge-pill">{{ $league->seasons()->completed()->count() }}</span></button>
+									</div>
 								@endif
 							</div>
 							
