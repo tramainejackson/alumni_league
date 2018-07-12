@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid leagues_page_div">
+	<div class="container-fluid bgrd3">
 		@if($showSeason->active == 'Y' && $showSeason->paid == 'Y')
 			<div class="row">
 				<!--Column will include buttons for creating a new season-->
@@ -50,21 +50,9 @@
 				</div>
 			</div>
 		@else
-			<div class="row">
-				<div class="container my-5">
-					<div class="row">
-						<div class="col text-center coolText4">
-							<h3 class="h3-responsive">League Pictures</h3>
-							@if($seasonPictures->isNotEmpty())
-								<h4 class="">Total: <span class="text-muted text-underline">{{ $seasonPictures->count() }}</span></h4>
-							@endif
-						</div>
-					</div>
-					<div class="row">
-						<div class="col">
-							<h1 class="h1-responsive text-justify coolText4">It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="/home?new_season">here</a> to create a new season.</h1>
-						</div>
-					</div>
+			<div class="row{{ $showSeason->league_profile ? '': ' view' }}">
+				<div class="col-12 col-xl-8 mx-auto{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
+					<h1 class="h1-responsive text-justify coolText4">It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="/home?new_season">here</a> to create a new season.</h1>
 				</div>
 			</div>
 		@endif

@@ -3,15 +3,10 @@
 @section('content')
 	@include('include.functions')
 
-	<div class="container-fluid">
-		<div class="row">
-			<a href="" class="btn">Active</a>
-			
-			<a href="" class="btn">Inactive</a>
-		</div>
+	<div class="container-fluid bgrd4">
 		
 		@foreach($leagues as $league)
-			<div class="row position-relative my-5 white-text">
+			<div class="row position-relative py-5 white-text">
 				<div class="col-12 col-md-8 mx-auto">
 					<div class="card card-image mb-3" style="background-image: url({{ $league->picture != null ? asset($league->picture) : $defaultImg }});">
 						<div class="text-white text-left d-flex flex-column align-items-center rgba-black-strong p-2 p-lg-5">
@@ -69,7 +64,7 @@
 							</div>
 							
 							@if($league->leagues_website != null)
-								<a href="{{ $league->leagues_website }}" class="btn btn-lg secondary-color">View Website</a>
+								<a href="http://www.{{ $league->leagues_website }}" class="btn btn-lg secondary-color">View Website</a>
 							@endif
 						</div>
 					</div>

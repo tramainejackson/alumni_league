@@ -3,7 +3,7 @@
 @section('content')
 	@include('include.functions')
 
-	<div class="container-fluid">
+	<div class="container-fluid bgrd4">
 		<div class="row">
 			<div class="col-12 col-md-10 mx-auto leagueContactInfo">
 				{!! Form::open(['action' => ['LeagueProfileController@update', 'league' => $league->id], 'method' => 'PATCH', 'files' => true]) !!}
@@ -43,63 +43,93 @@
 					</div>
 					<div class="updateLeagueForm">
 						<div class="md-form">
-							<input type="text" name="name" class="form-control" id="name" value="{{ $league->name }}" />
+							<input type="text" name="name" class="form-control white-text" id="name" value="{{ $league->name }}" />
 							
 							<label for="name">League Name</label>
+							
+							@if ($errors->has('name'))
+								<span class="help-block">
+									<strong>{{ $errors->first('name') }}</strong>
+								</span>
+							@endif
 						</div>
 						<div class="md-form">
-							<input type="text" name="commish" class="form-control" id="commish" placeholder="Commissioner" value="{{ $league->commish }}" />
+							<input type="text" name="commish" class="form-control white-text" id="commish" placeholder="Commissioner" value="{{ $league->commish }}" />
 
 							<label for="commish">Commissioner</label>
+							
+							@if ($errors->has('commish'))
+								<span class="help-block">
+									<strong>{{ $errors->first('commish') }}</strong>
+								</span>
+							@endif
 						</div>
 						<div class="md-form">
-							<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $league->address }}" />
+							<input type="text" name="leagues_address" class="form-control white-text" id="leagues_address" placeholder="Address" value="{{ $league->address }}" />
 
 							<label for="leagues_address">League Address</label>
 						</div>
 						<div class="md-form">
-							<input type="text" name="leagues_phone" class="form-control" id="leagues_phone" placeholder="Phone" value="{{ $league->phone }}" />
+							<input type="text" name="leagues_phone" class="form-control white-text" id="leagues_phone" placeholder="Phone" value="{{ $league->phone }}" />
 
 							<label for="leagues_phone">League Phone</label>
 						</div>
 						<div class="md-form">
-							<input type="text" name="leagues_email" class="form-control" id="leagues_email" value="{{ $league->leagues_email }}" />
+							<input type="text" name="leagues_email" class="form-control white-text" id="leagues_email" value="{{ $league->leagues_email }}" />
 
 							<label for="leagues_email">League Email</label>
 						</div>
-						<div class="md-form">
-							<input type="text" name="leagues_website" class="form-control" id="leagues_website" value="{{ $league->leagues_website }}" />
+						
+						<div class="md-form input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text coolText4">http://www.</span>
+							</div>
+
+							<input type="text" name="leagues_website" class="form-control white-text" id="leagues_website" value="{{ $league->leagues_website }}" placeholder="League Website" />
 
 							<label for="leagues_website">League Website</label>
 						</div>
+						
 						<div class="md-form input-group">
 							<div class="input-group-prepend">
 								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 							</div>
 							
-							<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $league->leagues_fee }}" step="0.01" placeholder="League Entry Fee" />
+							<input type="number" name="leagues_fee" class="form-control white-text" id="league_fee" value="{{ $league->leagues_fee }}" step="0.01" placeholder="League Entry Fee" />
 							
 							<div class="input-group-prepend">
-								<span class="input-group-text">Per Team</span>
+								<span class="input-group-text coolText4">Per Team</span>
 							</div>
 							
 							<label for="leagues_fee">Entry Fee</label>
+							
+							@if ($errors->has('leagues_fee'))
+								<span class="help-block">
+									<strong>{{ $errors->first('leagues_fee') }}</strong>
+								</span>
+							@endif
 						</div>
 						<div class="md-form input-group mb-5">
 							<div class="input-group-prepend">
 								<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 							</div>
 							
-							<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $league->ref_fee }}" step="0.01" placeholder="League Referee Fee" />
+							<input type="number" class="form-control white-text" class="form-control" name="ref_fee" id="ref_fee" value="{{ $league->ref_fee }}" step="0.01" placeholder="League Referee Fee" />
 							
 							<div class="input-group-prepend">
-								<span class="input-group-text">Per Game</span>
+								<span class="input-group-text coolText4">Per Game</span>
 							</div>
 							
 							<label for="ref_fee">Ref Fee</label>
+							
+							@if ($errors->has('ref_fee'))
+								<span class="help-block">
+									<strong>{{ $errors->first('ref_fee') }}</strong>
+								</span>
+							@endif
 						</div>
 						
-						<div class="section text-center">
+						<div class="section text-center white-text">
 							<h2 class="h2-responsive coolText4">Select Your Leagues Ages and Competition Levels</h2>
 						</div>
 						

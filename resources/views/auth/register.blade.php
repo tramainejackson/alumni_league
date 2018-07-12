@@ -61,7 +61,7 @@
 												<div class="md-form{{ $errors->has('commish_name') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
-													<input id="commish_name" type="text" class="form-control" name="commish_name" required>
+													<input id="commish_name" type="text" class="form-control" name="commish_name" value="{{ old('commish_name') }}" required>
 
 													<label for="commish_name" class="">Your Name</label>
 													
@@ -76,7 +76,7 @@
 												<div class="md-form{{ $errors->has('league_name') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
-													<input id="league_name" type="text" class="form-control" name="league_name" required>
+													<input id="league_name" type="text" class="form-control" name="league_name" value="{{ old('league_name') }}" required>
 
 													<label for="league_name" class="">League Name</label>
 													
@@ -94,11 +94,11 @@
 												<div class="md-form{{ $errors->has('league_phone') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
-													<input id="league_phone" type="text" class="form-control" name="league_phone">
+													<input id="league_phone" type="text" class="form-control" name="league_phone" value="{{ old('league_phone') }}">
 
 													<label for="league_phone" class="">League Phone</label>
 													
-													@if ($errors->has('league_phone'))
+													@if($errors->has('league_phone'))
 														<span class="help-block">
 															<strong>{{ $errors->first('league_phone') }}</strong>
 														</span>
@@ -109,7 +109,7 @@
 												<div class="md-form{{ $errors->has('league_address') ? ' has-error' : '' }}">
 													<i class="fa fa-lock prefix grey-text"></i>
 													
-													<input id="league_address" type="text" class="form-control" name="league_address">
+													<input id="league_address" type="text" class="form-control" name="league_address" value="{{ old('league_address') }}">
 
 													<label for="league_address" class="">League Address</label>
 													

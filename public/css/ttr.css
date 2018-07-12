@@ -27,7 +27,15 @@ html, body, header, .view {
 }
 
 .bgrd3 {
-    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url(/images/gym1.jpg);
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(/images/gym1.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.bgrd4 {
+	background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.5)), url(/images/sports_office.jpg);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -178,6 +186,11 @@ li.game-bottom{
 #champion_team_table th, #champion_team_table td {
 	font-size: 145%;
 }
+
+.updateLeagueForm .md-form label.active {
+	color: whitesmoke !important;
+}
+
 #mainBody {
 	background-image:url("/totherec/public/images/Basketball-Wallpapers-HD-Pictures2.jpg");
 	background-repeat:no-repeat;
@@ -742,6 +755,10 @@ a.changeRegistrationLink {
 
 .active {
     color: white !important;
+}
+
+.dropdown-toggle.active {
+    color: inherit !important;
 }
 
 .active_btn {

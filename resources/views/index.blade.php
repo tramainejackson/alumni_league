@@ -14,7 +14,7 @@
 	@include('include.functions')
 	
 	<div class="container-fluid bgrd3">
-		<div class="row align-items-stretch">
+		<div class="row align-items-stretch{{ $showSeason->league_profile ? '': ' view' }}">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col py-3" id="">
 				<div class="row">
@@ -31,7 +31,8 @@
 					@endif
 				</div>
 			</div>
-			<div class="col-12 col-lg-7 pb-3">
+
+			<div class="col-12 col-lg-7 pb-3{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
 				@if(!isset($allComplete))
 					<!-- Show league season info -->
 					@if($showSeason->paid == 'Y')

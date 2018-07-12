@@ -47,7 +47,7 @@ class HomeController extends Controller
 		$showSeasonUnpaidTeams = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_teams()->unpaid();
 		$showSeasonPlayers = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_players;
 		$allComplete = 'Y';
-		
+
 		if($showSeason->is_playoffs == 'Y') {
 			$allGames = $showSeason->games;
 			$allTeams = $showSeason->league_teams;

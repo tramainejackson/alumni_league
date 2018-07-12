@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid leagues_page_div">
-		<div class="row">
+	<div class="container-fluid bgrd3">
+		<div class="row{{ $showSeason->league_profile ? '': ' view' }}">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col col-xl-2 d-none d-lg-block mt-3 order-xl-0">
 				@if($activeSeasons->isNotEmpty())
@@ -12,7 +12,7 @@
 				@else
 				@endif
 			</div>
-			<div class="col-12 col-xl-8 order-lg-2 order-xl-1">
+			<div class="col-12 col-xl-8 order-lg-2 order-xl-1{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
 				@if(!isset($allComplete))
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
