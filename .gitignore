@@ -16,6 +16,7 @@
 /public/*.jpg
 /public/*.png
 /storage/*.key
+/config/session.php
 /vendor
 /.idea
 /.vagrant
