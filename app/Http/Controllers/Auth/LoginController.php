@@ -81,15 +81,4 @@ class LoginController extends Controller
 			return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
 		}
     }
-
-	/**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function ttr_user($user)
-    {
-		dd(session());
-        return view('auth.login');
-    }
 }

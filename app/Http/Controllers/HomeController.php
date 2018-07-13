@@ -155,6 +155,18 @@ class HomeController extends Controller
     }
 	
 	/**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function test_drive(Request $request)
+    {
+		Auth::loginUsingId(48);
+        
+		return redirect()->action('HomeController@index');
+    }
+	
+	/**
      * Check for a query string and get the current season.
      *
      * @return seaon

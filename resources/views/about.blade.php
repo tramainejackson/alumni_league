@@ -73,7 +73,7 @@
 									
 									<!-- input subject -->
 									<div class="md-form">
-										<i class="fa fa-tag prefix"></i>
+										<i class="fa fa-id-badge prefix" aria-hidden="true"></i>
 										
 										<input type="text" name="contact_subject" id="contact_subject" class="form-control">
 										
@@ -82,7 +82,7 @@
 									
 									<!-- input subject -->
 									<div class="md-form">
-										<i class="fa fa-tag prefix"></i>
+										<i class="fa fa-address-card prefix" aria-hidden="true"></i>
 										
 										<input type="text" name="contact_subject" id="contact_subject" class="form-control">
 										
@@ -91,7 +91,7 @@
 									
 									<!-- input subject -->
 									<div class="md-form">
-										<i class="fa fa-tag prefix"></i>
+										<i class="fa fa-phone prefix" aria-hidden="true"></i>
 										
 										<input type="text" name="contact_subject" id="contact_subject" class="form-control">
 										
@@ -106,6 +106,19 @@
 						</div>
 					</div>
 					<!--/.Card-->
+				</div>
+			</div>
+		</div>
+		
+		<div class="">
+			<div class="view d-flex align-items-center justify-content-center">
+				<div class="">
+					<p class="">Not sure if this is for your league or not?</p>
+					<p class="">Click here and take it for a test drive with the test account</p>
+					
+					<p class="">
+						<a href="{{ route('test_drive') }}" class="btn peach-gradient">Test Drive</a>
+					</p>
 				</div>
 			</div>
 		</div>

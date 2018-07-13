@@ -15,10 +15,12 @@
 					
 					<img src="{{ $league->picture !== null ? asset($league->picture) : $defaultImg }}" class="img-fluid z-depth-1 rounded-circle" />
 					
-					<div class="my-2">
-						<h2 class="h2-responsive white-text">League: <a class="text-underline" href="{{ route('league_profile.show', ['league' => str_ireplace(" ", "", strtolower($league->name))]) }}">{{ ucwords($league->name) }}</a></h2>
+					<div class="my-2 coolText4">
+						<h2 class="h2-responsive white-text"><span class="font-weight-bold">League:</span> <a class="text-underline" href="{{ route('league_profile.show', ['league' => str_ireplace(" ", "", strtolower($league->name))]) }}">{{ ucwords($league->name) }}</a></h2>
 						
-						<h3 class="h3-responsive white-text">Season Name: {{ ucwords($season->name) }}</h3>
+						<h3 class="h3-responsive white-text"><span class="font-weight-bold">Season Name:</span> {{ ucwords($season->name) }}</h3>
+						
+						<h3 class="h3-responsive white-text"><span class="font-weight-bold">When:</span> {{ ucwords($season->season) . ' ' . $season->year }}</h3>
 					</div>
 				</div>
 				
@@ -259,8 +261,8 @@
 										</table>
 									</div>
 								</div>
-								<div class="hidden table-wrapper" id="player_stats" style="display:none !important; max-height: initial;">
-									<table class="table" id="player_stats_table">
+								<div class="hidden table-wrapper" id="player_stats">
+									<table class="table table-hover" id="">
 										<thead>
 											<tr>
 												<th></th>
@@ -305,8 +307,8 @@
 									</table>
 								</div>
 
-								<div class="hidden table-wrapper" id="team_stats" style="display:none !important; max-height: initial;">
-									<table class="table" id="team_stats_table">
+								<div class="hidden table-wrapper" id="team_stats">
+									<table class="table table-hover" id="">
 										<thead>
 											<tr class='text-center'>
 												<th></th>
@@ -650,7 +652,7 @@
 									<div class="mdb-lightbox">
 										@foreach($pictures as $picture)
 											<figure class="col-4">
-												<a href="{{ $picture->sm_photo() }}" class="" data-size="1600x1067">
+												<a href="{{ $picture->lg_photo() }}" class="" data-size="1700x{{ $picture->lg_height }}">
 													<img alt="picture" src="{{ $picture->sm_photo() }}" class="img-fluid" />
 												</a>
 											</figure>

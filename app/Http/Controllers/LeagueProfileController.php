@@ -87,7 +87,7 @@ class LeagueProfileController extends Controller
 			}
 		}
 		
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
+		$activeSeasons = $league->seasons()->active()->get();
 		
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(350, null, 	function ($constraint) {
@@ -149,7 +149,7 @@ class LeagueProfileController extends Controller
 			}
 		}
 		
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
+		$activeSeasons = $league->seasons()->active()->get();
 		
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(350, null, 	function ($constraint) {
