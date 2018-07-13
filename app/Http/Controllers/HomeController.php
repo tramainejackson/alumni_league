@@ -161,7 +161,7 @@ class HomeController extends Controller
      */
     public function test_drive(Request $request)
     {
-		Auth::loginUsingId(48);
+		Auth::loginUsingId(6);
         
 		return redirect()->action('HomeController@index');
     }
