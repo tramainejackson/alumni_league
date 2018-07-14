@@ -35,22 +35,45 @@ class LeagueTeamController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
-		$seasonTeams = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_teams;
-		$allComplete = 'Y';
 		
-		// Resize the default image
-		Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
-				$constraint->aspectRatio();
-				$constraint->upsize();
-			}
-		)->save(storage_path('app/public/images/lg/default_img.jpg'));
-		$defaultImg = asset('/storage/images/lg/default_img.jpg');
-
 		if($showSeason instanceof \App\LeagueProfile) {
-			return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg', 'allComplete'));
-		} else {	
+			
+			if($showSeason->seasons->isNotEmpty()) {
+				
+				$activeSeasons = $showSeason->seasons()->active()->get();
+				$seasonTeams = collect();
+				
+				// Resize the default image
+				Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
+						$constraint->aspectRatio();
+						$constraint->upsize();
+					}
+				)->save(storage_path('app/public/images/lg/default_img.jpg'));
+				$defaultImg = asset('/storage/images/lg/default_img.jpg');
+
+				return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
+				
+			} else {
+				
+				return view('no_season', compact('showSeason'));
+				
+			}
+			
+		} else {
+
+			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+			$seasonTeams = $showSeason->league_teams;
+			
+			// Resize the default image
+			Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
+					$constraint->aspectRatio();
+					$constraint->upsize();
+				}
+			)->save(storage_path('app/public/images/lg/default_img.jpg'));
+			$defaultImg = asset('/storage/images/lg/default_img.jpg');
+
 			return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
+
 		}
     }
 	

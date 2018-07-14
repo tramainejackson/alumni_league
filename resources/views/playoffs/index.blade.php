@@ -455,6 +455,7 @@
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
+					
 					<div class="modal-body mx-3">
 						<form name="newSeasonForm" class="">
 							<div class="newSeasonInfo animated">
@@ -594,6 +595,7 @@
 							</div>
 						</form>
 					</div>
+					
 					<div class="modal-footer d-flex justify-content-center">
 						<button type="button" class="btn btn-deep-orange addSeasonBtn animated">Add Season</button>
 						

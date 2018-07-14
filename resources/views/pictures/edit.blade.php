@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid leagues_page_div">
+	<div class="container-fluid bgrd3">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col-md-2 mt-3 mr-auto"></div>
@@ -22,7 +22,8 @@
 						{!! Form::open(['action' => ['LeaguePictureController@update', $league_picture->id], 'method' => 'PATCH', 'files' => true]) !!}
 							<!-- Picture Description -->
 							<div class="md-form">
-								<textarea type="text" name="description" class="form-control md-textarea" rows="3">{{ $league_picture->description }}</textarea>
+								<textarea type="text" name="description" class="form-control md-textarea" rows="3" placeholder="Enter a Description Of The Picture">{{ $league_picture->description }}</textarea>
+								
 								<label for="description">Description</label>
 							</div>
 							

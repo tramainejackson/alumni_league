@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid leagues_page_div">
+	<div class="container-fluid bgrd3">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col col-lg-3 mt-3 d-none d-lg-block">

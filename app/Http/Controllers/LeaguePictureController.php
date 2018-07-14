@@ -37,23 +37,45 @@ class LeaguePictureController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
-		$seasonPictures = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->pictures;
 		
-		// Resize the default image
-		Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
-				$constraint->aspectRatio();
-				$constraint->upsize();
-			}
-		)->save(storage_path('app/public/images/lg/default_img.jpg'));
-		$defaultImg = asset('/storage/images/lg/default_img.jpg');
-
 		if($showSeason instanceof \App\LeagueProfile) {
-			$allComplete = 'Y';
 			
-			return view('pictures.index', compact('showSeason', 'activeSeasons', 'seasonPictures', 'defaultImg', 'allComplete'));
+			if($showSeason->seasons->isNotEmpty()) {
+			
+				$activeSeasons = $showSeason->seasons()->active()->get();
+				$seasonPictures = collect();
+				
+				// Resize the default image
+				Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
+						$constraint->aspectRatio();
+						$constraint->upsize();
+					}
+				)->save(storage_path('app/public/images/lg/default_img.jpg'));
+				$defaultImg = asset('/storage/images/lg/default_img.jpg');
+
+				return view('pictures.index', compact('showSeason', 'activeSeasons', 'seasonPictures', 'defaultImg'));
+			
+			} else {
+				
+				return view('no_season', compact('showSeason'));
+				
+			}
+			
 		} else {
+			
+			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+			$seasonPictures = $showSeason->pictures;
+			
+			// Resize the default image
+			Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
+					$constraint->aspectRatio();
+					$constraint->upsize();
+				}
+			)->save(storage_path('app/public/images/lg/default_img.jpg'));
+			$defaultImg = asset('/storage/images/lg/default_img.jpg');
+
 			return view('pictures.index', compact('showSeason', 'activeSeasons', 'seasonPictures', 'defaultImg'));
+			
 		}
     }
 	
@@ -66,8 +88,9 @@ class LeaguePictureController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-
-		return view('pictures.edit', compact('showSeason', 'league_picture'));
+		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
+		
+		return view('pictures.edit', compact('showSeason', 'league_picture', 'activeSeasons'));
     }
 	
 	/**

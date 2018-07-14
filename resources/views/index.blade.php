@@ -344,17 +344,11 @@
 									</table>
 								</div>
 							@else
-								<h3 class="h3-responsive">There are no stats added for this league yet</h3>
+								<h3 class="text-center h3-responsive col">There are no stats added for this league yet</h3>
 							@endif
 						</div>
 					</div>
 					<!--./ League season stats snap shot /.-->
-					
-					<!-- League season standings -->
-					<div class="">
-						
-					</div>
-					<!--./ League season standings /.-->
 				</div>
 			@else
 			@endif
@@ -372,111 +366,230 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
+
 						<div class="modal-body mx-3">
-							<div class="md-form">
-								<input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Enter A Name For The Season" />
-								
-								<label data-error="wrong" data-success="right" for="name" class="blue-text">Name</label>
-							</div>
-							<div class="row">
-								<div class="col-6">
+							<form name="newSeasonForm" class="">
+								<div class="newSeasonInfo animated">
+									<div class="row">
+										<div class="col-12">
+											<div class="md-form">
+												<input type="text" class="form-control" id="season_name" value="{{ old('name') }}" placeholder="Add A Name For This Season" name="name" required />
+
+												<label data-error="wrong" data-success="right" for="season" class="blue-text">Season</label>
+											</div>
+										</div>
+										<div class="col-12 col-lg">
+											<div class="md-form">
+												<select class="mdb-select" name="season" required>
+													<option value="" disabled selected>Choose A Season</option>
+													<option value="winter">Winter</option>
+													<option value="spring">Spring</option>
+													<option value="summer">Summer</option>
+													<option value="fall">Fall</option>
+												</select>
+
+												<label data-error="wrong" data-success="right" for="season" class="blue-text">Season</label>
+											</div>
+										</div>
+										<div class="col-12 col-lg">
+											<div class="md-form">
+												<select class="mdb-select" name="year" required>
+													<option value="" disabled selected>Choose A Year</option>
+													<option value="2018">2018</option>
+													<option value="2019">2019</option>
+													<option value="2020">2020</option>
+													<option value="2021">2021</option>
+												</select>
+
+												<label data-error="wrong" data-success="right" for="season" class="blue-text">Year</label>
+											</div>
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="col-12 col-lg">
+											<div class="md-form input-group">
+												<div class="input-group-prepend">
+													<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+												</div>
+
+												<input type="number" name="league_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->leagues_fee == null ? 0.00 : $showSeason->league_profile->leagues_fee : $showSeason->leagues_fee == null ? 0.00 : $showSeason->leagues_fee }}" step="0.01" placeholder="League Entry Fee" required />
+												
+												<input type="number" name="league_id" class="hidden" value="{{ $showSeason->league_profile ? $showSeason->league_profile->id : $showSeason->id }}" hidden />
+												
+												<div class="input-group-prepend">
+													<span class="input-group-text">Per Team</span>
+												</div>
+												
+												<label for="leagues_fee">Entry Fee</label>
+											</div>
+										</div>
+										<div class="col-12 col-lg">
+											<div class="md-form input-group">
+												<div class="input-group-prepend">
+													<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+												</div>
+												
+												<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->ref_fee == null ? 0.00 : $showSeason->league_profile->ref_fee : $showSeason->ref_fee == null ? 0.00 : $showSeason->ref_fee }}" step="0.01" placeholder="League Referee Fee" required />
+												
+												<div class="input-group-prepend">
+													<span class="input-group-text">Per Game</span>
+												</div>
+												
+												<label for="ref_fee">Ref Fee</label>
+											</div>
+										</div>
+									</div>
+
 									<div class="md-form">
-										<select class="mdb-select" name="season" required>
-											<option value="" disabled selected>Choose A Season</option>
-											<option value="winter">Winter</option>
-											<option value="spring">Spring</option>
-											<option value="summer">Summer</option>
-											<option value="fall">Fall</option>
+										<select class="mdb-select" name="age_group">
+											@if(head($ageGroups) == '' || head($ageGroups) == null)
+												<option value="blank" selected disabled>You do not have any age groups selected to choose from</option>
+											@else
+												@foreach($ageGroups as $ageGroup)
+													<option value="{{ $ageGroup }}">{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
+												@endforeach
+											@endif
 										</select>
-
-										<label data-error="wrong" data-success="right" for="season" class="blue-text">Season</label>
+										
+										<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
 									</div>
-								</div>
-								<div class="col-6">
+
 									<div class="md-form">
-										<select class="mdb-select" name="year" required>
-											<option value="" disabled selected>Choose A Year</option>
-											<option value="2018">2018</option>
-											<option value="2019">2019</option>
-											<option value="2020">2020</option>
-											<option value="2021">2021</option>
+										<select class="mdb-select" name="comp_group">
+											@if(head($ageGroups) == '' || head($ageGroups) == null)
+												<option value="blank" selected disabled>You do not have any competition groups selected to choose from</option>
+											@else
+												@foreach($compGroups as $compGroup)
+													<option value="{{ $compGroup }}">{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
+												@endforeach
+											@endif
 										</select>
-
-										<label data-error="wrong" data-success="right" for="season" class="blue-text">Year</label>
+										
+										<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
+									</div>
+									
+									<div class="md-form">
+										<input type="text" name="location" class="form-control" value="{{ old('location') ? old('location') : $showSeason->league_profile ? $showSeason->league_profile->address : $showSeason->address }}" />
+										
+										<label data-error="wrong" data-success="right" for="age_group">Games Location</label>
 									</div>
 								</div>
-							</div>
-							
-							<div class="row">
-								<div class="col">
-									<div class="md-form input-group">
-										<div class="input-group-prepend">
-											<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+								<div class="payPalCheckout animated hidden">
+									<div class="row">
+										<div class="col-12">
+											<h2 class="">To continue, select the PayPal checkout button. Each season is $100 and includes all features throughout the whole season. Your will be redirected to your new season once payment is accepted.</h2>
 										</div>
-										
-										<input type="number" name="league_fee" class="form-control" id="league_fee" value="{{ !isset($allComplete) ? $showSeason->league_profile->leagues_fee == null ? 0.00 : $showSeason->league_profile->leagues_fee : $showSeason->leagues_fee == null ? 0.00 : $showSeason->leagues_fee }}" step="0.01" placeholder="League Entry Fee" required />
-										
-										<div class="input-group-prepend">
-											<span class="input-group-text">Per Team</span>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<h4 class="h4-responsive">New Season For</h4>
+											<p class="payPalCheckoutSeason"></p>
 										</div>
-										
-										<label for="leagues_fee">Entry Fee</label>
+										<div class="col-6">
+											<p class="">Season Name</p>
+											<p class="payPalCheckoutSeasonName"></p>
+										</div>
+										<div class="col-6">
+											<p class="">Season Location</p>
+											<p class="payPalCheckoutSeasonLocation"></p>
+										</div>
+										<div class="col-6">
+											<p class="">Season Levels</p>
+											<p class="payPalCheckoutSeasonLevel"></p>
+										</div>
+										<div class="col-6">
+											<p class="">Season Cost</p>
+											<p class="payPalCheckoutSeasonCost"></p>
+										</div>
 									</div>
 								</div>
-								<div class="col">
-									<div class="md-form input-group">
-										<div class="input-group-prepend">
-											<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
-										</div>
-										
-										<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ !isset($allComplete) ? $showSeason->league_profile->ref_fee == null ? 0.00 : $showSeason->league_profile->ref_fee : $showSeason->ref_fee == null ? 0.00 : $showSeason->ref_fee }}" step="0.01" placeholder="League Referee Fee" required />
-										
-										<div class="input-group-prepend">
-											<span class="input-group-text">Per Game</span>
-										</div>
-										
-										<label for="ref_fee">Ref Fee</label>
-									</div>
-								</div>
-							</div>
-
-							<div class="md-form">
-								<select class="mdb-select" name="age_group">
-									@if(head($ageGroups) == '' || head($ageGroups) == null)
-										<option value="blank" selected disabled>You do not have any age groups selected to choose from</option>
-									@else
-										@foreach($ageGroups as $ageGroup)
-											<option value="{{ $ageGroup }}">{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
-										@endforeach
-									@endif
-								</select>
-								
-								<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
-							</div>
-
-							<div class="md-form">
-								<select class="mdb-select" name="comp_group">
-									@if(head($ageGroups) == '' || head($ageGroups) == null)
-										<option value="blank" selected disabled>You do not have any competition groups selected to choose from</option>
-									@else
-										@foreach($compGroups as $compGroup)
-											<option value="{{ $compGroup }}">{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
-										@endforeach
-									@endif
-								</select>
-								
-								<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
-							</div>
-							
-							<div class="md-form">
-								<input type="text" name="location" class="form-control" value="{{ old('location') ? old('location') : !isset($allComplete) ? $showSeason->league_profile->address : $showSeason->address }}" />
-								
-								<label data-error="wrong" data-success="right" for="age_group">Games Location</label>
-							</div>
+							</form>
 						</div>
+						
+
 						<div class="modal-footer d-flex justify-content-center">
-							<button type="submit" class="btn btn-deep-orange">Add Season</button>
+							<button type="button" class="btn btn-deep-orange addSeasonBtn animated">Add Season</button>
+							
+							<div class="payPalCheckoutBtn animated hidden">
+								<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+								<div id="paypal-button"></div>
+
+								<script>
+									paypal.Button.render({
+
+										env: 'sandbox', // sandbox | production
+
+										style: {
+											size: 'medium',
+											color: 'blue',
+											shape: 'pill',
+											label: 'checkout',
+											tagline: 'true'
+										},
+										
+										client: {
+											sandbox:    'AZri7zmZvEDIt-EyO1A1kfvDzygfGcuOjVdowBT1pqqmuZFDhkKq9HG2HSMlkzo5ibNUBFf3-3GsuiGu',
+											production: 'AS7p39CJ_I30Af236rVzKtkoq2LzJw5ZMJnFwcuPOXUVWwehJ7OJscCl43jknJB_sdjBqNVbTUYexfIN'
+										},
+
+										payment: function(data, actions) {
+											return actions.payment.create({
+												payment: {
+													transactions: [{
+														amount: { 
+															total: '100.00', 
+															currency: 'USD' 
+														}
+													}]
+												}
+											});
+										},
+
+										// Wait for the payment to be authorized by the customer
+
+										onAuthorize: function(data, actions) {
+										  return actions.payment.execute()
+											.then(function () {
+												$.ajax({
+												  method: "POST",
+												  url: "league_season",
+												  data: $('form[name="newSeasonForm"]').serialize()
+												})
+												
+												.fail(function() {	
+													alert("Fail");
+												})
+												
+												.done(function(data) {
+													var returnData = data;
+
+													toastr.success(returnData[1], 'Successful');
+													
+													setTimeout(function() {
+														window.open('/home?season=' + returnData[0] + '&year=' + $('.newSeasonInfo select[name="year"]').val(), '_self');
+													}, 2000);
+												});
+											});
+										},
+										
+										onCancel: function (data, actions) {
+											// Show a cancel page or return to cart
+											alert("Cancel");
+										},
+
+										onError: function (err) {
+											// Show an error page here, when an error occurs
+											alert("Error");
+										}
+										
+									}, '#paypal-button');
+
+								</script>
+							</div>								
 						</div>
+						
 					{!! Form::close() !!}
 				</div>
 			</div>

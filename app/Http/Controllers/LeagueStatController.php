@@ -35,35 +35,72 @@ class LeagueStatController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
-		$seasonTeams = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->league_teams;
+		
+		if($showSeason instanceof \App\LeagueProfile) {
 			
-		$allPlayers = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->stats()->allFormattedStats();
-		$allTeams = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->stats()->allTeamStats();
-		$seasonScheduleWeeks = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->games()->getScheduleWeeks()->get();
-		$checkStats = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->stats()->allFormattedStats()->get()->isNotEmpty();
-		$allComplete = 'Y';
+			if($showSeason->seasons->isNotEmpty()) {
 		
-		// Resize the default image
-		Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
-				$constraint->aspectRatio();
-			}
-		)->save(storage_path('app/public/images/lg/default_img.jpg'));
-		$defaultImg = asset('/storage/images/lg/default_img.jpg');
-		
-		if($showSeason->is_playoffs == 'Y') {
-			$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
-			$playInGames = $showSeason->games()->playoffPlayinGames();
-			$playoffSettings = $showSeason->playoffs;
+				$activeSeasons = $showSeason->seasons()->active()->get();
+				$checkStats = $seasonScheduleWeeks = $$seasonTeams = $allPlayers = $allTeams = collect();
+				
+				// Resize the default image
+				Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
+						$constraint->aspectRatio();
+					}
+				)->save(storage_path('app/public/images/lg/default_img.jpg'));
+				$defaultImg = asset('/storage/images/lg/default_img.jpg');
+				
+				if($showSeason->is_playoffs == 'Y') {
+					$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+					$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
+					$playInGames = $showSeason->games()->playoffPlayinGames();
+					$playoffSettings = $showSeason->playoffs;
 
-			return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
-		} else {
-			if($showSeason instanceof \App\LeagueProfile) {
-				return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'allComplete'));
+					return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+					
+				} else {
+
+					return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+					
+				}
+			
 			} else {
-				return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+				
+				return view('no_season', compact('showSeason'));
+				
 			}
+
+		} else {
+			
+			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+			$seasonTeams = $showSeason->league_teams;
+				
+			$allPlayers = $showSeason->stats()->allFormattedStats();
+			$allTeams = $showSeason->stats()->allTeamStats();
+			$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
+			$checkStats = $showSeason->stats()->allFormattedStats()->get()->isNotEmpty();
+			
+			// Resize the default image
+			Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
+					$constraint->aspectRatio();
+				}
+			)->save(storage_path('app/public/images/lg/default_img.jpg'));
+			$defaultImg = asset('/storage/images/lg/default_img.jpg');
+			
+			if($showSeason->is_playoffs == 'Y') {
+				$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+				$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
+				$playInGames = $showSeason->games()->playoffPlayinGames();
+				$playoffSettings = $showSeason->playoffs;
+
+				return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+				
+			} else {
+
+				return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+				
+			}
+		
 		}
     }
 	

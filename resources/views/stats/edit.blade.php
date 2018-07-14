@@ -3,7 +3,7 @@
 @section('content')
 	@include('include.functions')
 	
-	<div class="container-fluid" id="leaguesProfileContainer">
+	<div class="container-fluid bgrd3" id="leaguesProfileContainer">
 		<div class="row">
 			<div class="col-12 mt-3">
 				@foreach($seasonScheduleWeeks as $edit_week)

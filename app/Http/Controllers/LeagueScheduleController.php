@@ -36,24 +36,49 @@ class LeagueScheduleController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
-		$allComplete = 'Y';
+		
+		if($showSeason instanceof \App\LeagueProfile) {
+			
+			if($showSeason->seasons->isNotEmpty()) {
+			
+				$activeSeasons = $showSeason->seasons()->active()->get();
 
-		if($showSeason->is_playoffs == 'Y') {
-			$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
-			$playInGames = $showSeason->games()->playoffPlayinGames();
-			$playoffSettings = $showSeason->playoffs;
+				if($showSeason->is_playoffs == 'Y') {
+					$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+					$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
+					$playInGames = $showSeason->games()->playoffPlayinGames();
+					$playoffSettings = $showSeason->playoffs;
+					
+					return view('playoffs.schedule', compact('showSeason', 'activeSeasons', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
+				} else {
+					$seasonScheduleWeeks = collect();
+					
+					return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
+				}
 			
-			return view('playoffs.schedule', compact('showSeason', 'activeSeasons', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
-		} else {
-			$seasonScheduleWeeks = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->games()->getScheduleWeeks();
-			
-			if($showSeason instanceof \App\LeagueProfile) {
-				return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks', 'allComplete'));
 			} else {
+				
+				return view('no_season', compact('showSeason'));
+				
+			}
+			
+		} else {
+			
+			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+
+			if($showSeason->is_playoffs == 'Y') {
+				$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+				$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
+				$playInGames = $showSeason->games()->playoffPlayinGames();
+				$playoffSettings = $showSeason->playoffs;
+				
+				return view('playoffs.schedule', compact('showSeason', 'activeSeasons', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
+			} else {
+				$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks();
+				
 				return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
 			}
+			
 		}
     }
 	

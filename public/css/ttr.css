@@ -188,7 +188,7 @@ li.game-bottom{
 }
 
 .updateLeagueForm .md-form label.active {
-	color: whitesmoke !important;
+	/* color: whitesmoke !important; */
 }
 
 #mainBody {
