@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid leagues_page_div">
+	<div class="container-fluid bgrd3">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col mt-3 d-none d-xl-block"></div>
@@ -17,7 +17,7 @@
 						<img src="{{ $league_team->team_picture != null ? $league_team->lg_photo() : $defaultImg }}" class="img-fluid mx-auto" alt="photo">
 					</div>
 					<!--Card content-->
-					<div class="card-body">
+					<div class="card-body rgba-white-strong rounded z-depth-1-half">
 						<!--Title-->
 						<h2 class="card-title h2-responsive text-center">{{ $league_team->team_name }}</h2>
 						

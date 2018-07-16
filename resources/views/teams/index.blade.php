@@ -34,7 +34,7 @@
 										</div>
 										
 										<!-- Card content -->
-										<div class="card-body text-center position-relative">
+										<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
 											<!-- Title -->
 											<h1 class="card-title h1-responsive font-weight-bold w-75 mx-auto">{{ $team->team_name }}</h1>
 											<!-- Team Captain Info -->

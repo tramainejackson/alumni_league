@@ -187,7 +187,7 @@
 										<!-- Edit Form -->
 										<div class="my-2">
 											<div class="row">
-												<div class="col-12">
+												<div class="col-12 table-wrapper mb-4 mb-lg-0">
 													<table class="table table-striped table-sm table-fixed">
 														<thead>
 															<tr class="blue darken-3 white-text text-center">
@@ -251,7 +251,7 @@
 														</tbody>
 													</table>
 												</div>
-												<div class="col-12">
+												<div class="col-12 table-wrapper">
 													<table class="table table-striped table-sm table-fixed">
 														<thead>
 															<tr class="blue-grey white-text text-center">

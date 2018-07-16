@@ -29,14 +29,14 @@
 						<p class=""><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;Standings are not editable. They are automatically compiled from the games results&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></p>
 					</div>
 					<div id="league_standings">
-						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm">
+						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-secondary table-bordered ">
 							<thead>
 								<tr>
-									<th>Team Name</th>
-									<th>Wins</th>
-									<th>Losses</th>
-									<th>Forfeits</th>
-									<th>Win/Loss Pct.</th>
+									<th class="font-weight-bold">Team Name</th>
+									<th class="font-weight-bold">Wins</th>
+									<th class="font-weight-bold">Losses</th>
+									<th class="font-weight-bold">Forfeits</th>
+									<th class="font-weight-bold">Win/Loss Pct.</th>
 								</tr>
 							</thead>
 							<tbody>

@@ -104,13 +104,17 @@ class HomeController extends Controller
 
 		if($showSeason !== null) {
 			
-			if($showSeason->seasons->isNotEmpty()) {
+			if($showSeason instanceof \App\LeagueProfile) {
+				
+				$activeSeasons = $showSeason->seasons()->active()->get();
 				
 				return view('about', compact('showSeason', 'activeSeasons'));
 
 			} else {
 
-				return view('no_season', compact('showSeason'));
+				$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+				
+				return view('no_season', compact('activeSeasons', 'showSeason'));
 
 			}
 		} else {

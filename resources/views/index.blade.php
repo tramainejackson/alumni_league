@@ -158,200 +158,195 @@
 				@endif
 			</div>
 		</div>
-		
-		@if(!isset($allComplete))
-			@if($showSeason->paid == 'Y')
-				<div class="row">
-					<!-- League season schedule snap shot -->
-					<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
-						<div class="my-5 d-flex align-items-center justify-content-center flex-column">
-							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-								<h1 class="h1-responsive">Upcoming Schedule</h1>
-								<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">Full Schedule</a>
+
+		@if($showSeason->paid == 'Y')
+			
+			<div class="row">
+				<!-- League season schedule snap shot -->
+				<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
+					<div class="my-5 d-flex align-items-center justify-content-center flex-column">
+						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
+							<h1 class="h1-responsive">Upcoming Schedule</h1>
+							<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">Full Schedule</a>
+						</div>
+						
+						<div class="container-fluid">
+							<div class="row">
+								@if($showSeasonSchedule->isNotEmpty())
+									@foreach($showSeasonSchedule as $upcomingGame)
+										<div class="card col-12 col-md-6 col-lg-4 col-lg-3 my-2">
+											<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
+											<div class="card-body text-center">
+												<p class="">{{ $upcomingGame->home_team }}</p>
+												<p class="">vs</p>
+												<p class="">{{ $upcomingGame->away_team }}</p>
+											</div>
+											<div class="card-footer px-1 d-flex align-items-center justify-content-around">
+												<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
+												<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+											</div>
+										</div>
+									@endforeach
+								@else
+									<div class="col text-center">
+										<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
+									</div>
+								@endif
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--./ League season schedule snap shot /.-->
+				
+				<!-- League season teams snap shot -->
+				<div class="col-8 mx-auto my-5">
+					<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
+						<h1 class="h1-responsive">Quick Teams</h1>
+						<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Teams</a>
+					</div>
+					<div class="my-5 d-flex align-items-center justify-content-around mb-4 mb-lg-0 flex-column flex-lg-row">
+						@if($showSeasonTeams->isNotEmpty())
+							
+							<button class="btn btn-lg deep-purple">Total Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonTeams->count() }}</span></button>
+
+							<button class="btn btn-lg deep-purple">Total Players:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonPlayers->count() }}</span></button>
+
+							<button class="btn btn-lg deep-purple">Unpaid Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonUnpaidTeams->count() }}</span></button>
+
+						@else
+							
+							<h3 class="h3-responsive">No teams showing for this season</h3>
+							
+						@endif
+					</div>
+				</div>
+				<!--./ League season teams snap shot /.-->
+				
+				<!-- League season stats snap shot -->
+				<div class="col-8 mx-auto my-5">
+					<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
+						<h1 class="h1-responsive">Quick Stats</h1>
+						<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
+					</div>
+					<div class="my-5 row">
+						<!-- Season stat leaders by category -->
+						@if($showSeasonStat->isNotEmpty())
+							<!-- Get the scoring leaders -->
+							<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<table class="table white-text">
+									<thead>
+										<tr>
+											<th>Team</th>
+											<th>Player</th>
+											<th>PPG</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
+											<tr class="white-text">
+												<td>{{ $playerStat->player->team_name }}</td>
+												<td>{{ $playerStat->player->player_name }}</td>
+												<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
 							</div>
 							
-							<div class="container-fluid">
-								<div class="row">
-									@if($showSeasonSchedule->isNotEmpty())
-										@foreach($showSeasonSchedule as $upcomingGame)
-											<div class="card col-12 col-md-6 col-lg-4 col-lg-3 my-2">
-												<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
-												<div class="card-body text-center">
-													<p class="">{{ $upcomingGame->home_team }}</p>
-													<p class="">vs</p>
-													<p class="">{{ $upcomingGame->away_team }}</p>
-												</div>
-												<div class="card-footer px-1 d-flex align-items-center justify-content-around">
-													<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
-													<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
-												</div>
-											</div>
+							<!-- Get the rebounding leaders -->
+							<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<table class="table white-text">
+									<thead>
+										<tr>
+											<th>Team</th>
+											<th>Player</th>
+											<th>RPG</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
+											<tr class="white-text">
+												<td>{{ $playerStat->player->team_name }}</td>
+												<td>{{ $playerStat->player->player_name }}</td>
+												<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
+											</tr>
 										@endforeach
-									@else
-										<div class="col text-center">
-											<h3 class="h3-responsive">No upcoming games within the next week on this seasons schedule</h3>
-										</div>
-									@endif
-								</div>
+									</tbody>
+								</table>
 							</div>
-						</div>
+							
+							<!-- Get the assisting leaders -->
+							<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<table class="table white-text">
+									<thead>
+										<tr>
+											<th>Team</th>
+											<th>Player</th>
+											<th>APG</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
+											<tr class="white-text">
+												<td>{{ $playerStat->player->team_name }}</td>
+												<td>{{ $playerStat->player->player_name }}</td>
+												<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							
+							<!-- Get the stealing leaders -->
+							<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<table class="table white-text">
+									<thead>
+										<tr>
+											<th>Team</th>
+											<th>Player</th>
+											<th>SPG</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
+											<tr class="white-text">
+												<td>{{ $playerStat->player->team_name }}</td>
+												<td>{{ $playerStat->player->player_name }}</td>
+												<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+							
+							<!-- Get the blocking leaders -->
+							<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<table class="table white-text">
+									<thead>
+										<tr>
+											<th>Team</th>
+											<th>Player</th>
+											<th>BPG</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
+											<tr class="white-text">
+												<td>{{ $playerBlocks->player->team_name }}</td>
+												<td>{{ $playerBlocks->player->player_name }}</td>
+												<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+						@else
+							<h3 class="text-center h3-responsive col">There are no stats added for this league yet</h3>
+						@endif
 					</div>
-					<!--./ League season schedule snap shot /.-->
-					
-					<!-- League season teams snap shot -->
-					<div class="col-8 mx-auto my-5">
-						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-							<h1 class="h1-responsive">Quick Teams</h1>
-							<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Teams</a>
-						</div>
-						<div class="my-5 d-flex align-items-center justify-content-around">
-							@if($showSeasonTeams->isNotEmpty())
-								<p class="">
-									<label>Total Teams:&nbsp;<label>
-									<span class="text-muted text-underline font-weight-bold">{{ $showSeasonTeams->count() }}</span>
-								</p>
-								<p class="">
-									<label>Total Players:&nbsp;<label>
-									<span class="text-muted text-underline font-weight-bold">{{ $showSeasonPlayers->count() }}</span>
-								</p>
-								<p class="">
-									<label>Unpaid Teams:&nbsp;<label>
-									<span class="text-muted text-underline font-weight-bold">{{ $showSeasonUnpaidTeams->count() }}</span>
-								</p>
-							@else
-								<h3 class="h3-responsive">No teams showing for this season</h3>
-							@endif
-						</div>
-					</div>
-					<!--./ League season teams snap shot /.-->
-					
-					<!-- League season stats snap shot -->
-					<div class="col-8 mx-auto my-5">
-						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-							<h1 class="h1-responsive">Quick Stats</h1>
-							<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
-						</div>
-						<div class="my-5 row">
-							<!-- Season stat leaders by category -->
-							@if($showSeasonStat->isNotEmpty())
-								<!-- Get the scoring leaders -->
-								<div class="blue-gradient col m-1">
-									<table class="table white-text">
-										<thead>
-											<tr>
-												<th>Team</th>
-												<th>Player</th>
-												<th>PPG</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
-												<tr class="white-text">
-													<td>{{ $playerStat->player->team_name }}</td>
-													<td>{{ $playerStat->player->player_name }}</td>
-													<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
-												</tr>
-											@endforeach
-										</tbody>
-									</table>
-								</div>
-								
-								<!-- Get the rebounding leaders -->
-								<div class="blue-gradient col m-1">
-									<table class="table white-text">
-										<thead>
-											<tr>
-												<th>Team</th>
-												<th>Player</th>
-												<th>RPG</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
-												<tr class="white-text">
-													<td>{{ $playerStat->player->team_name }}</td>
-													<td>{{ $playerStat->player->player_name }}</td>
-													<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
-												</tr>
-											@endforeach
-										</tbody>
-									</table>
-								</div>
-								
-								<!-- Get the assisting leaders -->
-								<div class="blue-gradient col m-1">
-									<table class="table white-text">
-										<thead>
-											<tr>
-												<th>Team</th>
-												<th>Player</th>
-												<th>APG</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
-												<tr class="white-text">
-													<td>{{ $playerStat->player->team_name }}</td>
-													<td>{{ $playerStat->player->player_name }}</td>
-													<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
-												</tr>
-											@endforeach
-										</tbody>
-									</table>
-								</div>
-								
-								<!-- Get the stealing leaders -->
-								<div class="blue-gradient col m-1">
-									<table class="table white-text">
-										<thead>
-											<tr>
-												<th>Team</th>
-												<th>Player</th>
-												<th>SPG</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
-												<tr class="white-text">
-													<td>{{ $playerStat->player->team_name }}</td>
-													<td>{{ $playerStat->player->player_name }}</td>
-													<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
-												</tr>
-											@endforeach
-										</tbody>
-									</table>
-								</div>
-								
-								<!-- Get the blocking leaders -->
-								<div class="blue-gradient col m-1">
-									<table class="table white-text">
-										<thead>
-											<tr>
-												<th>Team</th>
-												<th>Player</th>
-												<th>BPG</th>
-											</tr>
-										</thead>
-										<tbody>
-											@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
-												<tr class="white-text">
-													<td>{{ $playerBlocks->player->team_name }}</td>
-													<td>{{ $playerBlocks->player->player_name }}</td>
-													<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
-												</tr>
-											@endforeach
-										</tbody>
-									</table>
-								</div>
-							@else
-								<h3 class="text-center h3-responsive col">There are no stats added for this league yet</h3>
-							@endif
-						</div>
-					</div>
-					<!--./ League season stats snap shot /.-->
 				</div>
-			@else
-			@endif
+				<!--./ League season stats snap shot /.-->
+			</div>
 		@else
 		@endif
 		
@@ -413,7 +408,7 @@
 													<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 												</div>
 
-												<input type="number" name="league_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->leagues_fee == null ? 0.00 : $showSeason->league_profile->leagues_fee : $showSeason->leagues_fee == null ? 0.00 : $showSeason->leagues_fee }}" step="0.01" placeholder="League Entry Fee" required />
+												<input type="number" name="league_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->leagues_fee == null ? '0.00' : $showSeason->leagues_fee == null ? '0.00' : $showSeason->leagues_fee : '0.00' }}" step="0.01" placeholder="League Entry Fee" required />
 												
 												<input type="number" name="league_id" class="hidden" value="{{ $showSeason->league_profile ? $showSeason->league_profile->id : $showSeason->id }}" hidden />
 												
@@ -430,7 +425,7 @@
 													<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
 												</div>
 												
-												<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->ref_fee == null ? 0.00 : $showSeason->league_profile->ref_fee : $showSeason->ref_fee == null ? 0.00 : $showSeason->ref_fee }}" step="0.01" placeholder="League Referee Fee" required />
+												<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->ref_fee == null ? '0.00' : $showSeason->ref_fee == null ? '0.00' : $showSeason->ref_fee : '0.00' }}" step="0.01" placeholder="League Referee Fee" required />
 												
 												<div class="input-group-prepend">
 													<span class="input-group-text">Per Game</span>
@@ -475,31 +470,32 @@
 										<label data-error="wrong" data-success="right" for="age_group">Games Location</label>
 									</div>
 								</div>
-								<div class="payPalCheckout animated hidden">
-									<div class="row">
+								<div class="payPalCheckout coolText4 animated hidden">
+									<div class="row mb-3">
 										<div class="col-12">
-											<h2 class="">To continue, select the PayPal checkout button. Each season is $100 and includes all features throughout the whole season. Your will be redirected to your new season once payment is accepted.</h2>
+											<h3 class="h3-responsive">To continue, select the PayPal checkout button. Each season is $100 and includes all features throughout the whole season. Your will be redirected to your new season once payment is accepted.</h3>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-12">
-											<h4 class="h4-responsive">New Season For</h4>
-											<p class="payPalCheckoutSeason"></p>
+										<div class="col-12 text-center">
+											<h4 class="h4-responsive">New Season For	
+												<span class="payPalCheckoutSeason"></span>
+											</h4>
 										</div>
 										<div class="col-6">
-											<p class="">Season Name</p>
+											<p class="text-underline mb-0">Season Name</p>
 											<p class="payPalCheckoutSeasonName"></p>
 										</div>
 										<div class="col-6">
-											<p class="">Season Location</p>
+											<p class="text-underline mb-0">Season Location</p>
 											<p class="payPalCheckoutSeasonLocation"></p>
 										</div>
 										<div class="col-6">
-											<p class="">Season Levels</p>
+											<p class="text-underline mb-0">Season Levels</p>
 											<p class="payPalCheckoutSeasonLevel"></p>
 										</div>
 										<div class="col-6">
-											<p class="">Season Cost</p>
+											<p class="text-underline mb-0">Season Cost</p>
 											<p class="payPalCheckoutSeasonCost"></p>
 										</div>
 									</div>

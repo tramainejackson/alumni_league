@@ -61,18 +61,62 @@ $(document).ready(function() {
 	
 	// Remove new season info and bring up paypal info
 	$("body").on("click", ".addSeasonBtn", function(e) {
+		var errors = 0;
+		
 		// Add form values to paypal info modal
-		$('.payPalCheckoutSeason').text($('.newSeasonInfo select[name="season"]').val() + ' ' + $('.newSeasonInfo select[name="year"]').val());
-		$('.payPalCheckoutSeasonName').text($('.newSeasonInfo input[name="name"]').val());
-		$('.payPalCheckoutSeasonLevel').text($('.newSeasonInfo select[name="age_group"]').val().replace(/_/g, " ") + ' ' + $('.newSeasonInfo select[name="comp_group"]').val());
-		$('.payPalCheckoutSeasonCost').text('League Fee $' + $('.newSeasonInfo input[name="league_fee"]').val() + ' Ref Fee $' + $('.newSeasonInfo input[name="ref_fee"]').val());
+		if($('.newSeasonInfo select[name="season"]').val() === null || $('.newSeasonInfo select[name="year"]').val() === null) {
+			
+			errors++;
+			
+			// Display an error toast
+			toastr.error('Complete season and year need to be entered.');
+			
+		} else {
+			
+			$('.payPalCheckoutSeason').text($('.newSeasonInfo select[name="season"]').val() + ' ' + $('.newSeasonInfo select[name="year"]').val());
+			
+		}
+		
+		if($('.newSeasonInfo input[name="name"]').val() === null || $('.newSeasonInfo input[name="name"]').val() == '') {
+			
+			errors++;
+
+			// Display an error toast
+			toastr.error('No season name entered.');
+			
+		} else {
+			
+			$('.payPalCheckoutSeasonName').text($('.newSeasonInfo input[name="name"]').val().replace(/_/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()}));
+			
+		}
+			
+		
+		if($('.newSeasonInfo input[name="league_fee"]').val() == '' || $('.newSeasonInfo input[name="ref_fee"]').val() == '') {
+			
+			errors++;
+			
+			// Display an error toast
+			toastr.error('League fee and ref fees need to be entered.');
+			
+		} else {
+			
+			$('.payPalCheckoutSeasonCost').text('League Fee $' + $('.newSeasonInfo input[name="league_fee"]').val() + ' | Ref Fee $' + $('.newSeasonInfo input[name="ref_fee"]').val());
+			
+		}
+		
+		$('.payPalCheckoutSeasonLevel').text($('.newSeasonInfo select[name="age_group"]').val().replace(/_/g, " ").replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()}) + ' ' + $('.newSeasonInfo select[name="comp_group"]').val().replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()}));
+		
 		$('.payPalCheckoutSeasonLocation').text($('.newSeasonInfo input[name="location"]').val());
 		
-		$('.payPalCheckout, .payPalCheckoutBtn').addClass('lightSpeedIn');
-		$(this).add($('.newSeasonInfo')).addClass('lightSpeedOut').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-			$('.payPalCheckout, .payPalCheckoutBtn').removeClass('hidden');
-			$(this).add($('.newSeasonInfo')).addClass('hidden');
-		});
+		if(errors < 1) {
+			
+			$('.payPalCheckout, .payPalCheckoutBtn').addClass('lightSpeedIn');
+			$(this).add($('.newSeasonInfo')).addClass('lightSpeedOut').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
+				$('.payPalCheckout, .payPalCheckoutBtn').removeClass('hidden');
+				$(this).add($('.newSeasonInfo')).addClass('hidden');
+			});
+			
+		}
 	});
 	
 	// Toggle value for checked item 
@@ -276,6 +320,90 @@ $(document).ready(function() {
 		statsToggle();
 	});
 	
+	// Check current game form inputs before submitting
+	$('form[name="edit_game_form"]').on('submit', function() {
+		var errors = 0;
+		
+		if($('form[name="edit_game_form"] input[name="edit_game_time"]').val() === null || $('form[name="edit_game_form"] input[name="edit_game_time"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game time has to be selected.');
+		}
+		
+		if($('form[name="edit_game_form"] input[name="edit_date_picker"]').val() === null || $('form[name="edit_game_form"] input[name="edit_date_picker"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game date has to be selected.');
+		}
+		
+		if(errors < 1) {
+			
+			return true;
+			
+		} else {
+			
+			return false;
+		}
+	});	
+	
+	// Check new game form inputs before submitting
+	$('form[name="new_game_form"]').on('submit', function() {
+		var errors = 0;
+		
+		if($('form[name="new_game_form"] select[name="season_week"]').val() === null || $('form[name="new_game_form"] select[name="season_week"]').val() == 'blank') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A week needs to be selected to add the new game to.');
+		}
+		
+		if($('form[name="new_game_form"] select[name="away_team"]').val() === null || $('form[name="new_game_form"] select[name="away_team"]').val() == 'blank') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('An away team has to be selected.');
+		}
+		
+		if($('form[name="new_game_form"] select[name="home_team"]').val() === null || $('form[name="new_game_form"] select[name="home_team"]').val() == 'blank') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A home team has to be selected.');
+		}
+		
+		if($('form[name="new_game_form"] input[name="game_time"]').val() === null || $('form[name="new_game_form"] input[name="game_time"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game time has to be selected.');
+		}
+		
+		if($('form[name="new_game_form"] input[name="date_picker"]').val() === null || $('form[name="new_game_form"] input[name="date_picker"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game date has to be selected.');
+		}
+		
+		if(errors < 1) {
+			
+			return true;
+			
+		} else {
+			
+			return false;
+		}
+	});
+	
 	//Add player stats to player card and display
 	$("body").on("click", ".leagueLeadersCategory tr:not(.leagueLeadersCategoryFR), #player_stats tr:not(:first)", function(e)
 	{
@@ -348,64 +476,56 @@ $(document).ready(function() {
 		$(".teamCardHeader img").attr('src',teamStats[18]);
 	});
 	
-// Change the scores background color
-	$("body").on("change", ".awayTeamScore, .homeTeamScore", function(e){
-		if($(this).attr("class") == "awayTeamScore teamScore")
-		{
-			var away_score = $(this);
-			var away_name = $(this).parent().parent().find(".away_team_select");
-			var home_score = $(this).parent().next().children(".homeTeamScore");
-			var home_name = $(this).parent().parent().find(".home_team_select");
-			if($(away_score).val() > $(home_score).val())
-			{
-				$(away_score).css({backgroundColor:"green", color:"white"});
-				$(away_name).css({backgroundColor:"green", color:"white"});
-				$(home_score).css({backgroundColor:"red", color:"white"});
-				$(home_name).css({backgroundColor:"red", color:"white"});
+	// Upload new images for the league. Add progress bar while uploading
+	$('body').on('click', 'form[name="new_pictures_form"] button[type="button"]', function() {
+		// event.preventDefault();
+		var formData = new FormData();
+		
+		if(document.getElementById('new_picture_file').files.length > 1) {
+			 var i = 0, len = document.getElementById('new_picture_file').files.length;
+			 
+			for(i; i < len; i++) {
+				formData.append("team_photo[]", document.getElementById('new_picture_file').files[i]);
 			}
-			else if($(away_score).val() < $(home_score).val())
-			{
-				$(away_score).css({backgroundColor:"red", color:"white"});
-				$(away_name).css({backgroundColor:"red", color:"white"});
-				$(home_score).css({backgroundColor:"green", color:"white"});
-				$(home_name).css({backgroundColor:"green", color:"white"});
-			}
-			else
-			{
-				$(away_score).css({backgroundColor:"yellow", color:"initial"});
-				$(away_name).css({backgroundColor:"yellow", color:"initial"});
-				$(home_score).css({backgroundColor:"yellow", color:"initial"});
-				$(home_name).css({backgroundColor:"yellow", color:"initial"});
-			}
+			
+		} else {
+			
+			formData.append("team_photo[]", document.getElementById('new_picture_file').files[0]);
+
 		}
-		else
-		{
-			var home_score = $(this);
-			var away_score = $(this).parent().prev().children(".awayTeamScore");
-			var away_name = $(this).parent().parent().find(".away_team_select");
-			var home_name = $(this).parent().parent().find(".home_team_select");
-			if($(away_score).val() > $(home_score).val())
-			{
-				$(away_score).css({backgroundColor:"green", color:"white"});
-				$(away_name).css({backgroundColor:"green", color:"white"});
-				$(home_score).css({backgroundColor:"red", color:"white"});
-				$(home_name).css({backgroundColor:"red", color:"white"});
-			}
-			else if($(away_score).val() < $(home_score).val())
-			{
-				$(away_score).css({backgroundColor:"red", color:"white"});
-				$(away_name).css({backgroundColor:"red", color:"white"});
-				$(home_score).css({backgroundColor:"green", color:"white"});
-				$(home_name).css({backgroundColor:"green", color:"white"});
-			}
-			else
-			{
-				$(away_score).css({backgroundColor:"yellow", color:"initial"});
-				$(away_name).css({backgroundColor:"yellow", color:"initial"});
-				$(home_score).css({backgroundColor:"yellow", color:"initial"});
-				$(home_name).css({backgroundColor:"yellow", color:"initial"});
-			}
-		}
+
+		$.ajax({
+			url: "/league_pictures/",
+			method: "POST",
+			data: formData,
+			contentType: false,
+			processData: false,
+			cache: false,
+			xhr: function() {
+				var xhr = new XMLHttpRequest();
+				
+				xhr.upload.addEventListener('progress', function(e) {
+					var progressbar = Math.round((e.loaded/e.total) * 100);
+					$('#progress_modal').modal('show');
+					$('#pro').css('width', progressbar + '%').text(progressbar + '%');
+				});
+				
+				return xhr;
+			},
+			
+			success: function(data) {
+				$('#progress_modal').modal('hide');
+				
+				// Display an error toast
+				toastr.success('Images added successfully.');
+			
+				setTimeout(function() {
+					window.open('/league_pictures', '_self');
+				}, 3000);
+			},
+		});
+		
+		return false;
 	});
 });
 

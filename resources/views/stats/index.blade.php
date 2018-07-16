@@ -31,10 +31,12 @@
 						<button type="button" class="btn statCategoryBtn gray w-100" id="player_stats_btn">Player Stats</button>
 						<button type="button" class="btn statCategoryBtn gray w-100" id="team_stats_btn">Team Stats</button>
 					</div>
-					<div id="league_stats" class="container-fluid">
+					<div id="league_stats" class="container-fluid mb-4">
+					
 						<div id="league_leaders" class="row">
-							<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_points">
-								<table class="table table-responsive-sm" id="points_category">
+						
+							<div class="leagueLeadersCategory col-12 col-md my-1 mx-auto table-wrapper" id="league_leaders_points">
+								<table class="table" id="points_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -66,8 +68,9 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_assist">
-								<table class="table table-responsive-sm" id="assist_category">
+							
+							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_assist">
+								<table class="table" id="assist_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -99,8 +102,9 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_rebounds">
-								<table class="table table-responsive-sm" id="rebounds_category">
+							
+							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_rebounds">
+								<table class="table" id="rebounds_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -132,8 +136,9 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_steals">
-								<table class="table table-responsive-sm" id="steals_category">
+							
+							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_steals">
+								<table class="table" id="steals_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -165,8 +170,9 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="leagueLeadersCategory col-12 col-md mx-auto" id="league_leaders_blocks">
-								<table class="table table-responsive-sm" id="blocks_category">
+							
+							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_blocks">
+								<table class="table" id="blocks_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -198,9 +204,11 @@
 									</tbody>
 								</table>
 							</div>
+						
 						</div>
+						
 						<div class="hidden table-wrapper" id="player_stats" style="display:none !important; max-height: initial;">
-							<table class="table" id="player_stats_table">
+							<table class="table table-bordered" id="player_stats_table">
 								<thead>
 									<tr>
 										<th></th>
@@ -246,7 +254,7 @@
 						</div>
 
 						<div class="hidden table-wrapper" id="team_stats" style="display:none !important; max-height: initial;">
-							<table class="table" id="team_stats_table">
+							<table class="table table-bordered" id="team_stats_table">
 								<thead>
 									<tr class='text-center'>
 										<th></th>

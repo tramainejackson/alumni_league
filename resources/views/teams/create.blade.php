@@ -25,7 +25,7 @@
 						<img src="{{ $defaultImg }}" class="img-fluid mx-auto" alt="photo">
 					</div>
 					<!--Card content-->
-					<div class="card-body">
+					<div class="card-body rgba-white-strong rounded z-depth-1-half">
 						<!--Title-->
 						<h2 class="card-title h2-responsive text-center">Create New Team</h2>
 						<!-- Create Form -->

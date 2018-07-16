@@ -960,21 +960,22 @@ div#league_leaders_points {
     color: white;
 }
 
-div#player_stats {
+div#player_stats table {
 	background-color: rgba(63, 124, 234, 0.8);
     color: white;
 }
 
-div#team_stats {
+div#team_stats table {
 	background-color: rgba(22, 99, 241, 0.8);
     color: white;
 }
 
-table#team_stats_table tr:hover, table#player_stats_table tr:hover {
+table#team_stats_table tbody tr:hover, table#player_stats_table tbody tr:hover {
     background-color: antiquewhite;
 	cursor: pointer;
+	color: black;
 }
-div.leagueLeadersCategory table tr:hover {
+div.leagueLeadersCategory table tbody tr:hover {
     background-color: cornflowerblue;
     color: black;
 	cursor: pointer;
