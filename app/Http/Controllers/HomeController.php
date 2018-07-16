@@ -102,14 +102,21 @@ class HomeController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 
-		if($showSeason->seasons->isNotEmpty()) {
+		if($showSeason !== null) {
 			
-			return view('about', compact('showSeason', 'activeSeasons'));
+			if($showSeason->seasons->isNotEmpty()) {
+				
+				return view('about', compact('showSeason', 'activeSeasons'));
 
+			} else {
+
+				return view('no_season', compact('showSeason'));
+
+			}
 		} else {
 
-			return view('no_season', compact('showSeason'));
-
+			return view('about', compact('showSeason'));
+			
 		}
     }
 	
@@ -221,7 +228,7 @@ class HomeController extends Controller
 			$showSeason = '';
 
 			if($request->query('season') != null && $request->query('year') != null) {
-				
+
 				$showSeason = $league->seasons()->active()->find($request->query('season'));
 				
 			} else {

@@ -42,7 +42,7 @@ class LeagueSeasonController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {		
+    {
 		$season = new LeagueSeason();
 		$season->league_profile_id = $request->league_id;
 		$season->season = $request->season;
@@ -59,7 +59,7 @@ class LeagueSeasonController extends Controller
 		if($season->save()) {
 			if($season->playoffs()->create([])) {
 				$newSeason = $season->id;
-				// return redirect()->action('HomeController@index')->with(['status' => 'New Season Added Successfully']);
+
 				return [$newSeason, "New Season Added Successfully"];
 			}
 		}

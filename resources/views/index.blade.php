@@ -359,7 +359,7 @@
 		<div class="modal fade" id="newSeasonForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg" role="document">
 				<div class="modal-content">
-					{!! Form::open(['action' => ['LeagueSeasonController@store', 'league' => !isset($allComplete) ? $showSeason->league_profile->id : $showSeason->id], 'method' => 'POST']) !!}
+					{!! Form::open(['action' => 'LeagueSeasonController@store', 'method' => 'POST', 'name' => 'newSeasonForm']) !!}
 						<div class="modal-header text-center">
 							<h4 class="modal-title w-100 font-weight-bold">New Season</h4>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">

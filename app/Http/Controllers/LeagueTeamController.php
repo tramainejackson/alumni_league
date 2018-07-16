@@ -139,16 +139,25 @@ class LeagueTeamController extends Controller
     {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		
+		if($showSeason->league_teams->contains('id', $league_team->id)) {
 
-		// Resize the default image
-		Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
-				$constraint->aspectRatio();
-			}
-		)->save(storage_path('app/public/images/lg/default_img.jpg'));
-		$defaultImg = asset('/storage/images/lg/default_img.jpg');
+			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 
-		return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons'));
+			// Resize the default image
+			Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
+					$constraint->aspectRatio();
+				}
+			)->save(storage_path('app/public/images/lg/default_img.jpg'));
+			$defaultImg = asset('/storage/images/lg/default_img.jpg');
+
+			return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons'));
+			
+		} else {
+			
+			abort(404);
+
+		}
     }
 	
 	/**

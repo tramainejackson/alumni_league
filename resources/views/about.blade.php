@@ -111,13 +111,14 @@
 		</div>
 		
 		<div class="">
-			<div class="view d-flex align-items-center justify-content-center">
+			<div class="view d-flex align-items-center justify-content-center text-center">
 				<div class="">
-					<p class="">Not sure if this is for your league or not?</p>
-					<p class="">Click here and take it for a test drive with the test account</p>
+					<h1 class="h1-responsive coolText3">Not sure if this is for your league or not?</h1>
+					
+					<h2 class="h2-responsive my-3 coolText3">Click here and take it for a test drive with the test account</h2>
 					
 					<p class="">
-						<a href="{{ route('test_drive') }}" class="btn peach-gradient">Test Drive</a>
+						<a href="{{ route('test_drive') }}" class="btn btn-lg peach-gradient">Test Drive</a>
 					</p>
 				</div>
 			</div>
