@@ -325,22 +325,35 @@
 		<div class="">
 			<!-- Player Card -->
 			<div class="modal fade" id="player_card" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="true">
+			
 				<div class="modal-dialog modal-lg">
+				
 					<div class="modal-content">
+					
 						<!--Card-->
-						<div class="card black white-text">
+						<div class="card testimonial-card">
+						
+							<!-- Bacground color -->
+							<div class="card-up dark-gradient lighten-1">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+	
 							<!--Card image-->
-							<div class="view playerCardHeader gradient-card-header blue-gradient">
+							<div class="avatar mx-auto white">
+								<img src="{{ $defaultImg }}" class="rounded-circle">
+							</div>
+							
+							<!--Card content-->
+							<div class="card-body playerCardStats container-fluid">
+							
 								<div class="card-header-title">
 									<h2 class="playerNamePlayerCard"></h2>
-								
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
 								</div>
-							</div>
-							<!--Card content-->
-							<div class="card-body black white-text text-center playerCardStats container-fluid">
+								
+								<hr/>
+								
 								<div class="row">
 									<div class="col-4 playerCardStatsLI">
 										<b>Team Name:</b> <span class="teamNameVal"></span>

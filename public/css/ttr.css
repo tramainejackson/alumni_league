@@ -42,6 +42,10 @@ html, body, header, .view {
     background-attachment: fixed;
 }
 
+.dark-gradient {
+	background: -webkit-linear-gradient(50deg,#5e6b72,#0a6c8a)!important;
+}
+
 .card .view {
 	min-height: initial !important;
 }
@@ -1609,30 +1613,12 @@ span.menuLiSpan {
     font-size: 200%;
 }
 
-.list {}
-
-.list2, .list1 {}
-
-.list2 td {}
-
-.list2 a:not(.noLeaguesLink), .list1 a {}
-
-.list1 td a:hover, .list2 td a:not(.noLeaguesLink):hover {}
-
-.list2 td a:hover {}
-
-table.list1 td {}
-
 img.fireIcon1, img.fireIcon2 {
     /* height: 65px; */
     max-height: 100%;
     width: 120px;
     max-width: 20%;
 }
-
-img.fireIcon1 {}
-
-img.fireIcon2 {}
 
 #recs_list_div td, #leagues_list_div td {
     font-size: 125%;
@@ -1669,9 +1655,6 @@ a.search_list_link:hover {
 .recs_modal .recDiv, .leagues_modal .leagueDiv {
     display: block;
     font-size: 150%;
-}
-
-.leagues_modal .leagueDiv {
 }
 
 .leagues_modal .leagueDiv .leagueProfileSub, .recs_modal .recDiv .recProfileSub {

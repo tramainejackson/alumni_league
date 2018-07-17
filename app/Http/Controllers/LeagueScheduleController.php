@@ -553,6 +553,7 @@ class LeagueScheduleController extends Controller
 			// If teams were changed then remove team that was changed and 
 			// add new players
 			if($game->player_stats->isNotEmpty()) {
+
 				$currentTeamID1 = $game->player_stats()->teams()[0]->league_teams_id;
 				$currentTeamID2 = $game->player_stats()->teams()[1]->league_teams_id;
 				// Remove team players if they do not match either team that was saved

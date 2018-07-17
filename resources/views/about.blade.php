@@ -111,7 +111,7 @@
 		</div>
 		
 		<div class="">
-			<div class="view d-flex align-items-center justify-content-center text-center">
+			<div class="view d-flex align-items-center justify-content-center text-center rgba-black-slight">
 				<div class="">
 					<h1 class="h1-responsive coolText3">Not sure if this is for your league or not?</h1>
 					

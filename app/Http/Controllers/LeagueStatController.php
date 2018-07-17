@@ -44,7 +44,7 @@ class LeagueStatController extends Controller
 				$checkStats = $seasonScheduleWeeks = $$seasonTeams = $allPlayers = $allTeams = collect();
 				
 				// Resize the default image
-				Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
+				Image::make(public_path('images/emptyface.jpg'))->resize(800, null, 	function ($constraint) {
 						$constraint->aspectRatio();
 					}
 				)->save(storage_path('app/public/images/lg/default_img.jpg'));
@@ -79,9 +79,9 @@ class LeagueStatController extends Controller
 			$allTeams = $showSeason->stats()->allTeamStats();
 			$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 			$checkStats = $showSeason->stats()->allFormattedStats()->get()->isNotEmpty();
-			
+
 			// Resize the default image
-			Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
+			Image::make(public_path('images/emptyface.jpg'))->resize(800, null, 	function ($constraint) {
 					$constraint->aspectRatio();
 				}
 			)->save(storage_path('app/public/images/lg/default_img.jpg'));
@@ -174,6 +174,16 @@ class LeagueStatController extends Controller
 					$away_stat->league_teams_id = $away_team->id;
 					$away_stat->league_schedule_id = $game->id;
 					
+					if($player_points[$counter] !== null || $player_assists[$counter] !== null || $player_rebounds[$counter] !== null || $player_steals[$counter] !== null || $player_blocks[$counter] !== null) {
+						
+						$away_stat->game_played = 1;
+						
+					} else {
+						
+						$away_stat->game_played = 0;
+						
+					}
+					
 					if($away_stat->save()) {
 						$counter++;
 					}
@@ -191,6 +201,16 @@ class LeagueStatController extends Controller
 					$home_stat->league_player_id = $home_player->id;
 					$home_stat->league_teams_id = $home_team->id;
 					$home_stat->league_schedule_id = $game->id;
+					
+					if($player_points[$counter] !== null || $player_assists[$counter] !== null || $player_rebounds[$counter] !== null || $player_steals[$counter] !== null || $player_blocks[$counter] !== null) {
+					
+						$home_stat->game_played = 1;
+					
+					} else {
+						
+						$home_stat->game_played = 0;
+						
+					}
 					
 					if($home_stat->save()) {
 						$counter++;
@@ -227,6 +247,16 @@ class LeagueStatController extends Controller
 					$away_stat->league_teams_id = $away_team->id;
 					$away_stat->league_schedule_id = $game->id;
 					
+					if($player_points[$counter] !== null || $player_assists[$counter] !== null || $player_rebounds[$counter] !== null || $player_steals[$counter] !== null || $player_blocks[$counter] !== null) {
+
+						$away_stat->game_played = 1;
+						
+					} else {
+						
+						$away_stat->game_played = 0;						
+						
+					}
+					
 					if($away_stat->save()) {
 						$counter++;
 					}
@@ -244,6 +274,16 @@ class LeagueStatController extends Controller
 					$home_stat->league_player_id = $home_player->id;
 					$home_stat->league_teams_id = $home_team->id;
 					$home_stat->league_schedule_id = $game->id;
+					
+					if($player_points[$counter] !== null || $player_assists[$counter] !== null || $player_rebounds[$counter] !== null || $player_steals[$counter] !== null || $player_blocks[$counter] !== null) {
+						
+						$home_stat->game_played = 1;
+						
+					} else {
+						
+						$home_stat->game_played = 0;						
+						
+					}
 					
 					if($home_stat->save()) {
 						$counter++;

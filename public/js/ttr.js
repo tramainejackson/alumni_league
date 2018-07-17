@@ -521,7 +521,7 @@ $(document).ready(function() {
 			
 				setTimeout(function() {
 					window.open('/league_pictures', '_self');
-				}, 3000);
+				}, 2000);
 			},
 		});
 		

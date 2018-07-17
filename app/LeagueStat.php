@@ -134,19 +134,18 @@ class LeagueStat extends Model
 			SUM(steals) AS TSTL,
 			SUM(blocks) AS TBLK,
 			FORMAT(team_points/team_games, 1) AS PPG,
-			FORMAT(SUM(threes_made)/team_games, 1) AS TPG,
-			FORMAT(SUM(ft_made)/team_games, 1) AS FTPG,
-			FORMAT(SUM(assist)/team_games, 1) AS APG,
-			FORMAT(SUM(steals)/team_games, 1) AS SPG,
-			FORMAT(SUM(rebounds)/team_games, 1) AS RPG,
-			FORMAT(SUM(blocks)/team_games, 1) AS BPG,
+			FORMAT(SUM(threes_made)/COUNT(league_stats.league_teams_id), 1) AS TPG,
+			FORMAT(SUM(ft_made)/COUNT(league_stats.league_teams_id), 1) AS FTPG,
+			FORMAT(SUM(assist)/COUNT(league_stats.league_teams_id), 1) AS APG,
+			FORMAT(SUM(steals)/COUNT(league_stats.league_teams_id), 1) AS SPG,
+			FORMAT(SUM(rebounds)/COUNT(league_stats.league_teams_id), 1) AS RPG,
+			FORMAT(SUM(blocks)/COUNT(league_stats.league_teams_id), 1) AS BPG,
 			league_standings.league_team_id,
 			league_standings.team_name,
 			team_games,
 			team_wins,
 			team_losses,
-			team_games,
-			team_picture")
+			team_games")
 		)
 		->groupBy('league_teams_id')
 		->orderBy('TPTS', 'desc');
