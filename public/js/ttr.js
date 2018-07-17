@@ -495,7 +495,7 @@ $(document).ready(function() {
 		}
 
 		$.ajax({
-			url: "/league_pictures/",
+			url: "/league_pictures",
 			method: "POST",
 			data: formData,
 			contentType: false,
