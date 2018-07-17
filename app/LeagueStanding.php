@@ -69,7 +69,7 @@ class LeagueStanding extends Model
 	* Scope a query to update standings for this season.
 	*/
 	public function scopeStandingUpdate($query) {
-		$teamStandings = $query->get();
+		$teamStandings = $query->where('deleted_at', null)->get();
 		
 		// Update each team standings row
 		foreach($teamStandings as $teamStanding) {

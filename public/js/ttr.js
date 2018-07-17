@@ -404,6 +404,56 @@ $(document).ready(function() {
 		}
 	});
 	
+	// Check new week form inputs before submitting
+	$('form[name="new_week_form"]').on('submit', function() {
+		var errors = 0;
+		
+		// Check for empty away teams
+		if($('form[name="new_week_form"] select[name="away_team[]"]').val() === null || $('form[name="new_week_form"] select[name="away_team[]"]').val() == 'blank') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('An away team has to be selected for every game.');
+		}
+		
+		// Check for empty home teams
+		if($('form[name="new_week_form"] select[name="home_team[]"]').val() === null || $('form[name="new_week_form"] select[name="home_team[]"]').val() == 'blank') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A home team has to be selected for every game.');
+		}
+		
+		// Check for empty game times
+		if($('form[name="new_week_form"] input[name="game_time[]"]').val() === null || $('form[name="new_week_form"] input[name="game_time[]"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game time has to be selected for every game.');
+		}
+		
+		// Check for empty game dates
+		if($('form[name="new_week_form"] input[name="date_picker[]"]').val() === null || $('form[name="new_week_form"] input[name="date_picker[]"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game date has to be selected for every game.');
+		}
+		
+		if(errors < 1) {
+			
+			return true;
+			
+		} else {
+			
+			return false;
+		}
+	});
+	
 	//Add player stats to player card and display
 	$("body").on("click", ".leagueLeadersCategory tr:not(.leagueLeadersCategoryFR), #player_stats tr:not(:first)", function(e)
 	{

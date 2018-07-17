@@ -21,7 +21,7 @@
 					<h4 class="h4-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;You currently have {{ $weekCount->count() > 0 ? $weekCount->count() : '0' }} weeks showing. This will add week {{ ($weekCount->count() + 1) }} to the schedule&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h4>
 				</div>
 				
-				{!! Form::open(['action' => ['LeagueScheduleController@add_week', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
+				{!! Form::open(['action' => ['LeagueScheduleController@add_week', 'season' => $showSeason->id, 'year' => $showSeason->year], 'name' =>'new_week_form', 'method' => 'POST']) !!}
 					@if($showSeason->league_teams->count() > 0)
 						@for($i=1; $i <= round($showSeason->league_teams->count() / 2); $i++)
 							<!--Card-->
@@ -41,6 +41,7 @@
 															<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
 														@endforeach
 													</select>
+													
 													<label for="away_team">Away Team</label>
 												</div>
 											</div>
@@ -52,6 +53,7 @@
 															<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
 														@endforeach
 													</select>
+													
 													<label for="home_team">Home Team</label>
 												</div>
 											</div>
@@ -60,12 +62,14 @@
 											<div class="col-12 col-lg">
 												<div class="md-form">
 													<input type="text" name="date_picker[]" id="input_gamedate" class="form-control datetimepicker" value="{{ old('game_date') }}" placeholder="Selected Date" />
+													
 													<label for="input_gamedate">Game Date</label>
 												</div>
 											</div>
 											<div class="col-12 col-lg">
 												<div class="md-form">
 													<input type="text" name="game_time[]" id="input_starttime" class="form-control timepicker" value="{{ old('game_time') }}" placeholder="Selected time" />
+													
 													<label for="input_starttime">Game Time</label>
 												</div>
 											</div>

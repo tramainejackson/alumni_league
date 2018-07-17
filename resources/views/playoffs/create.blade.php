@@ -36,7 +36,7 @@
 											<div class="col">
 												<div class="md-form">
 													<select class="mdb-select" name="away_team[]">
-														<option value="" disabled selected>Choose your option</option>
+														<option value="blank" disabled selected>Choose your option</option>
 														@foreach($showSeason->league_teams as $away_team)
 															<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
 														@endforeach
@@ -47,7 +47,7 @@
 											<div class="col">
 												<div class="md-form">
 													<select class="mdb-select" name="home_team[]">
-														<option value="" disabled selected>Choose your option</option>
+														<option value="blank" disabled selected>Choose your option</option>
 														@foreach($showSeason->league_teams as $home_team)
 															<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
 														@endforeach
@@ -60,12 +60,14 @@
 											<div class="col">
 												<div class="md-form">
 													<input type="text" name="date_picker[]" id="input_gamedate" class="form-control datetimepicker" value="{{ old('game_date') }}" placeholder="Selected Date" />
+													
 													<label for="input_gamedate">Game Date</label>
 												</div>
 											</div>
 											<div class="col">
 												<div class="md-form">
 													<input type="text" name="game_time[]" id="input_starttime" class="form-control timepicker" value="{{ old('game_time') }}" placeholder="Selected time" />
+													
 													<label for="input_starttime">Game Time</label>
 												</div>
 											</div>
