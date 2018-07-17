@@ -153,6 +153,8 @@ class LeagueStatController extends Controller
 			$player_rebounds = $request->edit_rebounds;
 			$player_steals   = $request->edit_steals;
 			$player_blocks   = $request->edit_blocks;
+			$player_threes   = $request->edit_threes;
+			$player_frees  = $request->edit_fts;
 			$counter = 0;
 
 			//Get the games that are getting stats added to them
@@ -169,6 +171,8 @@ class LeagueStatController extends Controller
 					$away_stat->rebounds = $player_rebounds[$counter];
 					$away_stat->steals = $player_steals[$counter];
 					$away_stat->blocks = $player_blocks[$counter];
+					$away_stat->threes_made = $player_threes[$counter];
+					$away_stat->ft_made = $player_frees[$counter];
 					$away_stat->league_season_id = $showSeason->id;
 					$away_stat->league_player_id = $away_player->id;
 					$away_stat->league_teams_id = $away_team->id;
@@ -197,6 +201,8 @@ class LeagueStatController extends Controller
 					$home_stat->rebounds = $player_rebounds[$counter];
 					$home_stat->steals = $player_steals[$counter];
 					$home_stat->blocks = $player_blocks[$counter];
+					$home_stat->threes_made = $player_threes[$counter];
+					$home_stat->ft_made = $player_frees[$counter];
 					$home_stat->league_season_id = $showSeason->id;
 					$home_stat->league_player_id = $home_player->id;
 					$home_stat->league_teams_id = $home_team->id;
@@ -226,6 +232,8 @@ class LeagueStatController extends Controller
 			$player_rebounds = $request->rebounds;
 			$player_steals   = $request->steals;
 			$player_blocks   = $request->blocks;
+			$player_threes   = $request->threes;
+			$player_frees  = $request->fts;
 			$counter = 0;
 
 			//Get the games that are getting stats added to them
@@ -242,6 +250,8 @@ class LeagueStatController extends Controller
 					$away_stat->rebounds = $player_rebounds[$counter];
 					$away_stat->steals = $player_steals[$counter];
 					$away_stat->blocks = $player_blocks[$counter];
+					$away_stat->threes_made = $player_threes[$counter];
+					$away_stat->ft_made = $player_frees[$counter];
 					$away_stat->league_season_id = $showSeason->id;
 					$away_stat->league_player_id = $away_player->id;
 					$away_stat->league_teams_id = $away_team->id;
@@ -270,6 +280,8 @@ class LeagueStatController extends Controller
 					$home_stat->rebounds = $player_rebounds[$counter];
 					$home_stat->steals = $player_steals[$counter];
 					$home_stat->blocks = $player_blocks[$counter];
+					$home_stat->threes_made = $player_threes[$counter];
+					$home_stat->ft_made = $player_frees[$counter];
 					$home_stat->league_season_id = $showSeason->id;
 					$home_stat->league_player_id = $home_player->id;
 					$home_stat->league_teams_id = $home_team->id;

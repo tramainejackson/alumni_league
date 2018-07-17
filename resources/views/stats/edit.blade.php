@@ -54,6 +54,8 @@
 															<tr class="blue darken-3 white-text text-center">
 																<th class="text-nowrap">{{ $game->away_team_obj->team_name }}</th>
 																<th>Points</th>
+																<th>3's</th>
+																<th>FT's</th>
 																<th>Assists</th>
 																<th>Rebounds</th>
 																<th>Steals</th>
@@ -70,7 +72,23 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Pts</span>
 																			</div>
-																			<input type="number" name="edit_points[]" class="form-control" value="{{ $playerStat->points }}" placeholder="Enter Points" />
+																			<input type="number" name="edit_points[]" class="form-control" value="{{ $playerStat->points }}" placeholder="Enter Points" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">3s</span>
+																			</div>
+																			<input type="number" name="edit_threes[]" class="form-control" value="{{ $playerStat->threes_made }}" placeholder="Enter Total 3's" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">FTs</span>
+																			</div>
+																			<input type="number" name="edit_fts[]" class="form-control" value="{{ $playerStat->ft_made }}" placeholder="Enter Total FT's" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -78,7 +96,7 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Ast</span>
 																			</div>
-																			<input type="number" name="edit_assists[]" class="form-control" value="{{ $playerStat->assist }}" placeholder="Enter Assists" />
+																			<input type="number" name="edit_assists[]" class="form-control" value="{{ $playerStat->assist }}" placeholder="Enter Assists" min="0" step="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -87,7 +105,7 @@
 																				<span class="input-group-text">Rebs</span>
 																			</div>
 																			
-																			<input type="number" name="edit_rebounds[]" class="form-control" value="{{ $playerStat->rebounds }}" placeholder="Enter Rebounds" />
+																			<input type="number" name="edit_rebounds[]" class="form-control" value="{{ $playerStat->rebounds }}" placeholder="Enter Rebounds" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -96,7 +114,7 @@
 																				<span class="input-group-text">Stls</span>
 																			</div>
 																			
-																			<input type="number" name="edit_steals[]" class="form-control" value="{{ $playerStat->steals }}" placeholder="Enter Steals" />
+																			<input type="number" name="edit_steals[]" class="form-control" value="{{ $playerStat->steals }}" placeholder="Enter Steals" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -105,7 +123,7 @@
 																				<span class="input-group-text">Blks</span>
 																			</div>
 																			
-																			<input type="number" name="edit_blocks[]" class="form-control" value="{{ $playerStat->blocks }}" placeholder="Enter Blocks" />
+																			<input type="number" name="edit_blocks[]" class="form-control" value="{{ $playerStat->blocks }}" placeholder="Enter Blocks" min="0" />
 																		</div>
 																	</td>
 																</tr>
@@ -119,6 +137,8 @@
 															<tr class="blue-grey white-text text-center">
 																<th class="text-nowrap">{{ $game->home_team_obj->team_name }}</th>
 																<th>Points</th>
+																<th>3's</th>
+																<th>FT's</th>
 																<th>Assists</th>
 																<th>Rebounds</th>
 																<th>Steals</th>
@@ -135,7 +155,23 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Pts</span>
 																			</div>
-																			<input type="number" name="edit_points[]" class="form-control" value="{{ $playerStat->points }}" placeholder="Enter Game Points" />
+																			<input type="number" name="edit_points[]" class="form-control" value="{{ $playerStat->points }}" placeholder="Enter Game Points" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">3s</span>
+																			</div>
+																			<input type="number" name="edit_threes[]" class="form-control" value="{{ $playerStat->threes_made }}" placeholder="Enter Total 3's" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">FTs</span>
+																			</div>
+																			<input type="number" name="edit_fts[]" class="form-control" value="{{ $playerStat->ft_made }}" placeholder="Enter Total FT's" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -143,7 +179,7 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Ast</span>
 																			</div>
-																			<input type="number" name="edit_assists[]" class="form-control" value="{{ $playerStat->assist }}" placeholder="Enter Game Assists" />
+																			<input type="number" name="edit_assists[]" class="form-control" value="{{ $playerStat->assist }}" placeholder="Enter Game Assists" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -152,7 +188,7 @@
 																				<span class="input-group-text">Rebs</span>
 																			</div>
 																			
-																			<input type="number" name="edit_rebounds[]" class="form-control" value="{{ $playerStat->rebounds }}" placeholder="Enter Game Rebounds" />
+																			<input type="number" name="edit_rebounds[]" class="form-control" value="{{ $playerStat->rebounds }}" placeholder="Enter Game Rebounds" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -161,7 +197,7 @@
 																				<span class="input-group-text">Stls</span>
 																			</div>
 																			
-																			<input type="number" name="edit_steals[]" class="form-control" value="{{ $playerStat->steals }}" placeholder="Enter Game Steals" />
+																			<input type="number" name="edit_steals[]" class="form-control" value="{{ $playerStat->steals }}" placeholder="Enter Game Steals" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -170,7 +206,7 @@
 																				<span class="input-group-text">Blks</span>
 																			</div>
 																			
-																			<input type="number" name="edit_blocks[]" class="form-control" value="{{ $playerStat->blocks }}" placeholder="Enter Game Total Blocks" />
+																			<input type="number" name="edit_blocks[]" class="form-control" value="{{ $playerStat->blocks }}" placeholder="Enter Game Total Blocks" min="0" />
 																		</div>
 																	</td>
 																</tr>
@@ -193,6 +229,8 @@
 															<tr class="blue darken-3 white-text text-center">
 																<th>{{ $game->away_team_obj->team_name }}</th>
 																<th>Points</th>
+																<th>3'</th>
+																<th>FT's</th>
 																<th>Assists</th>
 																<th>Rebounds</th>
 																<th>Steals</th>
@@ -208,7 +246,23 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Pts</span>
 																			</div>
-																			<input type="number" name="points[]" class="form-control" value="" placeholder="Enter Points" />
+																			<input type="number" name="points[]" class="form-control" value="" placeholder="Enter Points" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">3s</span>
+																			</div>
+																			<input type="number" name="threes[]" class="form-control" value="" placeholder="Enter Total 3's" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">FTs</span>
+																			</div>
+																			<input type="number" name="fts[]" class="form-control" value="" placeholder="Enter Total FT's" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -216,7 +270,7 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Ast</span>
 																			</div>
-																			<input type="number" name="assists[]" class="form-control" value="" placeholder="Enter Assists" />
+																			<input type="number" name="assists[]" class="form-control" value="" placeholder="Enter Assists" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -225,7 +279,7 @@
 																				<span class="input-group-text">Rebs</span>
 																			</div>
 																			
-																			<input type="number" name="rebounds[]" class="form-control" value="" placeholder="Enter Rebounds" />
+																			<input type="number" name="rebounds[]" class="form-control" value="" placeholder="Enter Rebounds" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -234,7 +288,7 @@
 																				<span class="input-group-text">Stls</span>
 																			</div>
 																			
-																			<input type="number" name="steals[]" class="form-control" value="" placeholder="Enter Steals" />
+																			<input type="number" name="steals[]" class="form-control" value="" placeholder="Enter Steals" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -243,7 +297,7 @@
 																				<span class="input-group-text">Blks</span>
 																			</div>
 																			
-																			<input type="number" name="blocks[]" class="form-control" value="" placeholder="Enter Blocks" />
+																			<input type="number" name="blocks[]" class="form-control" value="" placeholder="Enter Blocks" min="0" />
 																		</div>
 																	</td>
 																</tr>
@@ -257,6 +311,8 @@
 															<tr class="blue-grey white-text text-center">
 																<th>{{ $game->home_team_obj->team_name }}</th>
 																<th>Points</th>
+																<th>3's</th>
+																<th>FT's</th>
 																<th>Assists</th>
 																<th>Rebounds</th>
 																<th>Steals</th>
@@ -272,7 +328,23 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Pts</span>
 																			</div>
-																			<input type="number" name="points[]" class="form-control" value="" placeholder="Enter Game Points" />
+																			<input type="number" name="points[]" class="form-control" value="" placeholder="Enter Game Points" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">3s</span>
+																			</div>
+																			<input type="number" name="threes[]" class="form-control" value="" placeholder="Enter Total 3's" min="0" />
+																		</div>
+																	</td>
+																	<td>
+																		<div class="input-group">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">FTs</span>
+																			</div>
+																			<input type="number" name="fts[]" class="form-control" value="" placeholder="Enter Total FT's" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -280,7 +352,7 @@
 																			<div class="input-group-prepend">
 																				<span class="input-group-text">Ast</span>
 																			</div>
-																			<input type="number" name="assists[]" class="form-control" value="" placeholder="Enter Game Assists" />
+																			<input type="number" name="assists[]" class="form-control" value="" placeholder="Enter Game Assists" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -289,7 +361,7 @@
 																				<span class="input-group-text">Rebs</span>
 																			</div>
 																			
-																			<input type="number" name="rebounds[]" class="form-control" value="" placeholder="Enter Game Rebounds" />
+																			<input type="number" name="rebounds[]" class="form-control" value="" placeholder="Enter Game Rebounds" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -298,7 +370,7 @@
 																				<span class="input-group-text">Stls</span>
 																			</div>
 																			
-																			<input type="number" name="steals[]" class="form-control" value="" placeholder="Enter Game Steals" />
+																			<input type="number" name="steals[]" class="form-control" value="" placeholder="Enter Game Steals" min="0" />
 																		</div>
 																	</td>
 																	<td>
@@ -307,7 +379,7 @@
 																				<span class="input-group-text">Blks</span>
 																			</div>
 																			
-																			<input type="number" name="blocks[]" class="form-control" value="" placeholder="Enter Game Total Blocks" />
+																			<input type="number" name="blocks[]" class="form-control" value="" placeholder="Enter Game Total Blocks" min="0" />
 																		</div>
 																	</td>
 																</tr>

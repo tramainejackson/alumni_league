@@ -348,7 +348,37 @@ $(document).ready(function() {
 			
 			return false;
 		}
-	});	
+	});
+	
+	// Check current game form inputs before submitting
+	$('form[name="edit_week_form"]').on('submit', function() {
+		var errors = 0;
+		
+		if($('form[name="edit_week_form"] input[name="game_time[]"]').val() === null || $('form[name="edit_week_form"] input[name="game_time[]"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game time has to be selected for every dagme.');
+		}
+		
+		if($('form[name="edit_week_form"] input[name="date_picker[]"]').val() === null || $('form[name="edit_week_form"] input[name="date_picker[]"]').val() == '') {
+		
+			errors++;
+			
+			// Display an error toast
+			toastr.error('A game date has to be selected for every dagme.');
+		}
+		
+		if(errors < 1) {
+			
+			return true;
+			
+		} else {
+			
+			return false;
+		}
+	});
 	
 	// Check new game form inputs before submitting
 	$('form[name="new_game_form"]').on('submit', function() {
