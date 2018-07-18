@@ -8,7 +8,12 @@
 				<h2 class="section-heading">Contact us</h2>
 				
 				<!--Google map-->
-				<div id="map-container-8" class="z-depth-1-half map-container mb-4" style="height: 200px"></div>
+				<iframe
+					width="600"
+					height="450"
+					frameborder="0" style="border:0"
+					src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCyVYk1IxEdKvFpzUodUZgaLsaN5g9AAoE&q=Philadelphia+WA" allowfullscreen>
+				</iframe>
 
 				<!-- Contact form -->
 				{!! Form::open(['action' => ['HomeController@store'], 'class' => 'w-100', 'method' => 'POST']) !!}

@@ -13,7 +13,7 @@ $(document).ready(function() {
 	var screenHeight = screen.height;
 	var screenWidth = screen.width;
 
-	google.maps.event.addDomListener(window, 'load', regular_map);
+	// google.maps.event.addDomListener(window, 'load', regular_map);
 	
 	// Animations initialization
 	new WOW().init();
@@ -627,24 +627,24 @@ function statsToggle()
 	}
 }
 
-// Regular map
-function regular_map() {
-	var var_location = new google.maps.LatLng(39.9526, -75.1652);
+// // Regular map
+// function regular_map() {
+	// var var_location = new google.maps.LatLng(39.9526, -75.1652);
 
-	var var_mapoptions = {
-		center: var_location,
-		zoom: 14
-	};
+	// var var_mapoptions = {
+		// center: var_location,
+		// zoom: 14
+	// };
 
-	var var_map = new google.maps.Map(document.getElementById("map-container-8"),
-		var_mapoptions);
+	// var var_map = new google.maps.Map(document.getElementById("map-container-8"),
+		// var_mapoptions);
 
-	var var_marker = new google.maps.Marker({
-		position: var_location,
-		map: var_map,
-		title: "Philadelphia"
-	});
-}
+	// var var_marker = new google.maps.Marker({
+		// position: var_location,
+		// map: var_map,
+		// title: "Philadelphia"
+	// });
+// }
 	
 // Tooltips Initialization
 $(function () {
