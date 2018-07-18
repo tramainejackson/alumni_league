@@ -77,6 +77,3 @@
 		</div>
 	</section> 
 </footer>
-<div class="d-flex black white-text align-items-center justify-content-around">
-	<p class="py-3">Created By: Tramaine Jackson</p>
-</div>
