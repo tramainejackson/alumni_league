@@ -15,6 +15,9 @@
 /public/music/*
 /public/*.jpg
 /public/*.png
+/public/css/addons*
+/public/css/modules/
+/public/js/addons*
 /storage/*.key
 /config/session.php
 /vendor
