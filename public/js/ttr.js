@@ -651,6 +651,11 @@ $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
+// popovers Initialization
+$(function () {
+    $('[data-toggle="popover"]').popover()
+});
+
 // MDB Lightbox Init
 $(function () {
 	$("#mdb-lightbox-ui").load("/addons/mdb-lightbox-ui.html");

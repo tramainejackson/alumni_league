@@ -27,7 +27,7 @@
 		<link href="{{ asset('/css/myIEcss.css') }}" rel="stylesheet">
 	@endif
 	
-	@yield('addt_style')
+	@yield('styles')
 </head>
 <body>
 

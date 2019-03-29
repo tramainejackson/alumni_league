@@ -28,6 +28,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/test_drive', 'HomeController@test_drive')->name('test_drive');
 
+Route::post('/remove_test_drive', 'HomeController@remove_test_drive')->name('remove_test_drive');
+
 Route::post('/home', 'HomeController@store');
 
 Route::get('/archives/{season}', 'HomeController@archive')->name('archives');

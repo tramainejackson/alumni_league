@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-	<div class="view" id="loginPage" style="background-image: url('/images/sports_office.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+	<div class="view" id="login_page">
 		<div class="mask rgba-black-light d-flex justify-content-center align-items-center">
 			<div class="container">
 				<div class="row">

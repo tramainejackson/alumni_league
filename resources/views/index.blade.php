@@ -36,33 +36,42 @@
 				@if(!isset($allComplete))
 					<!-- Show league season info -->
 					@if($showSeason->paid == 'Y')
-						<div class="text-center coolText1">
+						<div class="text-center coolText1 d-flex align-items-center justify-content-center seasonName">
 							<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 						</div>
 
 						<!--Card-->
 						<div class="card">
 							<!--Card content-->
-							<div class="card-body text-center">
+							<div class="card-body">
 								<!-- League season info -->
 								<div class="">
 									{!! Form::open(['action' => ['LeagueSeasonController@update', $showSeason->league_profile->id, 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'PATCH', 'files' => true]) !!}
 										<div class="updateLeagueForm">
-											<div class="md-form">
-												<input type="text" name="name" class="form-control" id="leagues_season_name" placeholder="Name" value="{{ $showSeason->name }}" />
 
-												<label for="name">Name</label>
-											</div>										<div class="md-form">
-												<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
+											<div class="row">
+												<div class="col-12 col-md" id="">
+													<div class="md-form">
+														<input type="text" name="name" class="form-control" id="leagues_season_name" placeholder="Name" value="{{ $showSeason->name }}" />
 
-												<label for="leagues_address">Address</label>
+														<label for="name">Name</label>
+													</div>
+												</div>
+
+												<div class="col-12 col-md" id="">
+													<div class="md-form">
+														<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
+
+														<label for="leagues_address">Address</label>
+													</div>
+												</div>
 											</div>
 											
 											<div class="row">
 												<div class="col-12 col-md">
 													<div class="md-form input-group">
 														<div class="input-group-prepend">
-															<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+															<span class="input-group-text md-addon"><i class="fas fa-dollar-sign"></i></span>
 														</div>
 														
 														<input type="number" name="leagues_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_fee }}"  step="0.01" placeholder="League Entry Fee" />
@@ -78,7 +87,7 @@
 												<div class="col-12 col-md">
 													<div class="md-form input-group mb-5">
 														<div class="input-group-prepend">
-															<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+															<span class="input-group-text md-addon"><i class="fas fa-dollar-sign" aria-hidden="true"></i></span>
 														</div>
 														
 														<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->ref_fee }}" step="0.01" placeholder="Ref Fee" />
@@ -93,28 +102,28 @@
 											</div>
 											
 											<div class="row">
+
 												<div class="col-12 col-md">
-													<div class="md-form">
-														<select class="mdb-select" name="age_group">
-															@foreach($ageGroups as $ageGroup)
-																<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
-															@endforeach
-														</select>
-														
-														<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
-													</div>
+													<select class="mdb-select md-form" name="age_group">
+														@foreach($ageGroups as $ageGroup)
+															<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
+														@endforeach
+													</select>
+
+													<label data-error="wrong" data-success="right" for="age_group" class="text-primary">Age Group</label>
 												</div>
+
 												<div class="col-12 col-md">
-													<div class="md-form">
-														<select class="mdb-select" name="comp_group">
-															@foreach($compGroups as $compGroup)
-																<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
-															@endforeach
-														</select>
-														
-														<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
-													</div>
+													<select class="mdb-select md-form" name="comp_group">
+														<option value="blank" disabled>Select blah blah</option>
+														@foreach($compGroups as $compGroup)
+															<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
+														@endforeach
+													</select>
+
+													<label for="comp_group" class="text-primary">Competition Group</label>
 												</div>
+
 											</div>
 											
 											<div class="md-form">
@@ -170,7 +179,7 @@
 							<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">Full Schedule</a>
 						</div>
 						
-						<div class="container-fluid">
+						<div class="container-fluid" id="season_schedule_snap">
 							<div class="row">
 								@if($showSeasonSchedule->isNotEmpty())
 									@foreach($showSeasonSchedule as $upcomingGame)
@@ -204,7 +213,7 @@
 						<h1 class="h1-responsive">Quick Teams</h1>
 						<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Teams</a>
 					</div>
-					<div class="my-5 d-flex align-items-center justify-content-around mb-4 mb-lg-0 flex-column flex-lg-row">
+					<div id="season_teams_snap" class="my-5 d-flex align-items-center justify-content-around mb-4 mb-lg-0 flex-column flex-lg-row">
 						@if($showSeasonTeams->isNotEmpty())
 							
 							<button class="btn btn-lg deep-purple">Total Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonTeams->count() }}</span></button>
@@ -228,7 +237,7 @@
 						<h1 class="h1-responsive">Quick Stats</h1>
 						<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 					</div>
-					<div class="my-5 row">
+					<div id="season_stats_snap" class="my-5 row">
 						<!-- Season stat leaders by category -->
 						@if($showSeasonStat->isNotEmpty())
 							<!-- Get the scoring leaders -->
@@ -374,30 +383,26 @@
 											</div>
 										</div>
 										<div class="col-12 col-lg">
-											<div class="md-form">
-												<select class="mdb-select" name="season" required>
-													<option value="" disabled selected>Choose A Season</option>
-													<option value="winter">Winter</option>
-													<option value="spring">Spring</option>
-													<option value="summer">Summer</option>
-													<option value="fall">Fall</option>
-												</select>
+											<select class="mdb-select md-form" name="season" required>
+												<option value="" disabled selected>Choose A Season</option>
+												<option value="winter">Winter</option>
+												<option value="spring">Spring</option>
+												<option value="summer">Summer</option>
+												<option value="fall">Fall</option>
+											</select>
 
-												<label data-error="wrong" data-success="right" for="season" class="blue-text">Season</label>
-											</div>
+											<label data-error="wrong" data-success="right" for="season" class="blue-text">Season</label>
 										</div>
 										<div class="col-12 col-lg">
-											<div class="md-form">
-												<select class="mdb-select" name="year" required>
-													<option value="" disabled selected>Choose A Year</option>
-													<option value="2018">2018</option>
-													<option value="2019">2019</option>
-													<option value="2020">2020</option>
-													<option value="2021">2021</option>
-												</select>
+											<select class="mdb-select md-form" name="year" required>
+												<option value="" disabled selected>Choose A Year</option>
+												<option value="2018">2018</option>
+												<option value="2019">2019</option>
+												<option value="2020">2020</option>
+												<option value="2021">2021</option>
+											</select>
 
-												<label data-error="wrong" data-success="right" for="season" class="blue-text">Year</label>
-											</div>
+											<label data-error="wrong" data-success="right" for="season" class="blue-text">Year</label>
 										</div>
 									</div>
 									
@@ -405,7 +410,7 @@
 										<div class="col-12 col-lg">
 											<div class="md-form input-group">
 												<div class="input-group-prepend">
-													<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+													<span class="input-group-text md-addon"><i class="fas fa-dollar-sign" aria-hidden="true"></i></span>
 												</div>
 
 												<input type="number" name="league_fee" class="form-control" id="league_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->leagues_fee == null ? '0.00' : $showSeason->leagues_fee == null ? '0.00' : $showSeason->leagues_fee : '0.00' }}" step="0.01" placeholder="League Entry Fee" required />
@@ -419,10 +424,11 @@
 												<label for="leagues_fee">Entry Fee</label>
 											</div>
 										</div>
+
 										<div class="col-12 col-lg">
 											<div class="md-form input-group">
 												<div class="input-group-prepend">
-													<i class="fa fa-dollar input-group-text" aria-hidden="true"></i>
+													<span class="input-group-text md-addon"><i class="fas fa-dollar-sign" aria-hidden="true"></i></span>
 												</div>
 												
 												<input type="number" class="form-control" class="form-control" name="ref_fee" id="ref_fee" value="{{ $showSeason->league_profile ? $showSeason->league_profile->ref_fee == null ? '0.00' : $showSeason->ref_fee == null ? '0.00' : $showSeason->ref_fee : '0.00' }}" step="0.01" placeholder="League Referee Fee" required />
@@ -436,40 +442,46 @@
 										</div>
 									</div>
 
-									<div class="md-form">
-										<select class="mdb-select" name="age_group">
-											@if(head($ageGroups) == '' || head($ageGroups) == null)
-												<option value="blank" selected disabled>You do not have any age groups selected to choose from</option>
-											@else
-												@foreach($ageGroups as $ageGroup)
-													<option value="{{ $ageGroup }}">{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
-												@endforeach
-											@endif
-										</select>
-										
-										<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
-									</div>
+									<div class="row" id="">
 
-									<div class="md-form">
-										<select class="mdb-select" name="comp_group">
-											@if(head($ageGroups) == '' || head($ageGroups) == null)
-												<option value="blank" selected disabled>You do not have any competition groups selected to choose from</option>
-											@else
-												@foreach($compGroups as $compGroup)
-													<option value="{{ $compGroup }}">{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
-												@endforeach
-											@endif
-										</select>
-										
-										<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Competition Group</label>
-									</div>
-									
-									<div class="md-form">
-										<input type="text" name="location" class="form-control" value="{{ old('location') ? old('location') : $showSeason->league_profile ? $showSeason->league_profile->address : $showSeason->address }}" />
-										
-										<label data-error="wrong" data-success="right" for="age_group">Games Location</label>
+										<div class="col-12">
+											<select class="mdb-select md-form" name="age_group">
+												@if(head($ageGroups) == '' || head($ageGroups) == null)
+													<option value="blank" selected disabled>You do not have any age groups selected to choose from</option>
+												@else
+													@foreach($ageGroups as $ageGroup)
+														<option value="{{ $ageGroup }}">{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
+													@endforeach
+												@endif
+											</select>
+
+											<label data-error="wrong" data-success="right" for="age_group" class="blue-text">Age Group</label>
+										</div>
+
+										<div class="col-12">
+											<select class="mdb-select md-form" name="comp_group">
+												@if(head($ageGroups) == '' || head($ageGroups) == null)
+													<option value="blank" selected disabled>You do not have any competition groups selected to choose from</option>
+												@else
+													@foreach($compGroups as $compGroup)
+														<option value="{{ $compGroup }}">{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
+													@endforeach
+												@endif
+											</select>
+
+											<label data-error="wrong" data-success="right" for="comp_group" class="blue-text">Competition Group</label>
+										</div>
+
+										<div class="col-12" id="">
+											<div class="md-form">
+												<input type="text" name="location" class="form-control" value="{{ old('location') ? old('location') : $showSeason->league_profile ? $showSeason->league_profile->address : $showSeason->address }}" />
+
+												<label data-error="wrong" data-success="right" for="age_group">Games Location</label>
+											</div>
+										</div>
 									</div>
 								</div>
+
 								<div class="payPalCheckout coolText4 animated hidden">
 									<div class="row mb-3">
 										<div class="col-12">
@@ -616,5 +628,27 @@
 				</div>
 			</div>
 		</div>
+
+		@if(session()->has('testdrive'))
+			@if(session()->get('testdrive') == 'true')
+
+				<!-- Test Drive Tutorial Modal -->
+				<div id="test_drive_tutorial" class="container position-fixed white rounded z-depth-2 w-25 p-3" style="top:10px; right:10px;">
+					<div class="row" id="">
+						<div class="col">
+							<h4 class="w-100" id="">ToTheRec Leagues Test Drive</h4>
+						</div>
+						<div class="col-12">
+							<p>Thanks for taking a test drive. We\'ll walk you through everything that you need to know about hosting your own league and multiple seasons with ToTheRec</p>
+							<div class="d-flex align-items-center justify-content-between">
+								<button class="btn btn-outline-amber nextBtn step1">Next</button>
+								<button class="btn btn-outline-red removeTestDrive" data-dismiss="modal" aria-label="Close">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			@endif
+		@endif
 	</div>
 @endsection

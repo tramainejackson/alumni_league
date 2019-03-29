@@ -16,9 +16,11 @@
 
     <!-- Styles -->
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 	<!-- Bootstrap core CSS -->
 	<link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
+
 	<!-- Material Design Bootstrap -->
 	<link href="{{ asset('/css/mdb.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/ttr.css') }}" rel="stylesheet">
@@ -27,7 +29,7 @@
 		<link href="{{ asset('/css/myIEcss.css') }}" rel="stylesheet">
 	@endif
 	
-	@yield('addt_style')
+	@yield('styles')
 </head>
 <body>
 	@php
@@ -42,7 +44,7 @@
 				@if(Auth::guest())
 					<a class="navbar-brand indigo-text" href="{{ route('welcome') }}">{{ config('app.name', 'ToTheRec') }}</a>
 				@else
-					<a class="navbar-brand indigo-text" href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ config('app.name', 'ToTheRec') }}</a>
+					<a class="navbar-brand indigo-text" href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ config('app.name', 'ToTheRec') }}</a>
 				@endif
 				
 				<ul class="nav navbar-nav" id=''>
@@ -188,22 +190,22 @@
 				<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
 					@if(!Auth::guest())
 						<li class="nav-item">
-							<a class='league_home nav-link indigo-text' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ $showSeason->league_profile ? $showSeason->league_profile->name : $showSeason->name }}</a>
+							<a id="" class='league_home nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">{{ $showSeason->league_profile ? $showSeason->league_profile->name : $showSeason->name }}</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
+							<a id="leagues_schedule_link" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']])  }}">Schedule</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Standings</a>
+							<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Standings</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Stats</a>
+							<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Stats</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Teams</a>
+							<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Teams</a>
 						</li>
 						<li class="nav-item">
-							<a class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
+							<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>
 						</li>
 					@endif
 				</ul>
@@ -255,8 +257,7 @@
 		@endif
 		
         @yield('content')
-		
-		@include('footer')
+
     </div>
 
 	<!-- SCRIPTS -->
@@ -269,7 +270,13 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="/js/mdb.min.js"></script>
 	<script type="text/javascript" src="/js/ttr.js"></script>
-	
+
+	@if(session()->has('testdrive'))
+        @if(session()->get('testdrive') == 'true')
+            <script type="text/javascript" src="/js/test_drive_tutorial.js"></script>
+        @endif
+	@endif
+
 	@yield('additional_scripts')
 </body>
 </html>

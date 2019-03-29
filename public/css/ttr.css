@@ -11,7 +11,7 @@ html, body, header, .view {
 }
 
 .bgrd1 {
-    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url(/images/gym3.jpg);
+    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url('/images/gym3.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -19,7 +19,7 @@ html, body, header, .view {
 }
 
 .bgrd2 {
-    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url(/images/gym2.jpg);
+    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url('/images/gym2.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -27,19 +27,29 @@ html, body, header, .view {
 }
 
 .bgrd3 {
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(/images/gym1.jpg);
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('/images/gym4.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+.bgrd4 {
+	background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.5)), url('/images/sports_office.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
-.bgrd4 {
-	background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.5)), url(/images/sports_office.jpg);
+.bgrd5 {
+    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url('/images/gym1.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
+    min-height: 100vh;
 }
 
 .dark-gradient {
@@ -671,6 +681,12 @@ p.confirmation_modal_content {
 	display: none;
 }
 
+#login_page {
+    background-image: url('/images/office_background1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
 #loginPageError {
     background-color: aliceblue;
     width: 50%;

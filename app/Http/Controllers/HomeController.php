@@ -58,7 +58,7 @@ class HomeController extends Controller
 			
 			} else {
 
-					return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));			
+				return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));
 
 			}
 			
@@ -86,7 +86,7 @@ class HomeController extends Controller
 			
 			} else {
 
-					return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));			
+				return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));
 
 			}
 			
@@ -217,7 +217,23 @@ class HomeController extends Controller
     public function test_drive(Request $request)
     {
 		Auth::loginUsingId(6);
+
+	    // Store a piece of data in the session...
+	    session(['testdrive' => 'true']);
         
+		return redirect()->action('HomeController@index');
+    }
+
+	/**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function remove_test_drive(Request $request)
+    {
+	    // Remove a piece of data in the session...
+	    session()->forget('testdrive');
+
 		return redirect()->action('HomeController@index');
     }
 	
@@ -227,6 +243,7 @@ class HomeController extends Controller
      * @return seaon
     */
 	public function find_season(Request $request) {
+
 		if(Auth::check()) {
 			
 			$league = Auth::user()->leagues_profiles->first();

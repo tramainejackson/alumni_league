@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('addt_style')
+@section('styles')
 	<style type="text/css">
 		.view {
 			min-height: initial !important;

@@ -58,8 +58,8 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         if(Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-			// Once authenticated, make sure this is a league account with 
-			// totherec
+			// Once authenticated, make sure this is a
+			// league account with totherec
 			$user = Auth::user();
 
 			if($user->leagues_profiles->where('user_id', Auth::id())->isNotEmpty()) {

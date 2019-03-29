@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		
-		<div class="" style="background: url(/images/league_reg_bkgrd.jpg); background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position: center center;">
+		<div class="" style="background: url('/images/blacktop1.jpg'); background-attachment: fixed; background-repeat: no-repeat; background-size: cover; background-position: center center;">
 			<div class="container pt-5">
 				<div class="row">
 					<div class="col mt-5 coolText4 wow fadeInUpBig" data-wow-delay="0.5s">
