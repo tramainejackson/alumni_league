@@ -274,6 +274,7 @@ $(document).ready(function() {
 		var newGame = $('.newGameRow').clone();
 		
 		$(newGame).removeClass('hidden newGameRow')
+			.addClass('bounceInLeft')
 			.prependTo('.updateWeekForm')
 			.removeAttr('hidden')
 			.find('input, button, select').removeAttr('disabled');

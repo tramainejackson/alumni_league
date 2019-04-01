@@ -147,10 +147,10 @@
 										<div class="d-flex flex-column align-items-center">
 											<p class="m-0">Forfeit</p>
 											<div class="">
-												<button class="btn btn-sm stylish-color-dark awayForfeitBtn d-block" type="button"><span class="awayForfeitBtnTeamName"></span>
+												<button class="btn btn-sm stylish-color-dark awayForfeitBtn d-block white-text" type="button"><span class="awayForfeitBtnTeamName"></span>
 													<input type="checkbox" name="away_forfeit" class="hidden" value="" hidden />
 												</button>
-												<button class="btn btn-sm stylish-color-dark homeForfeitBtn d-block" type="button"><span class="homeForfeitBtnTeamName"></span>
+												<button class="btn btn-sm stylish-color-dark homeForfeitBtn d-block white-text" type="button"><span class="homeForfeitBtnTeamName"></span>
 													<input type="checkbox" name="home_forfeit" class="hidden" value="" hidden />
 												</button>
 											</div>
@@ -161,8 +161,8 @@
 									<div class="my-2">
 										<div class="row">
 											<div class="col-12 col-lg">
-												<div class="md-form">
-													<select class="mdb-select" name="edit_away_team">
+												<div class="">
+													<select class="mdb-select md-form" name="edit_away_team">
 														<option value="" disabled>Choose your option</option>
 														@foreach($showSeason->league_teams as $away_team)
 															<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
@@ -172,8 +172,8 @@
 												</div>
 											</div>
 											<div class="col-12 col-lg">
-												<div class="md-form">
-													<select class="mdb-select" name="edit_home_team">
+												<div class="">
+													<select class="mdb-select md-form" name="edit_home_team">
 														<option value="" disabled>Choose your option</option>
 														@foreach($showSeason->league_teams as $home_team)
 															<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
@@ -251,8 +251,8 @@
 					<div class="modal-body">
 						<!-- Create Form -->
 						{!! Form::open(['action' => ['LeagueScheduleController@add_game'], 'name' => 'new_game_form','method' => 'POST']) !!}
-							<div class="md-form">
-								<select class="mdb-select" name="season_week">
+							<div class="">
+								<select class="mdb-select md-form" name="season_week">
 									<option value="blank" disabled selected>Choose a week</option>
 									@foreach($seasonScheduleWeeks->get() as $week)
 										<option value="{{ $week->season_week }}">Week {{ $week->season_week }}</option>
@@ -262,8 +262,8 @@
 							</div>
 							<div class="row">
 								<div class="col-12 col-lg">
-									<div class="md-form">
-										<select class="mdb-select" name="away_team">
+									<div class="">
+										<select class="mdb-select md-form" name="away_team">
 											<option value="blank" disabled selected>Choose your option</option>
 											@foreach($showSeason->league_teams as $away_team)
 												<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
@@ -273,8 +273,8 @@
 									</div>
 								</div>
 								<div class="col-12 col-lg">
-									<div class="md-form">
-										<select class="mdb-select" name="home_team">
+									<div class="">
+										<select class="mdb-select md-form" name="home_team">
 											<option value="blank" disabled selected>Choose your option</option>
 											@foreach($showSeason->league_teams as $home_team)
 												<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
@@ -301,7 +301,7 @@
 								</div>
 							</div>
 							<div class="md-form">
-								<button class="btn blue lighten-1" type="submit">Add Game</button>
+								<button class="btn blue lighten-1 white-text" type="submit">Add Game</button>
 							</div>
 						{!! Form::close() !!}
 					</div>

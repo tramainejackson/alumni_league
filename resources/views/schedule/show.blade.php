@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid leagues_page_div">
+	<div class="container-fluid bgrd3">
 		<div class="row">
 			<div class="col mt-3"></div>
 			

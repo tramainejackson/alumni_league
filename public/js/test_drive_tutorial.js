@@ -140,7 +140,13 @@ $(document).ready(function()
             data: { remove_test_drive:'remove_test_drive' },
 
             success: function (data) {
-                $(modal).modal('hide');
+                $(modal).removeClass('bounceInDown').addClass('bounceOutUp');
+
+                // Remove any borders if available
+                $("body *").removeClass('border border-primary');
+
+                // Remove any popovers if available
+                $("body *").find('[data-toggle="popover"]').popover('hide');
             },
         });
     });

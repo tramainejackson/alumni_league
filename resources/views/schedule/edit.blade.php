@@ -21,7 +21,7 @@
 					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4 order-2" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>					
 				</div>
 				<div class="text-center mb-4">
-					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $weekGames->first()->season_week]) : route('league_stat.edit_week', ['week' => $weekGames->first()->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded cyan darken-1" type="button">Edit Week Stats</a>
+					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $weekGames->first()->season_week]) : route('league_stat.edit_week', ['week' => $weekGames->first()->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded cyan darken-1 white-text" type="button">Edit Week Stats</a>
 				</div>
 
 				{!! Form::open(['action' => ['LeagueScheduleController@update_week', $weekGames->first()->season_week], 'class' => 'updateWeekForm', 'name' => 'edit_week_form', 'method' => 'PATCH']) !!}
@@ -35,17 +35,17 @@
 									<div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
 										<div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
 											<h2 class="card-title h2-responsive my-2 text-underline">Game {{ $loop->iteration}}</h2>
-											<a href="{{ request()->query() == null ? route('league_schedule.show', ['league_schedule' => $game->id]) : route('league_schedule.show', ['league_schedule' => $game->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded orange darken-1" type="button">Remove Game</a>
+											<a href="{{ request()->query() == null ? route('league_schedule.show', ['league_schedule' => $game->id]) : route('league_schedule.show', ['league_schedule' => $game->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded orange darken-1 white-text" type="button">Remove Game</a>
 										</div>
 										
 										<!-- Forfeit Toggle -->
 										<div class="d-flex flex-column align-items-center">
 											<p class="m-0">Forfeit</p>
 											<div class="">
-												<button class="btn btn-sm d-block w-100 awayForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->away_team }} Forfeit
+												<button class="btn btn-sm d-block w-100 awayForfeitBtn white-text{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->away_team }} Forfeit
 													<input type="checkbox" name="away_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->away_team_id ? ' checked' : '' : '' }} />
 												</button>
-												<button class="btn btn-sm d-block w-100 homeForfeitBtn{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->home_team }} Forfeit
+												<button class="btn btn-sm d-block w-100 homeForfeitBtn white-text{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' red' : ' stylish-color-dark' : ' stylish-color-dark' }}" type="button">{{ $game->home_team }} Forfeit
 													<input type="checkbox" name="home_forfeit[]" class="hidden" value="{{ $game->id }}" hidden{{ $game->result ? $game->result->forfeit == 'Y' && $game->result->losing_team_id == $game->home_team_id ? ' checked' : '' : '' }} />
 												</button>
 											</div>
@@ -55,8 +55,8 @@
 									<div class="my-2">
 										<div class="row">
 											<div class="col-12 col-md">
-												<div class="md-form">
-													<select class="mdb-select" name="away_team[]">
+												<div class="">
+													<select class="mdb-select md-form" name="away_team[]">
 														<option value="" disabled selected>Choose your option</option>
 														@foreach($showSeason->league_teams as $away_team)
 															<option value="{{ $away_team->id }}"{{ $game->away_team_id == $away_team->id ? 'selected' : '' }}>{{ $away_team->team_name }}</option>
@@ -66,8 +66,8 @@
 												</div>
 											</div>
 											<div class="col-12 col-md">
-												<div class="md-form">
-													<select class="mdb-select" name="home_team[]">
+												<div class="">
+													<select class="mdb-select md-form" name="home_team[]">
 														<option value="" disabled selected>Choose your option</option>
 														@foreach($showSeason->league_teams as $home_team)
 															<option value="{{ $home_team->id }}"{{ $game->home_team_id == $home_team->id ? 'selected' : '' }}>{{ $home_team->team_name }}</option>
@@ -127,7 +127,7 @@
 						
 						<!-- Hidden card for new games -->
 						<!--Card-->
-						<div class="card mb-4 newGameRow hidden" hidden>
+						<div class="card mb-4 newGameRow hidden animated" hidden>
 							<!--Card content-->
 							<div class="card-body">
 								<!--Title-->
@@ -136,8 +136,8 @@
 								<div class="my-2">
 									<div class="row">
 										<div class="col-12 col-md">
-											<div class="md-form">
-												<select class="" name="new_away_team[]" disabled>
+											<div class="">
+												<select class="mdb-select md-form" name="new_away_team[]" disabled>
 													<option value="" disabled selected>Choose your option</option>
 													@foreach($showSeason->league_teams as $away_team)
 														<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
@@ -147,8 +147,8 @@
 											</div>
 										</div>
 										<div class="col-12 col-md">
-											<div class="md-form">
-												<select class="" name="new_home_team[]" disabled>
+											<div class="">
+												<select class="mdb-select md-form" name="new_home_team[]" disabled>
 													<option value="" disabled selected>Choose your option</option>
 													@foreach($showSeason->league_teams as $home_team)
 														<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
@@ -203,7 +203,7 @@
 						</div>
 						<!--/.Card-->
 						<div class="md-form">
-							<button class="btn btn-lg blue lighten-1" type="submit">Update Week Games</button>
+							<button class="btn btn-lg blue lighten-1 white-text" type="submit">Update Week Games</button>
 						</div>
 					@else
 						<div class="my-5 text-center">

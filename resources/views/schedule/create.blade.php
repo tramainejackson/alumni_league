@@ -34,8 +34,8 @@
 									<div class="my-2">
 										<div class="row">
 											<div class="col-12 col-lg">
-												<div class="md-form">
-													<select class="mdb-select" name="away_team[]">
+												<div class="">
+													<select class="mdb-select md-form" name="away_team[]">
 														<option value="" disabled selected>Choose your option</option>
 														@foreach($showSeason->league_teams as $away_team)
 															<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
@@ -46,8 +46,8 @@
 												</div>
 											</div>
 											<div class="col-12 col-lg">
-												<div class="md-form">
-													<select class="mdb-select" name="home_team[]">
+												<div class="">
+													<select class="mdb-select md-form" name="home_team[]">
 														<option value="" disabled selected>Choose your option</option>
 														@foreach($showSeason->league_teams as $home_team)
 															<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
@@ -80,7 +80,7 @@
 							<!--/.Card-->
 						@endfor
 						<div class="md-form">
-							<button class="btn blue lighten-1" type="submit">Add Week</button>
+							<button class="btn blue lighten-1 white-text" type="submit">Add Week</button>
 						</div>
 					@else
 						<div class="my-5 text-center">

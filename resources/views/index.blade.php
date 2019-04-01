@@ -127,8 +127,8 @@
 											</div>
 											
 											<div class="md-form">
-												<button type="submit" class="btn btn-lg green m-0" id="">Update League</button>
-												<button type="button" class="btn btn-lg cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
+												<button type="submit" class="btn btn-lg white-text green m-0" id="">Update League</button>
+												<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
 											</div>
 										</div>
 									{!! Form::close() !!}
@@ -216,11 +216,11 @@
 					<div id="season_teams_snap" class="my-5 d-flex align-items-center justify-content-around mb-4 mb-lg-0 flex-column flex-lg-row">
 						@if($showSeasonTeams->isNotEmpty())
 							
-							<button class="btn btn-lg deep-purple">Total Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonTeams->count() }}</span></button>
+							<button class="btn btn-lg deep-purple white-text">Total Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonTeams->count() }}</span></button>
 
-							<button class="btn btn-lg deep-purple">Total Players:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonPlayers->count() }}</span></button>
+							<button class="btn btn-lg deep-purple white-text">Total Players:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonPlayers->count() }}</span></button>
 
-							<button class="btn btn-lg deep-purple">Unpaid Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonUnpaidTeams->count() }}</span></button>
+							<button class="btn btn-lg deep-purple white-text">Unpaid Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonUnpaidTeams->count() }}</span></button>
 
 						@else
 							
@@ -633,7 +633,7 @@
 			@if(session()->get('testdrive') == 'true')
 
 				<!-- Test Drive Tutorial Modal -->
-				<div id="test_drive_tutorial" class="container position-fixed white rounded z-depth-2 w-25 p-3" style="top:10px; right:10px;">
+				<div id="test_drive_tutorial" class="container position-fixed white rounded z-depth-2 w-25 p-3 animated bounceInDown" style="top:10px; right:10px;">
 					<div class="row" id="">
 						<div class="col">
 							<h4 class="w-100" id="">ToTheRec Leagues Test Drive</h4>
