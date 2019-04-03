@@ -55,14 +55,14 @@
 													</p>
 												</div>
 												<div class="">
-													<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1">Edit Team</a>
+													<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">Edit Team</a>
 												</div>
 											</div>
 											<div class="feesButton">
 												@if($team->fee_paid == 'N')
-													<button class="btn orange darken-2" type="button">Fees Due</button>
+													<button class="btn orange darken-2 white-text" type="button">Fees Due</button>
 												@else
-													<button class="btn green darken-1" type="button">Fees Paid</button>
+													<button class="btn green darken-1 white-text" type="button">Fees Paid</button>
 												@endif
 											</div>
 										</div>

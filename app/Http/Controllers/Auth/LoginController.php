@@ -71,7 +71,8 @@ class LoginController extends Controller
 				
 				return redirect()->action('HomeController@index');
 			} else {
-				// Log the user with the player profile out and then redirect
+				// This needs to redirect the player to the regular totherec site
+				// and log them into their player account
 				Auth::logout();
 				
 				return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);

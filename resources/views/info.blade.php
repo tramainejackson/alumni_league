@@ -139,7 +139,7 @@
 							<div class="row">
 								@foreach($ages as $age)
 									<div class="col-6 col-xl-3">
-										<button type="button" class="btn btn-lg mx-0 w-100 ageBtnSelect{{ in_array($age, $ageArray) ? ' blue ' : ' grey' }}">{{ str_ireplace("_", " ", ucwords($age)) }}
+										<button type="button" class="btn btn-lg mx-0 w-100 white-text ageBtnSelect{{ in_array($age, $ageArray) ? ' blue ' : ' grey' }}">{{ str_ireplace("_", " ", ucwords($age)) }}
 											<input type="checkbox" class="hidden" name="age[]" value="{{ $age }}" hidden{{ in_array($age, $ageArray) ? ' checked ' : '' }}/>
 										</button>
 									</div>
@@ -152,7 +152,7 @@
 							<div class="row">
 								@foreach($getComp as $comp)
 									<div class="col-12 col-md-6">
-										<button class="btn btn-lg mx-0 w-100 compBtnSelect{{ in_array($comp, $compArray) ? ' orange' : ' grey' }}" type="button">{{ str_ireplace("_", " ", ucwords($comp)) }}
+										<button class="btn btn-lg mx-0 w-100 white-text compBtnSelect{{ in_array($comp, $compArray) ? ' orange' : ' grey' }}" type="button">{{ str_ireplace("_", " ", ucwords($comp)) }}
 											<input type="checkbox" class="hidden" name="leagues_comp[]" value="{{ $comp }}" hidden{{ in_array($comp, $compArray) ? ' checked ' : '' }}/>
 										</button>
 									</div>
@@ -160,7 +160,7 @@
 							</div>
 						</div>
 						<div class="md-form">
-							<button type="submit" name="submit" class="btn btn-lg green m-0" id="" value="">Update League</button>
+							<button type="submit" name="submit" class="btn btn-lg green m-0 white-text" id="" value="">Update League</button>
 						</div>
 					</div>
 				{!! Form::close() !!}

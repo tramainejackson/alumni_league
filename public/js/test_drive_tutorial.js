@@ -18,6 +18,9 @@ $(document).ready(function()
     $('body').on('click', '.step1', function() {
         $(this).toggleClass('step1 step2');
 
+        // Scroll view to top of page
+        window.scrollTo(0, 0);
+
         // Step 1: Highlight the League Name
         $('#leagues_menu li:first-of-type a')
             .attr('data-toggle', 'popover')
@@ -29,6 +32,9 @@ $(document).ready(function()
 
     $('body').on('click', '.step2', function() {
         $(this).toggleClass('step2 step3');
+
+        // Scroll view to top of page
+        window.scrollTo(0, 0);
 
         // Hide current popover
         $('#leagues_menu li:first-of-type a').popover('hide');
@@ -45,6 +51,9 @@ $(document).ready(function()
     $('body').on('click', '.step3', function() {
         $(this).toggleClass('step3 step4');
 
+        // Scroll view to top of page
+        window.scrollTo(0, 0);
+
         // Hide current popover
         $('.seasonName h1').popover('hide');
 
@@ -52,9 +61,9 @@ $(document).ready(function()
         $('.card')
 			.addClass('border border-primary')
             .attr('data-toggle', 'popover')
-            .attr('title', 'Season Name')
+            .attr('title', 'Season Info')
             .attr('data-placement', 'left')
-            .attr('data-content', 'Here is the name of one of the current seasons you\'re running.')
+            .attr('data-content', 'This is the information for the season. The season name, address of the games, league fees and competition levels.')
             .popover('show');
     });
 
@@ -88,9 +97,9 @@ $(document).ready(function()
         // Step 4: Highlight the Quick Snap Shot League Schedule
         $("#season_teams_snap").parent().addClass('border border-primary')
             .attr('data-toggle', 'popover')
-            .attr('title', 'Seasons Teams')
+            .attr('title', 'Teams Info')
             .attr('data-placement', 'left')
-            .attr('data-content', 'This is a quick view of the teams participating in the season. Showing a count of total teams, players, and unpaid teams fees')
+            .attr('data-content', 'This view shows a count of total teams, players, and unpaid teams fees')
             .popover('show');
     });
 
@@ -125,12 +134,19 @@ $(document).ready(function()
             data: { remove_test_drive:'remove_test_drive' },
 
             success: function (data) {
-                $(modal).modal('hide');
+                $(modal).removeClass('bounceInDown').addClass('bounceOutUp');
+
+                // Remove any borders if available
+                // Remove any popovers if available
+                $("body *").removeClass('border border-primary').find('[data-toggle="popover"]').popover('hide');
+
+                // Scroll the view back to the top
+                window.scrollTo(0, 0);
             },
         });
 
         // Go to the leagues schedule page
-        $('#leagues_schedule_link')[0].click();
+        // $('#leagues_schedule_link')[0].click();
     });
 
     $('body').on('click', '.removeTestDrive', function() {

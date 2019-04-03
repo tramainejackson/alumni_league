@@ -14,7 +14,7 @@
 				<div class="card card-cascade mb-4 reverse wider">
 					<!--Card image-->
 					<div class="view">
-						<img src="{{ $league_team->team_picture != null ? $league_team->lg_photo() : $defaultImg }}" class="img-fluid mx-auto" alt="photo">
+						<img src="{{ $league_team->team_picture != null ? $league_team->lg_photo() : $defaultImg }}" class="img-fluid mx-auto" alt="photo" style="max-width: 75%;">
 					</div>
 					<!--Card content-->
 					<div class="card-body rgba-white-strong rounded z-depth-1-half">
@@ -22,7 +22,7 @@
 						<h2 class="card-title h2-responsive text-center">{{ $league_team->team_name }}</h2>
 						
 						<!-- Create Form -->
-						{!! Form::open(['action' => ['LeagueTeamController@update', $league_team->id], 'method' => 'PATCH', 'files' => true]) !!}
+						{!! Form::open(['action' => ['LeagueTeamController@update', $league_team->id], 'id' => 'update_team_form', 'method' => 'PATCH', 'files' => true]) !!}
 							<!-- Team Info -->
 							<div class="">
 								<div class="row">
@@ -99,9 +99,11 @@
 											@if($league_team->players->isNotEmpty())
 												@foreach($league_team->players as $player)
 													<tr class="">
-														<td class="">
-															<input type="checkbox" name="team_captain" class="filled-in" value="captain_{{ $player->id }}" id="captain_{{ $player->id }}"{{ $player->team_captain == 'Y' ? ' checked' : '' }} />
-															<label for="captain_{{ $player->id }}" class="label-table"></label>
+														<td class="align-bottom">
+															<div class="form-check" id="">
+																<input type="checkbox" name="team_captain" class="form-check-input filled-in" value="captain_{{ $player->id }}" id="captain_{{ $player->id }}"{{ $player->team_captain == 'Y' ? ' checked' : '' }} />
+																<label class="form-check-label" for="captain_{{ $player->id }}"></label>
+															</div>
 														</td>
 														<td class="">
 															<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" />
@@ -149,8 +151,8 @@
 								</div>
 							</div>
 							<div class="md-form">
-								<button class="btn blue lighten-1" type="submit">Update Team Information</button>
-								<button class="btn red darken-1" type="button" data-toggle="modal" data-target="#delete_team">Delete Team</button>
+								<button class="btn blue lighten-1 white-text" type="submit">Update Team Information</button>
+								<button class="btn red darken-1 white-text" type="button" data-toggle="modal" data-target="#delete_team">Delete Team</button>
 							</div>
 						{!! Form::close() !!}
 					</div>

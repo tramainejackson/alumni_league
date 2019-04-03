@@ -108,6 +108,7 @@ class LeagueSeasonController extends Controller
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 
+		$showSeason->name = $request->name;
 		$showSeason->comp_group = $request->comp_group;
 		$showSeason->age_group = $request->age_group;
 		$showSeason->league_fee = $request->leagues_fee;

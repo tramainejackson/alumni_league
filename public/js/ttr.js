@@ -268,6 +268,12 @@ $(document).ready(function() {
 	$('body').on('click', '.removeNewPlayerRow', function() {
 		$(this).parents('tr').remove();
 	});
+
+	// Make sure an email address is added when a captain is selected
+	// before submitting the team update form
+	$('body').on('submit', '#update_team_form', function () {
+		verify_captain_email();
+    });
 	
 	// Add new game card on the schedule week edit page
 	$('body').on('click', '#edit_page_add_game', function() {
@@ -625,6 +631,25 @@ function statsToggle()
 		$statCategories[0].hide(); $statCategories[1].show(); $statCategories[2].hide();
 	} else {
 		$statCategories[0].hide(); $statCategories[1].hide(); $statCategories[2].show();
+	}
+}
+
+function verify_captain_email()
+{
+	var captain = $('input[name="team_captain"]:checked').length > 0 ? $('input[name="team_captain"]:checked') : null;
+
+	if(captain !== null) {
+        var captain_email = $(captain).parents("tr").find('input[name="player_email[]"]');
+
+        if(captain_email.val() == '') {
+            event.preventDefault();
+            captain_email.addClass('border border-danger');
+
+            // Display an error toast, with a title
+            toastr.error('Please add an email address for the teams captain.');
+        }
+	} else {
+        console.log($('input[name="team_captain"]:checked').length + ' team captains selected');
 	}
 }
 

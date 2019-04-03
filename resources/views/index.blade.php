@@ -639,7 +639,7 @@
 							<h4 class="w-100" id="">ToTheRec Leagues Test Drive</h4>
 						</div>
 						<div class="col-12">
-							<p>Thanks for taking a test drive. We\'ll walk you through everything that you need to know about hosting your own league and multiple seasons with ToTheRec</p>
+							<p>Thanks for taking a test drive. We'll walk you through everything that you need to know about hosting your own league and multiple seasons with ToTheRec</p>
 							<div class="d-flex align-items-center justify-content-between">
 								<button class="btn btn-outline-amber nextBtn step1">Next</button>
 								<button class="btn btn-outline-red removeTestDrive" data-dismiss="modal" aria-label="Close">Cancel</button>

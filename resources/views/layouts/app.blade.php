@@ -92,12 +92,12 @@
 					@if (Auth::guest())
 						<!-- Logins -->
 						<li class="nav-item">
-							<a href="{{ route('login') }}" class="nav-link btn indigo">Login
+							<a href="{{ route('login') }}" class="nav-link btn indigo white-text">Login
 								<i class="fa fa-user" aria-hidden="true"></i>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="{{ route('register') }}" class="nav-link btn indigo lighten-1">Register
+							<a href="{{ route('register') }}" class="nav-link btn indigo lighten-1 white-text">Register
 								<i class="fa fa-user" aria-hidden="true"></i>
 							</a>
 						</li>
@@ -216,12 +216,12 @@
 					@if(Auth::guest())
 						<!-- Logins -->
 						<li class="nav-item">
-							<a href="{{ route('login') }}" class="nav-link btn indigo">Login
+							<a href="{{ route('login') }}" class="nav-link btn indigo white-text">Login
 								<i class="fa fa-user" aria-hidden="true"></i>
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="{{ route('register') }}" class="nav-link btn indigo lighten-1">Register
+							<a href="{{ route('register') }}" class="nav-link btn indigo lighten-1 white-text">Register
 								<i class="fa fa-user" aria-hidden="true"></i>
 							</a>
 						</li>
