@@ -300,7 +300,7 @@ $(document).ready(function() {
 		});
 		
 		// Initialize datetimepicker
-		$(newGame).find('select').addClass('.mdb-select').material_select();
+		$(newGame).find('select').addClass('mdb-select').material_select();
 	});
 	
 	// Delete the player from the team

@@ -54,7 +54,7 @@
 								</div>
 							</div>
 							<div class="md-form text-center">
-								<button type="submit" class="btn blue lighten-1">Create Team</button>
+								<button type="submit" class="btn blue lighten-1 white-text">Create Team</button>
 							</div>
 						{!! Form::close() !!}
 					</div>

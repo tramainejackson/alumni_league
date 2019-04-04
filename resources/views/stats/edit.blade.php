@@ -34,8 +34,8 @@
 										
 										<div class="d-flex flex-column align-items-center">
 											<div class="btn-group mb-2" role="group" aria-label="Game Time and Date">
-												<button class="btn btn-outline-mdb-color" type="button"><i class="fa fa-calendar mr-2" aria-hidden="true"></i>{{ $game->game_date() }}</button>
-												<button class="btn btn-outline-mdb-color" type="button"><i class="fa fa-clock-o mr-2" aria-hidden="true"></i>{{ $game->game_time() }}</button>
+												<button class="btn btn-outline-mdb-color" type="button"><i class="fas fa-calendar mr-2" aria-hidden="true"></i>{{ $game->game_date() }}</button>
+												<button class="btn btn-outline-mdb-color" type="button"><i class="fas fa-clock mr-2" aria-hidden="true"></i>{{ $game->game_time() }}</button>
 											</div>
 											<div class="btn-group" role="group" aria-label="Game Time and Date">
 												<button class="btn btn-outline-mdb-color" type="button"><span class="blue-grey border px-2 py-1 rounded-circle white-text d-block d-md-inline">{{ $game->result ? $game->result->away_team_score != null ? $game->result->away_team_score : '0' : '' }}</span>&nbsp;{{ $game->away_team }}</button>
@@ -397,7 +397,7 @@
 						@endforeach
 						
 						<div class="md-form">
-							<button class="btn btn-lg blue lighten-1" type="submit">Update Week Games</button>
+							<button class="btn btn-lg blue lighten-1 white-text" type="submit">Update Week Games</button>
 						</div>
 					{!! Form::close() !!}
 				@else

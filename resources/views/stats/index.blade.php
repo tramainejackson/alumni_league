@@ -36,7 +36,7 @@
 						<div id="league_leaders" class="row">
 						
 							<div class="leagueLeadersCategory col-12 col-md my-1 mx-auto table-wrapper" id="league_leaders_points">
-								<table class="table" id="points_category">
+								<table class="table white-text" id="points_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -70,7 +70,7 @@
 							</div>
 							
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_assist">
-								<table class="table" id="assist_category">
+								<table class="table white-text" id="assist_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -104,7 +104,7 @@
 							</div>
 							
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_rebounds">
-								<table class="table" id="rebounds_category">
+								<table class="table white-text" id="rebounds_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -138,7 +138,7 @@
 							</div>
 							
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_steals">
-								<table class="table" id="steals_category">
+								<table class="table white-text" id="steals_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -172,7 +172,7 @@
 							</div>
 							
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_blocks">
-								<table class="table" id="blocks_category">
+								<table class="table white-text" id="blocks_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>

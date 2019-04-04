@@ -106,7 +106,7 @@
 															</div>
 														</td>
 														<td class="">
-															<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" />
+															<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" min="0" step="1" />
 														</td>
 														<td class="">
 															<input type="text" name="player_name[]" class="form-control" value="{{ $player->player_name }}" placeholder="Enter Player Name" />
@@ -131,7 +131,7 @@
 											<tr class="newPlayerRow hidden" hidden>
 												<td class="text-center">&nbsp;</td>
 												<td class="">
-													<input type="number" name="new_jers_num[]" class="form-control" value="" placeholder="Enter Jersey #" disabled />
+													<input type="number" name="new_jers_num[]" class="form-control" value="" placeholder="Enter Jersey #" min="0" step="1" disabled />
 												</td>
 												<td class="">
 													<input type="text" name="new_player_name[]" class="form-control" value="" placeholder="Enter Player Name" disabled />

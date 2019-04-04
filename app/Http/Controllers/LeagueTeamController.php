@@ -241,25 +241,27 @@ class LeagueTeamController extends Controller
 					$newPlayer->league_team_id = $league_team->id;
 					$newPlayer->league_season_id = $showSeason->id;
 
-					// Save the new team player
-					if ($newPlayer->save()) {
-						// If this team has any team stats, then
-						// add each new player to that games stats
-						if ($league_team->home_games->merge($league_team->away_games)->isNotEmpty()) {
-							$games = $league_team->home_games->merge($league_team->away_games);
+					if($newPlayer->player_name != null && $newPlayer->player_name != '') {
+						// Save the new team player
+						if ($newPlayer->save()) {
+							// If this team has any team stats, then
+							// add each new player to that games stats
+							if ($league_team->home_games->merge($league_team->away_games)->isNotEmpty()) {
+								$games = $league_team->home_games->merge($league_team->away_games);
 
-							foreach ($games as $game) {
-								// Check and see if the game has stats added yet
-								// Add player to that games stats if exist
-								if ($game->player_stats->isNotEmpty()) {
-									$newPlayerStat = new LeagueStat();
-									$newPlayerStat->league_teams_id = $league_team->id;
-									$newPlayerStat->league_season_id = $showSeason->id;
-									$newPlayerStat->league_schedule_id = $game->id;
-									$newPlayerStat->league_player_id = $newPlayer->id;
-									$newPlayerStat->game_played = 0;
+								foreach ($games as $game) {
+									// Check and see if the game has stats added yet
+									// Add player to that games stats if exist
+									if ($game->player_stats->isNotEmpty()) {
+										$newPlayerStat = new LeagueStat();
+										$newPlayerStat->league_teams_id = $league_team->id;
+										$newPlayerStat->league_season_id = $showSeason->id;
+										$newPlayerStat->league_schedule_id = $game->id;
+										$newPlayerStat->league_player_id = $newPlayer->id;
+										$newPlayerStat->game_played = 0;
 
-									if ($newPlayerStat->save()) {
+										if ($newPlayerStat->save()) {
+										}
 									}
 								}
 							}

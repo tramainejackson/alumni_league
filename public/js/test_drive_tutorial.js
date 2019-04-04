@@ -80,7 +80,7 @@ $(document).ready(function()
         $("#season_schedule_snap").parent().addClass('border border-primary')
             .attr('data-toggle', 'popover')
             .attr('title', 'Season Schedule')
-            .attr('data-placement', 'left')
+            .attr('data-placement', 'top')
             .attr('data-content', 'This is a quick view of the upcoming schedule on the seasons calendar.')
             .popover('show');
     });

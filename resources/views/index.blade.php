@@ -184,7 +184,7 @@
 								@if($showSeasonSchedule->isNotEmpty())
 									@foreach($showSeasonSchedule as $upcomingGame)
 										<div class="card col-12 col-md-6 col-lg-4 col-lg-3 my-2">
-											<h3 class="h3-responsive text-center p-4 blue-grey">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
+											<h3 class="h3-responsive text-center p-4 blue-grey white-text">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
 											<div class="card-body text-center">
 												<p class="">{{ $upcomingGame->home_team }}</p>
 												<p class="">vs</p>

@@ -137,7 +137,7 @@
 									<div class="row">
 										<div class="col-12 col-md">
 											<div class="">
-												<select class="mdb-select md-form" name="new_away_team[]" disabled>
+												<select class="md-form colorful-select dropdown-ins" name="new_away_team[]" disabled>
 													<option value="" disabled selected>Choose your option</option>
 													@foreach($showSeason->league_teams as $away_team)
 														<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
@@ -148,7 +148,7 @@
 										</div>
 										<div class="col-12 col-md">
 											<div class="">
-												<select class="mdb-select md-form" name="new_home_team[]" disabled>
+												<select class="md-form  colorful-select dropdown-ins" name="new_home_team[]" disabled>
 													<option value="" disabled selected>Choose your option</option>
 													@foreach($showSeason->league_teams as $home_team)
 														<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
