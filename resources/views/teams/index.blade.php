@@ -5,20 +5,14 @@
 		<div class="row{{ $showSeason->league_profile ? '': ' view' }}">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col col-lg-3 col-xl mt-3 d-none d-lg-block">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
+				<a href="{{ route('league_teams.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
+
 			</div>
 			<div class="col-12 col-md-10 col-lg-6 col-xl-8 mx-auto{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
 				@if(!isset($allComplete))
-					<div class="text-center coolText1">
-						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
-					</div>
 					
 					@if($seasonTeams->isNotEmpty())
+
 						<div class="row">
 							@foreach($seasonTeams as $team)
 								@php $teamCaptain = $team->players()->captain(); @endphp
@@ -54,23 +48,33 @@
 														<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No email address' : 'No email address' }}</span>
 													</p>
 												</div>
-												<div class="">
-													<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">Edit Team</a>
-												</div>
-											</div>
-											<div class="feesButton">
-												@if($team->fee_paid == 'N')
-													<button class="btn orange darken-2 white-text" type="button">Fees Due</button>
-												@else
-													<button class="btn green darken-1 white-text" type="button">Fees Paid</button>
+
+												@if(Auth::user())
+													{{--Authourization Only--}}
+													<div class="">
+														<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">Edit Team</a>
+													</div>
 												@endif
 											</div>
+
+											@if(Auth::user())
+												{{--Authourization Only--}}
+												<div class="feesButton">
+													@if($team->fee_paid == 'N')
+														<button class="btn orange darken-2 white-text" type="button">Fees Due</button>
+													@else
+														<button class="btn green darken-1 white-text" type="button">Fees Paid</button>
+													@endif
+												</div>
+											@endif
 										</div>
 									</div>
 								</div>
 							@endforeach
 						</div>
+
 					@else
+
 						<div class="">
 							<h1 class="h1-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no teams added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
 							
@@ -124,10 +128,14 @@
 					</div>
 				@endif
 			</div>
+
 			<div class="col col-lg-3 col-xl mt-3 text-center text-lg-right order-first order-lg-0">
-				@if(!isset($allComplete))
-					<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
-				@else
+				@if(Auth::user())
+				{{--Authourization Only--}}
+					@if(!isset($allComplete))
+						<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
+					@else
+					@endif
 				@endif
 			</div>
 		</div>

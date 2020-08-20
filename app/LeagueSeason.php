@@ -335,9 +335,34 @@ class LeagueSeason extends Model
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
     */
-    public function scopeActive($query)
-    {
-        return $query->where('active', 'Y');
+    public function scopeActive($query, $season=null, $year=null) {
+	    if(request()->query('season') != null && request()->query('year') != null) {
+		    $season = request()->query('season');
+		    $year = request()->query('year');
+	    }
+
+	    if($season != null && $year != null) {
+		    return $query->where([
+		    	['active', 'Y'],
+		    	['id', $season],
+		    	['year', $year],
+		    	['completed', 'N'],
+		    ]);
+	    } elseif($season == null && $year != null) {
+		    return $query->where([
+			    ['active', 'Y'],
+			    ['year', $year],
+			    ['completed', 'N'],
+		    ]);
+	    } elseif($season != null && $year == null) {
+		    return $query->where([
+			    ['active', 'Y'],
+			    ['id', $season],
+			    ['completed', 'N'],
+		    ]);
+	    } else {
+		    return $query->where('active', 'Y');
+	    }
     }
 	
 	/**
@@ -346,8 +371,7 @@ class LeagueSeason extends Model
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
     */
-    public function scopeCompleted($query)
-    {
+    public function scopeCompleted($query) {
         return $query->where([
 			['completed', 'Y'],
 			['active', 'N'],
@@ -359,8 +383,7 @@ class LeagueSeason extends Model
 	* Start the playoffs for the selected season
 	*
 	**/
-	public function create_playoff_settings()
-	{
+	public function create_playoff_settings() {
 		$this->is_playoffs = 'Y';
 		$seasonPlayoffs = $this->playoffs;
 		$totalPlayoffTeams = $this->league_teams;

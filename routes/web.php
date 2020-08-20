@@ -17,18 +17,29 @@
 
 Auth::routes();
 
+/* Resource Controllers */
+Route::resource('league_schedule', 'LeagueScheduleController');
+Route::resource('league_players', 'LeaguePlayerController');
+Route::resource('league_teams', 'LeagueTeamController');
+Route::resource('league_pictures', 'LeaguePictureController');
+Route::resource('league_profile', 'LeagueProfileController');
+Route::resource('league_seasons', 'LeagueSeasonController');
+Route::resource('news', 'NewsArticleController');
+Route::resource('messages', 'MessagesController');
+/* Resource Controllers */
+
 /* Overwrite the default login controller */
-	Route::post('/login', 'Auth\LoginController@authenticate');
-	Route::get('/login/{user}', 'Auth\LoginController@ttr_user');
+//	Route::post('/login', 'Auth\LoginController@authenticate');
+//	Route::get('/login/{user}', 'Auth\LoginController@ttr_user');
 /* Overwrite the default login controller */
 
 Route::get('/', 'HomeController@about')->name('welcome');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/test_drive', 'HomeController@test_drive')->name('test_drive');
+//Route::get('/test_drive', 'HomeController@test_drive')->name('test_drive');
 
-Route::post('/remove_test_drive', 'HomeController@remove_test_drive')->name('remove_test_drive');
+//Route::post('/remove_test_drive', 'HomeController@remove_test_drive')->name('remove_test_drive');
 
 Route::post('/home', 'HomeController@store');
 
@@ -63,18 +74,6 @@ Route::get('league_stat/edit_week/{week}', 'LeagueStatController@edit_week')->na
 Route::get('league_stat/edit_round/{round}', 'LeagueStatController@edit_round')->name('league_stat.edit_round');
 
 Route::patch('league_stat/edit_week/{week}', 'LeagueStatController@update');
-
-Route::resource('league_schedule', 'LeagueScheduleController');
-
-Route::resource('league_players', 'LeaguePlayerController');
-
-Route::resource('league_teams', 'LeagueTeamController');
-
-Route::resource('league_pictures', 'LeaguePictureController');
-
-Route::resource('league_profile', 'LeagueProfileController');
-
-Route::resource('league_season', 'LeagueSeasonController');
 
 Route::post('create_playoffs', 'LeagueSeasonController@create_playoffs');
 

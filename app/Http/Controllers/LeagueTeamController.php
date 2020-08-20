@@ -9,6 +9,7 @@ use App\LeagueStanding;
 use App\LeaguePlayer;
 use App\LeagueTeam;
 use App\LeagueStat;
+use App\LeagueSeason;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,65 +18,45 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class LeagueTeamController extends Controller
 {
+	public $showSeason;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct() {
+        $this->middleware('auth')->except('index');
+
+	    $this->showSeason = LeagueSeason::active()->get()->last();
     }
+
+	public function get_season() {
+    	return $this->showSeason;
+	}
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-		// Get the season to show
-		$showSeason = $this->find_season(request());
-		
-		if($showSeason instanceof \App\LeagueProfile) {
-			
-			if($showSeason->seasons->isNotEmpty()) {
-				
-				$activeSeasons = $showSeason->seasons()->active()->get();
-				$seasonTeams = collect();
-				
-				// Resize the default image
-				Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
-						$constraint->aspectRatio();
-						$constraint->upsize();
-					}
-				)->save(storage_path('app/public/images/lg/default_img.jpg'));
-				$defaultImg = asset('/storage/images/lg/default_img.jpg');
+    public function index(Request $request) {
+	    // Get the season to show
+	    $showSeason = null;
+	    $league = $showSeason = LeagueProfile::find(2);
 
-				return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
-				
-			} else {
-				
-				return view('no_season', compact('showSeason'));
-				
+		$activeSeason = $league->seasons()->active()->get()->last();
+		$seasonTeams = $activeSeason->league_teams;
+
+		// Resize the default image
+		Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+				$constraint->upsize();
 			}
-			
-		} else {
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-			$seasonTeams = $showSeason->league_teams;
-			
-			// Resize the default image
-			Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
-					$constraint->aspectRatio();
-					$constraint->upsize();
-				}
-			)->save(storage_path('app/public/images/lg/default_img.jpg'));
-			$defaultImg = asset('/storage/images/lg/default_img.jpg');
-
-			return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
-
-		}
+		return view('teams.index', compact('showSeason', 'activeSeason', 'seasonTeams', 'defaultImg'));
     }
 	
 	/**
@@ -83,10 +64,9 @@ class LeagueTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function create()
-    {
+    public function create() {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
+		$showSeason = LeagueSeason::active()->get()->last();
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 		$totalTeams = $showSeason->league_teams->count();
 		
@@ -105,16 +85,13 @@ class LeagueTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
 		$this->validate($request, [
 			'team_name' => 'required',
 		]);
-		// Get the season to show
-		$showSeason = $this->find_season(request());
 		
 		// Create a new team for the selected season
-		$team = $showSeason->league_teams()->create([
+		$team = $this->showSeason->league_teams()->create([
 			'team_name' => ucwords(strtolower($request->team_name)),
 			'fee_paid' => $request->fee_paid,
 		]);
@@ -126,7 +103,7 @@ class LeagueTeamController extends Controller
 			$teamStandings->team_name = $team->team_name;
 			
 			if($teamStandings->save()) {
-				return redirect()->action('LeagueTeamController@edit', ['team' => $team->id, 'season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'New Team Added Successfully');
+				return redirect()->action('LeagueTeamController@edit', ['team' => $team->id, 'season' => $this->showSeason->id, 'year' => $this->showSeason->year])->with('status', 'New Team Added Successfully');
 			}
 		} else {}
     }
@@ -136,14 +113,11 @@ class LeagueTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function edit(LeagueTeam $league_team)
-    {
+    public function edit(LeagueTeam $league_team) {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
-		
-		if($showSeason->league_teams->contains('id', $league_team->id)) {
+		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
 
-			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+			$activeSeasons = $this->showSeason->league_profile->seasons()->active()->get();
 
 			// Resize the default image
 			Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
@@ -166,15 +140,11 @@ class LeagueTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function update(Request $request, LeagueTeam $league_team)
-    {
+    public function update(Request $request, LeagueTeam $league_team) {
 		$this->validate($request, [
 			'team_name' => 'required',
 			'team_photo' => 'nullable|image',
 		]);
-		
-		// Get the season to show
-		$showSeason = $this->find_season(request());
 
 		$league_team->team_name = $request->team_name;
 		$league_team->fee_paid = $request->fee_paid;
@@ -239,7 +209,7 @@ class LeagueTeamController extends Controller
 					$newPlayer->phone = $request->new_player_phone[$key];
 					$newPlayer->team_captain = 'N';
 					$newPlayer->league_team_id = $league_team->id;
-					$newPlayer->league_season_id = $showSeason->id;
+					$newPlayer->league_season_id = $this->get_season()->id;
 
 					if($newPlayer->player_name != null && $newPlayer->player_name != '') {
 						// Save the new team player
@@ -337,8 +307,7 @@ class LeagueTeamController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function destroy(Request $request, LeagueTeam $league_team)
-    {
+    public function destroy(Request $request, LeagueTeam $league_team) {
 		// Get the season to show
 		$league = Auth::user()->leagues_profiles->first();
 		$showSeason = '';
@@ -396,36 +365,4 @@ class LeagueTeamController extends Controller
 			}
 		} else {}
     }
-	
-	/**
-     * Check for a query string and get the current season.
-     *
-     * @return seaon
-    */
-	public function find_season(Request $request) {
-		if(Auth::check()) {
-			$league = Auth::user()->leagues_profiles->first();
-			$showSeason = '';
-			
-			if($request->query('season') != null && $request->query('year') != null) {
-				$showSeason = $league->seasons()->active()->find($request->query('season'));
-			} else {
-				if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
-					$showSeason = $league;
-				} else {
-					if($league->seasons()->active()->first()) {
-						$showSeason = $league->seasons()->active()->first();
-					} else {
-						if($league->seasons()->first()) {
-							$showSeason = $league->seasons()->first();
-						} else {
-							$showSeason = $league;
-						}
-					}
-				}
-			}
-			
-			return $showSeason;
-		}
-	}
 }

@@ -21,9 +21,8 @@ class LeagueSeasonController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct() {
+        $this->middleware('auth')->except('index');
     }
 
     /**
@@ -31,9 +30,8 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-		
+    public function index() {
+		return view('seasons.index');
     }
 	
 	/**
@@ -41,8 +39,7 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
 		$season = new LeagueSeason();
 		$season->league_profile_id = $request->league_id;
 		$season->season = $request->season;
@@ -70,8 +67,7 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create_playoffs(Request $request, LeagueSeason $league_season)
-    {
+    public function create_playoffs(Request $request, LeagueSeason $league_season) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		
@@ -85,8 +81,7 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function complete_season(LeagueSeason $league_season)
-    {
+    public function complete_season(LeagueSeason $league_season) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		
@@ -103,8 +98,7 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 
@@ -125,40 +119,7 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit()
-    {
+    public function edit() {
         
     }
-	
-	/**
-     * Check for a query string and get the current season.
-     *
-     * @return seaon
-    */
-	public function find_season(Request $request) {
-		if(Auth::check()) {
-			$league = Auth::user()->leagues_profiles->first();
-			$showSeason = '';
-			
-			if($request->query('season') != null && $request->query('year') != null) {
-				$showSeason = $league->seasons()->active()->find($request->query('season'));
-			} else {
-				if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
-					$showSeason = $league;
-				} else {
-					if($league->seasons()->active()->first()) {
-						$showSeason = $league->seasons()->active()->first();
-					} else {
-						if($league->seasons()->first()) {
-							$showSeason = $league->seasons()->first();
-						} else {
-							$showSeason = $league;
-						}
-					}
-				}
-			}
-			
-			return $showSeason;
-		}
-	}
 }

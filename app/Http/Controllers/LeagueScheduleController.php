@@ -24,7 +24,7 @@ class LeagueScheduleController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->only('index');
+        $this->middleware('auth')->except('index');
     }
 
     /**
@@ -32,53 +32,24 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-		// Get the season to show
-		$showSeason = $this->find_season(request());
-		
-		if($showSeason instanceof \App\LeagueProfile) {
+    public function index() {
+	    // Get the season to show
+	    $showSeason = null;
+	    $league = $showSeason = LeagueProfile::find(2);
 			
-			if($showSeason->seasons->isNotEmpty()) {
-			
-				$activeSeasons = $showSeason->seasons()->active()->get();
+		$activeSeason = $showSeason->seasons()->active()->get()->last();
 
-				if($showSeason->is_playoffs == 'Y') {
-					$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-					$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
-					$playInGames = $showSeason->games()->playoffPlayinGames();
-					$playoffSettings = $showSeason->playoffs;
-					
-					return view('playoffs.schedule', compact('showSeason', 'activeSeasons', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
-				} else {
-					$seasonScheduleWeeks = collect();
-					
-					return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
-				}
-			
-			} else {
-				
-				return view('no_season', compact('showSeason'));
-				
-			}
-			
+		if($activeSeason->is_playoffs == 'Y') {
+			$playoffRounds = $activeSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+			$nonPlayInGames = $activeSeason->games()->playoffNonPlayinGames();
+			$playInGames = $activeSeason->games()->playoffPlayinGames();
+			$playoffSettings = $activeSeason->playoffs;
+
+			return view('playoffs.schedule', compact('showSeason', 'activeSeason', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
 		} else {
-			
-			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+			$seasonScheduleWeeks = $activeSeason->games()->getScheduleWeeks();
 
-			if($showSeason->is_playoffs == 'Y') {
-				$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-				$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
-				$playInGames = $showSeason->games()->playoffPlayinGames();
-				$playoffSettings = $showSeason->playoffs;
-				
-				return view('playoffs.schedule', compact('showSeason', 'activeSeasons', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
-			} else {
-				$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks();
-				
-				return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
-			}
-			
+			return view('schedule.index', compact('showSeason', 'activeSeason', 'seasonScheduleWeeks'));
 		}
     }
 	
@@ -87,8 +58,7 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function create()
-    {
+    public function create() {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
@@ -103,8 +73,7 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function edit($week)
-    {
+    public function edit($week) {
 		// Get the season to show
 		$showSeason	= $this->find_season(request());
 		$thisWeek 	= $week;
@@ -119,8 +88,7 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function edit_playins()
-    {
+    public function edit_playins() {
 		// Get the season to show
 		$showSeason	= $this->find_season(request());
 		$weekGames 	= $showSeason->games()->playoffPlayinGames()->get();

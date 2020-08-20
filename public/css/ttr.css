@@ -147,6 +147,10 @@ main{
 	flex-grow:3;
 }
 
+.leagueInfoHeader {
+    min-width: 200px;
+}
+
 /*
  *  General Styles
 */

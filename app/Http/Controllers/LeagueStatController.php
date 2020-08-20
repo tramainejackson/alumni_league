@@ -23,7 +23,7 @@ class LeagueStatController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('index');
     }
 
     /**
@@ -31,76 +31,38 @@ class LeagueStatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-		// Get the season to show
-		$showSeason = $this->find_season(request());
-		
-		if($showSeason instanceof \App\LeagueProfile) {
+    public function index(Request $request) {
+	    // Get the season to show
+	    $showSeason = null;
+	    $league = $showSeason = LeagueProfile::find(2);
 			
-			if($showSeason->seasons->isNotEmpty()) {
-		
-				$activeSeasons = $showSeason->seasons()->active()->get();
-				$checkStats = $seasonScheduleWeeks = $$seasonTeams = $allPlayers = $allTeams = collect();
-				
-				// Resize the default image
-				Image::make(public_path('images/emptyface.jpg'))->resize(800, null, 	function ($constraint) {
-						$constraint->aspectRatio();
-					}
-				)->save(storage_path('app/public/images/lg/default_img.jpg'));
-				$defaultImg = asset('/storage/images/lg/default_img.jpg');
-				
-				if($showSeason->is_playoffs == 'Y') {
-					$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-					$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
-					$playInGames = $showSeason->games()->playoffPlayinGames();
-					$playoffSettings = $showSeason->playoffs;
+		$activeSeason = $league->seasons()->active()->get()->last();
+		$seasonTeams = $activeSeason->league_teams;
 
-					return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
-					
-				} else {
+		$allPlayers = $activeSeason->stats()->allFormattedStats();
+		$allTeams = $activeSeason->stats()->allTeamStats();
+		$seasonScheduleWeeks = $activeSeason->games()->getScheduleWeeks()->get();
+		$checkStats = $activeSeason->stats()->allFormattedStats()->get()->isNotEmpty();
 
-					return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
-					
-				}
-			
-			} else {
-				
-				return view('no_season', compact('showSeason'));
-				
+		// Resize the default image
+		Image::make(public_path('images/emptyface.jpg'))->resize(800, null, 	function ($constraint) {
+				$constraint->aspectRatio();
 			}
+		)->save(storage_path('app/public/images/lg/default_img.jpg'));
+		$defaultImg = asset('/storage/images/lg/default_img.jpg');
+
+		if($activeSeason->is_playoffs == 'Y') {
+			$playoffRounds = $activeSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+			$nonPlayInGames = $activeSeason->games()->playoffNonPlayinGames();
+			$playInGames = $activeSeason->games()->playoffPlayinGames();
+			$playoffSettings = $activeSeason->playoffs;
+
+			return view('stats.index', compact('activeSeason', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
 
 		} else {
-			
-			$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-			$seasonTeams = $showSeason->league_teams;
-				
-			$allPlayers = $showSeason->stats()->allFormattedStats();
-			$allTeams = $showSeason->stats()->allTeamStats();
-			$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
-			$checkStats = $showSeason->stats()->allFormattedStats()->get()->isNotEmpty();
 
-			// Resize the default image
-			Image::make(public_path('images/emptyface.jpg'))->resize(800, null, 	function ($constraint) {
-					$constraint->aspectRatio();
-				}
-			)->save(storage_path('app/public/images/lg/default_img.jpg'));
-			$defaultImg = asset('/storage/images/lg/default_img.jpg');
-			
-			if($showSeason->is_playoffs == 'Y') {
-				$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-				$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
-				$playInGames = $showSeason->games()->playoffPlayinGames();
-				$playoffSettings = $showSeason->playoffs;
+			return view('stats.index', compact('activeSeason', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
 
-				return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
-				
-			} else {
-
-				return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
-				
-			}
-		
 		}
     }
 	

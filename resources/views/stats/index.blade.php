@@ -3,24 +3,17 @@
 @section('content')
 	<div class="container-fluid bgrd3">
 
-		<div class="row{{ $showSeason->league_profile && $checkStats ? '': ' view' }}">
+		<div class="row{{ $activeSeason->league_profile && $checkStats ? '': ' view' }}">
 
 			<!--Column will include buttons for creating a new season-->
 			<div class="col col-xl-2 d-none d-lg-block mt-3 order-xl-0">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_stat.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
+				<a href="{{ route('league_stat.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
 			</div>
 
-			<div class="col-12 col-xl-8 order-lg-2 order-xl-1{{ $showSeason->league_profile && $checkStats ? '': ' d-flex align-items-center justify-content-center flex-column' }}">
+			<div class="col-12 col-xl-8 order-lg-2 order-xl-1{{ $activeSeason->league_profile && $checkStats ? '': ' d-flex align-items-center justify-content-center flex-column' }}">
 				
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
-					
-					@if($showSeason->is_playoffs == 'Y')
+					@if($activeSeason->is_playoffs == 'Y')
 						<h1 class="display-4 coolText4">It's Playoff Time</h1>
 					@endif
 				</div>
@@ -45,7 +38,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($showSeason->stats()->scoringLeaders(5)->get() as $scoringLeader)
+										@foreach($activeSeason->stats()->scoringLeaders(5)->get() as $scoringLeader)
 											<tr data-toggle="modal" data-target="#player_card">
 												<td class='playerNameTD'>#{{ $scoringLeader->player->jersey_num . ' ' . $scoringLeader->player->player_name }}</td>
 												<td class='totalPointsTD text-center'>{{ $scoringLeader->TPTS == null ? 0 : $scoringLeader->TPTS }}</td>
@@ -79,7 +72,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($showSeason->stats()->assistingLeaders(5)->get() as $assistLeader)
+										@foreach($activeSeason->stats()->assistingLeaders(5)->get() as $assistLeader)
 											<tr data-toggle="modal" data-target="#player_card">
 												<td class='playerNameTD'>#{{ $assistLeader->player->jersey_num . ' ' . $assistLeader->player->player_name }}</td>
 												<td class='totalPointsTD' hidden>{{ $assistLeader->TPTS == null ? 0 : $assistLeader->TPTS }}</td>
@@ -113,7 +106,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $reboundsLeader)
+										@foreach($activeSeason->stats()->reboundingLeaders(5)->get() as $reboundsLeader)
 											<tr data-toggle="modal" data-target="#player_card">
 												<td class='playerNameTD'>#{{ $reboundsLeader->player->jersey_num . ' ' . $reboundsLeader->player->player_name }}</td>
 												<td class='totalPointsTD' hidden>{{ $reboundsLeader->TPTS == null ? 0 : $reboundsLeader->TPTS }}</td>
@@ -147,7 +140,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($showSeason->stats()->stealingLeaders(5)->get() as $stealsLeader)
+										@foreach($activeSeason->stats()->stealingLeaders(5)->get() as $stealsLeader)
 											<tr data-toggle="modal" data-target="#player_card">
 												<td class='playerNameTD'>#{{ $stealsLeader->player->jersey_num . '  ' . $stealsLeader->player->player_name }}</td>
 												<td class='totalPointsTD' hidden>{{ $stealsLeader->TPTS == null ? 0 : $stealsLeader->TPTS }}</td>
@@ -181,7 +174,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										@foreach($showSeason->stats()->blockingLeaders(5)->get() as $blocksLeader)
+										@foreach($activeSeason->stats()->blockingLeaders(5)->get() as $blocksLeader)
 											<tr data-toggle="modal" data-target="#player_card">
 												<td class='playerNameTD'>#{{ $blocksLeader->player->jersey_num . ' ' . $blocksLeader->player->player_name }}</td>
 												<td class='totalPointsTD' hidden>{{ $blocksLeader->TPTS == null ? 0 : $blocksLeader->TPTS }}</td>
@@ -305,18 +298,21 @@
 				@endif
 			</div>
 			<div class="col-md col-xl-2 mt-3 text-lg-right text-center order-first order-lg-1 order-xl-2">
-				@if($showSeason->is_playoffs == 'Y')
-					
-					@foreach($playoffRounds as $round)
-						<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $round->round]) : route('league_stat.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
-					@endforeach
-					
-				@else
-					
-					@foreach($seasonScheduleWeeks as $week)
-						<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
-					@endforeach
-					
+				@if(Auth::user())
+					{{--Authourization Only--}}
+					@if($activeSeason->is_playoffs == 'Y')
+
+						@foreach($playoffRounds as $round)
+							<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $round->round]) : route('league_stat.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+						@endforeach
+
+					@else
+
+						@foreach($seasonScheduleWeeks as $week)
+							<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
+						@endforeach
+
+					@endif
 				@endif
 			</div>
 		</div>

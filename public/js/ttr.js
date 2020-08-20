@@ -19,7 +19,7 @@ $(document).ready(function() {
 	new WOW().init();
 	
 	// Initialize MDB select
-	$('.mdb-select').material_select();
+	$('.mdb-select').materialSelect();
 	
 	// Initialize datetimepicker
 	$('.datetimepicker').pickadate({
@@ -38,15 +38,12 @@ $(document).ready(function() {
 	
 	// Dropdown Init
 	$('.dropdown-toggle').dropdown();
-	
+
+    // SideNav Button Initialization
+    $(".button-collapse").sideNav();
 	// SideNav Scrollbar Initialization
-	var sideNavScrollbar = document.querySelector('.custom-scrollbar');
-	Ps.initialize(sideNavScrollbar);
-	// SideNav Button Initialization
-	$(".button-collapse").sideNav({
-		edge: 'left', // Choose the horizontal origin
-		closeOnClick: true // Closes side-nav on <a> clicks, useful for Angular/Meteor
-	});
+    var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+    var ps = new PerfectScrollbar(sideNavScrollbar);
 
 	// Remove flash message if there is one after 8 seconds
 	if($('.flashMessage').length == 1) {
@@ -194,7 +191,7 @@ $(document).ready(function() {
 		var editModal = $('#edit_game_modal');
 		
 		// Destroy the mdb select
-		$(editModal).find('select[name="edit_away_team"], select[name="edit_home_team"]').material_select('destroy');
+		$(editModal).find('select[name="edit_away_team"], select[name="edit_home_team"]').materialSelect('destroy');
 		
 		// Add the names of the teams and their team ID to the forfeit buttons
 		// and respective input checkbox value
@@ -251,7 +248,7 @@ $(document).ready(function() {
 		
 		// Initialize the mdb select
 		$(editModal).find('select[name="edit_away_team"], select[name="edit_home_team"]')
-			.material_select();
+			.materialSelect();
 	});
 	
 	// Add a new player row on the team edit page
@@ -300,7 +297,7 @@ $(document).ready(function() {
 		});
 		
 		// Initialize datetimepicker
-		$(newGame).find('select').addClass('mdb-select').material_select();
+		$(newGame).find('select').addClass('mdb-select').materialSelect();
 	});
 	
 	// Delete the player from the team

@@ -26,8 +26,7 @@ class LeagueProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 
@@ -292,8 +291,10 @@ class LeagueProfileController extends Controller
 					}
 				}
 			}
-			
-			return $showSeason;
+		} else {
+			$showSeason = LeagueSeason::first();
 		}
+
+		return $showSeason;
 	}
 }
