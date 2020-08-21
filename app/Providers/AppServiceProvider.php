@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Admin;
 use App\LeagueSeason;
+use App\LeagueProfile;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -16,7 +17,6 @@ class AppServiceProvider extends ServiceProvider
 	 */
 	public function boot() {
 		View::share('settings', Admin::first());
-		View::share('showSeason', LeagueSeason::active()->get()->last());
 	}
 
 	/**

@@ -223,7 +223,7 @@
 							<button class="btn btn-lg deep-purple white-text">Unpaid Teams:&nbsp;<span class="badge badge-pill blue-grey">{{ $showSeasonUnpaidTeams->count() }}</span></button>
 
 						@else
-							
+
 							<h3 class="h3-responsive">No teams showing for this season</h3>
 							
 						@endif

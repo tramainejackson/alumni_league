@@ -45,7 +45,7 @@
 					<!--Card-->
 					<div class="card mb-5 col p-0 mx-1 mx-md-5 wow fadeInUpBig" data-wow-delay="0.5s">
 						<!--Card image-->
-						<div class="view gradient-card-header peach-gradient text-center py-3 coolText4">
+						<div class="view gradient-card-header peach-gradient text-center py-3 coolText4" style="height: auto">
 							<h2 class="">Register</h2>
 						</div>
 						<!--Card content-->
@@ -110,19 +110,19 @@
 			</div>
 		</div>
 		
-		<div class="">
-			<div class="view d-flex align-items-center justify-content-center text-center rgba-black-slight">
-				<div class="">
-					<h1 class="h1-responsive coolText3">Not sure if this is for your league or not?</h1>
-					
-					<h2 class="h2-responsive my-3 coolText3">Click here and take it for a test drive with the test account</h2>
-					
-					<p class="">
-						<a href="{{ route('test_drive') }}" class="btn btn-lg peach-gradient">Test Drive</a>
-					</p>
-				</div>
-			</div>
-		</div>
+		{{--<div class="">--}}
+			{{--<div class="view d-flex align-items-center justify-content-center text-center rgba-black-slight">--}}
+				{{--<div class="">--}}
+					{{--<h1 class="h1-responsive coolText3">Not sure if this is for your league or not?</h1>--}}
+					{{----}}
+					{{--<h2 class="h2-responsive my-3 coolText3">Click here and take it for a test drive with the test account</h2>--}}
+					{{----}}
+					{{--<p class="">--}}
+						{{--<a href="{{ route('test_drive') }}" class="btn btn-lg peach-gradient">Test Drive</a>--}}
+					{{--</p>--}}
+				{{--</div>--}}
+			{{--</div>--}}
+		{{--</div>--}}
 	</div>
 	
 	<!--Section: Contact v.2-->

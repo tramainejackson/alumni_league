@@ -16,14 +16,29 @@ use Illuminate\Support\Facades\DB;
 
 class LeagueSeasonController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct() {
-        $this->middleware('auth')->except('index');
-    }
+
+	public $showSeason;
+	public $league;
+
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->middleware('auth')->except('index');
+
+		$this->league = LeagueProfile::find(2);
+		$this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
+	}
+
+	public function get_season() {
+		return $this->showSeason;
+	}
+
+	public function get_league() {
+		return $this->league;
+	}
 
     /**
      * Show the application dashboard.
@@ -31,7 +46,20 @@ class LeagueSeasonController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-		return view('seasons.index');
+    	$showSeason = $this->showSeason;
+    	$completedSeasons = $this->league->seasons()->completed()->get();
+	    $ageGroups = explode(' ', $showSeason->league_profile->age);
+	    $compGroups = explode(' ', $showSeason->league_profile->comp);
+	    $showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
+	    $showSeasonStat = $showSeason->stats()->get();
+	    $showSeasonTeams = $showSeason->league_teams;
+	    $showSeasonPlayers = $showSeason->league_players;
+
+    	if($showSeason !== null || $completedSeasons !== null) {
+		    return view('seasons.index', compact('showSeason', 'completedSeasons', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers'));
+	    } else {
+		    return view('seasons.no_season');
+	    }
     }
 	
 	/**

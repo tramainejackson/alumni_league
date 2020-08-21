@@ -19,6 +19,7 @@ use Intervention\Image\ImageManagerStatic as Image;
 class LeagueTeamController extends Controller
 {
 	public $showSeason;
+	public $league;
 
     /**
      * Create a new controller instance.
@@ -26,13 +27,18 @@ class LeagueTeamController extends Controller
      * @return void
      */
     public function __construct() {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except(['index', 'show']);
 
-	    $this->showSeason = LeagueSeason::active()->get()->last();
+	    $this->league = LeagueProfile::find(2);
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
     }
 
 	public function get_season() {
     	return $this->showSeason;
+	}
+
+	public function get_league() {
+    	return $this->league;
 	}
 
     /**
@@ -79,6 +85,35 @@ class LeagueTeamController extends Controller
 		
 		return view('teams.create', compact('showSeason', 'activeSeasons', 'defaultImg', 'totalTeams'));
     }
+
+	/**
+	 * Show the application create team page.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function show(LeagueTeam $league_team) {
+		$showSeason = $this->showSeason;
+
+		// Get the season to show
+		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
+
+			$activeSeasons = $this->showSeason->league_profile->seasons()->active()->get();
+
+			// Resize the default image
+			Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
+				$constraint->aspectRatio();
+			}
+			)->save(storage_path('app/public/images/lg/default_img.jpg'));
+			$defaultImg = asset('/storage/images/lg/default_img.jpg');
+
+			return view('teams.show', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons'));
+
+		} else {
+
+			abort(404);
+
+		}
+	}
 	
 	/**
      * Show the application create team page.
@@ -114,6 +149,8 @@ class LeagueTeamController extends Controller
      * @return \Illuminate\Http\Response
     */
     public function edit(LeagueTeam $league_team) {
+	    $showSeason = $this->showSeason;
+
 		// Get the season to show
 		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
 

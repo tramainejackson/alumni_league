@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Allerta+Stencil|Artifika|Cinzel+Decorative|Fanwood+Text|Fredericka+the+Great|Fugaz+One|Germania+One|Graduate|Grand+Hotel|IM+Fell+Double+Pica|Montserrat|Source+Sans+Pro|Lato|Oswald|Special+Elite|Slabo+27px|Raleway|PT+Sans+Narrow|PT+Serif|Indie+Flower|Bitter|Playfair+Display|Arvo|Lobster|Bree+Serif|Shadows+Into+Light|Orbitron|Pacifico|Rokkitt|Sigmar+One|Amatic+SC|Dancing+Script|Bangers);
 
 html, body, header, .view {
-	font-family: 'Indie Flower', serif;
+	font-family: 'Fredericka the Great', cursive;
 	min-height: 100vh;
 }
 
@@ -66,6 +66,18 @@ html, body, header, .view {
 
 .hidden {
 	display: none;
+}
+
+.divider-short {
+    width: 50%;
+    border: solid black 1.5px;
+    margin: 15px auto;
+}
+
+.divider-long {
+    width: 80%;
+    border: solid black 1.5px;
+    margin: 15px auto;
 }
 
 /** Different Text **/

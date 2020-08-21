@@ -57,7 +57,7 @@ class LeaguePictureController extends Controller
 			
 			} else {
 				
-				return view('no_season', compact('showSeason'));
+				return view('seasons.no_season', compact('showSeason'));
 				
 			}
 			

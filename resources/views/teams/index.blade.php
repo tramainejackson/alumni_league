@@ -2,12 +2,12 @@
 
 @section('content')
 	<div class="container-fluid bgrd3">
-		<div class="row{{ $showSeason->league_profile ? '': ' view' }}">
+		<div class="row view">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col col-lg-3 col-xl mt-3 d-none d-lg-block">
 				<a href="{{ route('league_teams.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
-
 			</div>
+
 			<div class="col-12 col-md-10 col-lg-6 col-xl-8 mx-auto{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
 				@if(!isset($allComplete))
 					
@@ -30,7 +30,7 @@
 										<!-- Card content -->
 										<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
 											<!-- Title -->
-											<h1 class="card-title h1-responsive font-weight-bold w-75 mx-auto">{{ $team->team_name }}</h1>
+											<h1 class="card-title h1-responsive font-weight-bold mx-auto">{{ $team->team_name }}</h1>
 											<!-- Team Captain Info -->
 											<div class="d-flex flex-column align-items-center">
 												<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
@@ -53,6 +53,10 @@
 													{{--Authourization Only--}}
 													<div class="">
 														<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">Edit Team</a>
+													</div>
+												@else
+													<div class="">
+														<a href="{{ request()->query() == null ? route('league_teams.show', ['league_team' => $team->id]) : route('league_teams.show', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">View Team</a>
 													</div>
 												@endif
 											</div>

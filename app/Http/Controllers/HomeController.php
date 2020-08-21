@@ -22,8 +22,7 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth')->only('index');
         $this->middleware('guest')->only('about');
     }
@@ -73,21 +72,21 @@ class HomeController extends Controller
      */
     public function about() {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
+		$showSeason = LeagueSeason::active()->get()->last();
 
-		if($showSeason !== null) {
-			
-			if($showSeason instanceof \App\LeagueProfile) {
-				
+		if(Auth::check()) {
+
+			if($showSeason !== null) {
+
 				$activeSeasons = $showSeason->seasons()->active()->get();
-				
+
 				return view('about', compact('showSeason', 'activeSeasons'));
 
 			} else {
 
 				$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-				
-				return view('no_season', compact('activeSeasons', 'showSeason'));
+
+				return view('seasons.no_season', compact('activeSeasons', 'showSeason'));
 
 			}
 		} else {
@@ -116,7 +115,7 @@ class HomeController extends Controller
 
 		} else {
 
-			return view('no_season', compact('showSeason'));
+			return view('seasons.no_season', compact('showSeason'));
 
 		}
     }
@@ -178,90 +177,90 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function test_drive(Request $request) {
-		Auth::loginUsingId(6);
-
-	    // Store a piece of data in the session...
-	    session(['testdrive' => 'true']);
-        
-		return redirect()->action('HomeController@index');
-    }
+//    public function test_drive(Request $request) {
+//		Auth::loginUsingId(6);
+//
+//	    // Store a piece of data in the session...
+//	    session(['testdrive' => 'true']);
+//
+//		return redirect()->action('HomeController@index');
+//    }
 
 	/**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function remove_test_drive(Request $request) {
-	    // Remove a piece of data in the session...
-	    session()->forget('testdrive');
-
-		return redirect()->action('HomeController@index');
-    }
+//    public function remove_test_drive(Request $request) {
+//	    // Remove a piece of data in the session...
+//	    session()->forget('testdrive');
+//
+//		return redirect()->action('HomeController@index');
+//    }
 	
 	/**
      * Check for a query string and get the current season.
      *
      * @return seaon
     */
-	public static function find_season(Request $request) {
-
-		if(Auth::check()) {
-			
-			$league = Auth::user()->leagues_profiles->first();
-			$showSeason = '';
-
-			if($request->query('season') != null && $request->query('year') != null) {
-
-				$showSeason = $league->seasons()->active()->find($request->query('season'));
-				
-			} else {
-				
-				if($league) {
-					
-					if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
-						
-						$showSeason = $league;
-						
-					} else {
-						
-						if($league->seasons()->active()->first()) {
-							
-							$showSeason = $league->seasons()->active()->first();
-							
-						} else {
-							
-							if($league->seasons()->first()) {
-								
-								$showSeason = $league->seasons()->first();
-								
-							} else {
-								
-								$showSeason = $league;
-								
-							}
-							
-						}
-						
-					}
-					
-				} else {
-					
-					
-					
-				}
-				
-			}
-
-		} else {
-			if(session()->has('commish')) {
-				Auth::loginUsingId(session()->get('commish'));
-			} else {
-				$league = $showSeason = LeagueProfile::find(2);
-				$activeSeason = $league->seasons()->active()->get()->last();
-			}
-		}
-
-		return $showSeason;
-	}
+//	public static function find_season(Request $request) {
+//
+//		if(Auth::check()) {
+//
+//			$league = Auth::user()->leagues_profiles->first();
+//			$showSeason = '';
+//
+//			if($request->query('season') != null && $request->query('year') != null) {
+//
+//				$showSeason = $league->seasons()->active()->find($request->query('season'));
+//
+//			} else {
+//
+//				if($league) {
+//
+//					if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
+//
+//						$showSeason = $league;
+//
+//					} else {
+//
+//						if($league->seasons()->active()->first()) {
+//
+//							$showSeason = $league->seasons()->active()->first();
+//
+//						} else {
+//
+//							if($league->seasons()->first()) {
+//
+//								$showSeason = $league->seasons()->first();
+//
+//							} else {
+//
+//								$showSeason = $league;
+//
+//							}
+//
+//						}
+//
+//					}
+//
+//				} else {
+//
+//
+//
+//				}
+//
+//			}
+//
+//		} else {
+//			if(session()->has('commish')) {
+//				Auth::loginUsingId(session()->get('commish'));
+//			} else {
+//				$league = $showSeason = LeagueProfile::find(2);
+//				$activeSeason = $league->seasons()->active()->get()->last();
+//			}
+//		}
+//
+//		return $showSeason;
+//	}
 }
