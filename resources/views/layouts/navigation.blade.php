@@ -1,7 +1,7 @@
  <nav class="navbar navbar-expand-lg justify-content-between">
 	<div class="d-flex align-items-center">
 		<!-- Branding Image -->
-		<a class="navbar-brand indigo-text" href="{{ route('welcome') }}">{{ config('app.name', 'AnyLeague') }}</a>
+		<a class="navbar-brand indigo-text" href="{{ route('welcome') }}">{{ $league->name }}</a>
 	</div>
 
 	<!-- SideNav slide-out button -->
@@ -160,10 +160,6 @@
 			@if(Auth::check())
 				<li class="nav-item">
 					<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('users.index') : route('users.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Users</a>
-				</li>
-
-				<li class="nav-item">
-					<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('settings') : route('settings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Settings</a>
 				</li>
 			@endif
 		</ul>

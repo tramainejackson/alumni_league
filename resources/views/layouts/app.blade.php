@@ -12,7 +12,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'AnyLeague') }}</title>
+    <title>{{ $league->name }}</title>
 
     <!-- Styles -->
 	<!-- Font Awesome -->

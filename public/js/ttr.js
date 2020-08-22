@@ -55,6 +55,17 @@ $(document).ready(function() {
 			});
 		}, 8000);
 	}
+
+    // Button type toggle switch
+    $('body').on("click", ".automatic, .manual", function(e) {
+        e.preventDefault();
+        if(!$(this).hasClass('active btn-success')) {
+            $(this).addClass('active btn-success').removeClass('btn-blue-grey').children().attr("checked", true);
+            $(this).parent().siblings('div').find('button').addClass('btn-blue-grey').removeClass('active btn-success').children().removeAttr("checked");
+        } else {
+            console.log('Here');
+        }
+    });
 	
 	// Remove new season info and bring up paypal info
 	$("body").on("click", ".addSeasonBtn", function(e) {

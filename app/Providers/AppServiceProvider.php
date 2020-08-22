@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
 	 */
 	public function boot() {
 		View::share('settings', Admin::first());
+		View::share('league', LeagueProfile::find(2));
 	}
 
 	/**

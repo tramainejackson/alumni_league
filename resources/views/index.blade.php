@@ -1,15 +1,5 @@
 @extends('layouts.app')
 
-@section('additional_scripts')
-	<script type="text/javascript">
-		if(window.location.href.indexOf("new_season") > 0) {
-			setTimeout(function() {
-				$('#newSeasonForm').modal('show');
-			}, 500);
-		}
-	</script>
-@endsection
-
 @section('content')
 	@include('include.functions')
 

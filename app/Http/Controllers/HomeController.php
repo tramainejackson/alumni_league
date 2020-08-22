@@ -41,12 +41,10 @@ class HomeController extends Controller
      */
     public function index() {
 		// Get the season to show
-//		$showSeason = $this->find_season(request());
-	    $league = LeagueProfile::find(2);
 	    $showSeason = $activeSeason = $league->seasons()->active()->get()->last();
 
 		$completedSeasons = $activeSeason->league_profile->seasons()->completed()->get();
-		$activeSeasons = $activeSeason->league_profile->seasons()->active()->get();
+		$activeSeasons = $this->league->seasons()->active()->get();
 		$ageGroups = explode(' ', $activeSeason->league_profile->age);
 		$compGroups = explode(' ', $activeSeason->league_profile->comp);
 		$showSeasonSchedule = $activeSeason->games()->upcomingGames()->get();

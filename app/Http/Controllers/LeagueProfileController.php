@@ -182,14 +182,11 @@ class LeagueProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LeagueProfile $league_profile)
-    {
+    public function update(Request $request, LeagueProfile $league_profile) {
 		// Validate incoming data
 		$this->validate($request, [
 			'name' => 'required|max:50:unique:league_profile',
 			'commish' => 'required|max:100',
-			'leagues_fee' => 'numeric|nullable',
-			'ref_fee' => 'numeric|nullable',
 		]);
 		
 		$league = $league_profile;
@@ -199,8 +196,6 @@ class LeagueProfileController extends Controller
 		$league->phone = $request->leagues_phone;
 		$league->leagues_email = $request->leagues_email;
 		$league->leagues_website = $request->leagues_website;
-		$league->leagues_fee = $request->leagues_fee;
-		$league->ref_fee = $request->ref_fee;
 		$league->age = isset($request->age) ? implode(' ', $request->age) : null;
 		$league->comp = isset($request->leagues_comp) ? implode(' ', $request->leagues_comp) : null;
 		

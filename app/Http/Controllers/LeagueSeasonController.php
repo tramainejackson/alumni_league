@@ -47,16 +47,18 @@ class LeagueSeasonController extends Controller
      */
     public function index() {
     	$showSeason = $this->showSeason;
+	    $activeSeasons = $this->league->seasons()->active()->get();
     	$completedSeasons = $this->league->seasons()->completed()->get();
-	    $ageGroups = explode(' ', $showSeason->league_profile->age);
-	    $compGroups = explode(' ', $showSeason->league_profile->comp);
-	    $showSeasonSchedule = $showSeason->games()->upcomingGames()->get();
-	    $showSeasonStat = $showSeason->stats()->get();
-	    $showSeasonTeams = $showSeason->league_teams;
-	    $showSeasonPlayers = $showSeason->league_players;
+	    $ageGroups = explode(' ', $this->league->age);
+	    $compGroups = explode(' ', $this->league->comp);
+	    $showSeasonSchedule = $this->showSeason->games()->upcomingGames()->get();
+	    $showSeasonStat = $this->showSeason->stats()->get();
+	    $showSeasonTeams = $this->showSeason->league_teams;
+	    $showSeasonUnpaidTeams = $this->showSeason->league_teams()->unpaid();
+	    $showSeasonPlayers = $this->showSeason->league_players;
 
     	if($showSeason !== null || $completedSeasons !== null) {
-		    return view('seasons.index', compact('showSeason', 'completedSeasons', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers'));
+		    return view('seasons.index', compact('showSeason', 'completedSeasons', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'activeSeasons', 'showSeasonUnpaidTeams'));
 	    } else {
 		    return view('seasons.no_season');
 	    }
