@@ -63,11 +63,11 @@
 	<script type="text/javascript" src="/js/mdb.min.js"></script>
 	<script type="text/javascript" src="/js/ttr.js"></script>
 
-	@if(session()->has('testdrive'))
-        @if(session()->get('testdrive') == 'true')
-            <script type="text/javascript" src="/js/test_drive_tutorial.js"></script>
-        @endif
-	@endif
+	{{--@if(session()->has('testdrive'))--}}
+        {{--@if(session()->get('testdrive') == 'true')--}}
+            {{--<script type="text/javascript" src="/js/test_drive_tutorial.js"></script>--}}
+        {{--@endif--}}
+	{{--@endif--}}
 
 	@yield('additional_scripts')
 </body>

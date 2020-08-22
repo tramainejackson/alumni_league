@@ -9,6 +9,7 @@
 		<span class="sr-only">Toggle Navigation</span>
 		<i class="fa fa-bars"></i>
 	</button>
+
 	<!-- Sidebar navigation -->
 	<div id="slide-out" class="side-nav fixed">
 		<div class="view">
@@ -36,6 +37,7 @@
 				</div>
 			@endif
 		</div>
+
 		<ul class="custom-scrollbar nav navbar-nav">
 			<!--/. Side navigation links -->
 
@@ -64,7 +66,7 @@
 
 			@if (Auth::check())
 				@if($showSeason->league_profile)
-					@if($activeSeasons->isNotEmpty())
+					@if($showSeason->active()->get()->isNotEmpty())
 						<div id="accordion1" class="accordion">
 							<ul class="collapsible collapsible-accordion">
 								<li class="position-relative">
@@ -75,7 +77,7 @@
 								<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion1" class="collapse">
 									<ul class="list-unstyled">
 
-										@foreach($activeSeasons as $activeSeason)
+										@foreach($showSeason->active()->get() as $activeSeason)
 											<li class="">
 												<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="" type="button">{{ $activeSeason->name }}</a>
 											</li>
@@ -154,6 +156,16 @@
 			{{--<li class="nav-item">--}}
 				{{--<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">League Pics</a>--}}
 			{{--</li>--}}
+
+			@if(Auth::check())
+				<li class="nav-item">
+					<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('users.index') : route('users.index', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Users</a>
+				</li>
+
+				<li class="nav-item">
+					<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('settings') : route('settings', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">Settings</a>
+				</li>
+			@endif
 		</ul>
 	</div>
 
@@ -167,12 +179,12 @@
 					</a>
 				</li>
 			@else
-				<li class="dropdown">
+				<li class="dropdown pt-2">
 					<a href="#" class="dropdown-toggle indigo-text" data-toggle="dropdown" role="button" aria-expanded="false">
 						{{ $showSeason->league_profile ? $showSeason->league_profile->commish : $showSeason->commish }} <span class="caret"></span>
 					</a>
 
-					<ul class="dropdown-menu" role="menu">
+					<ul class="dropdown-menu" role="menu" style="min-width: 8rem;">
 						<li>
 							<a href="{{ route('logout') }}"
 								onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

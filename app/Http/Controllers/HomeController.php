@@ -16,7 +16,11 @@ use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class HomeController extends Controller
-{	
+{
+
+	public $showSeason;
+	public $league;
+
     /**
      * Create a new controller instance.
      *
@@ -25,6 +29,9 @@ class HomeController extends Controller
     public function __construct() {
         $this->middleware('auth')->only('index');
         $this->middleware('guest')->only('about');
+
+	    $this->league = LeagueProfile::find(2);
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
     }
 
     /**
@@ -91,11 +98,34 @@ class HomeController extends Controller
 			}
 		} else {
 
-			return view('about', compact('showSeason'));
+			return view('about2', compact('showSeason'));
 			
 		}
     }
 	
+	/**
+     * Show the leagues settings page.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show_setting() {
+	    // Get the season to show
+	    $showSeason = $this->showSeason;
+
+	    if($this->showSeason !== null) {
+
+			$activeSeason = $this->showSeason;
+		    $standings = $activeSeason->standings()->seasonStandings()->get();
+
+			return view('standings', compact('activeSeason', 'standings', 'league', 'showSeason'));
+
+		} else {
+
+			return view('seasons.no_season', compact('showSeason'));
+
+		}
+    }
+
 	/**
      * Show the leagues standings page.
      *

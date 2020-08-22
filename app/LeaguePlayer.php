@@ -65,6 +65,23 @@ class LeaguePlayer extends Model
     {
         return $this->hasMany('App\LeagueStat');
     }
+
+	/**
+	 * Get the avatar of the player
+	 */
+	public function getAvatarAttribute($value) {
+
+		// Check if file exist
+		$img_file = Storage::disk('public')->exists('images/' . $value . '_sm.png');
+
+		if($img_file) {
+			$img_file = $value . '_sm.png';
+		} else {
+			$img_file = 'default.png';
+		}
+
+		return $img_file;
+	}
 	
 	/**
 	* Scope a query to get the captain of the team

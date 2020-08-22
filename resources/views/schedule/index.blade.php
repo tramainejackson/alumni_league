@@ -5,11 +5,11 @@
 		
 		<div class="row view">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col col-lg d-none d-lg-block mt-3">
+			<div class="col col-lg-2 d-none d-lg-block mt-3">
 				<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
 			</div>
 
-			<div class="col-12 col-lg-7 pt-3 d-flex align-items-center justify-content-center flex-column">
+			<div class="col-12 col-lg-8 pt-3 d-flex align-items-center justify-content-center flex-column">
 				@if(!isset($allComplete))
 					
 					@if($seasonScheduleWeeks->get()->isNotEmpty())
@@ -110,7 +110,7 @@
 				@endif
 			</div>
 			
-			<div class="col-md col-lg mt-3 text-center text-lg-right order-first order-lg-0">
+			<div class="col col-lg-2 mt-3 text-center text-lg-right order-first order-lg-0">
 				@if(Auth::user())
 					{{--Authourization Only--}}
 					@if(!isset($allComplete))

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\LeagueProfile;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,9 @@ class LoginController extends Controller
     */
 
 	use AuthenticatesUsers;
+
+	public $showSeason;
+	public $league;
 	
 	/**
      * Where to redirect users after login.
@@ -35,9 +39,11 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except(['logout', 'ttr_user']);
+    public function __construct() {
+        $this->middleware('guest')->except('logout');
+
+	    $this->league = LeagueProfile::find(2);
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
     }
 	
 	/**
@@ -46,7 +52,7 @@ class LoginController extends Controller
      * @return void
      */
     public function showLoginForm(Request $request) {
-	    $showSeason = HomeController::find_season($request);
+	    $showSeason = $this->showSeason;
 
         return view('auth.login', compact('showSeason'));
     }

@@ -12,7 +12,7 @@
 */
 
 // Route::get('/test', function () {
-    // return view('test');
+//     return view('about2');
 // });
 
 Auth::routes();
@@ -26,6 +26,8 @@ Route::resource('league_profile', 'LeagueProfileController');
 Route::resource('league_seasons', 'LeagueSeasonController');
 Route::resource('news', 'NewsArticleController');
 Route::resource('messages', 'MessagesController');
+Route::resource('users', 'UserController');
+Route::resource('settings', 'AdminController');
 /* Resource Controllers */
 
 /* Overwrite the default login controller */
@@ -80,6 +82,10 @@ Route::post('create_playoffs', 'LeagueSeasonController@create_playoffs');
 Route::post('complete_season', 'LeagueSeasonController@complete_season');
 
 Route::get('league_profile/{league}/{season}', 'LeagueProfileController@show_season')->name('league_profile.season');
+
+Route::get('settings', 'HomeController@show_setting')->name('settings');
+
+Route::post('settings/{setting}', 'HomeController@edit_setting');
 
 /** MDB Templates **/
 Route::get('/templates/about_us', 'TemplateController@about_us');

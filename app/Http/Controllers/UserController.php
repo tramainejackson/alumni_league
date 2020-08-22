@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
-use App\Client;
-use App\Member;
+use App\LeagueProfile;
+use App\User;
 use App\MessageReason;
 use App\Service;
 use App\NewsArticle;
@@ -16,11 +16,17 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
 use Carbon\Carbon;
 
-class MemberController extends Controller
+class UserController extends Controller
 {
+
+	public $showSeason;
+	public $league;
 
 	public function __construct() {
 		$this->middleware(['auth'])->except(['index']);
+
+		$this->league = LeagueProfile::find(2);
+		$this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
 	}
 
     /**
@@ -29,14 +35,11 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-	    $allMembers = Member::all();
-	    $members = Member::showMembers();
-
-	    if((Auth::user())) {
-		    return view('admin.members.index', compact('allMembers'));
-	    } else {
-		    return view('members', compact('members'));
-	    }
+    	$showSeason = $this->showSeason;
+	    $allUsers = $this->league->users;
+	    $users = $this->league->users()->showMembers();
+	    
+	    return view('users.index', compact('users', 'allUsers', 'showSeason'));
     }
 
     /**
@@ -65,7 +68,7 @@ class MemberController extends Controller
 		    'bio'       => 'nullable',
 	    ]);
 
-	    $member = new Member();
+	    $member = new User();
 	    $member->name   = $request->name;
 	    $member->title  = $request->title;
 	    $member->email  = $request->email;
@@ -74,27 +77,27 @@ class MemberController extends Controller
 	    $member->bio    = $request->bio;
 
 	    if($member->save()) {
-		    return back()->with('status', 'New Member Added Successfully');
+		    return back()->with('status', 'New User Added Successfully');
 	    }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  Member $member
+     * @param  int  User $member
      * @return \Illuminate\Http\Response
      */
-    public function show(Member $member) {
-    	return view('admin.members.show', compact('member'));
+    public function show(User $member) {
+    	return view('admin.users.show', compact('member'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  Member $member
+     * @param  int  User $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(Member $member) {
+    public function edit(User $member) {
 	    $member_image = '';
 	    $member->avatar != '' ? $member_image = $member->avatar : $member_image = 'default';
 
@@ -107,17 +110,17 @@ class MemberController extends Controller
 		    $img_file = 'default.png';
 	    }
 	    
-    	return view('admin.members.edit', compact('member', 'img_file'));
+    	return view('admin.users.edit', compact('member', 'img_file'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  Member $member
+     * @param  int  User $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Member $member) {
+    public function update(Request $request, User $member) {
 
 	    $this->validate($request, [
 		    'name'    => 'required|max:100',
@@ -187,17 +190,17 @@ class MemberController extends Controller
 	    $member->title     = $request->title != null ? $request->title : null;
 
 	    if($member->save()) {
-		    return back()->with('status', 'Member Info Updated Successfully');
+		    return back()->with('status', 'User Info Updated Successfully');
 	    }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  Member $member
+     * @param  int  User $member
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Member $member)
+    public function destroy(User $member)
     {
         //
     }

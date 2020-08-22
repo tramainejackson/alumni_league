@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -40,16 +43,64 @@ class User extends Authenticatable
 	/**
 	* Get the leagues profile for the user.
 	*/
-    public function leagues_profiles()
-    {
+    public function leagues_profiles() {
         return $this->hasMany('App\LeagueProfile');
     }
 	
 	/**
 	* Get the player profile for the user.
 	*/
-    public function player_profiles()
-    {
+    public function player_profiles() {
         return $this->hasMany('App\PlayerProfile');
     }
+
+	/**
+	 * Get the name of the member
+	 */
+	public function getTitleAttribute($value) {
+		return ucwords(strtolower($value));
+	}
+
+	/**
+	 * Get the link of the member
+	 */
+	public function getLinkAttribute($value) {
+		return strtolower($value);
+	}
+
+	/**
+	 * Get the owner of the member
+	 */
+	public function getNameAttribute($value) {
+		return ucwords(strtolower($value));
+	}
+
+	/**
+	 * Set the name of the member
+	 */
+	public function setTitleAttribute($value) {
+		$this->attributes['title'] = ucwords(strtolower($value));
+	}
+
+	/**
+	 * Set the link of the member
+	 */
+	public function setLinkAttribute($value) {
+		$this->attributes['link'] = strtolower($value);
+	}
+
+	/**
+	 * Set the owner of the member
+	 */
+	public function setNameAttribute($value) {
+		$this->attributes['name'] = ucwords(strtolower($value));
+	}
+
+	/**
+	 * Check for active users
+	 */
+	public function scopeShowMembers($query) {
+		return $query->where('active', '=', 1)
+			->get();
+	}
 }

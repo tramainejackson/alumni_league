@@ -6,7 +6,7 @@
 			<div class="card-body">
 				<!--Card heading-->
 				<h2 class="section-heading">Contact us</h2>
-				
+
 				<!--Google map-->
 				<iframe
 					width="600"
@@ -22,36 +22,36 @@
 							<!-- input text -->
 							<div class="md-form">
 								<i class="fa fa-user prefix"></i>
-								
+
 								<input type="text" name="contact_name" id="contact_name" class="form-control" />
-								
+
 								<label for="contact_name">Your name</label>
 							</div>
 
 							<!-- input email -->
 							<div class="md-form">
 								<i class="fa fa-envelope prefix"></i>
-								
+
 								<input type="email" name="contact_email" id="contact_email" class="form-control" />
-								
+
 								<label for="contact_email">Your email</label>
 							</div>
-							
+
 							<!-- input subject -->
 							<div class="md-form">
 								<i class="fa fa-tag prefix"></i>
-								
+
 								<input type="text" name="contact_subject" id="contact_subject" class="form-control">
-								
+
 								<label for="contact_subject">Subject</label>
 							</div>
-							
+
 							<!-- textarea message -->
 							<div class="md-form">
 								<i class="fa fa-pencil prefix"></i>
-								
+
 								<textarea type="text" name="contact_message" id="contact_message" class="form-control md-textarea" rows="5"></textarea>
-								
+
 								<label for="contact_message">Your message</label>
 							</div>
 						</div>
@@ -80,5 +80,5 @@
 				{!! Form::close() !!}
 			</div>
 		</div>
-	</section> 
+	</section>
 </footer>

@@ -38,41 +38,43 @@ class LeagueProfile extends Model
 	/**
 	* Get the players for the league object.
 	*/
-    public function players()
-    {
+    public function players() {
         return $this->hasMany('App\LeaguePlayer');
     }
 	
 	/**
 	* Get the team for the league object.
 	*/
-    public function teams()
-    {
+    public function teams() {
         return $this->hasMany('App\LeagueTeam');
     }
 	
 	/**
 	* Get the standings for the league object.
 	*/
-    public function standings()
-    {
+    public function standings() {
         return $this->hasMany('App\LeagueStanding');
     }
 	
 	/**
 	* Get the standings for the league object.
 	*/
-    public function stats()
-    {
+    public function stats() {
         return $this->hasMany('App\LeagueStat');
     }
 	
 	/**
 	* Get the seasons for the league object.
 	*/
-    public function seasons()
-    {
+    public function seasons() {
         return $this->hasMany('App\LeagueSeason');
+    }
+
+	/**
+	* Get the users for the league object.
+	*/
+    public function users() {
+        return $this->hasMany('App\User');
     }
 	
 	private function sql_formatted_stats($leagueID=0) {
