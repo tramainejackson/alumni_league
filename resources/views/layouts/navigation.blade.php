@@ -27,7 +27,7 @@
 				@endif
 
 				<div class="mask">
-					<a class='league_home position-absolute bottom btn btn-light-blue' href="{{ $queryStrCheck == null ? route('home') : route('home', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">
+					<a class='league_home position-absolute bottom btn btn-light-blue' href="{{ $queryStrCheck == null ? route('welcome') : route('welcome', ['season' => $queryStrCheck['season'], 'year' => $queryStrCheck['year']]) }}">
 						@if($showSeason->league_profile)
 							{{ !isset($allComplete) ? $showSeason->league_profile->name : $showSeason->name }}
 						@else
@@ -79,7 +79,7 @@
 
 										@foreach($showSeason->active()->get() as $activeSeason)
 											<li class="">
-												<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="" type="button">{{ $activeSeason->name }}</a>
+												<a href="{{ route('welcome', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="" type="button">{{ $activeSeason->name }}</a>
 											</li>
 										@endforeach
 									</ul>

@@ -37,7 +37,7 @@ Route::resource('settings', 'AdminController');
 
 Route::get('/', 'HomeController@about')->name('welcome');
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/test_drive', 'HomeController@test_drive')->name('test_drive');
 

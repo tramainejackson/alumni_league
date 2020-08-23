@@ -24,7 +24,7 @@
 
 							@if($activeSeasons->isNotEmpty())
 								@foreach($activeSeasons as $activeSeason)
-									<a href="{{ route('home', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+									<a href="{{ route('welcome', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 								@endforeach
 							@else
 							@endif
@@ -165,8 +165,39 @@
 													</div>
 												</div>
 
-												<div class="md-form">
-													<button type="submit" class="btn btn-lg white-text green m-0" id="">Update League</button>
+												<div class="form-row justify-content-between align-items-center">
+													<div class="form-group text-center">
+														<label for="conferences" class="d-block form-control-label">Conferences</label>
+
+														<div class="btn-group">
+															<button type="button" class="btn btn-success active activeYes" style="line-height:1.5">
+																<input type="checkbox" name="conferences" value="Y" checked hidden />Yes
+															</button>
+															<button type="button" class="btn btn-blue-grey activeNo" style="line-height:1.5">
+																<input type="checkbox" name="conferences" value="N" hidden />No
+															</button>
+														</div>
+													</div>
+
+													<div class="form-group text-center">
+														<label for="divisions" class="d-block form-control-label">Divisions</label>
+
+														<div class="btn-group">
+															<button type="button" class="btn btn-success active activeYes" style="line-height:1.5">
+																<input type="checkbox" name="divisions" value="Y" checked hidden />Yes
+															</button>
+															<button type="button" class="btn btn-blue-grey activeNo" style="line-height:1.5">
+																<input type="checkbox" name="divisions" value="N" hidden />No
+															</button>
+														</div>
+													</div>
+												</div>
+
+												{{-- Add Divider--}}
+												<div class="divider-long" id=""></div>
+
+												<div class="d-flex justify-content-around align-items-center">
+													<button type="submit" class="btn btn-lg white-text green" id="">Update League</button>
 													<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
 												</div>
 											</div>

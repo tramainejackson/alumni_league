@@ -58,7 +58,19 @@ class LeagueSeasonController extends Controller
 	    $showSeasonPlayers = $this->showSeason->league_players;
 
     	if($showSeason !== null || $completedSeasons !== null) {
-		    return view('seasons.index', compact('showSeason', 'completedSeasons', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'activeSeasons', 'showSeasonUnpaidTeams'));
+
+		    if($this->showSeason->is_playoffs == 'Y') {
+
+			    $allGames = $this->showSeason->games;
+			    $allTeams = $this->showSeason->league_teams;
+			    $playoffSettings = $this->showSeason->playoffs;
+			    $nonPlayInGames = $this->showSeason->games()->playoffNonPlayinGames()->get();
+			    $playInGames = $this->showSeason->games()->playoffPlayinGames()->get();
+
+			    return view('playoffs.index', compact('ageGroups', 'compGroups', 'completedSeasons', 'activeSeasons', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
+		    } else {
+			    return view('seasons.index', compact('showSeason', 'completedSeasons', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'activeSeasons', 'showSeasonUnpaidTeams'));
+		    }
 	    } else {
 		    return view('seasons.no_season');
 	    }

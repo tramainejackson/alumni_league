@@ -66,6 +66,20 @@ $(document).ready(function() {
             console.log('Here');
         }
     });
+
+    // Button yes/no toggle switch
+    $('body').on("click", ".activeYes, .activeNo", function(e) {
+        e.preventDefault();
+        if($(this).hasClass('activeNo')) {
+            $(this).addClass('active btn-success').removeClass('btn-blue-grey').children().attr("checked", true);
+            $(this).siblings('button').addClass('btn-blue-grey').removeClass('active btn-success').children().removeAttr("checked");
+        } else if($(this).hasClass('activeYes')) {
+            $(this).addClass('active btn-success').removeClass('btn-blue-grey').children().attr("checked", true);
+            $(this).siblings('button').addClass('btn-blue-grey').removeClass('active btn-success').children().removeAttr("checked");
+        } else {
+            console.log('Here');
+        }
+    });
 	
 	// Remove new season info and bring up paypal info
 	$("body").on("click", ".addSeasonBtn", function(e) {

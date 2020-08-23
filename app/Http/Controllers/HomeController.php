@@ -40,34 +40,32 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-		// Get the season to show
-	    $showSeason = $activeSeason = $league->seasons()->active()->get()->last();
-
-		$completedSeasons = $activeSeason->league_profile->seasons()->completed()->get();
-		$activeSeasons = $this->league->seasons()->active()->get();
-		$ageGroups = explode(' ', $activeSeason->league_profile->age);
-		$compGroups = explode(' ', $activeSeason->league_profile->comp);
-		$showSeasonSchedule = $activeSeason->games()->upcomingGames()->get();
-		$showSeasonStat = $activeSeason->stats()->get();
-		$showSeasonTeams = $activeSeason->league_teams;
-		$showSeasonUnpaidTeams = $activeSeason->league_teams()->unpaid();
-		$showSeasonPlayers = $activeSeason->league_players;
-
-		if($activeSeason->is_playoffs == 'Y') {
-
-			$allGames = $activeSeason->games;
-			$allTeams = $activeSeason->league_teams;
-			$playoffSettings = $activeSeason->playoffs;
-			$nonPlayInGames = $activeSeason->games()->playoffNonPlayinGames()->get();
-			$playInGames = $activeSeason->games()->playoffPlayinGames()->get();
-
-			return view('playoffs.index', compact('ageGroups', 'compGroups', 'completedSeasons', 'activeSeasons', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
-
-		} else {
-
-			return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));
-
-		}
+//		$showSeason = $this->showSeason;
+//    	$completedSeasons = $this->league->seasons()->completed()->get();
+//		$activeSeasons = $this->league->seasons()->active()->get();
+//		$ageGroups = explode(' ', $this->league->age);
+//		$compGroups = explode(' ', $this->league->comp);
+//		$showSeasonSchedule = $this->showSeason->games()->upcomingGames()->get();
+//		$showSeasonStat = $this->showSeason->stats()->get();
+//		$showSeasonTeams = $this->showSeason->league_teams;
+//		$showSeasonUnpaidTeams = $this->showSeason->league_teams()->unpaid();
+//		$showSeasonPlayers = $this->showSeason->league_players;
+//
+//		if($this->showSeason->is_playoffs == 'Y') {
+//
+//			$allGames = $this->showSeason->games;
+//			$allTeams = $this->showSeason->league_teams;
+//			$playoffSettings = $this->showSeason->playoffs;
+//			$nonPlayInGames = $this->showSeason->games()->playoffNonPlayinGames()->get();
+//			$playInGames = $this->showSeason->games()->playoffPlayinGames()->get();
+//
+//			return view('playoffs.index', compact('ageGroups', 'compGroups', 'completedSeasons', 'activeSeasons', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
+//
+//		} else {
+//
+//			return view('index', compact('completedSeasons', 'activeSeasons', 'showSeason', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonPlayers', 'showSeasonTeams', 'ageGroups', 'compGroups', 'showSeasonUnpaidTeams'));
+//
+//		}
     }
 	
 	/**
