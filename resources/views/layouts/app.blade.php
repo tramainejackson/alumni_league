@@ -34,7 +34,7 @@
 <body>
 
 	@php
-		$queryStrCheck = request()->query('season') != null && request()->query('year') != null ? ['season' => request()->query('season'), 'year' => request()->query('year')] : null;
+		$queryStrCheck = request()->query('season') != null ? ['season' => request()->query('season')] : null;
 	@endphp
 
     <div id="app">

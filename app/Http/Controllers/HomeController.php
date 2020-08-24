@@ -19,6 +19,7 @@ class HomeController extends Controller
 {
 
 	public $showSeason;
+	public $activeSeasons;
 	public $league;
 
     /**
@@ -28,11 +29,23 @@ class HomeController extends Controller
      */
     public function __construct() {
         $this->middleware('auth')->only('index');
-        $this->middleware('guest')->only('about');
 
 	    $this->league = LeagueProfile::find(2);
-	    $this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
+
+	public function get_season() {
+		return $this->showSeason;
+	}
+
+	public function get_league() {
+		return $this->league;
+	}
+
+	public function get_active_seasons() {
+		return $this->activeSeasons;
+	}
 
     /**
      * Show the application dashboard.
@@ -75,19 +88,16 @@ class HomeController extends Controller
      */
     public function about() {
 		// Get the season to show
-		$showSeason = LeagueSeason::active()->get()->last();
+		$showSeason = $this::get_season();
+	    $activeSeasons = $this::get_active_seasons();
 
 		if(Auth::check()) {
 
 			if($showSeason !== null) {
 
-				$activeSeasons = $showSeason->seasons()->active()->get();
-
-				return view('about', compact('showSeason', 'activeSeasons'));
+				return view('about2', compact('showSeason', 'activeSeasons'));
 
 			} else {
-
-				$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 
 				return view('seasons.no_season', compact('activeSeasons', 'showSeason'));
 
@@ -129,15 +139,14 @@ class HomeController extends Controller
      */
     public function standings() {
 	    // Get the season to show
-	    $showSeason = null;
-	    $league = $showSeason = LeagueProfile::find(2);
+	    $showSeason = $this::get_season();
+	    $activeSeasons = $this::get_active_seasons();
 
-	    if($showSeason->seasons->isNotEmpty()) {
+	    if($this->league->seasons->isNotEmpty()) {
 
-			$activeSeason = $showSeason->seasons()->active()->get()->last();
-		    $standings = $activeSeason->standings()->seasonStandings()->get();
+		    $standings = $showSeason->standings()->seasonStandings()->get();
 
-			return view('standings', compact('activeSeason', 'standings', 'league', 'showSeason'));
+			return view('standings', compact('activeSeasons', 'standings', 'league', 'showSeason'));
 
 		} else {
 
@@ -153,22 +162,12 @@ class HomeController extends Controller
      */
     public function info() {
 		// Get the season to show
-	    $showSeason = null;
-	    $league = LeagueProfile::find(2);
-	    $activeSeasons = $league->seasons()->active()->get();
+	    $showSeason = $this::get_season();
+	    $activeSeasons = $this::get_active_seasons();
 
-	    if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
-		    $showSeason = $league;
+	    if($activeSeasons->count() < 1 && $this->league->seasons()->completed()->count() > 0) {
+		    $showSeason = $this->league;
 	    } else {
-		    if($league->seasons()->active()->first()) {
-			    $showSeason = $league->seasons()->active()->first();
-		    } else {
-			    if($league->seasons()->first()) {
-				    $showSeason = $league->seasons()->first();
-			    } else {
-				    $showSeason = $league;
-			    }
-		    }
 	    }
 
 	    return view('info', compact('league', 'showSeason', 'activeSeasons'));

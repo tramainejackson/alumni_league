@@ -18,7 +18,9 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class LeagueTeamController extends Controller
 {
+
 	public $showSeason;
+	public $activeSeasons;
 	public $league;
 
     /**
@@ -30,15 +32,20 @@ class LeagueTeamController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
 
 	    $this->league = LeagueProfile::find(2);
-	    $this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
 
 	public function get_season() {
-    	return $this->showSeason;
+		return $this->showSeason;
 	}
 
 	public function get_league() {
-    	return $this->league;
+		return $this->league;
+	}
+
+	public function get_active_seasons() {
+		return $this->activeSeasons;
 	}
 
     /**
@@ -48,11 +55,9 @@ class LeagueTeamController extends Controller
      */
     public function index(Request $request) {
 	    // Get the season to show
-	    $showSeason = null;
-	    $league = $showSeason = LeagueProfile::find(2);
-
-		$activeSeason = $league->seasons()->active()->get()->last();
-		$seasonTeams = $activeSeason->league_teams;
+	    $showSeason = $this::get_season();
+		$activeSeasons = $this::get_active_seasons();
+		$seasonTeams = $showSeason->league_teams;
 
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
@@ -62,7 +67,7 @@ class LeagueTeamController extends Controller
 		)->save(storage_path('app/public/images/lg/default_img.jpg'));
 		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-		return view('teams.index', compact('showSeason', 'activeSeason', 'seasonTeams', 'defaultImg'));
+		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
     }
 	
 	/**

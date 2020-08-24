@@ -6,15 +6,24 @@
 		<div class="row view">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col col-lg-2 d-none d-lg-block mt-3">
-				<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
+				@if($activeSeasons->isNotEmpty())
+					@foreach($activeSeasons as $activeSeason)
+						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+					@endforeach
+				@else
+				@endif
 			</div>
 
 			<div class="col-12 col-lg-8 pt-3 d-flex align-items-center justify-content-center flex-column">
+				<div class="text-center coolText1">
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+				</div>
+
 				@if(!isset($allComplete))
 					
 					@if($seasonScheduleWeeks->get()->isNotEmpty())
 						@foreach($seasonScheduleWeeks->get() as $showWeekInfo)
-							@php $seasonWeekGames = $activeSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
+							@php $seasonWeekGames = $showSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
 							<div class='leagues_schedule text-center table-wrapper mb-5'>
 								<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table'>
 									<thead>
@@ -114,7 +123,7 @@
 				@if(Auth::user())
 					{{--Authourization Only--}}
 					@if(!isset($allComplete))
-						@if($activeSeason->league_teams->isNotEmpty())
+						@if($showSeason->league_teams->isNotEmpty())
 							<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
 						@endif
 
@@ -169,7 +178,7 @@
 												<div class="">
 													<select class="mdb-select md-form" name="edit_away_team">
 														<option value="" disabled>Choose your option</option>
-														@foreach($activeSeason->league_teams as $away_team)
+														@foreach($showSeason->league_teams as $away_team)
 															<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
 														@endforeach
 													</select>
@@ -180,7 +189,7 @@
 												<div class="">
 													<select class="mdb-select md-form" name="edit_home_team">
 														<option value="" disabled>Choose your option</option>
-														@foreach($activeSeason->league_teams as $home_team)
+														@foreach($showSeason->league_teams as $home_team)
 															<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
 														@endforeach
 													</select>
@@ -270,7 +279,7 @@
 									<div class="">
 										<select class="mdb-select md-form" name="away_team">
 											<option value="blank" disabled selected>Choose your option</option>
-											@foreach($activeSeason->league_teams as $away_team)
+											@foreach($showSeason->league_teams as $away_team)
 												<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
 											@endforeach
 										</select>
@@ -281,7 +290,7 @@
 									<div class="">
 										<select class="mdb-select md-form" name="home_team">
 											<option value="blank" disabled selected>Choose your option</option>
-											@foreach($activeSeason->league_teams as $home_team)
+											@foreach($showSeason->league_teams as $home_team)
 												<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
 											@endforeach
 										</select>

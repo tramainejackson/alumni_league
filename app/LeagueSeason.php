@@ -335,9 +335,21 @@ class LeagueSeason extends Model
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
     */
-    public function scopeActive($query, $season=null, $year=null) {
-	    if(request()->query('season') != null && request()->query('year') != null) {
+    public function scopeActive($query) {
+    	return $query->where('active', 'Y')->get();
+    }
+	/**
+     * Scope a query to only include active seasons.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+    */
+    public function scopeShowSeason($query, $season=null, $year=null) {
+	    if(request()->query('season') != null) {
 		    $season = request()->query('season');
+	    }
+
+	    if(request()->query('year') != null) {
 		    $year = request()->query('year');
 	    }
 
@@ -347,21 +359,24 @@ class LeagueSeason extends Model
 		    	['id', $season],
 		    	['year', $year],
 		    	['completed', 'N'],
-		    ]);
+		    ])->get()->last();
 	    } elseif($season == null && $year != null) {
 		    return $query->where([
 			    ['active', 'Y'],
 			    ['year', $year],
 			    ['completed', 'N'],
-		    ]);
+		    ])->get()->last();
 	    } elseif($season != null && $year == null) {
 		    return $query->where([
 			    ['active', 'Y'],
 			    ['id', $season],
 			    ['completed', 'N'],
-		    ]);
+		    ])->get()->last();
 	    } else {
-		    return $query->where('active', 'Y');
+		    return $query->where([
+			    ['completed', 'N'],
+			    ['active', 'Y'],
+		    ])->get()->last();
 	    }
     }
 	

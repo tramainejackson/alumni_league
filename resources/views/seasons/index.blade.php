@@ -24,7 +24,7 @@
 
 							@if($activeSeasons->isNotEmpty())
 								@foreach($activeSeasons as $activeSeason)
-									<a href="{{ route('welcome', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+									<a href="{{ route('league_seasons.show', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 								@endforeach
 							@else
 							@endif
@@ -33,8 +33,9 @@
 				</div>
 
 				<div class="col-12 col-lg-7 pb-3{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
-				@if($showSeason->completed == 'N')
-					<!-- Show league season info -->
+
+					@if($showSeason->completed == 'N')
+						<!-- Show league season info -->
 						@if($showSeason->paid == 'Y')
 							<div class="text-center coolText1 d-flex align-items-center justify-content-center seasonName">
 								<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
@@ -110,6 +111,7 @@
 
 													<div class="col-12 col-md">
 														<select class="mdb-select md-form" name="age_group">
+															<option value="blank" disabled>Select An Age Option</option>
 															@foreach($ageGroups as $ageGroup)
 																<option value="{{ $ageGroup }}"{{ $ageGroup == $showSeason->age_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $ageGroup)) }}</option>
 															@endforeach
@@ -120,7 +122,7 @@
 
 													<div class="col-12 col-md">
 														<select class="mdb-select md-form" name="comp_group">
-															<option value="blank" disabled>Select blah blah</option>
+															<option value="blank" disabled>Select A Competition Option</option>
 															@foreach($compGroups as $compGroup)
 																<option value="{{ $compGroup }}"{{ $compGroup == $showSeason->comp_group ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $compGroup)) }}</option>
 															@endforeach
@@ -280,7 +282,7 @@
 					<!-- League season teams snap shot -->
 					<div class="col-8 mx-auto my-5">
 						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-							<h1 class="h1-responsive">Quick Teams</h1>
+							<h1 class="h1-responsive">Teams</h1>
 							<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Teams</a>
 						</div>
 						<div id="season_teams_snap" class="my-5 d-flex align-items-center justify-content-around mb-4 mb-lg-0 flex-column flex-lg-row">
@@ -304,7 +306,7 @@
 					<!-- League season stats snap shot -->
 					<div class="col-8 mx-auto my-5">
 						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-							<h1 class="h1-responsive">Quick Stats</h1>
+							<h1 class="h1-responsive">Stats</h1>
 							<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 						</div>
 						<div id="season_stats_snap" class="my-5 row">
@@ -443,9 +445,15 @@
 
 					<div class="row">
 						<!-- League season schedule snap shot -->
-						<div class="col-12 col-lg-8 col-xl-8 mx-auto py-2">
-							<h2 class="display-2 text-center">Current Season</h2>
-							<h2 class="display-4 text-center font-italic">Name: {{ $showSeason->name }}</h2>
+						<div class="col-12 mx-auto py-2">
+							<h2 class="display-3 text-center">Active Season(s)</h2>
+
+							@if($activeSeasons->isNotEmpty())
+								@foreach($activeSeasons as $activeSeason)
+									<a href="{{ route('league_seasons.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+								@endforeach
+							@else
+							@endif
 						</div>
 
 						<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
@@ -490,7 +498,7 @@
 						<!-- League season teams snap shot -->
 						<div class="col-8 mx-auto my-5">
 							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-								<h1 class="h1-responsive">Quick Teams</h1>
+								<h1 class="h1-responsive">Teams</h1>
 								<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Teams</a>
 							</div>
 							<div id="season_teams_snap" class="my-5 d-flex align-items-center justify-content-around mb-4 mb-lg-0 flex-column flex-lg-row">
@@ -516,7 +524,7 @@
 						<!-- League season stats snap shot -->
 						<div class="col-8 mx-auto my-5">
 							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-								<h1 class="h1-responsive">Quick Stats</h1>
+								<h1 class="h1-responsive">Stats</h1>
 								<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 							</div>
 							<div id="season_stats_snap" class="my-5 row">
@@ -640,14 +648,16 @@
 					</div>
 				@else
 				@endif
-					@if($completedSeasons->isNotEmpty())
-						<div class="divider-long" id=""></div>
 
-						<div class="" id="completed_seasons">
+				@if($completedSeasons->isNotEmpty())
+					<div class="divider-long" id=""></div>
+
+					<div class="row" id="completed_seasons">
+						<div class="col-12">
 							<h2 class="display-2">Completed Seasons</h2>
 						</div>
-					@endif
-				</div>
+					</div>
+				@endif
 			</div>
 		</div>
 	@endif

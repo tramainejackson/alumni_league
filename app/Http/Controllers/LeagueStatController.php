@@ -16,6 +16,11 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class LeagueStatController extends Controller
 {
+
+	public $showSeason;
+	public $activeSeasons;
+	public $league;
+
     /**
      * Create a new controller instance.
      *
@@ -23,7 +28,23 @@ class LeagueStatController extends Controller
      */
     public function __construct() {
         $this->middleware('auth')->except('index');
+
+	    $this->league = LeagueProfile::find(2);
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
+
+	public function get_season() {
+		return $this->showSeason;
+	}
+
+	public function get_league() {
+		return $this->league;
+	}
+
+	public function get_active_seasons() {
+		return $this->activeSeasons;
+	}
 
     /**
      * Show the stats index page.
@@ -32,16 +53,13 @@ class LeagueStatController extends Controller
      */
     public function index(Request $request) {
 	    // Get the season to show
-	    $showSeason = null;
-	    $league = $showSeason = LeagueProfile::find(2);
-			
-		$activeSeason = $league->seasons()->active()->get()->last();
-		$seasonTeams = $activeSeason->league_teams;
+	    $showSeason = $this->get_season();
+		$activeSeasons = $this::get_active_seasons();
 
-		$allPlayers = $activeSeason->stats()->allFormattedStats();
-		$allTeams = $activeSeason->stats()->allTeamStats();
-		$seasonScheduleWeeks = $activeSeason->games()->getScheduleWeeks()->get();
-		$checkStats = $activeSeason->stats()->allFormattedStats()->get()->isNotEmpty();
+		$allPlayers = $showSeason->stats()->allFormattedStats();
+		$allTeams = $showSeason->stats()->allTeamStats();
+		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
+		$checkStats = $showSeason->stats()->allFormattedStats()->get()->isNotEmpty();
 
 		// Resize the default image
 		Image::make(public_path('images/emptyface.jpg'))->resize(800, null, 	function ($constraint) {
@@ -50,17 +68,17 @@ class LeagueStatController extends Controller
 		)->save(storage_path('app/public/images/lg/default_img.jpg'));
 		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-		if($activeSeason->is_playoffs == 'Y') {
-			$playoffRounds = $activeSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-			$nonPlayInGames = $activeSeason->games()->playoffNonPlayinGames();
-			$playInGames = $activeSeason->games()->playoffPlayinGames();
-			$playoffSettings = $activeSeason->playoffs;
+		if($showSeason->is_playoffs == 'Y') {
+			$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+			$nonPlayInGames = $showSeason->games()->playoffNonPlayinGames();
+			$playInGames = $showSeason->games()->playoffPlayinGames();
+			$playoffSettings = $showSeason->playoffs;
 
-			return view('stats.index', compact('activeSeason', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+			return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
 
 		} else {
 
-			return view('stats.index', compact('activeSeason', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+			return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
 
 		}
     }

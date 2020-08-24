@@ -18,6 +18,7 @@ class LeagueSeasonController extends Controller
 {
 
 	public $showSeason;
+	public $activeSeasons;
 	public $league;
 
 	/**
@@ -29,7 +30,8 @@ class LeagueSeasonController extends Controller
 		$this->middleware('auth')->except('index');
 
 		$this->league = LeagueProfile::find(2);
-		$this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
+		$this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+		$this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
 	}
 
 	public function get_season() {
@@ -40,14 +42,19 @@ class LeagueSeasonController extends Controller
 		return $this->league;
 	}
 
+	public function get_active_seasons() {
+		return $this->activeSeasons;
+	}
+
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
     public function index() {
+//    	dd($this->showSeason);
     	$showSeason = $this->showSeason;
-	    $activeSeasons = $this->league->seasons()->active()->get();
+	    $activeSeasons = $this->league->seasons()->active();
     	$completedSeasons = $this->league->seasons()->completed()->get();
 	    $ageGroups = explode(' ', $this->league->age);
 	    $compGroups = explode(' ', $this->league->comp);
@@ -82,7 +89,7 @@ class LeagueSeasonController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-		$season = new LeagueSeason();
+    	$season = new LeagueSeason();
 		$season->league_profile_id = $request->league_id;
 		$season->season = $request->season;
 		$season->name = $request->name;
@@ -163,5 +170,14 @@ class LeagueSeasonController extends Controller
      */
     public function edit() {
         
+    }
+
+	/**
+     * Show the application about us page for public.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show() {
+
     }
 }

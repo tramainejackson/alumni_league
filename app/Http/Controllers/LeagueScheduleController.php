@@ -17,15 +17,34 @@ use Carbon\Carbon;
 
 class LeagueScheduleController extends Controller
 {
+
+	public $showSeason;
+	public $league;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth')->except('index');
+
+	    $this->league = LeagueProfile::find(2);
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
+
+	public function get_season() {
+		return $this->showSeason;
+	}
+
+	public function get_league() {
+		return $this->league;
+	}
+
+	public function get_active_seasons() {
+		return $this->activeSeasons;
+	}
 
     /**
      * Show the application dashboard.
@@ -34,22 +53,20 @@ class LeagueScheduleController extends Controller
      */
     public function index() {
 	    // Get the season to show
-	    $showSeason = null;
-	    $league = $showSeason = LeagueProfile::find(2);
-			
-		$activeSeason = $showSeason->seasons()->active()->get()->last();
+	    $showSeason = $this::get_season();
+		$activeSeasons = $this::get_active_seasons();
 
-		if($activeSeason->is_playoffs == 'Y') {
-			$playoffRounds = $activeSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
-			$nonPlayInGames = $activeSeason->games()->playoffNonPlayinGames();
-			$playInGames = $activeSeason->games()->playoffPlayinGames();
-			$playoffSettings = $activeSeason->playoffs;
+		if($this->showSeason->is_playoffs == 'Y') {
+			$playoffRounds = $this->showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
+			$nonPlayInGames = $this->showSeason->games()->playoffNonPlayinGames();
+			$playInGames = $this->showSeason->games()->playoffPlayinGames();
+			$playoffSettings = $this->showSeason->playoffs;
 
-			return view('playoffs.schedule', compact('showSeason', 'activeSeason', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
+			return view('playoffs.schedule', compact('showSeason', 'activeSeasons', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
 		} else {
-			$seasonScheduleWeeks = $activeSeason->games()->getScheduleWeeks();
+			$seasonScheduleWeeks = $this->showSeason->games()->getScheduleWeeks();
 
-			return view('schedule.index', compact('showSeason', 'activeSeason', 'seasonScheduleWeeks'));
+			return view('schedule.index', compact('showSeason', 'activeSeasons', 'seasonScheduleWeeks'));
 		}
     }
 	
@@ -102,8 +119,7 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function edit_round($round)
-    {
+    public function edit_round($round) {
 		// Get the season to show
 		$showSeason	= $this->find_season(request());
 		$weekGames 	= $showSeason->games()->roundGames($round)->get();
@@ -117,8 +133,7 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add_game(Request $request)
-    {
+    public function add_game(Request $request) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$awayTeam = LeagueTeam::find($request->away_team);
@@ -168,8 +183,7 @@ class LeagueScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function add_week(Request $request)
-    {
+    public function add_week(Request $request) {
 		// dd($request);
 		// Get the season to show
 		$showSeason = $this->find_season(request());
@@ -228,8 +242,7 @@ class LeagueScheduleController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update_week(Request $request, $week)
-	{
+	public function update_week(Request $request, $week) {
 		// dd($request);
 		// Get the season to show
 		$showSeason = $this->find_season(request());
@@ -452,8 +465,7 @@ class LeagueScheduleController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function delete_week($week)
-	{
+	public function delete_week($week) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$weekGames = LeagueSchedule::getWeekGames($week)->get();
@@ -483,8 +495,7 @@ class LeagueScheduleController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update_game(Request $request)
-	{
+	public function update_game(Request $request) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$game		= LeagueSchedule::find($request->edit_game_id);
@@ -671,8 +682,7 @@ class LeagueScheduleController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function delete_game(LeagueSchedule $league_schedule)
-	{
+	public function delete_game(LeagueSchedule $league_schedule) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
@@ -702,8 +712,7 @@ class LeagueScheduleController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    public function update_playoff_week(Request $request)
-    {
+    public function update_playoff_week(Request $request) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$playoffRound = isset($request->round_id) ? $request->round_id : null;
@@ -794,8 +803,7 @@ class LeagueScheduleController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(LeagueSchedule $league_schedule)
-	{
+	public function show(LeagueSchedule $league_schedule) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		$allStats = $league_schedule->player_stats()->get();
@@ -813,30 +821,30 @@ class LeagueScheduleController extends Controller
      *
      * @return seaon
     */
-	public function find_season(Request $request) {
-		if(Auth::check()) {
-			$league = Auth::user()->leagues_profiles->first();
-			$showSeason = '';
-			
-			if($request->query('season') != null && $request->query('year') != null) {
-				$showSeason = $league->seasons()->active()->find($request->query('season'));
-			} else {
-				if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
-					$showSeason = $league;
-				} else {
-					if($league->seasons()->active()->first()) {
-						$showSeason = $league->seasons()->active()->first();
-					} else {
-						if($league->seasons()->first()) {
-							$showSeason = $league->seasons()->first();
-						} else {
-							$showSeason = $league;
-						}
-					}
-				}
-			}
-			
-			return $showSeason;
-		}
-	}
+//	public function find_season(Request $request) {
+//		if(Auth::check()) {
+//			$league = Auth::user()->leagues_profiles->first();
+//			$showSeason = '';
+//
+//			if($request->query('season') != null && $request->query('year') != null) {
+//				$showSeason = $league->seasons()->active()->find($request->query('season'));
+//			} else {
+//				if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
+//					$showSeason = $league;
+//				} else {
+//					if($league->seasons()->active()->first()) {
+//						$showSeason = $league->seasons()->active()->first();
+//					} else {
+//						if($league->seasons()->first()) {
+//							$showSeason = $league->seasons()->first();
+//						} else {
+//							$showSeason = $league;
+//						}
+//					}
+//				}
+//			}
+//
+//			return $showSeason;
+//		}
+//	}
 }

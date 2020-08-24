@@ -6,7 +6,12 @@
 		<div class="row{{ $showSeason->league_profile && $standings->isNotEmpty() ? '' : ' view' }}">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col-md mt-3 d-none d-md-block" id="">
-				<a href="{{ route('league_standings', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
+				@if($activeSeasons->isNotEmpty())
+					@foreach($activeSeasons as $activeSeason)
+						<a href="{{ route('league_standings', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+					@endforeach
+				@else
+				@endif
 			</div>
 			
 			<div class="col-12 col-lg-8{{ $showSeason->league_profile && $standings->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">

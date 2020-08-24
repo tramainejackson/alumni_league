@@ -4,11 +4,24 @@
 	<div class="container-fluid bgrd3">
 		<div class="row view">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col col-lg-3 col-xl mt-3 d-none d-lg-block">
-				<a href="{{ route('league_teams.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
+			<div class="col-md mt-3 d-none d-md-block" id="">
+				@if($activeSeasons->isNotEmpty())
+					@foreach($activeSeasons as $activeSeason)
+						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+					@endforeach
+				@else
+				@endif
 			</div>
 
-			<div class="col-12 col-md-10 col-lg-6 col-xl-8 mx-auto{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
+			<div class="col-12 col-lg-8{{ $showSeason->league_profile && $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
+				<div class="text-center coolText1">
+					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+
+					@if($showSeason->is_playoffs == 'Y')
+						<h1 class="display-4 coolText4">It's Playoff Time</h1>
+					@endif
+				</div>
+
 				@if(!isset($allComplete))
 					
 					@if($seasonTeams->isNotEmpty())
@@ -79,51 +92,58 @@
 
 					@else
 
-						<div class="">
-							<h1 class="h1-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no teams added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
-							
-							<!--Card-->
-							<div class="card card-cascade mb-4 reverse wider">
-								<!--Card image-->
-								<div class="view">
-									<img src="{{ $defaultImg }}" class="img-fluid mx-auto" alt="photo">
-								</div>
-								<!--Card content-->
-								<div class="card-body">
-									<!--Title-->
-									<h2 class="card-title h2-responsive text-center">Create New Team</h2>
-									<!-- Create Form -->
-									{!! Form::open(['action' => ['LeagueTeamController@store', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
-										<div class="md-form">
-											<input type="text" name="team_name" class="form-control" value="{{ old('team_name') }}" />
-											<label for="team_name">Team Name</label>
-										</div>
-										
-										@if($errors->has('team_name'))
-											<div class="md-form-errors red-text">
-												<p class=""><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;{{ $errors->first('team_name') }}</p>
-											</div>
-										@endif
-										
-										<div class="input-form">
-											<label for="fee_paid" class="d-block">League Fee Paid</label>
-											<div class="">
-												<button class="btn inputSwitchToggle green active" type="button">Yes
-													<input type="checkbox" name="fee_paid" class="hidden" value="Y" checked hidden />
-												</button>
-												
-												<button class="btn inputSwitchToggle grey" type="button">No
-													<input type="checkbox" name="fee_paid" class="hidden" value="N" hidden />
-												</button>
-											</div>
-										</div>
-										<div class="md-form text-center">
-											<button type="submit" class="btn blue lighten-1">Create Team</button>
-										</div>
-									{!! Form::close() !!}
-								</div>
+						<div class="{{ $showSeason->league_profile && $seasonTeams->isEmpty() ? '' : 'col-12 col-lg-8 d-flex align-items-center justify-content-center flex-column' }}">
+
+							<div class="text-center coolText1">
+								<h1 class="h1-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no teams added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
 							</div>
-							<!--/.Card-->
+
+							@if(Auth::user())
+								{{--Authourization Only--}}
+
+								<!--Card-->
+								<div class="card card-cascade mb-4 reverse wider">
+									<!--Card image-->
+									<div class="view">
+										<img src="{{ $defaultImg }}" class="img-fluid mx-auto" alt="photo">
+									</div>
+									<!--Card content-->
+									<div class="card-body">
+										<!--Title-->
+										<h2 class="card-title h2-responsive text-center">Create New Team</h2>
+										<!-- Create Form -->
+										{!! Form::open(['action' => ['LeagueTeamController@store', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
+											<div class="md-form">
+												<input type="text" name="team_name" class="form-control" value="{{ old('team_name') }}" />
+												<label for="team_name">Team Name</label>
+											</div>
+
+											@if($errors->has('team_name'))
+												<div class="md-form-errors red-text">
+													<p class=""><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;{{ $errors->first('team_name') }}</p>
+												</div>
+											@endif
+
+											<div class="input-form">
+												<label for="fee_paid" class="d-block">League Fee Paid</label>
+												<div class="">
+													<button class="btn inputSwitchToggle green active" type="button">Yes
+														<input type="checkbox" name="fee_paid" class="hidden" value="Y" checked hidden />
+													</button>
+
+													<button class="btn inputSwitchToggle grey" type="button">No
+														<input type="checkbox" name="fee_paid" class="hidden" value="N" hidden />
+													</button>
+												</div>
+											</div>
+											<div class="md-form text-center">
+												<button type="submit" class="btn blue lighten-1">Create Team</button>
+											</div>
+										{!! Form::close() !!}
+									</div>
+								</div>
+								<!--/.Card-->
+							@endif
 						</div>
 					@endif
 				@else
@@ -135,7 +155,7 @@
 
 			<div class="col col-lg-3 col-xl mt-3 text-center text-lg-right order-first order-lg-0">
 				@if(Auth::user())
-				{{--Authourization Only--}}
+					{{--Authourization Only--}}
 					@if(!isset($allComplete))
 						<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
 					@else
