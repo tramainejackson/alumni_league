@@ -27,8 +27,9 @@
 					<div class="text-center coolText4 mt-3">
 						<p class=""><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;Standings are not editable. They are automatically compiled from the games results&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></p>
 					</div>
+
 					<div id="league_standings">
-						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-secondary table-bordered ">
+						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-secondary table-bordered">
 							<thead>
 								<tr>
 									<th class="font-weight-bold">Team Name</th>
@@ -55,6 +56,74 @@
 					<div class="text-center">
 						<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no standings for the selected season. Standings will be generated as teams are added.&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
 					</div>
+				@endif
+
+				@if($showSeason->has_conferences == 'Y' && $showSeason->conferences->isNotEmpty())
+					@foreach($showSeason->conferences as $conference)
+						@if($conference->teams->isNotEmpty())
+							<div id="" class="league_conferences_standings">
+								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered league_conferences_table">
+									<thead>
+									<tr>
+										<th class="font-weight-bold" colspan="3">{{ $conference->conference_name }}</th>
+									</tr>
+										<tr>
+											<th class="font-weight-bold">Team Name</th>
+											<th class="font-weight-bold">Wins</th>
+											<th class="font-weight-bold">Losses</th>
+										</tr>
+									</thead>
+
+									<tbody>
+										@foreach($conference->teams as $showConferenceTeam)
+											@php $showStandings = $showConferenceTeam->standings; @endphp
+
+											<tr>
+												<td>{{ $showStandings->team_name }}</td>
+												<td>{{ $showStandings->team_wins == null ? '0' : $showStandings->team_wins }}</td>
+												<td>{{ $showStandings->team_losses == null ? '0' : $showStandings->team_losses }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+						@endif
+					@endforeach
+				@endif
+
+				@if($showSeason->has_divisions == 'Y' && $showSeason->divisions->isNotEmpty())
+					@foreach($showSeason->divisions as $division)
+						@if($division->teams->isNotEmpty())
+							<div id="" class="league_divisions_standings">
+								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered league_divisions_table">
+									<thead>
+										<tr>
+											<th class="font-weight-bold" colspan="3">{{ $division->division_name }}</th>
+										</tr>
+										<tr>
+											<th class="font-weight-bold">Team Name</th>
+											<th class="font-weight-bold">Wins</th>
+											<th class="font-weight-bold">Losses</th>
+										</tr>
+									</thead>
+
+									<tbody>
+
+										@foreach($division->teams as $showDivisionTeam)
+											@php $showStandings = $showDivisionTeam->standings; @endphp
+
+											<tr>
+												<td>{{ $showStandings->team_name }}</td>
+												<td>{{ $showStandings->team_wins == null ? '0' : $showStandings->team_wins }}</td>
+												<td>{{ $showStandings->team_losses == null ? '0' : $showStandings->team_losses }}</td>
+											</tr>
+										@endforeach
+
+									</tbody>
+								</table>
+							</div>
+						@endif
+					@endforeach
 				@endif
 			</div>
 			

@@ -2,12 +2,12 @@
 
 @section('content')
 	<div class="container-fluid bgrd3">
-		<div class="row view">
+		<div class="row view pt-3">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3 d-none d-md-block" id="">
+			<div class="col col-lg-2 col-xl d-none d-md-block" id="">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
@@ -28,6 +28,7 @@
 
 						<div class="row">
 							@foreach($seasonTeams as $team)
+
 								@php $teamCaptain = $team->players()->captain(); @endphp
 
 								<div class="col-12 col-xl-6">
@@ -52,15 +53,30 @@
 														<label class="">Name:&nbsp;</label>
 														<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
 													</p>
-													<p class="m-0">
-														<label class="">Email:&nbsp;</label>
-														<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->email != null ? $teamCaptain->first()->email : 'No email address' : 'No email address' }}</span>
-													</p>
+
 													<p class="m-0">
 														<label class="">Phone:&nbsp;</label>
 														<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No email address' : 'No email address' }}</span>
 													</p>
 												</div>
+
+												@if($team->league_conference_id != null || $team->league_division_id != null)
+													<div class="divider-short"></div>
+												@endif
+
+												@if($team->league_conference_id != null)
+													<p class="m-0">
+														<label class="">Conference:&nbsp;</label>
+														<span>{{ $team->conference->conference_name }}</span>
+													</p>
+												@endif
+
+												@if($team->league_division_id != null)
+													<p class="m-0">
+														<label class="">Division:&nbsp;</label>
+														<span>{{ $team->division->division_name }}</span>
+													</p>
+												@endif
 
 												@if(Auth::user())
 													{{--Authourization Only--}}
@@ -108,11 +124,15 @@
 										<img src="{{ $defaultImg }}" class="img-fluid mx-auto" alt="photo">
 									</div>
 									<!--Card content-->
-									<div class="card-body">
+									<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
 										<!--Title-->
 										<h2 class="card-title h2-responsive text-center">Create New Team</h2>
+
 										<!-- Create Form -->
-										{!! Form::open(['action' => ['LeagueTeamController@store', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
+										<form action="{{ action('LeagueTeamController@store', ['season' => $showSeason->id, 'year' => $showSeason->year]) }}" method="POST" class="" enctype="multipart/form-data">
+
+											{{ csrf_field() }}
+
 											<div class="md-form">
 												<input type="text" name="team_name" class="form-control" value="{{ old('team_name') }}" />
 												<label for="team_name">Team Name</label>
@@ -139,7 +159,7 @@
 											<div class="md-form text-center">
 												<button type="submit" class="btn blue lighten-1">Create Team</button>
 											</div>
-										{!! Form::close() !!}
+										</form>
 									</div>
 								</div>
 								<!--/.Card-->
@@ -153,11 +173,11 @@
 				@endif
 			</div>
 
-			<div class="col col-lg-3 col-xl mt-3 text-center text-lg-right order-first order-lg-0">
+			<div class="col col-lg-2 col-xl text-center text-lg-right order-first order-lg-0">
 				@if(Auth::user())
 					{{--Authourization Only--}}
 					@if(!isset($allComplete))
-						<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
+						<a class="btn btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Team</a>
 					@else
 					@endif
 				@endif

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\LeagueConference;
+use App\LeagueDivision;
 use App\PlayerProfile;
 use App\LeagueProfile;
 use App\LeagueSchedule;
@@ -63,6 +65,8 @@ class LeagueSeasonController extends Controller
 	    $showSeasonTeams = $this->showSeason->league_teams;
 	    $showSeasonUnpaidTeams = $this->showSeason->league_teams()->unpaid();
 	    $showSeasonPlayers = $this->showSeason->league_players;
+	    $showSeasonConferences = $this->showSeason->conferences;
+	    $showSeasonDivisions = $this->showSeason->divisions;
 
     	if($showSeason !== null || $completedSeasons !== null) {
 
@@ -76,7 +80,7 @@ class LeagueSeasonController extends Controller
 
 			    return view('playoffs.index', compact('ageGroups', 'compGroups', 'completedSeasons', 'activeSeasons', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
 		    } else {
-			    return view('seasons.index', compact('showSeason', 'completedSeasons', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'activeSeasons', 'showSeasonUnpaidTeams'));
+			    return view('seasons.index', compact('showSeason', 'completedSeasons', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'activeSeasons', 'showSeasonUnpaidTeams', 'showSeasonConferences', 'showSeasonDivisions'));
 		    }
 	    } else {
 		    return view('seasons.no_season');
@@ -149,7 +153,8 @@ class LeagueSeasonController extends Controller
      */
     public function update(Request $request) {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
+		$showSeason = $this->showSeason;
+//		dd($request);
 
 		$showSeason->name = $request->name;
 		$showSeason->comp_group = $request->comp_group;
@@ -157,7 +162,72 @@ class LeagueSeasonController extends Controller
 		$showSeason->league_fee = $request->leagues_fee;
 		$showSeason->ref_fee = $request->ref_fee;
 		$showSeason->location = $request->leagues_address;
-		
+		$showSeason->has_conferences = $request->conferences;
+		$showSeason->has_divisions = $request->divisions;
+
+	    if($showSeason->has_conferences == 'Y') {
+		    if($showSeason->conferences->isEmpty()) {
+		    	$conference1 = new LeagueConference();
+		    	$conference2 = new LeagueConference();
+
+		    	// Add season id
+		    	$conference1->league_season_id = $showSeason->id;
+		    	$conference2->league_season_id = $showSeason->id;
+
+		    	// Add conference name
+			    $conference1->conference_name = $request->conference_name[0] != '' ? $request->conference_name[0] : 'Conference A';
+			    $conference2->conference_name = $request->conference_name[1] != '' ? $request->conference_name[1] : 'Conference B';
+
+			    if($conference1->save()) {
+				    if($conference2->save()) {
+				    }
+			    }
+		    } else {
+			    foreach($showSeason->conferences as $key => $conference) {
+				    $conference->conference_name = $request->conference_name[$key];
+
+				    if($conference->save()) {}
+			    }
+		    }
+	    }
+
+	    if($showSeason->has_divisions == 'Y') {
+		    if($showSeason->conferences->isEmpty()) {
+				$division1 = new LeagueDivision();
+				$division2 = new LeagueDivision();
+				$division3 = new LeagueDivision();
+				$division4 = new LeagueDivision();
+
+			    // Add season id
+			    $division1->league_season_id = $showSeason->id;
+			    $division2->league_season_id = $showSeason->id;
+			    $division3->league_season_id = $showSeason->id;
+			    $division4->league_season_id = $showSeason->id;
+
+			    // Add division name
+			    $division1->division_name = $request->division_name[0] != '' ? $request->division_name[0] : 'Division A';
+			    $division2->division_name = $request->division_name[1] != '' ? $request->division_name[1] : 'Division B';
+			    $division3->division_name = $request->division_name[2] != '' ? $request->division_name[2] : 'Division C';
+			    $division4->division_name = $request->division_name[3] != '' ? $request->division_name[3] : 'Division D';
+
+			    if($division1->save()) {
+				    if($division2->save()) {
+					    if($division3->save()) {
+						    if($division4->save()) {
+
+						    }
+					    }
+				    }
+			    }
+		    } else {
+			    foreach($showSeason->divisions as $key => $division) {
+				    $division->division_name = $request->division_name[$key];
+
+				    if($division->save()) {}
+			    }
+		    }
+	    }
+
 		if($showSeason->save()) {
 			return redirect()->back()->with(['status' => 'Season Updated Successfully']);
 		}

@@ -26,10 +26,6 @@ class LeagueStanding extends Model
         'team_name', 'leagues_season_id',
     ];
 	
-	public function __construct() {
-		
-	}
-	
 	/**
 	* Get the league for the standings object.
 	*/

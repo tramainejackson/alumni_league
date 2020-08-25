@@ -39,34 +39,36 @@
 		</div>
 
 		<ul class="custom-scrollbar nav navbar-nav">
+
 			<!--/. Side navigation links -->
+			<li class="nav-item">
+				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season']])  }}">Schedule</a>
+			</li>
+			<li class="nav-item">
+				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season']]) }}">Standings</a>
+			</li>
+			<li class="nav-item">
+				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season']]) }}">Stats</a>
+			</li>
+			<li class="nav-item">
+				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season']]) }}">Teams</a>
+			</li>
+			<li class="nav-item">
+				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season']]) }}">League Pics</a>
+			</li>
 
-				<li class="nav-item">
-					<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season']])  }}">Schedule</a>
-				</li>
-				<li class="nav-item">
-					<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season']]) }}">Standings</a>
-				</li>
-				<li class="nav-item">
-					<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season']]) }}">Stats</a>
-				</li>
-				<li class="nav-item">
-					<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season']]) }}">Teams</a>
-				</li>
-				<li class="nav-item">
-					<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season']]) }}">League Pics</a>
-				</li>
-
+			@if(Auth::guest())
 				<!-- Logins -->
 				<li class="nav-item">
 					<a href="{{ route('login') }}" class="nav-link btn indigo white-text">Login
 						<i class="fa fa-user" aria-hidden="true"></i>
 					</a>
 				</li>
+			@endif
 
 			@if (Auth::check())
 				@if($showSeason->league_profile)
-					@if($showSeason->active()->get()->isNotEmpty())
+					@if($showSeason)
 						<div id="accordion1" class="accordion">
 							<ul class="collapsible collapsible-accordion">
 								<li class="position-relative">
@@ -77,7 +79,7 @@
 								<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion1" class="collapse">
 									<ul class="list-unstyled">
 
-										@foreach($showSeason->active()->get() as $activeSeason)
+										@foreach($activeSeasons as $activeSeason)
 											<li class="">
 												<a href="{{ route('welcome', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="" type="button">{{ $activeSeason->name }}</a>
 											</li>

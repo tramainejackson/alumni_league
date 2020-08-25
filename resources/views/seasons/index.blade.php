@@ -24,7 +24,7 @@
 
 							@if($activeSeasons->isNotEmpty())
 								@foreach($activeSeasons as $activeSeason)
-									<a href="{{ route('league_seasons.show', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+									<a href="{{ route('league_seasons.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 								@endforeach
 							@else
 							@endif
@@ -172,11 +172,11 @@
 														<label for="conferences" class="d-block form-control-label">Conferences</label>
 
 														<div class="btn-group">
-															<button type="button" class="btn btn-success active activeYes" style="line-height:1.5">
-																<input type="checkbox" name="conferences" value="Y" checked hidden />Yes
+															<button type="button" class="btn activeYes{{ $showSeason->has_conferences == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+																<input type="checkbox" name="conferences" value="Y" {{ $showSeason->has_conferences == 'Y' ? 'checked' : '' }} hidden />Yes
 															</button>
-															<button type="button" class="btn btn-blue-grey activeNo" style="line-height:1.5">
-																<input type="checkbox" name="conferences" value="N" hidden />No
+															<button type="button" class="btn activeNo{{ $showSeason->has_conferences == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+																<input type="checkbox" name="conferences" value="N" {{ $showSeason->has_conferences == 'N' ? 'checked' : '' }} hidden />No
 															</button>
 														</div>
 													</div>
@@ -185,11 +185,11 @@
 														<label for="divisions" class="d-block form-control-label">Divisions</label>
 
 														<div class="btn-group">
-															<button type="button" class="btn btn-success active activeYes" style="line-height:1.5">
-																<input type="checkbox" name="divisions" value="Y" checked hidden />Yes
+															<button type="button" class="btn activeYes{{ $showSeason->has_divisions == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+																<input type="checkbox" name="divisions" value="Y" {{ $showSeason->has_divisions == 'Y' ? 'checked' : '' }} hidden />Yes
 															</button>
-															<button type="button" class="btn btn-blue-grey activeNo" style="line-height:1.5">
-																<input type="checkbox" name="divisions" value="N" hidden />No
+															<button type="button" class="btn activeNo{{ $showSeason->has_divisions == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+																<input type="checkbox" name="divisions" value="N" {{ $showSeason->has_divisions == 'N' ? 'checked' : '' }} hidden />No
 															</button>
 														</div>
 													</div>
@@ -197,6 +197,48 @@
 
 												{{-- Add Divider--}}
 												<div class="divider-long" id=""></div>
+
+												@if($showSeason->has_conferences == 'Y')
+													<div class="text-center" id="">
+														<h2>Conference Names</h2>
+													</div>
+
+													<div class="row">
+														@foreach($showSeasonConferences as $conference)
+															<div class="col-12 col-md" id="">
+																<div class="md-form">
+																	<input type="text" name="conference_name[]" class="form-control" id="conference_name" placeholder="Name" value="{{ $conference->conference_name }}" />
+
+																	<label for="conference_name">Conference {{ $loop->iteration }} Name</label>
+																</div>
+															</div>
+														@endforeach
+													</div>
+
+													{{-- Add Divider--}}
+													<div class="divider-long" id=""></div>
+												@endif
+
+												@if($showSeason->has_divisions == 'Y')
+													<div class="text-center" id="">
+														<h2>Division Names</h2>
+													</div>
+
+													<div class="row">
+														@foreach($showSeasonDivisions as $division)
+															<div class="col-12 col-md" id="">
+																<div class="md-form">
+																	<input type="text" name="division_name[]" class="form-control" id="division_name" placeholder="Name" value="{{ $division->division_name }}" />
+
+																	<label for="division_name">Division {{ $loop->iteration }} Name</label>
+																</div>
+															</div>
+														@endforeach
+													</div>
+
+													{{-- Add Divider--}}
+													<div class="divider-long" id=""></div>
+												@endif
 
 												<div class="d-flex justify-content-around align-items-center">
 													<button type="submit" class="btn btn-lg white-text green" id="">Update League</button>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\LeagueConference;
+use App\LeagueDivision;
 use App\PlayerProfile;
 use App\LeagueProfile;
 use App\LeagueSchedule;
@@ -77,8 +79,8 @@ class LeagueTeamController extends Controller
     */
     public function create() {
 		// Get the season to show
-		$showSeason = LeagueSeason::active()->get()->last();
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
+		$showSeason = $this->get_season();
+		$activeSeasons = $this::get_active_seasons();
 		$totalTeams = $showSeason->league_teams->count();
 		
 		// Resize the default image
@@ -98,11 +100,10 @@ class LeagueTeamController extends Controller
 	 */
 	public function show(LeagueTeam $league_team) {
 		$showSeason = $this->showSeason;
+		$activeSeasons = $this->get_active_seasons();
 
 		// Get the season to show
 		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
-
-			$activeSeasons = $this->showSeason->league_profile->seasons()->active()->get();
 
 			// Resize the default image
 			Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
@@ -155,11 +156,12 @@ class LeagueTeamController extends Controller
     */
     public function edit(LeagueTeam $league_team) {
 	    $showSeason = $this->showSeason;
+	    $activeSeasons = $this::get_active_seasons();
+	    $conferences = $showSeason->conferences;
+	    $divisions = $showSeason->divisions;
 
 		// Get the season to show
 		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
-
-			$activeSeasons = $this->showSeason->league_profile->seasons()->active()->get();
 
 			// Resize the default image
 			Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
@@ -168,7 +170,7 @@ class LeagueTeamController extends Controller
 			)->save(storage_path('app/public/images/lg/default_img.jpg'));
 			$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-			return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons'));
+			return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons', 'conferences', 'divisions'));
 			
 		} else {
 			
@@ -190,6 +192,8 @@ class LeagueTeamController extends Controller
 
 		$league_team->team_name = $request->team_name;
 		$league_team->fee_paid = $request->fee_paid;
+		$league_team->league_conference_id = isset($request->conference) ? $request->conference : null;
+		$league_team->league_division_id = isset($request->division) ? $request->division : null;
 		$team_players = $league_team->players;
 		$team_standing = $league_team->standings;
 		$team_home_games = $league_team->home_games;

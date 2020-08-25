@@ -7,7 +7,7 @@
 			<div class="col col-md-3 mt-3 text-left d-none d-md-block">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_teams.create', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
+						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
@@ -28,8 +28,13 @@
 					<div class="card-body rgba-white-strong rounded z-depth-1-half">
 						<!--Title-->
 						<h2 class="card-title h2-responsive text-center">Create New Team</h2>
+
 						<!-- Create Form -->
-						{!! Form::open(['action' => ['LeagueTeamController@store', 'season' => $showSeason->id, 'year' => $showSeason->year], 'method' => 'POST']) !!}
+						<!-- Create Form -->
+						<form action="{{ action('LeagueTeamController@store', ['season' => $showSeason->id, 'year' => $showSeason->year]) }}" method="POST" class="" enctype="multipart/form-data">
+
+							{{ csrf_field() }}
+
 							<div class="md-form">
 								<input type="text" name="team_name" class="form-control" value="{{ old('team_name') }}" />
 								<label for="team_name">Team Name</label>
@@ -56,7 +61,7 @@
 							<div class="md-form text-center">
 								<button type="submit" class="btn blue lighten-1 white-text">Create Team</button>
 							</div>
-						{!! Form::close() !!}
+						</form>
 					</div>
 				</div>
 				<!--/.Card-->

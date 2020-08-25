@@ -16,6 +16,7 @@
 					<div class="view">
 						<img src="{{ $league_team->team_picture != null ? $league_team->lg_photo() : $defaultImg }}" class="img-fluid mx-auto" alt="photo" style="max-width: 75%;">
 					</div>
+
 					<!--Card content-->
 					<div class="card-body rgba-white-strong rounded z-depth-1-half">
 						<!--Title-->
@@ -23,6 +24,7 @@
 						
 						<!-- Create Form -->
 						{!! Form::open(['action' => ['LeagueTeamController@update', $league_team->id], 'id' => 'update_team_form', 'method' => 'PATCH', 'files' => true]) !!}
+
 							<!-- Team Info -->
 							<div class="">
 								<div class="row">
@@ -58,23 +60,63 @@
 										@endif
 									</div>
 								</div>
-								
-								
+
+								<div class="form-row">
+
+									@if($showSeason->has_conferences == 'Y')
+										@if($showSeason->conferences->isNotEmpty())
+											<div class="col-12 col-md">
+												<select class="mdb-select md-form" name="conference">
+
+													<option value="blank" selected disabled>Select A Conference</option>
+
+													@foreach($conferences as $conference)
+														<option value="{{ $conference->id }}"{{ $league_team->league_conference_id == $conference->id ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $conference->conference_name)) }}</option>
+													@endforeach
+												</select>
+
+												<label data-error="wrong" data-success="right" for="conference" class="text-primary mdb-main-label">Conference</label>
+											</div>
+										@endif
+									@endif
+
+									@if($showSeason->has_divisions == 'Y')
+										@if($showSeason->conferences->isNotEmpty())
+											<div class="col-12 col-md">
+												<select class="mdb-select md-form" name="division">
+
+													<option value="blank" selected disabled>Select A Division</option>
+
+													@foreach($divisions as $division)
+														<option value="{{ $division->id }}"{{ $league_team->league_division_id == $division->id ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $division->division_name)) }}</option>
+													@endforeach
+												</select>
+
+												<label for="comp_group" class="text-primary mdb-main-label">Division</label>
+											</div>
+										@endif
+									@endif
+
+								</div>
+
 								<div class="input-form">
 									<label for="fee_paid" class="d-block">League Fee Paid</label>
+
 									<div class="">
 										<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
 											<input type="checkbox" name="fee_paid" class="hidden" value="Y"{{ $league_team->fee_paid == 'Y' ? ' checked' : '' }} hidden />
 										</button>
-										
+
 										<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'N' ? ' green active' : ' grey' }}" type="button">No
 											<input type="checkbox" name="fee_paid" class="hidden" value="N"{{ $league_team->fee_paid == 'N' ? ' checked' : '' }} hidden />
 										</button>
 									</div>
 								</div>
+
 							</div>
-							
-							<hr class="d-block d-md-none" />
+
+							<div class="divider-long my-5"></div>
+
 							<!-- Team Players Info -->
 							<div class="mt-4 position-relative">
 								<div class="d-flex flex-column flex-md-row align-items-center justify-content-center">

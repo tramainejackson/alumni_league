@@ -85,7 +85,7 @@ class LeagueSeason extends Model
     }
 	
 	/**
-	* Get the games for the league season object.
+	* Get the standings for the league season object.
 	*/
     public function standings()
     {
@@ -98,6 +98,22 @@ class LeagueSeason extends Model
     public function pictures()
     {
         return $this->hasMany('App\LeaguePicture');
+    }
+
+	/**
+	* Get the conferences for the league season object.
+	*/
+    public function conferences()
+    {
+        return $this->hasMany('App\LeagueConference');
+    }
+
+	/**
+	* Get the divisions for the league season object.
+	*/
+    public function divisions()
+    {
+        return $this->hasMany('App\LeagueDivision');
     }
 	
 	/**

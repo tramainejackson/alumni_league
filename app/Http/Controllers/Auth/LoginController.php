@@ -25,6 +25,7 @@ class LoginController extends Controller
 	use AuthenticatesUsers;
 
 	public $showSeason;
+	public $activeSeasons;
 	public $league;
 	
 	/**
@@ -43,8 +44,21 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
 
 	    $this->league = LeagueProfile::find(2);
-	    $this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
+
+	public function get_season() {
+		return $this->showSeason;
+	}
+
+	public function get_league() {
+		return $this->league;
+	}
+
+	public function get_active_seasons() {
+		return $this->activeSeasons;
+	}
 	
 	/**
      * Create a new controller instance.

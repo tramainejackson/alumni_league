@@ -39,7 +39,7 @@ class LeagueTeam extends Model
 	*/
     public function league()
     {
-        return $this->belongsTo('App\LeagueProfile');
+        return $this->belongsTo('App\LeagueProfile', 'league_profile_id');
     }
 	
 	/**
@@ -71,7 +71,7 @@ class LeagueTeam extends Model
 	*/
     public function season()
     {
-        return $this->belongsTo('App\LeagueSeason');
+        return $this->belongsTo('App\LeagueSeason', 'league_season_id');
     }
 	
 	/**
@@ -80,6 +80,22 @@ class LeagueTeam extends Model
     public function standings()
     {
         return $this->hasOne('App\LeagueStanding');
+    }
+
+	/**
+	* Get the standings for the team object.
+	*/
+    public function conference()
+    {
+        return $this->belongsTo('App\LeagueConference', 'league_conference_id');
+    }
+
+	/**
+	* Get the standings for the team object.
+	*/
+    public function division()
+    {
+        return $this->belongsTo('App\LeagueDivision', 'league_division_id');
     }
 	
 	/**
