@@ -1,7 +1,7 @@
  <nav class="navbar navbar-expand-lg justify-content-between">
 	<div class="d-flex align-items-center">
 		<!-- Branding Image -->
-		<a class="navbar-brand indigo-text" href="{{ route('welcome') }}">{{ $league->name }}</a>
+		<a class="navbar-brand indigo-text" href="{{ route('welcome', ['season' => $showSeason->id], false) }}">{{ $league->name }}</a>
 	</div>
 
 	<!-- SideNav slide-out button -->
@@ -42,20 +42,20 @@
 
 			<!--/. Side navigation links -->
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season']])  }}">Schedule</a>
+				<a class='nav-link white-text' href="{{ route('league_schedule.index', ['season' => $showSeason->id], false) }}">Schedule</a>
 			</li>
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season']]) }}">Standings</a>
+				<a class='nav-link white-text' href="{{ route('league_standings', ['season' => $showSeason->id], false) }}">Standings</a>
 			</li>
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season']]) }}">Stats</a>
+				<a class='nav-link white-text' href="{{ route('league_stats.index', ['season' => $showSeason->id], false) }}">Stats</a>
 			</li>
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season']]) }}">Teams</a>
+				<a class='nav-link white-text' href="{{ route('league_teams.index', ['season' => $showSeason->id], false) }}">Teams</a>
 			</li>
-			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season']]) }}">League Pics</a>
-			</li>
+			{{--<li class="nav-item">--}}
+				{{--<a class='nav-link white-text' href="{{ route('league_pictures.index', ['season' => $showSeason->id], false) }}">League Pics</a>--}}
+			{{--</li>--}}
 
 			@if(Auth::guest())
 				<!-- Logins -->
@@ -138,22 +138,22 @@
 		<!-- Right Side Of Navbar -->
 		<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
 			<li class="nav-item">
-				<a id="leagues_season_link" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_seasons.index') : route('league_seasons.index', ['season' => $queryStrCheck['season']])  }}">Seasons</a>
+				<a id="leagues_season_link" class='nav-link indigo-text' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}">Seasons</a>
 			</li>
 			<li class="nav-item">
-				<a id="leagues_schedule_link" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => $queryStrCheck['season']])  }}">Schedule</a>
+				<a id="leagues_schedule_link" class='nav-link indigo-text' href="{{ route('league_schedule.index', ['season' => $showSeason->id], false) }}">Schedule</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_standings') : route('league_standings', ['season' => $queryStrCheck['season']]) }}">Standings</a>
+				<a id="" class='nav-link indigo-text' href="{{ route('league_standings', ['season' => $showSeason->id], false) }}">Standings</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_stat.index') : route('league_stat.index', ['season' => $queryStrCheck['season']]) }}">Stats</a>
+				<a id="" class='nav-link indigo-text' href="{{ route('league_stats.index', ['season' => $showSeason->id], false) }}">Stats</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_teams.index') : route('league_teams.index', ['season' => $queryStrCheck['season']]) }}">Teams</a>
+				<a id="" class='nav-link indigo-text' href="{{ route('league_teams.index', ['season' => $showSeason->id], false) }}">Teams</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='league_home nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_info') : route('league_info', ['season' => $queryStrCheck['season']]) }}">League Info</a>
+				<a id="" class='league_home nav-link indigo-text' href="{{ route('league_info', ['season' => $showSeason->id], false) }}">League Info</a>
 			</li>
 			{{--<li class="nav-item">--}}
 				{{--<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season']]) }}">League Pics</a>--}}
@@ -161,7 +161,7 @@
 
 			@if(Auth::check())
 				<li class="nav-item">
-					<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('users.index') : route('users.index', ['season' => $queryStrCheck['season']]) }}">Users</a>
+					<a id="" class='nav-link indigo-text' href="{{ route('users.index', ['season' => $showSeason->id], false) }}">Users</a>
 				</li>
 			@endif
 		</ul>

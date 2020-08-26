@@ -149,6 +149,15 @@ class LeagueStat extends Model
 		->groupBy('league_teams_id')
 		->orderBy('TPTS', 'desc');
 	}
+
+	/*
+	*
+	* Scope a query to get a players stats
+	*
+	*/
+	public function scopePlayerGameStats($query, $playerID=0) {
+		return $query->where('league_player_id', $playerID)->get();
+	}
 	
 	public static function get_formatted_stats() {
 		$format = "*, FORMAT(SUM(points)/SUM(game_played), 1) AS PPG,

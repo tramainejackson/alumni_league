@@ -20,13 +20,15 @@ class UserController extends Controller
 {
 
 	public $showSeason;
+	public $activeSeasons;
 	public $league;
 
 	public function __construct() {
 		$this->middleware(['auth'])->except(['index']);
 
 		$this->league = LeagueProfile::find(2);
-		$this->showSeason = LeagueProfile::find(2)->seasons()->active()->get()->last();
+		$this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+		$this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
 	}
 
     /**

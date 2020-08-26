@@ -9,7 +9,7 @@
 			<div class="col col-xl-2 d-none d-lg-block mt-3 order-xl-0">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_stat.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+						<a href="{{ route('league_stats.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
@@ -315,13 +315,13 @@
 					@if($showSeason->is_playoffs == 'Y')
 
 						@foreach($playoffRounds as $round)
-							<a href="{{ request()->query() == null ? route('league_stat.edit_round', ['round' => $round->round]) : route('league_stat.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+							<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $round->round]) : route('league_stats.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
 						@endforeach
 
 					@else
 
 						@foreach($seasonScheduleWeeks as $week)
-							<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $week->season_week]) : route('league_stat.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
+							<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
 						@endforeach
 
 					@endif

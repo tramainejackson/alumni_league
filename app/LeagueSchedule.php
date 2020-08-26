@@ -295,8 +295,7 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to only include games from now to next week.
 	*/
-	public function scopeUpcomingGames($query) 
-	{
+	public function scopeUpcomingGames($query) {
 		$now = Carbon::now();
 
 		return $query->where([
@@ -308,8 +307,7 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to get all the weeks listed on the schedule.
 	*/	
-	public function scopeGetScheduleWeeks($query) 
-	{
+	public function scopeGetScheduleWeeks($query) {
 		return $query->select('season_week')
 		->where("season_week", '<>', null)
 		->groupBy("season_week");
@@ -319,8 +317,7 @@ class LeagueSchedule extends Model
 	* Scope a query to get all the playoff games listed on the schedule.
 	* Excluding the playin games
 	*/	
-	public function scopePlayoffRounds($query) 
-	{
+	public function scopePlayoffRounds($query) {
 		return $query->select('round')
 		->where([
 			["season_week", null],
@@ -333,8 +330,7 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to get all the playoff playin games listed on the schedule.
 	*/	
-	public function scopePlayoffNonPlayinGames($query) 
-	{
+	public function scopePlayoffNonPlayinGames($query) {
 		return $query->select('*')
 		->where([
 			["season_week", null],
@@ -346,8 +342,7 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to get all the playoff playin games listed on the schedule.
 	*/	
-	public function scopeRoundGames($query, $round) 
-	{
+	public function scopeRoundGames($query, $round) {
 		return $query->select('*')
 		->where([
 			["season_week", null],
@@ -359,8 +354,7 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to get all the playoff playin games listed on the schedule.
 	*/	
-	public function scopePlayoffPlayinGames($query) 
-	{
+	public function scopePlayoffPlayinGames($query) {
 		return $query->select('*')
 		->where([
 			["season_week", null],

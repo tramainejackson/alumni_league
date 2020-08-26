@@ -349,7 +349,7 @@
 					<div class="col-8 mx-auto my-5">
 						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 							<h1 class="h1-responsive">Stats</h1>
-							<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
+							<a href="{{ request()->query() == null ? route('league_stats.index') : route('league_stats.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 						</div>
 						<div id="season_stats_snap" class="my-5 row">
 							<!-- Season stat leaders by category -->
@@ -567,7 +567,7 @@
 						<div class="col-8 mx-auto my-5">
 							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 								<h1 class="h1-responsive">Stats</h1>
-								<a href="{{ request()->query() == null ? route('league_stat.index') : route('league_stat.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
+								<a href="{{ request()->query() == null ? route('league_stats.index') : route('league_stats.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 							</div>
 							<div id="season_stats_snap" class="my-5 row">
 								<!-- Season stat leaders by category -->

@@ -99,17 +99,33 @@
 
 								</div>
 
-								<div class="input-form">
-									<label for="fee_paid" class="d-block">League Fee Paid</label>
+								<div class="form-row align-items-center justify-content-between justify-content-md-around">
+									<div class="input-form">
+										<label for="fee_paid" class="d-block">League Fee Paid</label>
 
-									<div class="">
-										<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
-											<input type="checkbox" name="fee_paid" class="hidden" value="Y"{{ $league_team->fee_paid == 'Y' ? ' checked' : '' }} hidden />
-										</button>
+										<div class="">
+											<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
+												<input type="checkbox" name="fee_paid" class="hidden" value="Y"{{ $league_team->fee_paid == 'Y' ? ' checked' : '' }} hidden />
+											</button>
 
-										<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'N' ? ' green active' : ' grey' }}" type="button">No
-											<input type="checkbox" name="fee_paid" class="hidden" value="N"{{ $league_team->fee_paid == 'N' ? ' checked' : '' }} hidden />
-										</button>
+											<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'N' ? ' green active' : ' grey' }}" type="button">No
+												<input type="checkbox" name="fee_paid" class="hidden" value="N"{{ $league_team->fee_paid == 'N' ? ' checked' : '' }} hidden />
+											</button>
+										</div>
+									</div>
+
+									<div class="input-form">
+										<label for="fee_paid" class="d-block">Is This An All-Star Team?</label>
+
+										<div class="">
+											<button class="btn inputSwitchToggle{{ $league_team->is_all_star_team == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
+												<input type="checkbox" name="all_star_team" class="hidden" value="Y"{{ $league_team->is_all_star_team == 'Y' ? ' checked' : '' }} hidden />
+											</button>
+
+											<button class="btn inputSwitchToggle{{ $league_team->is_all_star_team == 'N' ? ' green active' : ' grey' }}" type="button">No
+												<input type="checkbox" name="all_star_team" class="hidden" value="N"{{ $league_team->is_all_star_team == 'N' ? ' checked' : '' }} hidden />
+											</button>
+										</div>
 									</div>
 								</div>
 
@@ -170,6 +186,7 @@
 													<th colspan="6" class="text-center">No Players Added for this team yet</th>
 												</tr>
 											@endif
+
 											<tr class="newPlayerRow hidden" hidden>
 												<td class="text-center">&nbsp;</td>
 												<td class="">
@@ -207,6 +224,7 @@
 				<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
 			</div>
 		</div>
+
 		<div class="row">
 			<div class="modal fade" id="delete_team" tabindex="-1" role="dialog" aria-labelledby="deleteTeam" aria-hidden="true" data-backdrop="true">
 				<div class="modal-dialog modal-lg">

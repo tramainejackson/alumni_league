@@ -92,11 +92,11 @@ class LeagueScheduleController extends Controller
     */
     public function edit($week) {
 		// Get the season to show
-		$showSeason	= $this->find_season(request());
-		$thisWeek 	= $week;
-		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
-		
+		$showSeason	= $this::get_season();
+	    $activeSeasons = $this::get_active_seasons();
+	    $thisWeek 	= $week;
+	    $weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
+
 		return view('schedule.edit', compact('showSeason', 'weekGames', 'thisWeek', 'activeSeasons'));
     }
 	

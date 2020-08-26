@@ -37,7 +37,7 @@ class LeagueSeason extends Model
     ];
 	
 	/**
-	* Get the league for the team object.
+	* Get the league for the season object.
 	*/
     public function league_profile()
     {
@@ -45,7 +45,7 @@ class LeagueSeason extends Model
     }
 	
 	/**
-	* Get the league for the team object.
+	* Get the playoffs for the season object.
 	*/
     public function playoffs()
     {
@@ -169,7 +169,7 @@ class LeagueSeason extends Model
 						$playoffSchedule->home_seed = $homeTeam->result->winning_team_id == $homeTeam->home_team_id ? $homeTeam->home_seed : $homeTeam->away_seed;
 						$playoffSchedule->away_seed = $awayTeam->result->winning_team_id == $awayTeam->home_team_id ? $awayTeam->home_seed : $awayTeam->away_seed;
 						
-						// Get the 2 winning teams team object
+						// Get the 2 winning teams season object
 						$homeTeam = LeagueTeam::find($homeTeam->result->winning_team_id);
 						$awayTeam = LeagueTeam::find($awayTeam->result->winning_team_id);
 						

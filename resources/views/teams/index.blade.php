@@ -24,98 +24,98 @@
 
 				@if(!isset($allComplete))
 					
-					@if($seasonTeams->isNotEmpty())
+					@if(Auth::check())
 
-						<div class="row">
-							@foreach($seasonTeams as $team)
+						{{--Authourization Only--}}
+						@if($seasonTeams->isNotEmpty())
 
-								@php $teamCaptain = $team->players()->captain(); @endphp
+							<div class="row">
+								@foreach($seasonTeams as $team)
 
-								<div class="col-12 col-xl-6">
-									<div class="card card-cascade wider my-4">
-										<!-- Card image -->
-										<div class="view overlay">
-											<img class="card-img-top" src="{{ $team->team_picture != null ? $team->sm_photo() : $defaultImg }}" alt="Card image cap">
-											<a href="#!">
-												<div class="mask rgba-white-slight"></div>
-											</a>
-										</div>
-										
-										<!-- Card content -->
-										<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
-											<!-- Title -->
-											<h1 class="card-title h1-responsive font-weight-bold mx-auto">{{ $team->team_name }}</h1>
-											<!-- Team Captain Info -->
-											<div class="d-flex flex-column align-items-center">
-												<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
-												<div class="d-flex flex-column align-items-center justify-content-center">
-													<p class="m-0">
-														<label class="">Name:&nbsp;</label>
-														<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
-													</p>
+									@php $teamCaptain = $team->players()->captain(); @endphp
 
-													<p class="m-0">
-														<label class="">Phone:&nbsp;</label>
-														<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No email address' : 'No email address' }}</span>
-													</p>
+									<div class="col-12 col-xl-6">
+										<div class="card card-cascade wider my-4">
+											<!-- Card image -->
+											<div class="view overlay">
+												<img class="card-img-top" src="{{ $team->team_picture != null ? $team->sm_photo() : $defaultImg }}" alt="Card image cap">
+												<a href="#!">
+													<div class="mask rgba-white-slight"></div>
+												</a>
+											</div>
+
+											<!-- Card content -->
+											<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
+												<!-- Title -->
+												<h1 class="card-title h1-responsive font-weight-bold mx-auto">{{ $team->team_name }}</h1>
+												<!-- Team Captain Info -->
+												<div class="d-flex flex-column align-items-center">
+													<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
+													<div class="d-flex flex-column align-items-center justify-content-center">
+														<p class="m-0">
+															<label class="">Name:&nbsp;</label>
+															<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
+														</p>
+
+														<p class="m-0">
+															<label class="">Phone:&nbsp;</label>
+															<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
+														</p>
+													</div>
+
+													@if($team->league_conference_id != null || $team->league_division_id != null)
+														<div class="divider-short"></div>
+													@endif
+
+													@if($team->league_conference_id != null)
+														<p class="m-0">
+															<label class="">Conference:&nbsp;</label>
+															<span>{{ $team->conference->conference_name }}</span>
+														</p>
+													@endif
+
+													@if($team->league_division_id != null)
+														<p class="m-0">
+															<label class="">Division:&nbsp;</label>
+															<span>{{ $team->division->division_name }}</span>
+														</p>
+													@endif
+
+													@if(Auth::user())
+														{{--Authourization Only--}}
+														<div class="">
+															<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">Edit Team</a>
+														</div>
+													@else
+														<div class="">
+															<a href="{{ request()->query() == null ? route('league_teams.show', ['league_team' => $team->id]) : route('league_teams.show', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">View Team</a>
+														</div>
+													@endif
 												</div>
-
-												@if($team->league_conference_id != null || $team->league_division_id != null)
-													<div class="divider-short"></div>
-												@endif
-
-												@if($team->league_conference_id != null)
-													<p class="m-0">
-														<label class="">Conference:&nbsp;</label>
-														<span>{{ $team->conference->conference_name }}</span>
-													</p>
-												@endif
-
-												@if($team->league_division_id != null)
-													<p class="m-0">
-														<label class="">Division:&nbsp;</label>
-														<span>{{ $team->division->division_name }}</span>
-													</p>
-												@endif
 
 												@if(Auth::user())
 													{{--Authourization Only--}}
-													<div class="">
-														<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">Edit Team</a>
-													</div>
-												@else
-													<div class="">
-														<a href="{{ request()->query() == null ? route('league_teams.show', ['league_team' => $team->id]) : route('league_teams.show', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">View Team</a>
+													<div class="feesButton">
+														@if($team->fee_paid == 'N')
+															<button class="btn orange darken-2 white-text" type="button">Fees Due</button>
+														@else
+															<button class="btn green darken-1 white-text" type="button">Fees Paid</button>
+														@endif
 													</div>
 												@endif
 											</div>
-
-											@if(Auth::user())
-												{{--Authourization Only--}}
-												<div class="feesButton">
-													@if($team->fee_paid == 'N')
-														<button class="btn orange darken-2 white-text" type="button">Fees Due</button>
-													@else
-														<button class="btn green darken-1 white-text" type="button">Fees Paid</button>
-													@endif
-												</div>
-											@endif
 										</div>
 									</div>
-								</div>
-							@endforeach
-						</div>
-
-					@else
-
-						<div class="{{ $showSeason->league_profile && $seasonTeams->isEmpty() ? '' : 'col-12 col-lg-8 d-flex align-items-center justify-content-center flex-column' }}">
-
-							<div class="text-center coolText1">
-								<h1 class="h1-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no teams added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+								@endforeach
 							</div>
 
-							@if(Auth::user())
-								{{--Authourization Only--}}
+						@else
+
+							<div class="{{ $showSeason->league_profile && $seasonTeams->isEmpty() ? '' : 'col-12 col-lg-8 d-flex align-items-center justify-content-center flex-column' }}">
+
+								<div class="text-center coolText1">
+									<h1 class="h1-responsive text-center coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no teams added for this season yet&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+								</div>
 
 								<!--Card-->
 								<div class="card card-cascade mb-4 reverse wider">
@@ -163,8 +163,135 @@
 									</div>
 								</div>
 								<!--/.Card-->
-							@endif
-						</div>
+							</div>
+						@endif
+
+					@else
+
+						@if($seasonTeams->isNotEmpty())
+
+							<div class="row">
+								@foreach($seasonTeams as $team)
+									@php $teamCaptain = $team->players()->captain(); @endphp
+
+									@if($team->is_all_star_team == 'Y')
+
+										@if($showSeason->is_playoffs == 'Y')
+
+											<div class="col-12 col-xl-6">
+												<div class="card card-cascade wider my-4">
+													<!-- Card image -->
+													<div class="view overlay">
+														<img class="card-img-top" src="{{ $team->team_picture != null ? $team->sm_photo() : $defaultImg }}" alt="Card image cap">
+														<a href="#!">
+															<div class="mask rgba-white-slight"></div>
+														</a>
+													</div>
+
+													<!-- Card content -->
+													<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
+														<!-- Title -->
+														<h1 class="card-title h1-responsive font-weight-bold mx-auto">{{ $team->team_name }}</h1>
+														<!-- Team Captain Info -->
+														<div class="d-flex flex-column align-items-center">
+															<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
+															<div class="d-flex flex-column align-items-center justify-content-center">
+																<p class="m-0">
+																	<label class="">Name:&nbsp;</label>
+																	<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
+																</p>
+
+																<p class="m-0">
+																	<label class="">Phone:&nbsp;</label>
+																	<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
+																</p>
+															</div>
+
+															@if($team->league_conference_id != null || $team->league_division_id != null)
+																<div class="divider-short"></div>
+															@endif
+
+															@if($team->league_conference_id != null)
+																<p class="m-0">
+																	<label class="">Conference:&nbsp;</label>
+																	<span>{{ $team->conference->conference_name }}</span>
+																</p>
+															@endif
+
+															@if($team->league_division_id != null)
+																<p class="m-0">
+																	<label class="">Division:&nbsp;</label>
+																	<span>{{ $team->division->division_name }}</span>
+																</p>
+															@endif
+
+															<div class="">
+																<a href="{{ request()->query() == null ? route('league_teams.show', ['league_team' => $team->id]) : route('league_teams.show', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">View Team</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										@endif
+									@else
+										<div class="col-12 col-xl-6">
+											<div class="card card-cascade wider my-4">
+												<!-- Card image -->
+												<div class="view overlay">
+													<img class="card-img-top" src="{{ $team->team_picture != null ? $team->sm_photo() : $defaultImg }}" alt="Card image cap">
+													<a href="#!">
+														<div class="mask rgba-white-slight"></div>
+													</a>
+												</div>
+
+												<!-- Card content -->
+												<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
+													<!-- Title -->
+													<h1 class="card-title h1-responsive font-weight-bold mx-auto">{{ $team->team_name }}</h1>
+													<!-- Team Captain Info -->
+													<div class="d-flex flex-column align-items-center">
+														<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
+														<div class="d-flex flex-column align-items-center justify-content-center">
+															<p class="m-0">
+																<label class="">Name:&nbsp;</label>
+																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
+															</p>
+
+															<p class="m-0">
+																<label class="">Phone:&nbsp;</label>
+																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
+															</p>
+														</div>
+
+														@if($team->league_conference_id != null || $team->league_division_id != null)
+															<div class="divider-short"></div>
+														@endif
+
+														@if($team->league_conference_id != null)
+															<p class="m-0">
+																<label class="">Conference:&nbsp;</label>
+																<span>{{ $team->conference->conference_name }}</span>
+															</p>
+														@endif
+
+														@if($team->league_division_id != null)
+															<p class="m-0">
+																<label class="">Division:&nbsp;</label>
+																<span>{{ $team->division->division_name }}</span>
+															</p>
+														@endif
+
+														<div class="">
+															<a href="{{ request()->query() == null ? route('league_teams.show', ['league_team' => $team->id]) : route('league_teams.show', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">View Team</a>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									@endif
+								@endforeach
+							</div>
+						@endif
 					@endif
 				@else
 					<div class="coolText4 py-3 px-5">

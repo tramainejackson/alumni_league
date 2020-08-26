@@ -24,6 +24,7 @@ Route::resource('league_teams', 'LeagueTeamController');
 Route::resource('league_pictures', 'LeaguePictureController');
 Route::resource('league_profile', 'LeagueProfileController');
 Route::resource('league_seasons', 'LeagueSeasonController');
+Route::resource('league_stats', 'LeagueStatController');
 Route::resource('news', 'NewsArticleController');
 Route::resource('messages', 'MessagesController');
 Route::resource('users', 'UserController');
@@ -69,13 +70,11 @@ Route::delete('/delete_game/{league_schedule}/', 'LeagueScheduleController@delet
 
 Route::patch('/update_game/', 'LeagueScheduleController@update_game');
 
-Route::get('/league_stat', 'LeagueStatController@index')->name('league_stat.index');
+Route::get('/league_stats/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stat.edit_week');
 
-Route::get('league_stat/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stat.edit_week');
+Route::get('/league_stats/edit_round/{round}', 'LeagueStatController@edit_round')->name('league_stat.edit_round');
 
-Route::get('league_stat/edit_round/{round}', 'LeagueStatController@edit_round')->name('league_stat.edit_round');
-
-Route::patch('league_stat/edit_week/{week}', 'LeagueStatController@update');
+Route::patch('/league_stats/edit_week/{week}', 'LeagueStatController@update');
 
 Route::post('create_playoffs', 'LeagueSeasonController@create_playoffs');
 

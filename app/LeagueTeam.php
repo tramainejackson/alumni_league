@@ -2,8 +2,11 @@
 
 namespace App;
 
+use App\LeagueProfile;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class LeagueTeam extends Model
 {
@@ -103,7 +106,14 @@ class LeagueTeam extends Model
 	*/
     public function lg_photo()
     {
-        return asset(str_ireplace('images', 'images/lg', $this->team_picture));
+	    // Check if file exist
+	    $img_file = Storage::disk('public')->exists('images/' . $this->team_picture . '_sm.png');
+
+	    if($img_file) {
+		    return asset(str_ireplace('images', 'images/lg', $this->team_picture));
+	    } else {
+		    return asset(str_ireplace('images', 'images/lg', LeagueProfile::find(2)->picture));
+	    }
     }
 	
 	/**
@@ -111,7 +121,14 @@ class LeagueTeam extends Model
 	*/
     public function sm_photo()
     {
-        return asset(str_ireplace('images', 'images/sm', $this->team_picture));
+	    // Check if file exist
+	    $img_file = Storage::disk('public')->exists('images/' . $this->team_picture . '_sm.png');
+
+	    if($img_file) {
+		    return asset(str_ireplace('images', 'images/sm', $this->team_picture));
+	    } else {
+		    return asset(str_ireplace('images', 'images/sm', LeagueProfile::find(2)->picture));
+	    }
     }
 	
 	/**

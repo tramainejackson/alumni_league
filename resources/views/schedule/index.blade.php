@@ -8,13 +8,13 @@
 			<div class="col col-lg-2 d-none d-lg-block mt-3">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
 			</div>
 
-			<div class="col-12 col-lg-8 pt-3 d-flex align-items-center justify-content-center flex-column">
+			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 				</div>
@@ -47,6 +47,7 @@
 										</tr>
 									</thead>
 									<tbody>
+
 										@if($seasonWeekGames->isEmpty())
 											<tr>
 												<th colspan="6" class="">NO GAMES SCHEDULED FOR THIS WEEK</th>
@@ -94,12 +95,17 @@
 													
 													<td class="gameTimeData text-nowrap">{{ $game->game_time() }}</td>
 													<td class="gameDateData text-nowrap">{{ $game->game_date() }}</td>
-													<td class="gameIDData" hidden>{{ $game->id }}</td>
+													<td>
 
-														@if(Auth::user())
+														@if(Auth::check())
 															{{--Authourization Only--}}
-															<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
-														@endif()
+															<button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button>
+														@else
+															<a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $game->id]) }}">View Stats</a>
+														@endif
+
+													</td>
+													<td class="gameIDData" hidden>{{ $game->id }}</td>
 												</tr>
 											@endforeach
 										@endif
@@ -119,16 +125,16 @@
 				@endif
 			</div>
 			
-			<div class="col col-lg-2 mt-3 text-center text-lg-right order-first order-lg-0">
+			<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0">
 				@if(Auth::user())
 					{{--Authourization Only--}}
 					@if(!isset($allComplete))
 						@if($showSeason->league_teams->isNotEmpty())
-							<a href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Week</a>
+							<a class="btn mx-auto mx-0 mw-100 btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Week</a>
 						@endif
 
 						@if($seasonScheduleWeeks->get()->isNotEmpty())
-							<a href="#" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
+							<a href="#" class="btn mx-auto mx-0 mw-100 btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
 						@endif
 					@endif
 				@endif
@@ -182,7 +188,7 @@
 															<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
 														@endforeach
 													</select>
-													<label for="edit_away_team">Away Team</label>
+													<label for="edit_away_team" class="mdb-main-label">Away Team</label>
 												</div>
 											</div>
 											<div class="col-12 col-lg">
@@ -193,7 +199,7 @@
 															<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
 														@endforeach
 													</select>
-													<label for="edit_home_team">Home Team</label>
+													<label for="edit_home_team" class="mdb-main-label">Home Team</label>
 												</div>
 											</div>
 										</div>
@@ -272,7 +278,7 @@
 										<option value="{{ $week->season_week }}">Week {{ $week->season_week }}</option>
 									@endforeach
 								</select>
-								<label for="">Select A Week</label>
+								<label for="" class="mdb-main-label">Select A Week</label>
 							</div>
 							<div class="row">
 								<div class="col-12 col-lg">
@@ -283,7 +289,7 @@
 												<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
 											@endforeach
 										</select>
-										<label for="away_team">Away Team</label>
+										<label for="away_team" class="mdb-main-label">Away Team</label>
 									</div>
 								</div>
 								<div class="col-12 col-lg">
@@ -294,7 +300,7 @@
 												<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
 											@endforeach
 										</select>
-										<label for="home_team">Home Team</label>
+										<label for="home_team" class="mdb-main-label">Home Team</label>
 									</div>
 								</div>
 							</div>

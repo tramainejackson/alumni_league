@@ -157,7 +157,7 @@
 						<i class="fab fa-hotjar red-text"></i> Competitive Play
 					</h4>
 
-					<p class="text-muted mb-lg-0">This is the best basketball league in the Tri-State area. POINT. BLANK. PERIOD.</p>
+					<p class="text-muted mb-lg-0">This is the best basketball league in the Tri-State area. POINT. BLANK. PERIOD. Be careful what you ask for. We give out all the smoke</p>
 				</div>
 				<div class="col-lg-4 col-md-6 mb-5">
 					<h4 class="font-weight-bold mb-3">

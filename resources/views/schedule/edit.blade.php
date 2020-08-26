@@ -62,7 +62,7 @@
 															<option value="{{ $away_team->id }}"{{ $game->away_team_id == $away_team->id ? 'selected' : '' }}>{{ $away_team->team_name }}</option>
 														@endforeach
 													</select>
-													<label for="away_team">Away Team</label>
+													<label for="away_team" class="mdb-main-label">Away Team</label>
 												</div>
 											</div>
 											<div class="col-12 col-md">
@@ -73,7 +73,7 @@
 															<option value="{{ $home_team->id }}"{{ $game->home_team_id == $home_team->id ? 'selected' : '' }}>{{ $home_team->team_name }}</option>
 														@endforeach
 													</select>
-													<label for="home_team">Home Team</label>
+													<label for="home_team" class="mdb-main-label">Home Team</label>
 												</div>
 											</div>
 										</div>
@@ -143,7 +143,7 @@
 														<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
 													@endforeach
 												</select>
-												<label for="away_team">Away Team</label>
+												<label for="away_team" class="mdb-main-label">Away Team</label>
 											</div>
 										</div>
 										<div class="col-12 col-md">
@@ -154,7 +154,7 @@
 														<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
 													@endforeach
 												</select>
-												<label for="home_team">Home Team</label>
+												<label for="home_team" class="mdb-main-label">Home Team</label>
 											</div>
 										</div>
 									</div>

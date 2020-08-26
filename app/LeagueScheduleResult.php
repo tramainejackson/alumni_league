@@ -30,7 +30,7 @@ class LeagueScheduleResult extends Model
     ];
 	
 	/**
-	* Get the league for the team object.
+	* Get the league for the game result object.
 	*/
     public function league()
     {
@@ -38,7 +38,7 @@ class LeagueScheduleResult extends Model
     }
 	
 	/**
-	* Get the league for the team object.
+	* Get the game for the game result object.
 	*/
     public function game()
     {

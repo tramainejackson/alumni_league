@@ -192,8 +192,9 @@ class LeagueTeamController extends Controller
 
 		$league_team->team_name = $request->team_name;
 		$league_team->fee_paid = $request->fee_paid;
-		$league_team->league_conference_id = isset($request->conference) ? $request->conference : null;
-		$league_team->league_division_id = isset($request->division) ? $request->division : null;
+	    $league_team->is_all_star_team = $request->all_star_team;
+	    $league_team->league_conference_id = isset($request->conference) ? $request->conference : null;
+	    $league_team->league_division_id = isset($request->division) ? $request->division : null;
 		$team_players = $league_team->players;
 		$team_standing = $league_team->standings;
 		$team_home_games = $league_team->home_games;
