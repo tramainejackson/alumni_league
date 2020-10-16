@@ -138,15 +138,18 @@
 														<label for="standings_type" class="d-block form-control-label">Standings Type</label>
 
 														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto automatic{{ $showSeason->standings_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">
+															<button type="button" class="btn w-auto automaticStandings automatic{{ $showSeason->standings_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">
 																<input type="checkbox" name="standings_type" value="automatic" {{ $showSeason->standings_type == 'automatic' ? 'checked' : '' }} hidden />Automatic
 															</button>
 														</div>
 														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto manual{{ $showSeason->standings_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">
+															<button type="button" class="btn w-auto manualStandings manual{{ $showSeason->standings_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">
 																<input type="checkbox" name="standings_type" value="manual" {{ $showSeason->standings_type == 'manual' ? 'checked' : '' }} hidden />Manual
 															</button>
 														</div>
+														<span class="{{ $showSeason->standings_type == 'automatic' ? 'd-block d-sm-inline' : 'd-none' }}">
+															<button type="button" class="btn w-auto btn-blue gsBtn">Generate Standings</button>
+														</span>
 													</div>
 												</div>
 
@@ -155,19 +158,22 @@
 														<label for="schedule_type" class="d-block form-control-label">Scheduling Type</label>
 
 														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto automatic{{ $showSeason->schedule_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">
+															<button type="button" class="btn w-auto automaticSchedule automatic{{ $showSeason->schedule_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">
 																<input type="checkbox" name="schedule_type" value="automatic" {{ $showSeason->schedule_type == 'automatic' ? 'checked' : '' }} hidden />Automatic
 															</button>
 														</div>
 														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto manual{{ $showSeason->schedule_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">
+															<button type="button" class="btn w-auto manualSchedule manual{{ $showSeason->schedule_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">
 																<input type="checkbox" name="schedule_type" value="manual" {{ $showSeason->schedule_type == 'manual' ? 'checked' : '' }} hidden />Manual
 															</button>
 														</div>
+														<span class="{{ $showSeason->standings_type == 'automatic' ? 'd-block d-sm-inline' : 'd-none' }}">
+															<button type="button" class="btn w-auto btn-blue gsBtn">Generate Schedule</button>
+														</span>
 													</div>
 												</div>
 
-												<div class="form-row justify-content-between align-items-center">
+												<div class="form-row justify-content-around align-items-center">
 													<div class="form-group text-center">
 														<label for="conferences" class="d-block form-control-label">Conferences</label>
 
@@ -499,6 +505,9 @@
 						</div>
 
 						<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
+							<div class="text-center p-4 card rgba-deep-orange-light white-text" id="">
+								<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+							</div>
 							<div class="my-5 d-flex align-items-center justify-content-center flex-column">
 								<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 									<h1 class="h1-responsive">Upcoming Schedule</h1>

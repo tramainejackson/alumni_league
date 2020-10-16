@@ -31,6 +31,18 @@ class UserController extends Controller
 		$this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
 	}
 
+	public function get_season() {
+		return $this->showSeason;
+	}
+
+	public function get_league() {
+		return $this->league;
+	}
+
+	public function get_active_seasons() {
+		return $this->activeSeasons;
+	}
+
     /**
      * Display a listing of the resource.
      *
@@ -40,8 +52,9 @@ class UserController extends Controller
     	$showSeason = $this->showSeason;
 	    $allUsers = $this->league->users;
 	    $users = $this->league->users()->showMembers();
+	    $activeSeasons = $this->league->seasons()->active();
 	    
-	    return view('users.index', compact('users', 'allUsers', 'showSeason'));
+	    return view('users.index', compact('users', 'allUsers', 'showSeason', 'activeSeasons'));
     }
 
     /**
@@ -90,7 +103,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $member) {
-    	return view('admin.users.show', compact('member'));
+    	return view('users.show', compact('member'));
     }
 
     /**
@@ -99,20 +112,11 @@ class UserController extends Controller
      * @param  int  User $member
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $member) {
-	    $member_image = '';
-	    $member->avatar != '' ? $member_image = $member->avatar : $member_image = 'default';
-
-	    // Check if file exist
-	    $img_file = Storage::disk('public')->exists('images/' . $member_image);
-
-	    if($img_file) {
-		    $img_file = $member_image;
-	    } else {
-		    $img_file = 'default.png';
-	    }
+    public function edit(User $user) {
+	    $showSeason = $this->showSeason;
+	    $activeSeasons = $this->league->seasons()->active();
 	    
-    	return view('admin.users.edit', compact('member', 'img_file'));
+    	return view('users.edit', compact('user', 'showSeason', 'activeSeasons'));
     }
 
     /**

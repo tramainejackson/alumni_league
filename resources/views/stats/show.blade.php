@@ -16,8 +16,10 @@
 			</div>
 
 			<div class="col-12 col-xl-8 order-lg-2 order-xl-1">
-				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+				<div class="col-12 col-lg-8 pt-3 mx-auto coolText1">
+					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
+						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+					</div>
 
 					@if($showSeason->is_playoffs == 'Y')
 						<h1 class="display-4 coolText4">It's Playoff Time</h1>
@@ -32,7 +34,7 @@
 
 						@foreach($week_games as $week_game)
 							@if($week_game->id != $game->id)
-								<div class="d-inline-block col-3 py-1 border border-primary rounded-pill rgba-stylish-light mr-3" id="" style="flex: 0 0 auto;">
+								<div class="d-inline-block col-4 py-1 border border-primary rounded-pill rgba-stylish-light mr-3 align-self-center" id="" style="flex: 0 0 auto;">
 									<a href="{{ route('league_stats.show', [$week_game->id]) }}">
 
 										<div class="container-fluid" id="">
@@ -61,7 +63,9 @@
 					<div class="row mt-3 mb-5" id="">
 						<div class="away_team_score col-5 d-flex align-items-center justify-content-around" id="">
 							<h2 class="h2-responsive">{{ $away_team->team_name }}</h2>
+
 							<img src="{{ $away_team->sm_photo() }}" class="rounded-circle img-thumbnail img-fluid" height="50px" width="50px" />
+
 							<h2 class="{{ $game_results->winning_team_id == $away_team->id ? 'green-text' : '' }}">{{ $game_results->away_team_score != null ? $game_results->away_team_score : '0' }}</h2>
 						</div>
 
@@ -69,7 +73,9 @@
 
 						<div class="home_team_score col-5 d-flex align-items-center justify-content-around" id="">
 							<h2 class="{{ $game_results->winning_team_id == $home_team->id ? 'green-text' : '' }}">{{ $game_results->home_team_score != null ? $game_results->home_team_score : '0' }}</h2>
+
 							<img src="{{ $home_team->sm_photo() }}" class="rounded-circle img-thumbnail img-fluid" height="50px" width="50px" />
+
 							<h2 class="h2-responsive">{{ $home_team->team_name }}</h2>
 						</div>
 					</div>
@@ -92,7 +98,7 @@
 											@foreach($away_team->players as $away_team_player)
 												@php $player_game_stats = $game->player_stats->where('league_player_id', $away_team_player->id)->first(); @endphp
 
-												<tr data-toggle="modal" data-target="#player_card" class="text-center">
+												<tr data-toggle="modal" data-target="#player_card" class="text-center{{ $player_game_stats->potw == 'Y' ? ' red' : '' }}">
 													<td class='playerNameTD'>#{{ $away_team_player->jersey_num . ' ' . $away_team_player->player_name }}</td>
 													<td class='playerNameTD'>{{ $player_game_stats->points != null ? $player_game_stats->points : 0 }}</td>
 													<td class='playerNameTD'>{{ $player_game_stats->rebounds != null ? $player_game_stats->rebounds : 0 }}</td>
@@ -171,7 +177,9 @@
 					<div class="row mt-3 mb-5" id="">
 						<div class="away_team_score col-5 d-flex align-items-center justify-content-around" id="">
 							<h2 class="h2-responsive">{{ $away_team->team_name }}</h2>
+
 							<img src="{{ $away_team->sm_photo() }}" class="rounded-circle img-thumbnail img-fluid" height="50px" width="50px" />
+
 							<h2 class="{{ $game_results->winning_team_id == $away_team->id ? 'green-text' : '' }}">{{ $game_results->away_team_score != null ? $game_results->away_team_score : '0' }}</h2>
 						</div>
 
@@ -179,7 +187,9 @@
 
 						<div class="home_team_score col-5 d-flex align-items-center justify-content-around" id="">
 							<h2 class="{{ $game_results->winning_team_id == $home_team->id ? 'green-text' : '' }}">{{ $game_results->home_team_score != null ? $game_results->home_team_score : '0' }}</h2>
+
 							<img src="{{ $home_team->sm_photo() }}" class="rounded-circle img-thumbnail img-fluid" height="50px" width="50px" />
+
 							<h2 class="h2-responsive">{{ $home_team->team_name }}</h2>
 						</div>
 

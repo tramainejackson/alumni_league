@@ -217,7 +217,7 @@
 
 		<!-- Copyright -->
 		<div class="footer-copyright text-center py-3 white-text">
-			<p class="d-inline-block">© 2018 Copyright:</p>
+			<p class="d-inline-block">© 2020 Copyright:</p>
 			<a href="https://thealumnileague.com/"> thealumnileague.com</a>
 		</div>
 		<!-- Copyright -->

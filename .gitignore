@@ -19,7 +19,6 @@
 /public/css/modules/
 /public/js/addons*
 /storage/*.key
-/config/session.php
 /vendor
 /.idea
 /.vagrant

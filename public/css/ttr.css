@@ -213,6 +213,12 @@ li.game-bottom{
 	color: whitesmoke;
 }
 
+.activeNav {
+    border-radius: .25rem!important;
+    background-color: rgba(62,69,81,0.7);
+    color: whitesmoke !important;
+}
+
 #champion_team_table th, #champion_team_table td {
 	font-size: 145%;
 }

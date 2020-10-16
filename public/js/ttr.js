@@ -62,8 +62,24 @@ $(document).ready(function() {
         if(!$(this).hasClass('active btn-success')) {
             $(this).addClass('active btn-success').removeClass('btn-blue-grey').children().attr("checked", true);
             $(this).parent().siblings('div').find('button').addClass('btn-blue-grey').removeClass('active btn-success').children().removeAttr("checked");
+        }
+        
+        if($(this).hasClass('automatic')) {
+        	if($(this).hasClass('automaticStandings')) {
+				$(this).parent().siblings().find('button.gsBtn').parent().removeClass('d-none').addClass('d-block d-sm-inline');
+        	}
+            
+            if($(this).hasClass('automaticSchedule')) {
+				$(this).parent().siblings().find('button.gsBtn').parent().removeClass('d-none').addClass('d-block d-sm-inline');
+			}
         } else {
-            console.log('Here');
+        	$('button.manualStandings').click(function(e) {
+				$(this).parent().siblings().find('button.gsBtn').parent().addClass('d-none').removeClass('d-block d-sm-inline');
+			});
+
+			$('button.manualSchedule').click(function(e) {
+				$(this).parent().siblings().find('button.gsBtn').parent().addClass('d-none').removeClass('d-block d-sm-inline');
+			});
         }
     });
 
@@ -158,6 +174,19 @@ $(document).ready(function() {
 	// Toggle team captain checkbox
 	$('body').on('click', '#team_players_table input[name="team_captain"]', function(e) {
 		var checkInputs = $('#team_players_table input[name="team_captain"]');
+		var checkedInput = $(this);
+
+		// Remove checkbox from all other checkboxes
+		checkInputs.each(function() {
+			if($(this).prop('checked') && $(this).val() != checkedInput.val()) {
+				$(this).prop('checked', false);
+			}
+		});
+	});
+
+	// Toggle player of the week checkbox
+	$('body').on('click', '.team_players_stats_table input[name="potw"]', function(e) {
+		var checkInputs = $('.team_players_stats_table input[name="potw"]');
 		var checkedInput = $(this);
 
 		// Remove checkbox from all other checkboxes

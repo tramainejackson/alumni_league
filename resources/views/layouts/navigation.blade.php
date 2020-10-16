@@ -1,7 +1,9 @@
  <nav class="navbar navbar-expand-lg justify-content-between">
 	<div class="d-flex align-items-center">
-		<!-- Branding Image -->
-		<a class="navbar-brand indigo-text" href="{{ route('welcome', ['season' => $showSeason->id], false) }}">{{ $league->name }}</a>
+		<!-- Brand -->
+		<a class="navbar-brand waves-effect indigo-text" href="{{ route('welcome', ['season' => $showSeason->id], false) }}">
+			<img src="{{ asset('images/alumni_league_logo_lg_sm.png') }}" height="50px" alt="Logo">
+		</a>
 	</div>
 
 	<!-- SideNav slide-out button -->
@@ -138,22 +140,22 @@
 		<!-- Right Side Of Navbar -->
 		<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
 			<li class="nav-item">
-				<a id="leagues_season_link" class='nav-link indigo-text' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}">Seasons</a>
+				<a id="leagues_season_link" class='nav-link indigo-text{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}">Seasons</a>
 			</li>
 			<li class="nav-item">
-				<a id="leagues_schedule_link" class='nav-link indigo-text' href="{{ route('league_schedule.index', ['season' => $showSeason->id], false) }}">Schedule</a>
+				<a id="leagues_schedule_link" class='nav-link indigo-text{{ substr_count(url()->current(),'schedule') > 0 ? ' activeNav': '' }}' href="{{ route('league_schedule.index', ['season' => $showSeason->id], false) }}">Schedule</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='nav-link indigo-text' href="{{ route('league_standings', ['season' => $showSeason->id], false) }}">Standings</a>
+				<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'standings') > 0 ? ' activeNav': '' }}' href="{{ route('league_standings', ['season' => $showSeason->id], false) }}">Standings</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='nav-link indigo-text' href="{{ route('league_stats.index', ['season' => $showSeason->id], false) }}">Stats</a>
+				<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'stats') > 0 ? ' activeNav': '' }}' href="{{ route('league_stats.index', ['season' => $showSeason->id], false) }}">Stats</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='nav-link indigo-text' href="{{ route('league_teams.index', ['season' => $showSeason->id], false) }}">Teams</a>
+				<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'teams') > 0 ? ' activeNav': '' }}' href="{{ route('league_teams.index', ['season' => $showSeason->id], false) }}">Teams</a>
 			</li>
 			<li class="nav-item">
-				<a id="" class='league_home nav-link indigo-text' href="{{ route('league_info', ['season' => $showSeason->id], false) }}">League Info</a>
+				<a id="" class='league_home nav-link indigo-text{{ substr_count(url()->current(),'info') > 0 ? ' activeNav': '' }}' href="{{ route('league_info', ['season' => $showSeason->id], false) }}">League Info</a>
 			</li>
 			{{--<li class="nav-item">--}}
 				{{--<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season']]) }}">League Pics</a>--}}
@@ -161,7 +163,7 @@
 
 			@if(Auth::check())
 				<li class="nav-item">
-					<a id="" class='nav-link indigo-text' href="{{ route('users.index', ['season' => $showSeason->id], false) }}">Users</a>
+					<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'user') > 0 ? ' activeNav': '' }}' href="{{ route('users.index', ['season' => $showSeason->id], false) }}">Users</a>
 				</li>
 			@endif
 		</ul>

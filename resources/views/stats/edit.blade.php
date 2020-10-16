@@ -7,7 +7,7 @@
 		<div class="row">
 			<div class="col-12 mt-3">
 				@foreach($seasonScheduleWeeks as $edit_week)
-					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $edit_week->season_week]) : route('league_stat.edit_week', ['week' => $edit_week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_week->season_week == $week ? ' disabled' : '' }}"{{ $edit_week->season_week == $week ? ' disabled' : '' }}>Week {{ $loop->iteration }} Stats</a>
+					<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $edit_week->season_week]) : route('league_stats.edit_week', ['week' => $edit_week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_week->season_week == $week ? ' disabled' : '' }}"{{ $edit_week->season_week == $week ? ' disabled' : '' }}>Week {{ $loop->iteration }} Stats</a>
 				@endforeach
 			</div>
 			<div class="col-12">
@@ -49,7 +49,7 @@
 										<div class="my-2">
 											<div class="row">
 												<div class="col-12 table-wrapper mb-3">
-													<table class="table table-striped table-sm table-fixed table-responsive-sm">
+													<table class="table table-striped table-sm table-fixed table-responsive-sm team_players_stats_table">
 														<thead>
 															<tr class="blue darken-3 white-text text-center">
 																<th class="text-nowrap">{{ $game->away_team_obj->team_name }}</th>
@@ -60,11 +60,13 @@
 																<th>Rebounds</th>
 																<th>Steals</th>
 																<th>Blocks</th>
+																<th>POTW</th>
 															</tr>
 														</thead>
 														<tbody>
 															@foreach($game->away_team_obj->players as $away_player)
 																@php $playerStat = $away_player->stats->where('league_schedule_id', $game->id)->first(); @endphp
+
 																<tr>
 																	<td class="text-center text-nowrap">{{ '#' . $away_player->jersey_num . ' ' . $away_player->player_name }}</td>
 																	<td>
@@ -126,13 +128,19 @@
 																			<input type="number" name="edit_blocks[]" class="form-control" value="{{ $playerStat->blocks }}" placeholder="Enter Blocks" min="0" />
 																		</div>
 																	</td>
+																	<td class="align-bottom text-center text-nowrap">
+																		<div class="form-check" id="">
+																			<input type="checkbox" name="potw" class="form-check-input filled-in" value="potw_{{ $away_player->id }}" id="potw_{{ $away_player->id }}"{{ $playerStat->potw == 'Y' ? ' checked' : '' }} />
+																			<label class="form-check-label" for="potw_{{ $away_player->id }}"></label>
+																		</div>
+																	</td>
 																</tr>
 															@endforeach
 														</tbody>
 													</table>
 												</div>
 												<div class="col-12 table-wrapper">
-													<table class="table table-striped table-sm table-fixed table-responsive-sm">
+													<table class="table table-striped table-sm table-fixed table-responsive-sm team_players_stats_table">
 														<thead>
 															<tr class="blue-grey white-text text-center">
 																<th class="text-nowrap">{{ $game->home_team_obj->team_name }}</th>
@@ -143,6 +151,7 @@
 																<th>Rebounds</th>
 																<th>Steals</th>
 																<th>Blocks</th>
+																<th>POTW</th>
 															</tr>
 														</thead>
 														<tbody>
@@ -207,6 +216,12 @@
 																			</div>
 																			
 																			<input type="number" name="edit_blocks[]" class="form-control" value="{{ $playerStat->blocks }}" placeholder="Enter Game Total Blocks" min="0" />
+																		</div>
+																	</td>
+																	<td class="align-bottom text-center text-nowrap">
+																		<div class="form-check" id="">
+																			<input type="checkbox" name="potw" class="form-check-input filled-in" value="potw_{{ $home_player->id }}" id="potw_{{ $home_player->id }}"{{ $playerStat->potw == 'Y' ? ' checked' : '' }} />
+																			<label class="form-check-label" for="potw_{{ $home_player->id }}"></label>
 																		</div>
 																	</td>
 																</tr>

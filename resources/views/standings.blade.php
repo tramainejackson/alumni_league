@@ -5,18 +5,20 @@
 	
 		<div class="row{{ $showSeason->league_profile && $standings->isNotEmpty() ? '' : ' view' }}">
 			<!--Column will include buttons for creating a new season-->
-			<div class="col-md mt-3 d-none d-md-block" id="">
+			<div class="col col-lg-2 d-none d-lg-block mt-3" id="">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_standings', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+						<a href="{{ route('league_standings', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
 			</div>
 			
-			<div class="col-12 col-lg-8{{ $showSeason->league_profile && $standings->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
+			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+					<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
+						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+					</div>
 					
 					@if($showSeason->is_playoffs == 'Y')
 						<h1 class="display-4 coolText4">It's Playoff Time</h1>
@@ -29,7 +31,7 @@
 					</div>
 
 					<div id="league_standings">
-						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-secondary table-bordered">
+						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-dark table-bordered">
 							<thead>
 								<tr>
 									<th class="font-weight-bold">Team Name</th>
@@ -127,7 +129,7 @@
 				@endif
 			</div>
 			
-			<div class="col-md"></div>
+			<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0"></div>
 		</div>
 	</div>
 @endsection

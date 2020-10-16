@@ -3,43 +3,39 @@
 @section('content')
 	<div class="container-fluid bgrd3">
 
-		<div class="row{{ $showSeason->league_profile && $checkStats ? '': ' view' }}">
+		<div class="row view">
 
 			<!--Column will include buttons for creating a new season-->
-			<div class="col col-xl-2 d-none d-lg-block mt-3 order-xl-0">
+			<div class="d-none d-lg-block mt-3{{ Auth::check() ? ' col col-lg-2' : $checkStats ? ' col-12' : ' col col-lg-2' }}">
 				@if($activeSeasons->isNotEmpty())
 					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_stats.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
+						<a href="{{ route('league_stats.index', ['season' => $activeSeason->id]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
 					@endforeach
 				@else
 				@endif
 			</div>
 
-			<div class="col-12 col-xl-8 order-lg-2 order-xl-1{{ $showSeason->league_profile && $checkStats ? '': ' d-flex align-items-center justify-content-center flex-column' }}">
-				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
-					
-					@if($showSeason->is_playoffs == 'Y')
-						<h1 class="display-4 coolText4">It's Playoff Time</h1>
-					@endif
+
+			<div class="pt-3{{ Auth::check() ? ' d-flex justify-content-center flex-column col col-lg-2' : $checkStats ? ' col-12' : ' col-12' }}">
+				<div class="text-center p-4 card rgba-deep-orange-light white-text my-3 col-8 mx-auto" id="">
+					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 				</div>
-				
-				<div class="text-center coolText1">
-					@if($showSeason->is_playoffs == 'Y')
-						<h1 class="display-4 coolText4">It's Playoff Time</h1>
-					@endif
-				</div>
-				
+
+				@if($showSeason->is_playoffs == 'Y')
+					<h1 class="display-4 coolText4">It's Playoff Time</h1>
+				@endif
+
 				@if($checkStats)
+
 					<div id="league_stat_categories" class="d-flex flex-column flex-md-row align-items-center justify-content-around">
 						<button type="button" class="btn statCategoryBtn gray activeBtn w-100" id="league_leaders_btn">League Leaders</button>
 						<button type="button" class="btn statCategoryBtn gray w-100" id="player_stats_btn">Player Stats</button>
 						<button type="button" class="btn statCategoryBtn gray w-100" id="team_stats_btn">Team Stats</button>
 					</div>
 					<div id="league_stats" class="container-fluid mb-4">
-					
+
 						<div id="league_leaders" class="row">
-						
+
 							<div class="leagueLeadersCategory col-12 col-md my-1 mx-auto table-wrapper" id="league_leaders_points">
 								<table class="table white-text" id="points_category">
 									<thead>
@@ -73,7 +69,7 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_assist">
 								<table class="table white-text" id="assist_category">
 									<thead>
@@ -107,7 +103,7 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_rebounds">
 								<table class="table white-text" id="rebounds_category">
 									<thead>
@@ -141,7 +137,7 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_steals">
 								<table class="table white-text" id="steals_category">
 									<thead>
@@ -175,7 +171,7 @@
 									</tbody>
 								</table>
 							</div>
-							
+
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_blocks">
 								<table class="table white-text" id="blocks_category">
 									<thead>
@@ -209,9 +205,9 @@
 									</tbody>
 								</table>
 							</div>
-						
+
 						</div>
-						
+
 						<div class="hidden table-wrapper" id="player_stats" style="display:none !important; max-height: initial;">
 							<table class="table table-bordered" id="player_stats_table">
 								<thead>
@@ -302,28 +298,30 @@
 						</div>
 					</div>
 				@else
-					
-					<div class="text-center">
-						<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no stats added for this season yet. Once you have games, teams and players added, you will be able to add their stats to the games&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
-					</div>
-					
+					@if(Auth::check())
+						<div class="text-center">
+							<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no stats added for this season yet. Once you have games, teams and players added, you will be able to add their stats to the games&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+						</div>
+					@else
+						<div class="text-center">
+							<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no stats added for this season yet.<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+						</div>
+					@endif
+
 				@endif
 			</div>
-			<div class="col-md col-xl-2 mt-3 text-lg-right text-center order-first order-lg-1 order-xl-2">
-				@if(Auth::user())
+
+			<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0">
+				@if(Auth::check())
 					{{--Authourization Only--}}
 					@if($showSeason->is_playoffs == 'Y')
-
 						@foreach($playoffRounds as $round)
-							<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $round->round]) : route('league_stats.edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+							<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $round->round]) : route('league_stats.edit_round', ['round' => $round->round, 'season' => request()->query('season')]) }}" class="btn btn-sm btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
 						@endforeach
-
 					@else
-
 						@foreach($seasonScheduleWeeks as $week)
-							<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
+							<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-sm btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
 						@endforeach
-
 					@endif
 				@endif
 			</div>

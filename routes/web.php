@@ -70,9 +70,9 @@ Route::delete('/delete_game/{league_schedule}/', 'LeagueScheduleController@delet
 
 Route::patch('/update_game/', 'LeagueScheduleController@update_game');
 
-Route::get('/league_stats/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stat.edit_week');
+Route::get('/league_stats/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stats.edit_week');
 
-Route::get('/league_stats/edit_round/{round}', 'LeagueStatController@edit_round')->name('league_stat.edit_round');
+Route::get('/league_stats/edit_round/{round}', 'LeagueStatController@edit_round')->name('league_stats.edit_round');
 
 Route::patch('/league_stats/edit_week/{week}', 'LeagueStatController@update');
 

@@ -15,8 +15,8 @@
 			</div>
 
 			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column">
-				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+				<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
+					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 				</div>
 
 				@if(!isset($allComplete))
@@ -30,12 +30,24 @@
 										<tr class="indigo darken-2 white-text">
 											<th class="text-center" colspan="6">
 												<h2 class="h2-responsive position-relative my-3">
-													<span>Week {{ $loop->iteration }} Games</span>
+                                                    <div class="" id="">
+                                                        <span>Week {{ $loop->iteration }} Games</span>
 
-													@if(Auth::user())
-														{{--Authourization Only--}}
-														<a href="{{ request()->query() == null ? route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week]) : route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
-													@endif
+                                                        @if(Auth::user())
+                                                            {{--Authourization Only--}}
+                                                            <a href="{{ request()->query() == null ? route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week]) : route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
+                                                        @endif
+                                                    </div>
+
+                                                    @if($seasonWeekGames->isNotEmpty())
+                                                        @foreach($seasonWeekGames as $getPOTW)
+                                                            @foreach($getPOTW->player_stats as $POTW)
+                                                                @if($POTW->potw == "Y")
+                                                                    <h4 class="h4-responsive">Player Of The Week : {{ $POTW->player->player_name }} ({{ $POTW->player->league_team->team_name }})</h4>
+                                                                @endif
+                                                            @endforeach
+                                                        @endforeach
+                                                    @endif
 												</h2>
 											</th>
 										</tr>
@@ -114,9 +126,15 @@
 							</div>
 						@endforeach
 					@else
-						<div class="text-center">
-							<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There is no schedule for the selected season. Once you have your teams added you will be able to create a new schedule&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
-						</div>
+						@if(Auth::check())
+							<div class="text-center">
+								<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There is no schedule for the selected season. Once you have your teams added you will be able to create a new schedule&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+							</div>
+						@else
+							<div class="text-center">
+								<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There is no schedule for the selected season yet.<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
+							</div>
+						@endif
 					@endif
 				@else
 					<div class="coolText4 py-3 px-5">

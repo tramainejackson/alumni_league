@@ -138,10 +138,10 @@ class LeagueStatController extends Controller
      */
     public function edit_week(Request $request, $week) {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
+	    $showSeason = LeagueSchedule::getWeekGames($week)->first()->season;
+	    $activeSeasons = $this::get_active_seasons();
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
 
 		return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames', 'activeSeasons'));
     }
@@ -168,7 +168,7 @@ class LeagueStatController extends Controller
      */
     public function update(Request $request, $week) {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
+	    $showSeason = LeagueSchedule::getWeekGames($week)->first()->season;
 
 		// Update existing stats
 		if(isset($request->edit_points)) {
@@ -190,6 +190,7 @@ class LeagueStatController extends Controller
 				// Add away player stats
 				foreach($away_team->players as $away_player) {
 					$away_stat = $away_player->stats->where('league_schedule_id', $game->id)->first();
+					$away_stat->potw = str_ireplace('potw_', '', $request->potw) == $away_player->id ? 'Y' : 'N';
 					$away_stat->points = $player_points[$counter];
 					$away_stat->assist = $player_assists[$counter];
 					$away_stat->rebounds = $player_rebounds[$counter];
@@ -220,6 +221,7 @@ class LeagueStatController extends Controller
 				// Add home player stats
 				foreach($home_team->players as $home_player) {
 					$home_stat = $home_player->stats->where('league_schedule_id', $game->id)->first();
+					$home_stat->potw = str_ireplace('potw_', '', $request->potw) == $home_player->id ? 'Y' : 'N';
 					$home_stat->points = $player_points[$counter];
 					$home_stat->assist = $player_assists[$counter];
 					$home_stat->rebounds = $player_rebounds[$counter];
@@ -269,6 +271,7 @@ class LeagueStatController extends Controller
 				// Add away player stats
 				foreach($away_team->players as $away_player) {
 					$away_stat = new LeagueStat();
+					$away_stat->potw = str_ireplace('potw_', '', $request->potw) == $away_player->id ? 'Y' : 'N';
 					$away_stat->points = $player_points[$counter];
 					$away_stat->assist = $player_assists[$counter];
 					$away_stat->rebounds = $player_rebounds[$counter];
@@ -299,6 +302,7 @@ class LeagueStatController extends Controller
 				// Add home player stats
 				foreach($home_team->players as $home_player) {
 					$home_stat = new LeagueStat();
+					$home_stat->potw = str_ireplace('potw_', '', $request->potw) == $home_player->id ? 'Y' : 'N';
 					$home_stat->points = $player_points[$counter];
 					$home_stat->assist = $player_assists[$counter];
 					$home_stat->rebounds = $player_rebounds[$counter];

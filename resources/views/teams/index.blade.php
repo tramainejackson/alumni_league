@@ -15,7 +15,9 @@
 
 			<div class="col-12 col-lg-8{{ $showSeason->league_profile && $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
+						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+					</div>
 
 					@if($showSeason->is_playoffs == 'Y')
 						<h1 class="display-4 coolText4">It's Playoff Time</h1>
