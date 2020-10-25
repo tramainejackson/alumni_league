@@ -704,6 +704,14 @@ function verify_captain_email()
 	}
 }
 
+function playOptionSelect() {
+	if($('select option:selected').val() == 'player') {
+		$('#user_player_edit').removeClass('d-none');
+	} else {
+        $('#user_player_edit').addClass('d-none');
+	}
+}
+
 // // Regular map
 // function regular_map() {
 	// var var_location = new google.maps.LatLng(39.9526, -75.1652);
@@ -722,7 +730,7 @@ function verify_captain_email()
 		// title: "Philadelphia"
 	// });
 // }
-	
+
 // Tooltips Initialization
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
@@ -730,7 +738,7 @@ $(function () {
 
 // popovers Initialization
 $(function () {
-    $('[data-toggle="popover"]').popover()
+    $('[data-toggle="popover"]').popover({html:true});
 });
 
 // MDB Lightbox Init

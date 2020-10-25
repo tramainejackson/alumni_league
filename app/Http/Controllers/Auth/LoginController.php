@@ -80,30 +80,31 @@ class LoginController extends Controller
      *
      * @return Response
      */
-//    public function authenticate(Request $request) {
-//        if(Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-//			// Once authenticated, make sure this is a
-//			// league account with totherec
-//			$user = Auth::user();
-//
-//			if($user->leagues_profiles->where('user_id', Auth::id())->isNotEmpty()) {
-//				$league = $user->leagues_profiles->where('user_id', Auth::id())->first();
-//
-//				if($user->type == 'commish') {
-//					session()->put(['user' => 'commish', 'commish' => $user->id]);
-//				}
-//
-//				return redirect()->action('HomeController@index');
-//			} else {
-//				// This needs to redirect the player to the regular totherec site
-//				// and log them into their player account
-//				Auth::logout();
-//
-//				return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
-//			}
-//
-//        } else {
-//			return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
-//		}
-//    }
+    public function authenticate(Request $request) {
+//    	dd('Test');
+        if(Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 1])) {
+			// Once authenticated, make sure this is a
+			// league account with totherec
+			$user = Auth::user();
+
+			if($user->leagues_profiles->where('user_id', Auth::id())->isNotEmpty()) {
+				$league = $user->leagues_profiles->where('user_id', Auth::id())->first();
+
+				if($user->type == 'commish') {
+					session()->put(['user' => 'commish', 'commish' => $user->id]);
+				}
+
+				return redirect()->action('HomeController@index');
+			} else {
+				// This needs to redirect the player to the regular totherec site
+				// and log them into their player account
+				Auth::logout();
+
+				return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
+			}
+
+        } else {
+			return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
+		}
+    }
 }

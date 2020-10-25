@@ -57,21 +57,29 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-3 mb-4">
+                                    <div class="col-md-6 mb-4">
 
                                         <div class="md-form" id="">
-                                            <!-- Name -->
-                                            <input type="text" id="title" class="form-control" name='title' value='{{ $user->title }}' placeholder="Enter Member Title">
 
-                                            <label for="title">Title</label>
+                                            <select class="mdb-select md-form colorful-select dropdown-primary" name="type" onchange="playOptionSelect();">
+                                                <option value="" disabled selected>----Select A User Type----</option>
+                                                <option value="admin" {{ $user->type == 'admin' ? 'selected' : '' }}>Administrator</option>
+                                                <option value="statitician" {{ $user->type == 'statitician' ? 'selected' : '' }}>Statitician</option>
+                                                <option value="player" {{ $user->type == 'player' ? 'selected' : '' }}>Player/Coach</option>
+                                            </select>
+                                            <!-- Type -->
 
-                                            @if ($errors->has('title'))
-                                                <span class="text-danger">Title cannot be empty</span>
+                                            <label class="mdb-main-label text-left" for="type">Type</label>
+
+                                            @if ($errors->has('type'))
+                                                <span class="text-danger">{{ $errors->first('type') }}</span>
                                             @endif
+
+                                            <i class="fas fa-info-circle position-absolute top right mt-n4" data-toggle="popover" title="Access Types" data-content="<b>Admin:</b> Access to Everything</br><b>Player/Coach:</b> Can ONLY Access the team assigned to to edit player names and jersey #'s</br><b>Statitician:</b> Can ONLY access game results"></i>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-9 mb-4">
+                                    <div class="col-md-6 mb-4">
 
                                         <div class="md-form" id="">
                                             <!-- Email -->
@@ -85,6 +93,11 @@
 
                                         </div>
                                     </div>
+                                </div>
+
+                                <!-- This section is for player captain or coach only -->
+                                <div class="row{{ $user->type == 'player' ? '' : ' d-none' }}" id="user_player_edit">
+                                    <h2>Test</h2>
                                 </div>
 
                                 <div class="row" id="">

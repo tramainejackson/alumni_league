@@ -17,33 +17,37 @@
 								</div>
 
 								<div class="">
-									{!! Form::open(['route' => ['login'], 'method' => 'POST']) !!}
+									<form action="{{ action('Auth\LoginController@authenticate') }}" method="POST" class="">
+
+										{{ method_field('POST') }}
+										{{ csrf_field() }}
+
 										<div class="md-form">
 											<i class="fa fa-user prefix grey-text"></i>
-											
+
 											<input type="text" class="form-control" name="username" id="username" />
-											
+
 											<label for="username">Username</label>
 										</div>
-										
+
 										@if(session('errors'))
 											<!--Username/Password Combination error message-->
 											<div class="m-3">
 												<span class="red-text">That username/password combination was not found. Please try again.</span>
 											</div>
 										@endif
-										
+
 										<div class="md-form">
 											<i class="fa fa-lock prefix grey-text"></i>
-											
+
 											<input type="password" class="form-control" id="password" name="password" />
-											
+
 											<label for="password">Password</label>
 										</div>
 										<div class="md-form">
 											<button type="submit" class="btn btn-lg deep-orange white-text ml-0">Sign me in</button>
 										</div>
-									{!! Form::close() !!}
+									</form>
 								</div>
 							</div>
 						</div>

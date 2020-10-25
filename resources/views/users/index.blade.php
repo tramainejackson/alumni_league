@@ -10,10 +10,13 @@
                 <div class="py-5" id="">
 
                     <!-- Subtitle -->
-                    <p class="my-0 pre_title">The Team</p>
+                    <h3 class="my-0 pre_title">The Team</h3>
 
                     <!-- Title -->
                     <h2 class="display-2 text-center">Users</h2>
+
+                    <!-- User Count -->
+                    <p class="text-center font-italic font-weight-bold text-muted mt-n3">Total: {{ $allUsers->count() }}</p>
                 </div>
             </div>
         </div>
@@ -33,6 +36,7 @@
                         <h3 class="card-title text-center mb-5">Create New User</h3>
 
                         <form class="" method="POST" action="{{ route('users.store') }}" enctype="multipart/form-data">
+
                             {{ csrf_field() }}
 
                             <div class="col-md-12 mb-4">
@@ -99,6 +103,27 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-12 mb-4">
+
+                                <div class="md-form" id="">
+
+                                    <select class="mdb-select md-form colorful-select dropdown-primary" name="type">
+                                        <option value="" disabled selected>----Select A User Type----</option>
+                                        <option value="admin">Administrator</option>
+                                        <option value="statitician">Statitician</option>
+                                        <option value="player">Player/Coach</option>
+                                    </select>
+                                    <!-- Type -->
+
+                                    <label class="mdb-main-label" for="type">Type</label>
+
+                                    @if ($errors->has('type'))
+                                        <span class="text-danger">{{ $errors->first('type') }}</span>
+                                    @endif
+
+                                </div>
+                            </div>
+
                             <div class="col-md-12 my-5">
 
                                 <div class="md-form" id="">
@@ -143,16 +168,24 @@
                                 </div>
 
                                 <div class="" id="">
-                                    <h5 class="card-title">{{ $user->name }} </h5>
+                                    <h5 class="card-title"><b>Name:</b> {{ $user->name }}</h5>
+                                </div>
+
+                                <div class="" id="">
+                                    <p class="card-title"><b>Access Type:</b> {{ $user->type == 'player' ? 'Player/Coach' : ucfirst($user->type) }}</p>
+                                </div>
+
+                                <div class="" id="">
+                                    <button type="button" class="btn rounded{{ $user->active == 'Y' ? ' btn-dark-green' : ' btn-danger' }}">{{ $user->active == 'Y' ? 'Active' : 'Inactive' }}</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row mb-5" id="">
-                            <div class="col-9 mx-auto" id="">
-                                <p class="card-text">{!! nl2br($user->bio) !!}</p>
-                            </div>
-                        </div>
+                        {{--<div class="row mb-5" id="">--}}
+                            {{--<div class="col-9 mx-auto" id="">--}}
+                                {{--<p class="card-text">{!! nl2br($user->bio) !!}</p>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         @if(!$loop->last)
                             <hr/>
