@@ -1,20 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid bgrd3">
+	<div class="container-fluid bgrd3 pb-5">
 	
 		<div class="row{{ $showSeason->league_profile && $standings->isNotEmpty() ? '' : ' view' }}">
-			<!--Column will include buttons for creating a new season-->
-			<div class="col col-lg-2 d-none d-lg-block mt-3" id="">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_standings', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
-			</div>
-			
-			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column">
+
+			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column mx-auto">
 				<div class="text-center coolText1">
 					<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
 						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
@@ -128,8 +119,11 @@
 					@endforeach
 				@endif
 			</div>
-			
-			<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0"></div>
+
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection

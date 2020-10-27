@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('additional_scripts')
+@section('scripts')
 	<script type="text/javascript"></script>
 @endsection
 
@@ -17,7 +17,7 @@
 								</div>
 
 								<div class="">
-									<form action="{{ action('Auth\LoginController@authenticate') }}" method="POST" class="">
+									<form action="{{ route('login') }}" method="POST" class="">
 
 										{{ method_field('POST') }}
 										{{ csrf_field() }}

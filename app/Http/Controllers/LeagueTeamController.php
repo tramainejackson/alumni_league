@@ -22,8 +22,6 @@ class LeagueTeamController extends Controller
 {
 
 	public $showSeason;
-	public $activeSeasons;
-	public $league;
 
     /**
      * Create a new controller instance.
@@ -33,21 +31,11 @@ class LeagueTeamController extends Controller
     public function __construct() {
         $this->middleware('auth')->except(['index', 'show']);
 
-	    $this->league = LeagueProfile::find(2);
 	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
-	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
 
 	public function get_season() {
 		return $this->showSeason;
-	}
-
-	public function get_league() {
-		return $this->league;
-	}
-
-	public function get_active_seasons() {
-		return $this->activeSeasons;
 	}
 
     /**
@@ -58,8 +46,8 @@ class LeagueTeamController extends Controller
     public function index(Request $request) {
 	    // Get the season to show
 	    $showSeason = $this::get_season();
-		$activeSeasons = $this::get_active_seasons();
 		$seasonTeams = $showSeason->league_teams;
+		$userTeamsIDs = array();
 
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(544, null, 	function ($constraint) {
@@ -69,7 +57,20 @@ class LeagueTeamController extends Controller
 		)->save(storage_path('app/public/images/lg/default_img.jpg'));
 		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-		return view('teams.index', compact('showSeason', 'activeSeasons', 'seasonTeams', 'defaultImg'));
+		// Check for user and if they are a player on a team
+	    if(Auth::check()) {
+		    if(Auth::user()->type == 'player') {
+		    	$playerProfiles = Auth::user()->league_player_profiles;
+
+		    	if(Auth::user()->league_player_profiles->isNotEmpty()) {
+		    		foreach ($playerProfiles as $teamPlayer) {
+		    	        array_push($userTeamsIDs, $teamPlayer->league_team_id);
+				    }
+			    }
+		    }
+	    }
+
+		return view('teams.index', compact('showSeason', 'seasonTeams', 'defaultImg', 'userTeamsIDs'));
     }
 	
 	/**
@@ -80,7 +81,6 @@ class LeagueTeamController extends Controller
     public function create() {
 		// Get the season to show
 		$showSeason = $this->get_season();
-		$activeSeasons = $this::get_active_seasons();
 		$totalTeams = $showSeason->league_teams->count();
 		
 		// Resize the default image
@@ -90,7 +90,7 @@ class LeagueTeamController extends Controller
 		)->save(storage_path('app/public/images/lg/default_img.jpg'));
 		$defaultImg = asset('/storage/images/lg/default_img.jpg');
 		
-		return view('teams.create', compact('showSeason', 'activeSeasons', 'defaultImg', 'totalTeams'));
+		return view('teams.create', compact('showSeason', 'defaultImg', 'totalTeams'));
     }
 
 	/**
@@ -100,7 +100,6 @@ class LeagueTeamController extends Controller
 	 */
 	public function show(LeagueTeam $league_team) {
 		$showSeason = $this->showSeason;
-		$activeSeasons = $this->get_active_seasons();
 
 		// Get the season to show
 		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
@@ -112,7 +111,7 @@ class LeagueTeamController extends Controller
 			)->save(storage_path('app/public/images/lg/default_img.jpg'));
 			$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-			return view('teams.show', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons'));
+			return view('teams.show', compact('league_team', 'showSeason', 'defaultImg'));
 
 		} else {
 
@@ -156,9 +155,9 @@ class LeagueTeamController extends Controller
     */
     public function edit(LeagueTeam $league_team) {
 	    $showSeason = $this->showSeason;
-	    $activeSeasons = $this::get_active_seasons();
 	    $conferences = $showSeason->conferences;
 	    $divisions = $showSeason->divisions;
+	    $checkUserTeams = false;
 
 		// Get the season to show
 		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
@@ -170,8 +169,29 @@ class LeagueTeamController extends Controller
 			)->save(storage_path('app/public/images/lg/default_img.jpg'));
 			$defaultImg = asset('/storage/images/lg/default_img.jpg');
 
-			return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'activeSeasons', 'conferences', 'divisions'));
-			
+			// Check for user and if they are a player on a team
+			if(Auth::check()) {
+				if(Auth::user()->type == 'player') {
+					$playerProfiles = Auth::user()->league_player_profiles;
+
+					if(Auth::user()->league_player_profiles->isNotEmpty()) {
+						foreach ($playerProfiles as $teamPlayer) {
+							if($teamPlayer->league_team_id == $league_team->id) {
+								$checkUserTeams = true;
+							}
+						}
+					}
+				} elseif(Auth::user()->type == 'admin') {
+					$checkUserTeams = true;
+				}
+			}
+
+			if($checkUserTeams === true) {
+				return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'conferences', 'divisions'));
+			} else {
+				return view('teams.show', compact('league_team', 'showSeason', 'defaultImg'));
+			}
+
 		} else {
 			
 			abort(404);
@@ -356,24 +376,7 @@ class LeagueTeamController extends Controller
     */
     public function destroy(Request $request, LeagueTeam $league_team) {
 		// Get the season to show
-		$league = Auth::user()->leagues_profiles->first();
-		$showSeason = '';
-		
-		if(isset(parse_url($request->session()->previousUrl())['query'])) {
-			$previousURL = parse_url($request->session()->previousUrl())['query'];
-			$queryStr = explode('&', $previousURL);
-			$queryArr = array();
-			
-			foreach($queryStr as $arr) {
-				$arr = explode('=', $arr);
-				$arr = array($arr[0] => $arr[1]);
-				$queryArr = array_merge($queryArr, $arr);
-			}
-			
-			$showSeason = $league->seasons()->active()->find($queryArr['season']);
-		} else {
-			$showSeason = $league->seasons()->active()->first();
-		}
+		$showSeason = $this->showSeason;
 
 		// Delete team
 		if($league_team->delete()) {

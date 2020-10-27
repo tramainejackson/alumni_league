@@ -13,13 +13,11 @@ use App\LeagueSeason;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Intervention\Image\ImageManagerStatic as Image;
 
 class HomeController extends Controller
 {
 
 	public $showSeason;
-	public $activeSeasons;
 	public $league;
 
     /**
@@ -32,7 +30,7 @@ class HomeController extends Controller
 
 	    $this->league = LeagueProfile::find(2);
 	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
-	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
+
     }
 
 	public function get_season() {
@@ -41,10 +39,6 @@ class HomeController extends Controller
 
 	public function get_league() {
 		return $this->league;
-	}
-
-	public function get_active_seasons() {
-		return $this->activeSeasons;
 	}
 
     /**
@@ -89,17 +83,16 @@ class HomeController extends Controller
     public function about() {
 		// Get the season to show
 		$showSeason = $this::get_season();
-	    $activeSeasons = $this::get_active_seasons();
 
 		if(Auth::check()) {
 
 			if($showSeason !== null) {
 
-				return view('about2', compact('showSeason', 'activeSeasons'));
+				return view('about2', compact('showSeason'));
 
 			} else {
 
-				return view('seasons.no_season', compact('activeSeasons', 'showSeason'));
+				return view('seasons.no_season', compact('showSeason'));
 
 			}
 		} else {
@@ -115,15 +108,12 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show_setting() {
-	    // Get the season to show
-	    $showSeason = $this->showSeason;
 
 	    if($this->showSeason !== null) {
 
-			$activeSeason = $this->showSeason;
-		    $standings = $activeSeason->standings()->seasonStandings()->get();
+		    $standings = $this->showSeason->standings()->seasonStandings()->get();
 
-			return view('standings', compact('activeSeason', 'standings', 'league', 'showSeason'));
+			return view('standings', compact('standings', 'showSeason'));
 
 		} else {
 
@@ -140,13 +130,12 @@ class HomeController extends Controller
     public function standings() {
 	    // Get the season to show
 	    $showSeason = $this::get_season();
-	    $activeSeasons = $this::get_active_seasons();
 
 	    if($this->league->seasons->isNotEmpty()) {
 
 		    $standings = $showSeason->standings()->seasonStandings()->get();
 
-			return view('standings', compact('activeSeasons', 'standings', 'league', 'showSeason'));
+			return view('standings', compact('standings', 'league', 'showSeason'));
 
 		} else {
 
@@ -163,38 +152,8 @@ class HomeController extends Controller
     public function info() {
 		// Get the season to show
 	    $showSeason = $this::get_season();
-	    $activeSeasons = $this::get_active_seasons();
 
-	    if($activeSeasons->count() < 1 && $this->league->seasons()->completed()->count() > 0) {
-		    $showSeason = $this->league;
-	    } else {
-	    }
-
-	    return view('info', compact('league', 'showSeason', 'activeSeasons'));
-    }
-	
-	/**
-     * Show the leagues archived season.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function archive(LeagueSeason $season) {
-		// Get the season to show
-		$showSeason = $season;
-		$league = $showSeason->league_profile;
-		$activeSeasons = $league->seasons()->active()->get();
-		$completedSeasons = $league->seasons()->completed()->get();
-		$standings = $showSeason->standings()->seasonStandings()->get();
-		$playersStats = $showSeason instanceof \App\LeagueProfile ? collect() : $showSeason->stats()->allFormattedStats();
-		
-		// Resize the default image
-		Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
-				$constraint->aspectRatio();
-			}
-		)->save(storage_path('app/public/images/lg/default_img.jpg'));
-		$defaultImg = asset('/storage/images/lg/default_img.jpg');
-		
-		return view('archives.index', compact('league', 'showSeason', 'activeSeasons', 'completedSeasons', 'standings', 'playersStats', 'defaultImg'));			
+	    return view('info', compact('showSeason'));
     }
 	
 	/**

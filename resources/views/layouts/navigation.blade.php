@@ -139,9 +139,26 @@
 	<div class="d-none d-lg-flex" id="">
 		<!-- Right Side Of Navbar -->
 		<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
-			<li class="nav-item">
-				<a id="leagues_season_link" class='nav-link indigo-text{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}">Seasons</a>
-			</li>
+			@if($activeSeasons->isNotEmpty())
+				<li class="nav-item dropdown">
+					<a id="leagues_season_link" class='nav-link dropdown-toggle indigo-text{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request()->query('season') != null ? \App\LeagueSeason::showSeason(request()->query('season'))->name : 'Seasons' }}</a>
+
+					<div class="dropdown-menu dropdown-secondary">
+						<a id="leagues_season_link" class='nav-link indigo-text' href="{{ route('league_seasons.index') }}">Seasons</a>
+
+						<div class="dropdown-divider"></div>
+
+						@foreach($activeSeasons as $activeSeason)
+							<a href="{{ substr_count(url()->current(),'archive') > 0 ? route('league_seasons.index', ['season' => $activeSeason->id], false) : url()->current() . '?season=' . $activeSeason->id }}" class="dropdown-item indigo-text{{ $activeSeason->id == $showSeason->id ? ' rgba-grey-strong white-text' : '' }}">{{ $activeSeason->name }}</a>
+						@endforeach
+					</div>
+				</li>
+			@else
+				<li class="nav-item">
+					<a id="leagues_season_link" class='nav-link indigo-text{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}">Seasons</a>
+				</li>
+			@endif
+
 			<li class="nav-item">
 				<a id="leagues_schedule_link" class='nav-link indigo-text{{ substr_count(url()->current(),'schedule') > 0 ? ' activeNav': '' }}' href="{{ route('league_schedule.index', ['season' => $showSeason->id], false) }}">Schedule</a>
 			</li>
@@ -157,14 +174,22 @@
 			<li class="nav-item">
 				<a id="" class='league_home nav-link indigo-text{{ substr_count(url()->current(),'info') > 0 ? ' activeNav': '' }}' href="{{ route('league_info', ['season' => $showSeason->id], false) }}">League Info</a>
 			</li>
+
+			@if($completedSeasons->isNotEmpty())
+				<li class="nav-item">
+					<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'archive') > 0 ? ' activeNav': '' }}' href="{{ route('archives_index') }}">History</a>
+				</li>
+			@endif
 			{{--<li class="nav-item">--}}
 				{{--<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_pictures.index') : route('league_pictures.index', ['season' => $queryStrCheck['season']]) }}">League Pics</a>--}}
 			{{--</li>--}}
 
 			@if(Auth::check())
-				<li class="nav-item">
-					<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'user') > 0 ? ' activeNav': '' }}' href="{{ route('users.index', ['season' => $showSeason->id], false) }}">Users</a>
-				</li>
+				@if(Auth::user()->type == 'admin')
+					<li class="nav-item">
+						<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'user') > 0 ? ' activeNav': '' }}' href="{{ route('users.index', ['season' => $showSeason->id], false) }}">Users</a>
+					</li>
+				@endif
 			@endif
 		</ul>
 	</div>
@@ -181,7 +206,7 @@
 			@else
 				<li class="dropdown pt-2">
 					<a href="#" class="dropdown-toggle indigo-text" data-toggle="dropdown" role="button" aria-expanded="false">
-						{{ $showSeason->league_profile ? $showSeason->league_profile->commish : $showSeason->commish }} <span class="caret"></span>
+						<span class="text-truncate">{{ Auth::user()->name }}</span><span class="caret"></span>
 					</a>
 
 					<ul class="dropdown-menu" role="menu" style="min-width: 8rem;">

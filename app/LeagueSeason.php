@@ -406,7 +406,7 @@ class LeagueSeason extends Model
         return $query->where([
 			['completed', 'Y'],
 			['active', 'N'],
-		]);
+		])->get();
     }
 	
 	/**

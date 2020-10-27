@@ -64,7 +64,7 @@
                                             <select class="mdb-select md-form colorful-select dropdown-primary" name="type" onchange="playOptionSelect();">
                                                 <option value="" disabled selected>----Select A User Type----</option>
                                                 <option value="admin" {{ $user->type == 'admin' ? 'selected' : '' }}>Administrator</option>
-                                                <option value="statitician" {{ $user->type == 'statitician' ? 'selected' : '' }}>Statitician</option>
+                                                <option value="statitician" {{ $user->type == 'statistician' ? 'selected' : '' }}>Statitician</option>
                                                 <option value="player" {{ $user->type == 'player' ? 'selected' : '' }}>Player/Coach</option>
                                             </select>
                                             <!-- Type -->

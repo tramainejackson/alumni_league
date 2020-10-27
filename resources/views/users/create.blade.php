@@ -3,7 +3,7 @@
 @section('content')
 
     @if(session('status'))
-        @section('additional_scripts')
+        @section('scripts')
             <script type="text/javascript">
                 toastr.success("Request Moved To Completed", "Success", {showMethod: 'slideDown'});
             </script>

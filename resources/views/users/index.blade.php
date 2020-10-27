@@ -110,7 +110,7 @@
                                     <select class="mdb-select md-form colorful-select dropdown-primary" name="type">
                                         <option value="" disabled selected>----Select A User Type----</option>
                                         <option value="admin">Administrator</option>
-                                        <option value="statitician">Statitician</option>
+                                        <option value="statistician">Statitician</option>
                                         <option value="player">Player/Coach</option>
                                     </select>
                                     <!-- Type -->

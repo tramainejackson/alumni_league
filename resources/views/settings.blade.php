@@ -6,7 +6,7 @@
 
 	<div class="container-fluid bgrd3 py-5">
 
-		@if(Auth::user())
+		@if(Auth::check() && Auth::user()->type == 'admin')
 
 			{{--Authourization Only--}}
 			<div class="row">

@@ -4,17 +4,8 @@
 	<div class="container-fluid bgrd3">
 		
 		<div class="row view">
-			<!--Column will include buttons for creating a new season-->
-			<div class="col col-lg-2 d-none d-lg-block mt-3">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
-			</div>
 
-			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column">
+			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column mx-auto">
 				<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
 					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 				</div>
@@ -33,7 +24,7 @@
                                                     <div class="" id="">
                                                         <span>Week {{ $loop->iteration }} Games</span>
 
-                                                        @if(Auth::user())
+                                                        @if(Auth::check() && Auth::user()->type == 'admin')
                                                             {{--Authourization Only--}}
                                                             <a href="{{ request()->query() == null ? route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week]) : route('league_schedule.edit', ['league_schedule' => $showWeekInfo->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
                                                         @endif
@@ -109,7 +100,7 @@
 													<td class="gameDateData text-nowrap">{{ $game->game_date() }}</td>
 													<td>
 
-														@if(Auth::check())
+														@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
 															{{--Authourization Only--}}
 															<button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button>
 														@else
@@ -142,9 +133,9 @@
 					</div>
 				@endif
 			</div>
-			
-			<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0">
-				@if(Auth::user())
+
+			@if(Auth::check() && Auth::user()->type == 'admin')
+				<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0">
 					{{--Authourization Only--}}
 					@if(!isset($allComplete))
 						@if($showSeason->league_teams->isNotEmpty())
@@ -155,8 +146,8 @@
 							<a href="#" class="btn mx-auto mx-0 mw-100 btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
 						@endif
 					@endif
-				@endif
-			</div>
+				</div>
+			@endif
 		</div>
 
 		<!-- Edit game modal -->
@@ -347,4 +338,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection

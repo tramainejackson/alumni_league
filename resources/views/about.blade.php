@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('additional_scripts')
+@section('scripts')
 	<script type="text/javascript">
 		$('footer').remove();
 	</script>

@@ -18,8 +18,6 @@ class LeagueStatController extends Controller
 {
 
 	public $showSeason;
-	public $activeSeasons;
-	public $league;
 
     /**
      * Create a new controller instance.
@@ -29,21 +27,11 @@ class LeagueStatController extends Controller
     public function __construct() {
         $this->middleware('auth')->except(['index', 'show']);
 
-	    $this->league = LeagueProfile::find(2);
 	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
-	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
 
 	public function get_season() {
 		return $this->showSeason;
-	}
-
-	public function get_league() {
-		return $this->league;
-	}
-
-	public function get_active_seasons() {
-		return $this->activeSeasons;
 	}
 
     /**
@@ -53,8 +41,7 @@ class LeagueStatController extends Controller
      */
     public function index() {
 	    // Get the season to show
-	    $showSeason = $this->get_season();
-		$activeSeasons = $this::get_active_seasons();
+	    $showSeason = $this->showSeason;
 
 		$allPlayers = $showSeason->stats()->allFormattedStats();
 		$allTeams = $showSeason->stats()->allTeamStats();
@@ -74,11 +61,11 @@ class LeagueStatController extends Controller
 			$playInGames = $showSeason->games()->playoffPlayinGames();
 			$playoffSettings = $showSeason->playoffs;
 
-			return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+			return view('stats.index', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
 
 		} else {
 
-			return view('stats.index', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+			return view('stats.index', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
 
 		}
     }
@@ -95,7 +82,6 @@ class LeagueStatController extends Controller
 	    if($game) {
 
 		    $showSeason = $game->season;
-			$activeSeasons = $this::get_active_seasons();
 		    $game_results = $game->result;
 			$away_team = $game->away_team_obj;
 			$home_team = $game->home_team_obj;
@@ -119,11 +105,11 @@ class LeagueStatController extends Controller
 				$playInGames = $showSeason->games()->playoffPlayinGames();
 				$playoffSettings = $showSeason->playoffs;
 
-				return view('stats.show', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+				return view('stats.show', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
 
 			} else {
 
-				return view('stats.show', compact('activeSeasons', 'showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'game_results', 'away_team', 'home_team', 'game', 'week_games'));
+				return view('stats.show', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'game_results', 'away_team', 'home_team', 'game', 'week_games'));
 
 			}
 	    } else {
@@ -139,11 +125,12 @@ class LeagueStatController extends Controller
     public function edit_week(Request $request, $week) {
 		// Get the season to show
 	    $showSeason = LeagueSchedule::getWeekGames($week)->first()->season;
-	    $activeSeasons = $this::get_active_seasons();
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
 
-		return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames', 'activeSeasons'));
+		if((Auth::user()->type == 'statistician' || Auth::user()->type == 'admin')) {
+			return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames'));
+		}
     }
 	
 	/**
@@ -156,9 +143,10 @@ class LeagueStatController extends Controller
 		$showSeason = $this->find_season(request());
 		$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
 		$roundGames	= $showSeason->games()->getRoundGames($round)->get();
-		$activeSeasons = $showSeason instanceof \App\LeagueProfile ? $showSeason->seasons()->active()->get() : $showSeason->league_profile->seasons()->active()->get();
 
-		return view('playoffs.stat', compact('playoffRounds', 'showSeason', 'round', 'roundGames', 'activeSeasons'));
+	    if((Auth::user()->type == 'statistician' || Auth::user()->type == 'admin')) {
+		    return view('playoffs.stat', compact('playoffRounds', 'showSeason', 'round', 'roundGames'));
+	    }
     }
 	
 	/**
@@ -168,7 +156,7 @@ class LeagueStatController extends Controller
      */
     public function update(Request $request, $week) {
 		// Get the season to show
-	    $showSeason = LeagueSchedule::getWeekGames($week)->first()->season;
+	    $showSeason = $this->showSeason;
 
 		// Update existing stats
 		if(isset($request->edit_points)) {

@@ -32,7 +32,7 @@ Route::resource('settings', 'AdminController');
 /* Resource Controllers */
 
 /* Overwrite the default login controller */
-//	Route::post('/login', 'Auth\LoginController@authenticate');
+	Route::post('/login', 'Auth\LoginController@authenticate');
 //	Route::get('/login/{user}', 'Auth\LoginController@ttr_user');
 /* Overwrite the default login controller */
 
@@ -46,7 +46,9 @@ Route::get('/', 'HomeController@about')->name('welcome');
 
 Route::post('/home', 'HomeController@store');
 
-Route::get('/archives/{season}', 'HomeController@archive')->name('archives');
+Route::get('/archives', 'LeagueSeasonController@archive_index')->name('archives_index');
+
+Route::get('/archives/show/{season}', 'LeagueSeasonController@archive_show')->name('archives_show');
 
 Route::get('/league_standings', 'HomeController@standings')->name('league_standings');
 

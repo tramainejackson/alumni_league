@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('additional_scripts')
+@section('scripts')
 	<script type="text/javascript">
 		$('.md-form label[for="leagues_comp"], .md-form label[for="leagues_ages"]').addClass('active');
 	</script>

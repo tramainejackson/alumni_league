@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('additional_scripts')
+@section('scripts')
 	<script type="text/javascript">
         if(window.location.href.indexOf("new_season") > 0) {
             setTimeout(function() {
@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-	@if(Auth::check())
+	@if(Auth::check() && Auth::user()->type == 'admin')
 		@include('include.functions')
 
 		<div class="container-fluid bgrd3">
@@ -21,13 +21,6 @@
 					<div class="row">
 						<div class="col">
 							<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
-
-							@if($activeSeasons->isNotEmpty())
-								@foreach($activeSeasons as $activeSeason)
-									<a href="{{ route('league_seasons.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text d-block{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-								@endforeach
-							@else
-							@endif
 						</div>
 					</div>
 				</div>
@@ -493,17 +486,6 @@
 
 					<div class="row">
 						<!-- League season schedule snap shot -->
-						<div class="col-12 mx-auto py-2">
-							<h2 class="display-3 text-center">Active Season(s)</h2>
-
-							@if($activeSeasons->isNotEmpty())
-								@foreach($activeSeasons as $activeSeason)
-									<a href="{{ route('league_seasons.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-								@endforeach
-							@else
-							@endif
-						</div>
-
 						<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
 							<div class="text-center p-4 card rgba-deep-orange-light white-text" id="">
 								<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
@@ -699,17 +681,11 @@
 					</div>
 				@else
 				@endif
-
-				@if($completedSeasons->isNotEmpty())
-					<div class="divider-long" id=""></div>
-
-					<div class="row" id="completed_seasons">
-						<div class="col-12">
-							<h2 class="display-2">Completed Seasons</h2>
-						</div>
-					</div>
-				@endif
 			</div>
 		</div>
 	@endif
+
+    <!-- Footer -->
+    @include('layouts.footer')
+    <!-- Footer -->
 @endsection

@@ -48,11 +48,18 @@ class User extends Authenticatable
     }
 	
 	/**
+	* Get the league player profiles for the user.
+	*/
+    public function league_player_profiles() {
+        return $this->hasMany('App\LeaguePlayer');
+    }
+
+	/**
 	* Get the player profile for the user.
 	*/
-    public function player_profiles() {
-        return $this->hasMany('App\PlayerProfile');
-    }
+//    public function player_profiles() {
+//        return $this->hasMany('App\PlayerProfile');
+//    }
 
 	/**
 	 * Get the name of the member

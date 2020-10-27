@@ -69,6 +69,6 @@
         {{--@endif--}}
 	{{--@endif--}}
 
-	@yield('additional_scripts')
+	@yield('scripts')
 </body>
 </html>

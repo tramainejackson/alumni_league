@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Carbon\Carbon;
 
 class LoginController extends Controller
 {
@@ -81,27 +82,14 @@ class LoginController extends Controller
      * @return Response
      */
     public function authenticate(Request $request) {
-//    	dd('Test');
-        if(Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 1])) {
-			// Once authenticated, make sure this is a
-			// league account with totherec
-			$user = Auth::user();
+        if(Auth::attempt(['username' => $request->username, 'password' => $request->password, 'active' => 'Y'])) {
+	        // Authentication passed...
+        	$user = Auth::user();
+	        $user->last_login = Carbon::now();
 
-			if($user->leagues_profiles->where('user_id', Auth::id())->isNotEmpty()) {
-				$league = $user->leagues_profiles->where('user_id', Auth::id())->first();
-
-				if($user->type == 'commish') {
-					session()->put(['user' => 'commish', 'commish' => $user->id]);
-				}
-
-				return redirect()->action('HomeController@index');
-			} else {
-				// This needs to redirect the player to the regular totherec site
-				// and log them into their player account
-				Auth::logout();
-
-				return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);
-			}
+	        if($user->save()) {
+		        return redirect()->intended('league_seasons');
+	        }
 
         } else {
 			return redirect()->back()->with(['errors' => 'The username/password combination you entered is incorrect.']);

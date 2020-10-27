@@ -3,20 +3,27 @@
 @section('content')
 	<div class="container-fluid bgrd3">
 
-		<div class="row view">
+		<div class="row">
 
-			<!--Column will include buttons for creating a new season-->
-			<div class="d-none d-lg-block mt-3{{ Auth::check() ? ' col col-lg-2' : $checkStats ? ' col-12' : ' col col-lg-2' }}">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_stats.index', ['season' => $activeSeason->id]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
+			<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0">
+				@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
+					{{--Authourization Only--}}
+					@if($showSeason->is_playoffs == 'Y')
+						@foreach($playoffRounds as $round)
+							<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $round->round]) : route('league_stats.edit_round', ['round' => $round->round, 'season' => request()->query('season')]) }}" class="btn btn-sm btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+						@endforeach
+					@else
+						@foreach($seasonScheduleWeeks as $week)
+							<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-sm btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
+						@endforeach
+					@endif
 				@endif
 			</div>
+		</div>
 
+		<div class="row view">
 
-			<div class="pt-3{{ Auth::check() ? ' d-flex justify-content-center flex-column col col-lg-2' : $checkStats ? ' col-12' : ' col-12' }}">
+			<div class="pt-3{{ Auth::check() && Auth::user()->type == 'admin' ? ' d-flex justify-content-center flex-column col col-lg-2' : $checkStats ? ' col-12' : ' col-12' }}">
 				<div class="text-center p-4 card rgba-deep-orange-light white-text my-3 col-8 mx-auto" id="">
 					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 				</div>
@@ -310,21 +317,6 @@
 
 				@endif
 			</div>
-
-			<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0">
-				@if(Auth::check())
-					{{--Authourization Only--}}
-					@if($showSeason->is_playoffs == 'Y')
-						@foreach($playoffRounds as $round)
-							<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $round->round]) : route('league_stats.edit_round', ['round' => $round->round, 'season' => request()->query('season')]) }}" class="btn btn-sm btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
-						@endforeach
-					@else
-						@foreach($seasonScheduleWeeks as $week)
-							<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-sm btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
-						@endforeach
-					@endif
-				@endif
-			</div>
 		</div>
 		
 		<!-- Modal Cards -->
@@ -454,4 +446,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection

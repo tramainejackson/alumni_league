@@ -3,17 +3,8 @@
 @section('content')
 	<div class="container-fluid bgrd3">
 		<div class="row view pt-3">
-			<!--Column will include buttons for creating a new season-->
-			<div class="col col-lg-2 col-xl d-none d-md-block" id="">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id]) }}" class="btn mw-100 mx-0 mx-auto btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
-			</div>
 
-			<div class="col-12 col-lg-8{{ $showSeason->league_profile && $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
+			<div class="col-12 col-lg-10 mx-auto{{ $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
 				<div class="text-center coolText1">
 					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
 						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
@@ -25,7 +16,7 @@
 				</div>
 
 				@if(!isset($allComplete))
-					
+
 					@if(Auth::check())
 
 						{{--Authourization Only--}}
@@ -83,10 +74,10 @@
 														</p>
 													@endif
 
-													@if(Auth::user())
+													@if(Auth::check() && (Auth::user()->type == 'admin') || array_search($team->id, $userTeamsIDs) !== false)
 														{{--Authourization Only--}}
 														<div class="">
-															<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">Edit Team</a>
+															<a href="{{ request()->query() == null ? route('league_teams.edit', ['league_team' => $team->id]) : route('league_teams.edit', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg deep-orange lighten-1 white-text">Edit Team</a>
 														</div>
 													@else
 														<div class="">
@@ -95,7 +86,7 @@
 													@endif
 												</div>
 
-												@if(Auth::user())
+												@if(Auth::check() && Auth::user()->type == 'admin')
 													{{--Authourization Only--}}
 													<div class="feesButton">
 														@if($team->fee_paid == 'N')
@@ -302,15 +293,19 @@
 				@endif
 			</div>
 
-			<div class="col col-lg-2 col-xl text-center text-lg-right order-first order-lg-0">
-				@if(Auth::user())
-					{{--Authourization Only--}}
+			@if(Auth::check() && Auth::user()->type == 'admin')
+				{{--Authourization Only--}}
+				<div class="col col-lg-2 col-xl text-center text-lg-right order-first order-lg-0">
 					@if(!isset($allComplete))
 						<a class="btn btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Team</a>
 					@else
 					@endif
-				@endif
-			</div>
+				</div>
+			@endif
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection

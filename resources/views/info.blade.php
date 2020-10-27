@@ -6,7 +6,7 @@
 
 	<div class="container-fluid bgrd3 py-5">
 
-		@if(Auth::user())
+		@if(Auth::check() && Auth::user()->type == 'admin')
 
 			{{--Authourization Only--}}
 			<div class="row">
@@ -124,96 +124,100 @@
 					{!! Form::close() !!}
 				</div>
 			</div>
-		</div>
 
-	@else
+		@else
 
-		<div class="row">
-			<div class="col-12 col-md-6 mx-auto leagueContactInfo">
-				<div class="row">
-					<div class="col-12 col-md-10 col-lg-8 col-xl-12 my-3 mx-auto">
-						<div id="update_pic" class="card card-cascade mx-auto">
-							<!--Card Image-->
-							<div class="view" style="min-height: initial !important;">
-								<img id="current_pic" class="card-img-top" src="{{ $league->picture != null ? asset($league->picture) : '/images/commissioner.jpg' }}">
+			<div class="row">
+				<div class="col-12 col-md-6 mx-auto leagueContactInfo">
+					<div class="row">
+						<div class="col-12 col-md-10 col-lg-8 col-xl-12 my-3 mx-auto">
+							<div id="update_pic" class="card card-cascade mx-auto">
+								<!--Card Image-->
+								<div class="view" style="min-height: initial !important;">
+									<img id="current_pic" class="card-img-top" src="{{ $league->picture != null ? asset($league->picture) : '/images/commissioner.jpg' }}">
+								</div>
+								<!--./Card Image/.-->
+
+								<!--Card Body-->
+								<div class="card-body">
+									<!--Title-->
+									<h1 class="card-title coolText1 text-center">{{ $league->name }}</h1>
+								</div>
+								<!--./Card Body/.-->
 							</div>
-							<!--./Card Image/.-->
+						</div>
+					</div>
 
-							<!--Card Body-->
-							<div class="card-body">
-								<!--Title-->
-								<h1 class="card-title coolText1 text-center">{{ $league->name }}</h1>
-							</div>
-							<!--./Card Body/.-->
+					<div class="">
+						<div class="rgba-white-strong px-5 py-3 rounded" id="">
+							@if($league->commish != '')
+								<div class="">
+									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">Commissioner:</p>
+									<p class="d-inline-block text-left">{{ $league->commish }}</p>
+								</div>
+							@endif
+
+							@if($league->address != '')
+								<div class="">
+									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Address:</p>
+									<p class="d-inline-block text-left">{{ $league->address }}</p>
+								</div>
+							@endif
+
+							@if($league->phone != '')
+								<div class="">
+									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Phone:</p>
+									<p class="d-inline-block text-left">{{ $league->phone }}</p>
+								</div>
+							@endif
+
+							@if($league->leagues_email != '')
+								<div class="">
+									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Email:</p>
+									<p class="d-inline-block text-left">{{ $league->leagues_email }}</p>
+								</div>
+							@endif
+
+							@if($league->comp != '')
+								<div class="">
+									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Competition:</p>
+									<p class="d-inline-block text-left">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', ucwords($league->comp))) }}</p>
+								</div>
+							@endif
+
+							@if($league->age != '')
+								<div class="">
+									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Ages:</p>
+									<p class="d-inline-block text-left">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', $league->age)) }}</p>
+								</div>
+							@endif
 						</div>
 					</div>
 				</div>
 
-				<div class="">
-					<div class="rgba-white-strong px-5 py-3 rounded" id="">
-						@if($league->commish != '')
-							<div class="">
-								<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">Commissioner:</p>
-								<p class="d-inline-block text-left">{{ $league->commish }}</p>
-							</div>
-						@endif
+				<!-- Dropdown button to show the league rules
+				<button class="mb-4" id="league_rules_btn">SEE LEAGUE RULES</button>
 
-						@if($league->address != '')
-							<div class="">
-								<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Address:</p>
-								<p class="d-inline-block text-left">{{ $league->address }}</p>
-							</div>
-						@endif
-
-						@if($league->phone != '')
-							<div class="">
-								<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Phone:</p>
-								<p class="d-inline-block text-left">{{ $league->phone }}</p>
-							</div>
-						@endif
-
-						@if($league->leagues_email != '')
-							<div class="">
-								<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Email:</p>
-								<p class="d-inline-block text-left">{{ $league->leagues_email }}</p>
-							</div>
-						@endif
-
-						@if($league->comp != '')
-							<div class="">
-								<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Competition:</p>
-								<p class="d-inline-block text-left">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', ucwords($league->comp))) }}</p>
-							</div>
-						@endif
-
-						@if($league->age != '')
-							<div class="">
-								<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Ages:</p>
-								<p class="d-inline-block text-left">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', $league->age)) }}</p>
-							</div>
-						@endif
+				<div class="col-12">
+					<div id="leagues_rules">
+						<h2>Leagues Rules</h2>
+						<ul>
+							<li>All teams must arrive 15 minutes before their scheduled game time.</li>
+							<li>All players must wear their teams jersey. If a player does not have a jersey, that player will not be allowed to play.</li>
+							<li>If teams aren't present 10 minutes after their scheduled game time they will be issued a forfeit.</li>
+							<li>Ref fees will be collected at halftime of every game.</li>
+							<li>After 5 fouls a player fouls out.</li>
+							<li>20 minutes halves with a running clock except the last 2 minutes of each half.</li>
+							<li>Each team has 4 timeouts per game.</li>
+							<li>Each overtime period will be 3 minutes</li>
+						</ul>
 					</div>
-				</div>
+				</div> -->
 			</div>
+		@endif
+	</div>
 
-			<!-- Dropdown button to show the league rules
-            <button class="mb-4" id="league_rules_btn">SEE LEAGUE RULES</button>
-
-			<div class="col-12">
-				<div id="leagues_rules">
-					<h2>Leagues Rules</h2>
-					<ul>
-						<li>All teams must arrive 15 minutes before their scheduled game time.</li>
-						<li>All players must wear their teams jersey. If a player does not have a jersey, that player will not be allowed to play.</li>
-						<li>If teams aren't present 10 minutes after their scheduled game time they will be issued a forfeit.</li>
-						<li>Ref fees will be collected at halftime of every game.</li>
-						<li>After 5 fouls a player fouls out.</li>
-						<li>20 minutes halves with a running clock except the last 2 minutes of each half.</li>
-						<li>Each team has 4 timeouts per game.</li>
-						<li>Each overtime period will be 3 minutes</li>
-					</ul>
-				</div>
-			</div> -->
-		</div>
-	@endif
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection
