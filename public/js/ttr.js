@@ -37,7 +37,7 @@ $(document).ready(function() {
 	});
 	
 	// Dropdown Init
-	$('.dropdown-toggle').dropdown();
+	// $('.dropdown-toggle').dropdown();
 
     // SideNav Button Initialization
     $(".button-collapse").sideNav();
@@ -705,11 +705,25 @@ function verify_captain_email()
 }
 
 function playOptionSelect() {
-	if($('select option:selected').val() == 'player') {
+	if($('select#user_type_select option:selected').val() == 'player') {
 		$('#user_player_edit').removeClass('d-none');
 	} else {
         $('#user_player_edit').addClass('d-none');
 	}
+}
+
+function userSeasonSelect() {
+	var seasonID = $('#user_season_select option:selected').val();
+	var selectableTeams = $('select#user_team_select option');
+	var hiddenListItems = $('ul#select-options-user_team_select li');
+
+	$(selectableTeams).each(function (index) {
+        if($(this).hasClass('season_' + seasonID + '_team')) {
+            $(hiddenListItems[index]).removeClass('d-none');
+        } else {
+            $(hiddenListItems[index]).addClass('d-none');
+        }
+	});
 }
 
 // // Regular map

@@ -61,7 +61,7 @@
 
                                         <div class="md-form" id="">
 
-                                            <select class="mdb-select md-form colorful-select dropdown-primary" name="type" onchange="playOptionSelect();">
+                                            <select class="mdb-select md-form colorful-select dropdown-primary" id="user_type_select" name="type" onchange="playOptionSelect();">
                                                 <option value="" disabled selected>----Select A User Type----</option>
                                                 <option value="admin" {{ $user->type == 'admin' ? 'selected' : '' }}>Administrator</option>
                                                 <option value="statitician" {{ $user->type == 'statistician' ? 'selected' : '' }}>Statitician</option>
@@ -97,19 +97,59 @@
 
                                 <!-- This section is for player captain or coach only -->
                                 <div class="row{{ $user->type == 'player' ? '' : ' d-none' }}" id="user_player_edit">
-                                    <h2>Test</h2>
+                                    <div class="col-12 text-center" id="">
+                                        <h2 class="text-underline">Player/Coach Selections</h2>
+                                    </div>
+
+                                    <div class="md-form col-12 col-lg-6" id="">
+
+                                        <select class="mdb-select md-form colorful-select dropdown-primary" id="user_season_select" name="season" onchange="userSeasonSelect();">
+                                            <option value="" disabled selected>----Select An Active Season----</option>
+
+                                            @foreach($activeSeasons as $activeSeason)
+                                                <option value="{{ $activeSeason->id }}"{{ $activeSeason->id == $seasonID ? 'selected' : '' }}>{{ ucwords($activeSeason->name) }}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- Type -->
+
+                                        <label class="mdb-main-label text-left" for="season">Season Select</label>
+
+                                        @if ($errors->has('type'))
+                                            <span class="text-danger">{{ $errors->first('season') }}</span>
+                                        @endif
+                                    </div>
+
+                                    <div class="md-form col-12 col-lg-6" id="">
+
+                                        <select class="mdb-select md-form colorful-select dropdown-primary" id="user_team_select" name="season_team">
+                                            <option value="" disabled selected>----Select A Team----</option>
+
+                                            @foreach($activeSeasons as $activeSeason)
+                                                @foreach($activeSeason->league_teams as $league_team)
+                                                    <option class="season_{{ $activeSeason->id }}_team" value="{{ $league_team->id }}" {{ $league_team->id == $teamID ? 'selected' : '' }}>{{ ucwords($league_team->team_name) }}</option>
+                                                @endforeach
+                                            @endforeach
+                                        </select>
+                                        <!-- Type -->
+
+                                        <label class="mdb-main-label text-left" for="season_team">Team Select</label>
+
+                                        @if ($errors->has('type'))
+                                            <span class="text-danger">{{ $errors->first('season_team') }}</span>
+                                        @endif
+                                    </div>
                                 </div>
 
                                 <div class="row" id="">
                                     <div class="form-group text-center">
-                                        <label for="conferences" class="d-block form-control-label">Active</label>
+                                        <label for="active" class="d-block form-control-label">Active</label>
 
                                         <div class="btn-group">
-                                            <button type="button" class="btn activeYes{{ $showSeason->has_conferences == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
-                                                <input type="checkbox" name="conferences" value="Y" {{ $showSeason->has_conferences == 'Y' ? 'checked' : '' }} hidden />Yes
+                                            <button type="button" class="btn activeYes{{ $user->active == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+                                                <input type="checkbox" name="active" value="Y" {{ $user->active == 'Y' ? 'checked' : '' }} hidden />Yes
                                             </button>
-                                            <button type="button" class="btn activeNo{{ $showSeason->has_conferences == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
-                                                <input type="checkbox" name="conferences" value="N" {{ $showSeason->has_conferences == 'N' ? 'checked' : '' }} hidden />No
+                                            <button type="button" class="btn activeNo{{ $user->active == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+                                                <input type="checkbox" name="active" value="N" {{ $user->active == 'N' ? 'checked' : '' }} hidden />No
                                             </button>
                                         </div>
                                     </div>

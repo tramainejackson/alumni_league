@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Admin;
+use App\LeaguePlayer;
 use App\LeagueProfile;
+use App\LeagueSeason;
+use App\LeagueTeam;
 use App\User;
 use App\MessageReason;
 use App\Service;
@@ -20,27 +23,15 @@ class UserController extends Controller
 {
 
 	public $showSeason;
-	public $activeSeasons;
-	public $league;
 
 	public function __construct() {
 		$this->middleware(['auth'])->except(['index']);
 
-		$this->league = LeagueProfile::find(2);
 		$this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
-		$this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
 	}
 
 	public function get_season() {
 		return $this->showSeason;
-	}
-
-	public function get_league() {
-		return $this->league;
-	}
-
-	public function get_active_seasons() {
-		return $this->activeSeasons;
 	}
 
     /**
@@ -52,9 +43,8 @@ class UserController extends Controller
     	$showSeason = $this->showSeason;
 	    $allUsers = $this->league->users;
 	    $users = $this->league->users()->showMembers();
-	    $activeSeasons = $this->league->seasons()->active();
 	    
-	    return view('users.index', compact('users', 'allUsers', 'showSeason', 'activeSeasons'));
+	    return view('users.index', compact('users', 'allUsers', 'showSeason'));
     }
 
     /**
@@ -83,15 +73,15 @@ class UserController extends Controller
 		    'bio'       => 'nullable',
 	    ]);
 
-	    $member = new User();
-	    $member->name   = $request->name;
-	    $member->title  = $request->title;
-	    $member->email  = $request->email;
-	    $member->phone  = $request->phone;
-	    $member->active = $request->active;
-	    $member->bio    = $request->bio;
+	    $user = new User();
+	    $user->name   = $request->name;
+	    $user->title  = $request->title;
+	    $user->email  = $request->email;
+	    $user->phone  = $request->phone;
+	    $user->active = $request->active;
+	    $user->bio    = $request->bio;
 
-	    if($member->save()) {
+	    if($user->save()) {
 		    return back()->with('status', 'New User Added Successfully');
 	    }
     }
@@ -114,9 +104,21 @@ class UserController extends Controller
      */
     public function edit(User $user) {
 	    $showSeason = $this->showSeason;
-	    $activeSeasons = $this->league->seasons()->active();
-	    
-    	return view('users.edit', compact('user', 'showSeason', 'activeSeasons'));
+
+	    //Check if user is a player
+	    //and belongs to a teams
+	    $getUserPlayer = LeaguePlayer::where('user_id', $user->id)->get()->last();
+	    $teamCheck = $getUserPlayer != null ? true : false;
+
+	    if($teamCheck) {
+	    	$teamID = $getUserPlayer->league_team->id;
+		    $seasonID = $getUserPlayer->league_team->season->id;
+	    } else {
+		    $teamID = null;
+		    $seasonID = null;
+	    }
+
+	    return view('users.edit', compact('user', 'showSeason', 'teamCheck', 'getUserPlayer', 'teamID', 'seasonID'));
     }
 
     /**
@@ -126,77 +128,127 @@ class UserController extends Controller
      * @param  int  User $member
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $member) {
+    public function update(Request $request, User $user) {
 
 	    $this->validate($request, [
-		    'name'    => 'required|max:100',
-		    'email'   => 'nullable|email|max:50',
-		    'title'   => 'nullable',
-		    'phone'   => 'nullable',
-		    'bio'     => 'required',
+		    'username' => 'required',
+		    'name'     => 'required|max:100',
+		    'type'     => 'required',
+		    'email'    => 'required|email|max:50',
+		    'active'   => 'required|',
 	    ]);
 
-	    if($request->hasFile('avatar')) {
+	    $user->username  = $request->username;
+	    $user->name      = $request->name;
+	    $user->type      = $request->type;
+	    $user->email     = $request->email;
+	    $user->active    = $request->active;
 
-		    $newImage = $request->file('avatar');
+	    if($user->type == 'player') {
+		    $season_id = $request->season;
+		    $team_id   = $request->season_team;
+		    $teamCheck = LeaguePlayer::where([['email', '=', $user->email], ['league_season_id', '=', $request->season], ['user_id', '=', $user->id]])->get()->first();
+		    $teamChangeCheck = $teamCheck->league_season_id == $season_id ? $teamCheck->league_team_id == $team_id ? false : true : false;
 
-		    // Check to see if upload is an image
-		    if($newImage->guessExtension() == 'jpeg' || $newImage->guessExtension() == 'png' || $newImage->guessExtension() == 'gif' || $newImage->guessExtension() == 'webp' || $newImage->guessExtension() == 'jpg') {
+		    //Find season and make sure the selected team
+		    //is in that season
+		    $season = LeagueSeason::find($season_id);
+		    $team = LeagueTeam::find($team_id);
 
-			    // Check to see if images is too large
-			    if($newImage->getError() == 1) {
-				    $fileName = $request->file('media')[0]->getClientOriginalName();
-				    $error .= "<li class='errorItem'>The file " . $fileName . " is too large and could not be uploaded</li>";
-			    } elseif($newImage->getError() == 0) {
-				    // Check to see if images is about 25MB
-				    // If it is then resize it
-				    if($newImage->getClientSize() < 25000000) {
-					    $image = Image::make($newImage->getRealPath())->orientate();
-//					    $path = $newImage->store('public/images');
-					    $image_ext = substr($image->mime(), '6');
+		    if($season->id == $team->league_season_id) {
+		    	$team_captain = $team->players()->captain();
+		    	$team_players = $team->players;
+		    	$matchCheck = null;
 
-					    // Create a smaller version of the image
-					    // and save to large image folder
-					    $image->resize(300, null, function ($constraint) {
-						    $constraint->aspectRatio();
-					    });
+		    	if($team_captain->isEmpty()) {
+				    foreach ($team_players as $team_player) {
+					    $team_player->email == $user->email ? $matchCheck = $team_player : null;
+				    }
 
-					    if($image->save(storage_path('app/public/images/' . str_ireplace(' ', '_', strtolower($member->name)) . '_sm.' . $image_ext))) {
-							$member->avatar = str_ireplace(' ', '_', strtolower($member->name) . '_sm.' . $image_ext);
-					    }
-
+				    if ($matchCheck) {
+					    $matchCheck->user_id = $user->id;
+					    $matchCheck->team_captain = 'Y';
 				    } else {
-					    // Resize the image before storing. Will need to hash the filename first
-					    $path = $newImage->store('public/images');
-					    $image = Image::make($newImage)->orientate()->resize(1600, null, function ($constraint) {
-						    $constraint->aspectRatio();
-						    $constraint->upsize();
-					    });
-					    $image->save(storage_path('app/'. $path));
+					    //Check if player team was changed
+				    	if($teamChangeCheck) {
+						    $teamCheck->user_id = null;
+						    $teamCheck->team_captain = 'N';
 
-					    // Save Image
-					    if($addImage->save()) {
-
+						    $teamCheck->save();
 					    }
+
+					    $newPlayer = new LeaguePlayer();
+					    $newPlayer->user_id = $user->id;
+					    $newPlayer->player_name = $user->name;
+					    $newPlayer->email = $user->email;
+					    $newPlayer->team_captain = 'Y';
+					    $newPlayer->league_season_id = $season->id;
+					    $newPlayer->league_team_id = $team->id;
+					    $newPlayer->team_name = $team->team_name;
+
+					    $newPlayer->save();
+				    }
+
+				    if ($user->save()) {
+					    return back()->with('status', 'User Info Updated Successfully');
 				    }
 			    } else {
-				    $error .= "<li class='errorItem'>The file " . $fileName . " may be corrupt and could not be uploaded</li>";
+		    		$captainPlayer = $team_captain->first();
+		    		$userIDMatch = $captainPlayer->user_id == $user->id ? true : false;
+		    		$userEmailMatch = $captainPlayer->email == $user->email ? true : false;
+
+		    		if($userIDMatch && $userEmailMatch) {
+				    } elseif(!$userIDMatch && $userEmailMatch) {
+					    $captainPlayer->user_id = $user->id;
+
+					    $captainPlayer->save();
+				    } elseif($userIDMatch && !$userEmailMatch) {
+					    $captainPlayer->email = $user->email;
+
+					    $captainPlayer->save();
+				    } else {
+					    foreach ($team_players as $team_player) {
+						    $team_player->email == $user->email ? $matchCheck = $team_player : null;
+					    }
+
+					    if ($matchCheck) {
+						    $matchCheck->user_id = $user->id;
+						    $matchCheck->team_captain = 'Y';
+
+						    $matchCheck->save();
+					    } else {
+						    //Check if player team was changed
+						    if($teamChangeCheck) {
+							    $teamCheck->user_id = null;
+							    $teamCheck->team_captain = 'N';
+
+							    $teamCheck->save();
+						    }
+
+						    $newPlayer = new LeaguePlayer();
+						    $newPlayer->user_id = $user->id;
+						    $newPlayer->player_name = $user->name;
+						    $newPlayer->email = $user->email;
+						    $newPlayer->team_captain = 'Y';
+						    $newPlayer->league_season_id = $season->id;
+						    $newPlayer->league_team_id = $team->id;
+						    $newPlayer->team_name = $team->team_name;
+
+						    $newPlayer->save();
+					    }
+				    }
+
+				    if ($user->save()) {
+					    return back()->with('status', 'User Info Updated Successfully');
+				    }
 			    }
 		    } else {
-			    // Upload is not an image.
-			    // Redirect with error
-			    $error .= "<li class='errorItem'>The file " . $fileName . " may be corrupt and could not be uploaded</li>";
+			    return back()->with('status', 'User Not Updated. The Team Selected Does\'t Belong to The Season Selected');
 		    }
-	    }
-
-	    $member->name      = $request->name;
-	    $member->email     = $request->email != null ? $request->email : null;
-	    $member->bio       = $request->bio != null ? $request->bio : null;
-	    $member->phone     = $request->phone != null ? $request->phone : null;
-	    $member->title     = $request->title != null ? $request->title : null;
-
-	    if($member->save()) {
-		    return back()->with('status', 'User Info Updated Successfully');
+	    } else {
+		    if($user->save()) {
+			    return back()->with('status', 'User Info Updated Successfully');
+		    }
 	    }
     }
 

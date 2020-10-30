@@ -5,7 +5,7 @@
 		
 		<div class="row view">
 
-			<div class="col-12 col-lg-8 pt-3 d-flex justify-content-center flex-column mx-auto">
+			<div class="col-12 col-lg-10 pt-3 d-flex justify-content-center flex-column mx-auto">
 				<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
 					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 				</div>

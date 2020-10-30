@@ -106,7 +106,7 @@
 
 									<div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion2" class="collapse">
 										<ul class="list-unstyled">
-											@foreach($showSeason->league_profile->seasons()->completed()->get() as $completedSeason)
+											@foreach($showSeason->league_profile->seasons()->completed() as $completedSeason)
 												<li class="">
 													<a class="dropdown-item" href="{{ route('archives', ['season' => $completedSeason->id]) }}">{{ $completedSeason->name }}</a>
 												</li>
@@ -141,10 +141,10 @@
 		<ul class="nav navbar-nav navbar-right" id='leagues_menu'>
 			@if($activeSeasons->isNotEmpty())
 				<li class="nav-item dropdown">
-					<a id="leagues_season_link" class='nav-link dropdown-toggle indigo-text{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request()->query('season') != null ? \App\LeagueSeason::showSeason(request()->query('season'))->name : 'Seasons' }}</a>
+					<a id="leagues_season_link" class='nav-link dropdown-toggle indigo-text{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}" type="button" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request()->query('season') != null ? \App\LeagueSeason::showSeason(request()->query('season'))->name : 'Seasons' }}</a>
 
-					<div class="dropdown-menu dropdown-secondary">
-						<a id="leagues_season_link" class='nav-link indigo-text' href="{{ route('league_seasons.index') }}">Seasons</a>
+					<div class="dropdown-menu dropdown-secondary" aria-labelledby="leagues_season_link">
+						<a id="" class='nav-link indigo-text' href="{{ route('league_seasons.index') }}">Seasons</a>
 
 						<div class="dropdown-divider"></div>
 

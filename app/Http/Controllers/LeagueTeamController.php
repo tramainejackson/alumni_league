@@ -210,11 +210,14 @@ class LeagueTeamController extends Controller
 			'team_photo' => 'nullable|image',
 		]);
 
-		$league_team->team_name = $request->team_name;
-		$league_team->fee_paid = $request->fee_paid;
-	    $league_team->is_all_star_team = $request->all_star_team;
-	    $league_team->league_conference_id = isset($request->conference) ? $request->conference : null;
-	    $league_team->league_division_id = isset($request->division) ? $request->division : null;
+		if(Auth::user()->type == 'admin') {
+			$league_team->fee_paid = $request->fee_paid;
+			$league_team->is_all_star_team = $request->all_star_team;
+			$league_team->league_conference_id = isset($request->conference) ? $request->conference : null;
+			$league_team->league_division_id = isset($request->division) ? $request->division : null;
+		}
+
+	    $league_team->team_name = $request->team_name;
 		$team_players = $league_team->players;
 		$team_standing = $league_team->standings;
 		$team_home_games = $league_team->home_games;
@@ -317,25 +320,29 @@ class LeagueTeamController extends Controller
 					$player->email = $request->player_email[$key];
 					$player->phone = $request->player_phone[$key];
 
-					if(!Auth::user()->username == 'testdrive') {
-						if ($player->team_captain == 'Y') {
-							$player_account = User::where('email', $player->email)->first();
-
-							if ($player_account !== null) {
-								$player->player_profile_id = $player_account->id;
-							} else {
-								// Create a user account with type player
-								$new_player = User::create([
-									'username' => $player->email,
-									'email' => $player->email,
-									'password' => null,
-									'type' => 'player',
-								]);
-
-								$player->player_profile_id = $new_player->id;
-							}
-						}
+					if(Auth::user()->type == 'admin') {
+						$player->all_star = in_array('all_star_' . $player->id, $request->all_star) ? 'Y' : 'N';
 					}
+
+//					if(!Auth::user()->username == 'testdrive') {
+//						if ($player->team_captain == 'Y') {
+//							$player_account = User::where('email', $player->email)->first();
+//
+//							if ($player_account !== null) {
+//								$player->player_profile_id = $player_account->id;
+//							} else {
+//								// Create a user account with type player
+//								$new_player = User::create([
+//									'username' => $player->email,
+//									'email' => $player->email,
+//									'password' => null,
+//									'type' => 'player',
+//								]);
+//
+//								$player->player_profile_id = $new_player->id;
+//							}
+//						}
+//					}
 
 					if($player->save()) {}
 				}

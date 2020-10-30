@@ -1,21 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-	<div class="container-fluid bgrd3">
+	<div class="container-fluid bgrd3 pb-5">
 
 		<div class="row{{ $showSeason->league_profile && $checkStats ? '': ' view' }}">
 
-			<!--Column will include buttons for creating a new season-->
-			<div class="col col-xl-2 d-none d-lg-block mt-3 order-xl-0">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_stats.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
-			</div>
-
-			<div class="col-12 col-xl-8 order-lg-2 order-xl-1">
+			<div class="col-12 col-lg-10 order-lg-2 order-xl-1 mx-auto">
 				<div class="col-12 col-lg-8 pt-3 mx-auto coolText1">
 					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
 						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
@@ -199,9 +189,6 @@
 					</div>
 				@endif
 			</div>
-
-			<div class="col-md col-xl-2 mt-3 text-lg-right text-center order-first order-lg-1 order-xl-2">
-			</div>
 		</div>
 
 		<!-- Modal Cards -->
@@ -265,4 +252,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection
