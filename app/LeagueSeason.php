@@ -69,6 +69,14 @@ class LeagueSeason extends Model
     }
 
 	/**
+	* Get the contact for the media object.
+	*/
+    public function league_rules()
+    {
+        return $this->hasMany('App\LeagueRule');
+    }
+
+	/**
 	* Get the stats for the league season object.
 	*/
     public function stats()

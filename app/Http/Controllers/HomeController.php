@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\PlayerProfile;
 use App\LeagueProfile;
+use App\LeagueRule;
 use App\LeagueSchedule;
 use App\LeagueStanding;
 use App\LeaguePlayer;
@@ -28,17 +29,12 @@ class HomeController extends Controller
     public function __construct() {
         $this->middleware('auth')->only('index');
 
-	    $this->league = LeagueProfile::find(2);
 	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
 
     }
 
 	public function get_season() {
 		return $this->showSeason;
-	}
-
-	public function get_league() {
-		return $this->league;
 	}
 
     /**
@@ -181,70 +177,5 @@ class HomeController extends Controller
 //
 //		return redirect()->action('HomeController@index');
 //    }
-	
-	/**
-     * Check for a query string and get the current season.
-     *
-     * @return seaon
-    */
-//	public static function find_season(Request $request) {
-//
-//		if(Auth::check()) {
-//
-//			$league = Auth::user()->leagues_profiles->first();
-//			$showSeason = '';
-//
-//			if($request->query('season') != null && $request->query('year') != null) {
-//
-//				$showSeason = $league->seasons()->active()->find($request->query('season'));
-//
-//			} else {
-//
-//				if($league) {
-//
-//					if($league->seasons()->active()->count() < 1 && $league->seasons()->completed()->count() > 0) {
-//
-//						$showSeason = $league;
-//
-//					} else {
-//
-//						if($league->seasons()->active()->first()) {
-//
-//							$showSeason = $league->seasons()->active()->first();
-//
-//						} else {
-//
-//							if($league->seasons()->first()) {
-//
-//								$showSeason = $league->seasons()->first();
-//
-//							} else {
-//
-//								$showSeason = $league;
-//
-//							}
-//
-//						}
-//
-//					}
-//
-//				} else {
-//
-//
-//
-//				}
-//
-//			}
-//
-//		} else {
-//			if(session()->has('commish')) {
-//				Auth::loginUsingId(session()->get('commish'));
-//			} else {
-//				$league = $showSeason = LeagueProfile::find(2);
-//				$activeSeason = $league->seasons()->active()->get()->last();
-//			}
-//		}
-//
-//		return $showSeason;
-//	}
+
 }

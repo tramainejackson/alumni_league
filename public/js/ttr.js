@@ -320,6 +320,21 @@ $(document).ready(function() {
 		$(this).parents('tr').remove();
 	});
 
+    // Add a new league rule row on the info edit page
+    $('body').on('click', '.addRuleBtn', function() {
+        var newRule = $('.newRuleRow').clone();
+
+        $(newRule).removeClass('hidden newRuleRow')
+            .insertBefore('#league_rules_table .newRuleRow')
+            .removeAttr('hidden')
+            .find('input, button').removeClass('hidden').removeAttr('disabled').focus();
+    });
+
+    // Remove the newly added rule row on info edit page
+    $('body').on('click', '.removeNewRuleRow', function() {
+        $(this).parents('tr').remove();
+    });
+
 	// Make sure an email address is added when a captain is selected
 	// before submitting the team update form
 	$('body').on('submit', '#update_team_form', function () {

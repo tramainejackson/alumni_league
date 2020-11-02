@@ -12,6 +12,7 @@ use App\LeaguePlayer;
 use App\LeagueTeam;
 use App\LeagueStat;
 use App\LeagueSeason;
+use App\LeagueRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -55,6 +56,7 @@ class LeagueSeasonController extends Controller
 	    $showSeasonPlayers = $this->showSeason->league_players;
 	    $showSeasonConferences = $this->showSeason->conferences;
 	    $showSeasonDivisions = $this->showSeason->divisions;
+	    $leagueRules = LeagueRule::all();
 
     	if($showSeason !== null || $completedSeasons !== null) {
 
@@ -66,9 +68,9 @@ class LeagueSeasonController extends Controller
 			    $nonPlayInGames = $this->showSeason->games()->playoffNonPlayinGames()->get();
 			    $playInGames = $this->showSeason->games()->playoffPlayinGames()->get();
 
-			    return view('playoffs.index', compact('ageGroups', 'compGroups', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams'));
+			    return view('playoffs.index', compact('ageGroups', 'compGroups', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams', 'leagueRules'));
 		    } else {
-			    return view('seasons.index', compact('showSeason', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'showSeasonUnpaidTeams', 'showSeasonConferences', 'showSeasonDivisions'));
+			    return view('seasons.index', compact('showSeason', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'showSeasonUnpaidTeams', 'showSeasonConferences', 'showSeasonDivisions', 'leagueRules'));
 		    }
 	    } else {
 		    return view('seasons.no_season');
@@ -185,6 +187,8 @@ class LeagueSeasonController extends Controller
 		$this->showSeason->location = $request->leagues_address;
 		$this->showSeason->has_conferences = $request->conferences;
 		$this->showSeason->has_divisions = $request->divisions;
+	    $seasonRules = $this->showSeason->league_rules;
+	    dd($seasonRules);
 
 	    if($this->showSeason->has_conferences == 'Y') {
 		    if($this->showSeason->conferences->isEmpty()) {
@@ -250,6 +254,36 @@ class LeagueSeasonController extends Controller
 	    }
 
 		if($this->showSeason->save()) {
+			// Add new players
+			if(isset($request->new_rule)) {
+				foreach($request->new_rule as $key => $newRule) {
+					$newRule = new LeagueRule();
+					$newRule->rule = $request->new_rule;
+					$newRule->league_season_id = $this->showSeason->id;
+					$newRule->league_profile_id = $this->showSeason->league_profile->id;
+
+					if($newRule->rule != null && $newRule->rule != '') {
+						// Save the new team player
+						if ($newRule->save()) {
+						}
+					}
+				}
+			}
+
+			// Updates league rules
+//			if($team_players) {
+//				foreach($team_players as $key => $player) {
+//					$player->team_captain = str_ireplace('captain_', '', $request->team_captain) == $player->id ? 'Y' : 'N';
+//					$player->team_name = $request->team_name;
+//					$player->player_name = $request->player_name[$key];
+//					$player->jersey_num = $request->jersey_num[$key];
+//					$player->email = $request->player_email[$key];
+//					$player->phone = $request->player_phone[$key];
+//
+//					if($player->save()) {}
+//				}
+//			}
+
 			return redirect()->back()->with(['status' => 'Season Updated Successfully']);
 		}
     }

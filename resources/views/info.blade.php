@@ -11,7 +11,11 @@
 			{{--Authourization Only--}}
 			<div class="row">
 				<div class="col-12 col-md-10 mx-auto leagueContactInfo">
-					{!! Form::open(['action' => ['LeagueProfileController@update', 'league' => $league->id], 'method' => 'PATCH', 'files' => true]) !!}
+					<form action="{{ action('LeagueProfileController@update', ['league' => $league->id]) }}" method="POST" enctype="multipart/form-data">
+
+						{{ method_field('PATCH') }}
+						{{ csrf_field() }}
+
 						<div class="row">
 							<div class="col-12 col-md-10 col-lg-8 col-xl-6 my-3 mx-auto">
 								<div id="update_pic" class="card card-cascade mx-auto">
@@ -46,6 +50,7 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="updateLeagueForm">
 							<div class="updateLeagueInputs rgba-white-strong px-5 py-3 rounded" id="">
 								<div class="md-form">
@@ -121,7 +126,7 @@
 								<button type="submit" name="submit" class="btn btn-lg green m-0 white-text" id="" value="">Update League</button>
 							</div>
 						</div>
-					{!! Form::close() !!}
+					</form>
 				</div>
 			</div>
 

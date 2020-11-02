@@ -239,6 +239,66 @@
 													<div class="divider-long" id=""></div>
 												@endif
 
+												<div class="updateLeagueInputs rgba-white-strong px-5 py-3 rounded" id="">
+													<div class="d-flex flex-column flex-md-row align-items-center justify-content-center" id="">
+														<h2 class="h2-responsive text-underline mx-auto">League Rules</h2>
+
+														<button class="btn btn-floating green addRuleBtn" type="button">
+															<i class="fa fa-plus-circle" aria-hidden="true"></i>
+														</button>
+													</div>
+													<div class="" id="">
+														<div class="table-wrapper">
+															<table class="table table-hover table-striped" id="league_rules_table">
+																<thead>
+																<tr>
+																	<th class="text-nowrap">League Rule Description</th>
+																	<th></th>
+																	<th></th>
+																</tr>
+																</thead>
+																<tbody>
+
+																@if($leagueRules->isNotEmpty())
+																	@foreach($leagueRules as $leagueRule)
+																		<tr class="">
+																			<td class="" colspan="2">
+																				<input type="text" name="rule[]" class="form-control" value="{{ $leagueRule->rule }}" placeholder="Enter Rule Description" />
+																			</td>
+
+																			<td class="">
+																				<button data-target="#delete_player" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deletePlayerBtn">Remove</button>
+																				<input type="text" class="hidden" value="{{ $leagueRule->id }}" hidden />
+																			</td>
+																		</tr>
+																	@endforeach
+																@else
+																	<tr class="">
+																		<th colspan="3" class="text-center">You currently do not have any rules added for this season.</th>
+																	</tr>
+																@endif
+
+																<tr class="hidden" hidden>
+																	<td class="hidden">
+																		<input type="number" name="season_id" class="form-control" value="{{ $showSeason->id }}" />
+																	</td>
+																</tr>
+
+																<tr class="newRuleRow hidden" hidden>
+																	<td class="" colspan="2">
+																		<input type="text" name="new_rule[]" class="form-control" value="" placeholder="Enter Rule Description" disabled />
+																	</td>
+																	<td class="">
+																		<button class="btn btn-sm orange lighten-1 w-100 my-0 removeNewRuleRow hidden" type="button">Hide</button>
+																	</td>
+																</tr>
+																</tbody>
+															</table>
+														</div>
+
+													</div>
+												</div>
+
 												<div class="d-flex justify-content-around align-items-center">
 													<button type="submit" class="btn btn-lg white-text green" id="">Update League</button>
 													<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>

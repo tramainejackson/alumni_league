@@ -284,7 +284,7 @@ div[id^="backgroundImage"]::after {
     top: 15%;
 }
 
-.fullCatLink, .addPlayerBtn {
+.fullCatLink, .addPlayerBtn, .addRuleBtn {
     position: relative;
 }
 
@@ -3059,6 +3059,11 @@ table.currentMonth {
 	.fullCatLink, .addPlayerBtn {
 		position: absolute;
 		right: 0px;
+	}
+
+	.addRuleBtn {
+		position: absolute;
+		right: 25px;
 	}
 
 	#leagues {
