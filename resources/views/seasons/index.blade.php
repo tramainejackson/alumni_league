@@ -267,7 +267,7 @@
 																			</td>
 
 																			<td class="">
-																				<button data-target="#delete_player" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deletePlayerBtn">Remove</button>
+																				<button data-target="#delete_rule" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deleteRuleBtn">Remove</button>
 																				<input type="text" class="hidden" value="{{ $leagueRule->id }}" hidden />
 																			</td>
 																		</tr>
@@ -535,6 +535,7 @@
 			{{-- Include Modals--}}
 			@include('modals.new_season_modal')
 			@include('modals.complete_season_modal')
+			@include('modals.delete_rule')
 
 		</div>
 	@else
@@ -738,6 +739,39 @@
 							</div>
 						</div>
 						<!--./ League season stats snap shot /.-->
+
+						@if($leagueRules->isNotEmpty())
+							<!-- Divider /.-->
+							<div class="divider-short" id=""></div>
+							<!--./ Divider /.-->
+						@endif
+
+						@if($leagueRules->isNotEmpty())
+							<div class="col-8 mx-auto my-5" id="">
+								<!-- League Rules snap shot -->
+								<table id="" class="table table-warning table-bordered table-striped leagueRulesTable" cellspacing="0" style="display: none">
+									<thead>
+									<tr>
+										<th class="th text-center">Rule Description<i class="" aria-hidden="true"></i></th>
+									</tr>
+									</thead>
+
+									<tbody>
+										@foreach($leagueRules as $leagueRule)
+											<tr>
+												<td>{{ $leagueRule->rule }}</td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+
+								<div class="text-center" id="">
+									<button class='btn btn-lg btn-deep-purple seeLeagueRules' type='button' onclick="showLeagueRules();">See League Rules</button>
+									<button class='btn btn-lg btn-outline-blue-grey closeLeagueRules' type='button' onclick="hideLeagueRules();" style="display: none">Close League Rules</button>
+								</div>
+								<!--./ League Rules snap shot /.-->
+							</div>
+						@endif
 					</div>
 				@else
 				@endif

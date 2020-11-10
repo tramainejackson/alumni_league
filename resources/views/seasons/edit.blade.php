@@ -276,6 +276,8 @@
 						</div>
 					</div>
 				</div>
+
+				@include('modals.delete_rule')
 			</div>
 		</div>
 	</div>

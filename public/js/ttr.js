@@ -378,6 +378,16 @@ $(document).ready(function() {
 		$('#delete_player form').attr('action', deleteURL);
 		$('#delete_player .modal-header h2').text('Delete Player ' + playerName);
 	});
+
+	// Delete the rule from the settings
+	$('body').on('click', '.deleteRuleBtn', function() {
+		var ruleID = $(this).next().val();
+		var deleteURL = window.location.protocol + '//' + window.location.hostname  + ':' + window.location.port + '/' + 'league_rules/' + ruleID;
+		var ruleDescr = $(this).parents('tr').find('input[name="rule[]"]').val();
+
+		$('#delete_rule form').attr('action', deleteURL);
+		$('#delete_rule .modal-header h2').text('Delete ' + ruleDescr);
+	});
 	
 	// Clear all the stats for a particular game on the stats edit page
 	$('body').on('click', '.clearStatsBtn', function() {
@@ -681,6 +691,19 @@ $(document).ready(function() {
 		return false;
 	});
 });
+
+//Show/Hide League Rules
+function showLeagueRules() {
+	$('.leagueRulesTable').slideDown();
+    $('.closeLeagueRules').slideDown();
+    $('.seeLeagueRules').slideUp();
+}
+function hideLeagueRules() {
+	$('.leagueRulesTable').slideUp();
+    $('.closeLeagueRules').slideUp();
+    $('.seeLeagueRules').slideDown();
+
+}
 
 //Toggle between the stat categories
 function statsToggle()

@@ -82,6 +82,8 @@ Route::post('create_playoffs', 'LeagueSeasonController@create_playoffs');
 
 Route::post('complete_season', 'LeagueSeasonController@complete_season');
 
+Route::delete('league_rules/{ruleID}', 'LeagueSeasonController@destroy_rule');
+
 Route::get('league_profile/{league}/{season}', 'LeagueProfileController@show_season')->name('league_profile.season');
 
 Route::get('settings', 'HomeController@show_setting')->name('settings');

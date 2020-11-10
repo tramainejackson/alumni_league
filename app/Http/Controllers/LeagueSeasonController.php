@@ -56,7 +56,7 @@ class LeagueSeasonController extends Controller
 	    $showSeasonPlayers = $this->showSeason->league_players;
 	    $showSeasonConferences = $this->showSeason->conferences;
 	    $showSeasonDivisions = $this->showSeason->divisions;
-	    $leagueRules = LeagueRule::all();
+	    $leagueRules = $this->showSeason->league_rules;
 
     	if($showSeason !== null || $completedSeasons !== null) {
 
@@ -188,7 +188,7 @@ class LeagueSeasonController extends Controller
 		$this->showSeason->has_conferences = $request->conferences;
 		$this->showSeason->has_divisions = $request->divisions;
 	    $seasonRules = $this->showSeason->league_rules;
-	    dd($seasonRules);
+//	    dd($seasonRules);
 
 	    if($this->showSeason->has_conferences == 'Y') {
 		    if($this->showSeason->conferences->isEmpty()) {
@@ -254,35 +254,30 @@ class LeagueSeasonController extends Controller
 	    }
 
 		if($this->showSeason->save()) {
-			// Add new players
+			// Add new rules
 			if(isset($request->new_rule)) {
 				foreach($request->new_rule as $key => $newRule) {
-					$newRule = new LeagueRule();
-					$newRule->rule = $request->new_rule;
-					$newRule->league_season_id = $this->showSeason->id;
-					$newRule->league_profile_id = $this->showSeason->league_profile->id;
+					$createRule = new LeagueRule();
+					$createRule->rule = $newRule;
+					$createRule->league_season_id = $this->showSeason->id;
+					$createRule->league_profile_id = $this->showSeason->league_profile->id;
 
-					if($newRule->rule != null && $newRule->rule != '') {
-						// Save the new team player
-						if ($newRule->save()) {
+					if($createRule->rule != null && $createRule->rule != '') {
+						// Save the new rule
+						if ($createRule->save()) {
 						}
 					}
 				}
 			}
 
-			// Updates league rules
-//			if($team_players) {
-//				foreach($team_players as $key => $player) {
-//					$player->team_captain = str_ireplace('captain_', '', $request->team_captain) == $player->id ? 'Y' : 'N';
-//					$player->team_name = $request->team_name;
-//					$player->player_name = $request->player_name[$key];
-//					$player->jersey_num = $request->jersey_num[$key];
-//					$player->email = $request->player_email[$key];
-//					$player->phone = $request->player_phone[$key];
-//
-//					if($player->save()) {}
-//				}
-//			}
+		    //Updates league rules
+			if($seasonRules) {
+				foreach($seasonRules as $key => $seasonRule) {
+					$seasonRule->rule = $request->rule[$key];
+
+					if($seasonRule->save()) {}
+				}
+			}
 
 			return redirect()->back()->with(['status' => 'Season Updated Successfully']);
 		}
@@ -304,5 +299,17 @@ class LeagueSeasonController extends Controller
      */
     public function show() {
 
+    }
+
+	/**
+     * Show the application about us page for public.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy_rule(Request $request, LeagueRule $ruleID) {
+		// Delete Rule
+	    if($ruleID->delete()) {
+	    	return redirect()->back()->with('status', 'Rule Deleted Successfully');
+	    }
     }
 }
