@@ -1,4 +1,4 @@
- <nav class="navbar navbar-expand-lg justify-content-between">
+<nav class="navbar navbar-expand-lg justify-content-between">
 	<div class="d-flex align-items-center">
 		<!-- Brand -->
 		<a class="navbar-brand waves-effect indigo-text" href="{{ route('welcome', ['season' => $showSeason->id], false) }}">
@@ -144,12 +144,12 @@
 					<a id="leagues_season_link" class='nav-link dropdown-toggle indigo-text{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}' href="{{ route('league_seasons.index', ['season' => $showSeason->id], false) }}" type="button" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request()->query('season') != null ? \App\LeagueSeason::showSeason(request()->query('season'))->name : 'Seasons' }}</a>
 
 					<div class="dropdown-menu dropdown-secondary" aria-labelledby="leagues_season_link">
-						<a id="" class='nav-link indigo-text' href="{{ route('league_seasons.index') }}">Seasons</a>
+						<a id="" class='nav-link indigo-text' href="{{ $queryStrCheck == null ? route('league_seasons.index') : route('league_seasons.index', ['season' => $queryStrCheck['season']]) }}">Seasons</a>
 
 						<div class="dropdown-divider"></div>
 
 						@foreach($activeSeasons as $activeSeason)
-							<a href="{{ substr_count(url()->current(),'archive') > 0 ? route('league_seasons.index', ['season' => $activeSeason->id], false) : url()->current() . '?season=' . $activeSeason->id }}" class="dropdown-item indigo-text{{ $activeSeason->id == $showSeason->id ? ' rgba-grey-strong white-text' : '' }}">{{ $activeSeason->name }}</a>
+							<a href="{{ (substr_count(url()->current(),'archive') > 0) || (request()->getPathInfo() == '/') ? route('league_seasons.index', ['season' => $activeSeason->id], false) : url()->current() . '?season=' . $activeSeason->id }}" class="dropdown-item indigo-text{{ $activeSeason->id == $showSeason->id ? ' rgba-grey-strong white-text' : '' }}">{{ $activeSeason->name }}</a>
 						@endforeach
 					</div>
 				</li>

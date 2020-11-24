@@ -122,39 +122,39 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="form-row text-center">
-                                        <div class="form-group col-12 col-lg-6">
-                                            <label for="standings_type" class="d-block form-control-label">Standings Type</label>
+                                {{--<div class="col-12">--}}
+                                    {{--<div class="form-row text-center">--}}
+                                        {{--<div class="form-group col-12 col-lg-6">--}}
+                                            {{--<label for="standings_type" class="d-block form-control-label">Standings Type</label>--}}
 
-                                            <div class="d-block d-sm-inline">
-                                                <button type="button" class="btn w-auto automatic active btn-success">
-                                                    <input type="checkbox" name="standings_type" value="automatic" checked hidden /> Automatic
-                                                </button>
-                                            </div>
-                                            <div class="d-block d-sm-inline">
-                                                <button type="button" class="btn w-auto manual btn-blue-grey">
-                                                    <input type="checkbox" name="standings_type" value="manual" hidden /> Manual
-                                                </button>
-                                            </div>
-                                        </div>
+                                            {{--<div class="d-block d-sm-inline">--}}
+                                                {{--<button type="button" class="btn w-auto automatic active btn-success">--}}
+                                                    {{--<input type="checkbox" name="standings_type" value="automatic" checked hidden /> Automatic--}}
+                                                {{--</button>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="d-block d-sm-inline">--}}
+                                                {{--<button type="button" class="btn w-auto manual btn-blue-grey">--}}
+                                                    {{--<input type="checkbox" name="standings_type" value="manual" hidden /> Manual--}}
+                                                {{--</button>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
 
-                                        <div class="form-group col-12 col-lg-6">
-                                            <label for="schedule_type" class="d-block form-control-label">Scheduling Type</label>
+                                        {{--<div class="form-group col-12 col-lg-6">--}}
+                                            {{--<label for="schedule_type" class="d-block form-control-label">Scheduling Type</label>--}}
 
-                                            <div class="d-block d-sm-inline">
-                                                <button type="button" class="btn w-auto automatic active btn-success">
-                                                    <input type="checkbox" name="schedule_type" value="automatic" checked hidden /> Automatic
-                                                </button>
-                                            </div>
-                                            <div class="d-block d-sm-inline">
-                                                <button type="button" class="btn w-auto manual btn-blue-grey">
-                                                    <input type="checkbox" name="schedule_type" value="manual" hidden /> Manual
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            {{--<div class="d-block d-sm-inline">--}}
+                                                {{--<button type="button" class="btn w-auto automatic active btn-success">--}}
+                                                    {{--<input type="checkbox" name="schedule_type" value="automatic" checked hidden /> Automatic--}}
+                                                {{--</button>--}}
+                                            {{--</div>--}}
+                                            {{--<div class="d-block d-sm-inline">--}}
+                                                {{--<button type="button" class="btn w-auto manual btn-blue-grey">--}}
+                                                    {{--<input type="checkbox" name="schedule_type" value="manual" hidden /> Manual--}}
+                                                {{--</button>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
 
                                 <div class="col-12" id="">
                                     <div class="form-row justify-content-between align-items-center">
@@ -268,7 +268,7 @@
                                         .then(function () {
                                             $.ajax({
                                                 method: "POST",
-                                                url: "league_season",
+                                                url: "league_seasons",
                                                 data: $('form[name="newSeasonForm"]').serialize()
                                             })
 
@@ -282,7 +282,7 @@
                                                     toastr.success(returnData[1], 'Successful');
 
                                                     setTimeout(function() {
-                                                        window.open('/home?season=' + returnData[0] + '&year=' + $('.newSeasonInfo select[name="year"]').val(), '_self');
+                                                        window.open('/league_seasons?season=' + returnData[0], '_self');
                                                     }, 2000);
                                                 });
                                         });

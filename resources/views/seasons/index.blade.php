@@ -17,7 +17,7 @@
 		<div class="container-fluid bgrd3">
 			<div class="row align-items-stretch{{ $showSeason->league_profile ? '': ' view' }}">
 				<!--Column will include buttons for creating a new season-->
-				<div class="col py-3" id="">
+				<div class="col-2 py-3" id="">
 					<div class="row">
 						<div class="col">
 							<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
@@ -25,7 +25,9 @@
 					</div>
 				</div>
 
-				<div class="col-12 col-lg-7 pb-3{{ $showSeason->league_profile ? '': ' d-flex align-items-center justify-content-center' }}">
+			</div>
+			<div class="row" id="">
+				<div class="col-12 col-lg-10 pb-3 mx-auto">
 
 					@if($showSeason->completed == 'N')
 						<!-- Show league season info -->
@@ -59,7 +61,7 @@
 
 													<div class="col-12 col-md" id="">
 														<div class="md-form">
-															<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->address }}" />
+															<input type="text" name="leagues_address" class="form-control" id="leagues_address" placeholder="Address" value="{{ $showSeason->location }}" />
 
 															<label for="leagues_address">Address</label>
 														</div>
@@ -123,58 +125,57 @@
 
 														<label for="comp_group" class="text-primary mdb-main-label">Competition Group</label>
 													</div>
-
 												</div>
 
-												<div class="form-row">
-													<div class="form-group col-12">
-														<label for="standings_type" class="d-block form-control-label">Standings Type</label>
+												{{--<div class="form-row">--}}
+													{{--<div class="form-group col-12">--}}
+														{{--<label for="standings_type" class="d-block form-control-label">Standings Type</label>--}}
 
-														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto automaticStandings automatic{{ $showSeason->standings_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">
-																<input type="checkbox" name="standings_type" value="automatic" {{ $showSeason->standings_type == 'automatic' ? 'checked' : '' }} hidden />Automatic
-															</button>
-														</div>
-														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto manualStandings manual{{ $showSeason->standings_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">
-																<input type="checkbox" name="standings_type" value="manual" {{ $showSeason->standings_type == 'manual' ? 'checked' : '' }} hidden />Manual
-															</button>
-														</div>
-														<span class="{{ $showSeason->standings_type == 'automatic' ? 'd-block d-sm-inline' : 'd-none' }}">
-															<button type="button" class="btn w-auto btn-blue gsBtn">Generate Standings</button>
-														</span>
-													</div>
-												</div>
+														{{--<div class="d-block d-sm-inline">--}}
+															{{--<button type="button" class="btn w-auto automaticStandings automatic{{ $showSeason->standings_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">--}}
+																{{--<input type="checkbox" name="standings_type" value="automatic" {{ $showSeason->standings_type == 'automatic' ? 'checked' : '' }} hidden />Automatic--}}
+															{{--</button>--}}
+														{{--</div>--}}
+														{{--<div class="d-block d-sm-inline">--}}
+															{{--<button type="button" class="btn w-auto manualStandings manual{{ $showSeason->standings_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">--}}
+																{{--<input type="checkbox" name="standings_type" value="manual" {{ $showSeason->standings_type == 'manual' ? 'checked' : '' }} hidden />Manual--}}
+															{{--</button>--}}
+														{{--</div>--}}
+														{{--<span class="{{ $showSeason->standings_type == 'automatic' ? 'd-block d-sm-inline' : 'd-none' }}">--}}
+															{{--<button type="button" class="btn w-auto btn-blue gsBtn">Generate Standings</button>--}}
+														{{--</span>--}}
+													{{--</div>--}}
+												{{--</div>--}}
 
-												<div class="form-row">
-													<div class="form-group col-12">
-														<label for="schedule_type" class="d-block form-control-label">Scheduling Type</label>
+												{{--<div class="form-row">--}}
+													{{--<div class="form-group col-12">--}}
+														{{--<label for="schedule_type" class="d-block form-control-label">Scheduling Type</label>--}}
 
-														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto automaticSchedule automatic{{ $showSeason->schedule_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">
-																<input type="checkbox" name="schedule_type" value="automatic" {{ $showSeason->schedule_type == 'automatic' ? 'checked' : '' }} hidden />Automatic
-															</button>
-														</div>
-														<div class="d-block d-sm-inline">
-															<button type="button" class="btn w-auto manualSchedule manual{{ $showSeason->schedule_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">
-																<input type="checkbox" name="schedule_type" value="manual" {{ $showSeason->schedule_type == 'manual' ? 'checked' : '' }} hidden />Manual
-															</button>
-														</div>
-														<span class="{{ $showSeason->standings_type == 'automatic' ? 'd-block d-sm-inline' : 'd-none' }}">
-															<button type="button" class="btn w-auto btn-blue gsBtn">Generate Schedule</button>
-														</span>
-													</div>
-												</div>
+														{{--<div class="d-block d-sm-inline">--}}
+															{{--<button type="button" class="btn w-auto automaticSchedule automatic{{ $showSeason->schedule_type == 'automatic' ? ' active btn-success' : ' btn-blue-grey' }}">--}}
+																{{--<input type="checkbox" name="schedule_type" value="automatic" {{ $showSeason->schedule_type == 'automatic' ? 'checked' : '' }} hidden />Automatic--}}
+															{{--</button>--}}
+														{{--</div>--}}
+														{{--<div class="d-block d-sm-inline">--}}
+															{{--<button type="button" class="btn w-auto manualSchedule manual{{ $showSeason->schedule_type == 'manual' ? ' active btn-success' : ' btn-blue-grey' }}">--}}
+																{{--<input type="checkbox" name="schedule_type" value="manual" {{ $showSeason->schedule_type == 'manual' ? 'checked' : '' }} hidden />Manual--}}
+															{{--</button>--}}
+														{{--</div>--}}
+														{{--<span class="{{ $showSeason->standings_type == 'automatic' ? 'd-block d-sm-inline' : 'd-none' }}">--}}
+															{{--<button type="button" class="btn w-auto btn-blue gsBtn">Generate Schedule</button>--}}
+														{{--</span>--}}
+													{{--</div>--}}
+												{{--</div>--}}
 
 												<div class="form-row justify-content-around align-items-center">
 													<div class="form-group text-center">
 														<label for="conferences" class="d-block form-control-label">Conferences</label>
 
 														<div class="btn-group">
-															<button type="button" class="btn activeYes{{ $showSeason->has_conferences == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+															<button type="button" class="btn activeYes{{ $showSeason->has_conferences == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" onclick="showOrRemoveConferences();" style="line-height:1.5">
 																<input type="checkbox" name="conferences" value="Y" {{ $showSeason->has_conferences == 'Y' ? 'checked' : '' }} hidden />Yes
 															</button>
-															<button type="button" class="btn activeNo{{ $showSeason->has_conferences == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+															<button type="button" class="btn activeNo{{ $showSeason->has_conferences == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" onclick="showOrRemoveConferences();" style="line-height:1.5">
 																<input type="checkbox" name="conferences" value="N" {{ $showSeason->has_conferences == 'N' ? 'checked' : '' }} hidden />No
 															</button>
 														</div>
@@ -184,20 +185,20 @@
 														<label for="divisions" class="d-block form-control-label">Divisions</label>
 
 														<div class="btn-group">
-															<button type="button" class="btn activeYes{{ $showSeason->has_divisions == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+															<button type="button" class="btn activeYes{{ $showSeason->has_divisions == 'Y' ? ' active btn-success' : ' btn-blue-grey' }}" onclick="showOrRemoveDivisions();" style="line-height:1.5">
 																<input type="checkbox" name="divisions" value="Y" {{ $showSeason->has_divisions == 'Y' ? 'checked' : '' }} hidden />Yes
 															</button>
-															<button type="button" class="btn activeNo{{ $showSeason->has_divisions == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" style="line-height:1.5">
+															<button type="button" class="btn activeNo{{ $showSeason->has_divisions == 'N' ? ' active btn-success' : ' btn-blue-grey' }}" onclick="showOrRemoveDivisions();" style="line-height:1.5">
 																<input type="checkbox" name="divisions" value="N" {{ $showSeason->has_divisions == 'N' ? 'checked' : '' }} hidden />No
 															</button>
 														</div>
 													</div>
 												</div>
 
-												{{-- Add Divider--}}
-												<div class="divider-long" id=""></div>
+												<div class="conferenceToggle {{ $showSeason->has_conferences == 'Y' ? '' : 'd-none bounceInLeft' }}" id="">
+													{{-- Add Divider--}}
+													<div class="divider-long" id=""></div>
 
-												@if($showSeason->has_conferences == 'Y')
 													<div class="text-center" id="">
 														<h2>Conference Names</h2>
 													</div>
@@ -213,12 +214,34 @@
 															</div>
 														@endforeach
 													</div>
+												</div>
+
+
+												{{--@if($showSeason->has_conferences == 'Y')--}}
+													{{--<div class="text-center" id="">--}}
+														{{--<h2>Conference Names</h2>--}}
+													{{--</div>--}}
+
+													{{--<div class="row">--}}
+														{{--@foreach($showSeasonConferences as $conference)--}}
+															{{--<div class="col-12 col-md" id="">--}}
+																{{--<div class="md-form">--}}
+																	{{--<input type="text" name="conference_name[]" class="form-control" id="conference_name" placeholder="Name" value="{{ $conference->conference_name }}" />--}}
+
+																	{{--<label for="conference_name">Conference {{ $loop->iteration }} Name</label>--}}
+																{{--</div>--}}
+															{{--</div>--}}
+														{{--@endforeach--}}
+													{{--</div>--}}
 
 													{{-- Add Divider--}}
-													<div class="divider-long" id=""></div>
-												@endif
+													{{--<div class="divider-long" id=""></div>--}}
+												{{--@endif--}}
 
-												@if($showSeason->has_divisions == 'Y')
+												<div class="divisionToggle {{ $showSeason->has_divisions == 'Y' ? '' : 'd-none bounceInLeft' }}" id="">
+													{{-- Add Divider--}}
+													<div class="divider-long" id=""></div>
+
 													<div class="text-center" id="">
 														<h2>Division Names</h2>
 													</div>
@@ -234,10 +257,7 @@
 															</div>
 														@endforeach
 													</div>
-
-													{{-- Add Divider--}}
-													<div class="divider-long" id=""></div>
-												@endif
+												</div>
 
 												<div class="updateLeagueInputs rgba-white-strong px-5 py-3 rounded" id="">
 													<div class="d-flex flex-column flex-md-row align-items-center justify-content-center" id="">
@@ -318,24 +338,6 @@
 					@else
 						<div class="coolText4 py-3 px-lg-5">
 							<h1 class="h1-responsive text-justify">It doesn't look like you have any active seasons going for your league right now. Let'e get started by creating a new season. Click <a href="#" class="" type="button" data-toggle="modal" data-target="#newSeasonForm">here</a> to create a new season.<br/><br/>You can always see past seasons by selecting the links under the completed season section to the right</h1>
-						</div>
-					@endif
-				</div>
-
-				<!--Column will include seasons (archieved and current)-->
-				<div class="col py-3 d-none d-lg-block">
-					<!--Show completed season if any available-->
-					<h2 class="text-center h2-responsive">Completed Seasons</h2>
-
-					@if($completedSeasons->isNotEmpty())
-						@foreach($completedSeasons as $completedSeason)
-							<div class="text-center">
-								<a href="{{ route('archives', ['season' => $completedSeason->id]) }}" class="btn btn-rounded btn-lg purple darken-2 d-block">{{ ucfirst($completedSeason->name) }}</a>
-							</div>
-						@endforeach
-					@else
-						<div class="text-center">
-							<h4 class="h4-responsive">You do not currently have any completed season in the archives</h4>
 						</div>
 					@endif
 				</div>

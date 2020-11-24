@@ -2,8 +2,20 @@
 
 @section('content')
 	<div class="container-fluid bgrd3">
-		<div class="row view pt-3">
 
+		<div class="row" id="">
+			@if(Auth::check() && Auth::user()->type == 'admin')
+				{{--Authourization Only--}}
+				<div class="col col-lg-10 mx-auto my-3">
+					@if(!isset($allComplete))
+						<a class="btn btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Team</a>
+					@else
+					@endif
+				</div>
+			@endif
+		</div>
+
+		<div class="row view pt-3">
 			<div class="col-12 col-lg-10 mx-auto{{ $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
 				<div class="text-center coolText1">
 					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
@@ -292,16 +304,6 @@
 					</div>
 				@endif
 			</div>
-
-			@if(Auth::check() && Auth::user()->type == 'admin')
-				{{--Authourization Only--}}
-				<div class="col col-lg-2 col-xl text-center text-lg-right order-first order-lg-0">
-					@if(!isset($allComplete))
-						<a class="btn btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Team</a>
-					@else
-					@endif
-				</div>
-			@endif
 		</div>
 	</div>
 

@@ -702,6 +702,36 @@ function hideLeagueRules() {
 	$('.leagueRulesTable').slideUp();
     $('.closeLeagueRules').slideUp();
     $('.seeLeagueRules').slideDown();
+}
+
+function showOrRemoveConferences() {
+	if($('.conferenceToggle').hasClass('d-none')) {
+        $('.conferenceToggle').removeClass('d-none');
+        $('.conferenceToggle').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
+            $('.conferenceToggle').addClass('animated bounceInLeft');
+        });
+	} else {
+        $('.conferenceToggle').addClass('animated bounceOutLeft');
+        $('.conferenceToggle').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
+            $('.conferenceToggle').addClass('d-none bounceInLeft');
+            $('.conferenceToggle').removeClass('bounceOutLeft');
+        });
+    }
+}
+
+function showOrRemoveDivisions() {
+    if($('.divisionToggle').hasClass('d-none')) {
+        $('.divisionToggle').removeClass('d-none');
+        $('.divisionToggle').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
+            $('.divisionToggle').addClass('animated bounceInLeft');
+        });
+    } else {
+        $('.divisionToggle').addClass('animated bounceOutLeft');
+        $('.divisionToggle').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(e) {
+            $('.divisionToggle').addClass('d-none bounceInLeft');
+            $('.divisionToggle').removeClass('bounceOutLeft');
+        });
+    }
 
 }
 

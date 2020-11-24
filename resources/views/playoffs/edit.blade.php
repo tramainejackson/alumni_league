@@ -18,7 +18,7 @@
 					<h2 class="h2-responsive text-center m-2">Edit Playin Games</h2>
 				</div>
 
-				{!! Form::open(['action' => 'LeagueScheduleController@update_playoff_week', 'class' => 'updateplayoffsForm', 'method' => 'POST']) !!}
+				{!! Form::open(['action' => ['LeagueScheduleController@update_playoff_week', 'season' => $showSeason->id], 'class' => 'updateplayoffsForm', 'method' => 'POST']) !!}
 					@foreach($weekGames as $game)
 						<!--Card-->
 						<div class="card mb-4">

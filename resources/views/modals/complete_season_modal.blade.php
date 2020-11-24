@@ -14,8 +14,8 @@
                 <h2 class="h2-responsive my-5">Are you sure you want to start this seasons playoffs?</h2>
 
                 <div class="d-flex align-items-center justify-content-between">
-                    <button class="btn btn-lg green" type="button" onclick="event.preventDefault(); document.getElementById('create_playoff_form').submit();">Yes</button>
-                    {!! Form::open(['action' => ['LeagueSeasonController@create_playoffs', 'season' => $showSeason->id, 'year' => $showSeason->year], 'id' => 'create_playoff_form', 'method' => 'POST']) !!}
+                    <button class="btn btn-lg green white-text" type="button" onclick="event.preventDefault(); document.getElementById('create_playoff_form').submit();">Yes</button>
+                    {!! Form::open(['action' => ['LeagueSeasonController@create_playoffs', 'season' => $showSeason->id], 'id' => 'create_playoff_form', 'method' => 'POST']) !!}
                     {!! Form::close() !!}
                     <button class="btn btn-lg btn-warning" type="button" data-dismiss="modal" aria-label="Close">No</button>
                 </div>

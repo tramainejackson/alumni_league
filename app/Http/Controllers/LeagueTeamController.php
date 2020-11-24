@@ -295,7 +295,7 @@ class LeagueTeamController extends Controller
 									if ($game->player_stats->isNotEmpty()) {
 										$newPlayerStat = new LeagueStat();
 										$newPlayerStat->league_teams_id = $league_team->id;
-										$newPlayerStat->league_season_id = $showSeason->id;
+										$newPlayerStat->league_season_id = $this->showSeason->id;
 										$newPlayerStat->league_schedule_id = $game->id;
 										$newPlayerStat->league_player_id = $newPlayer->id;
 										$newPlayerStat->game_played = 0;

@@ -233,6 +233,7 @@ class LeagueSeason extends Model
 	*
 	*/
 	public function complete_playins() {
+		$showSeason = $this->showSeaon;
 		$games 	= $this->games()->playoffPlayinGames()->get();
 		$roundGames = $this->games()->playoffRounds()->get();
 		$completeGames = 0;
@@ -250,38 +251,34 @@ class LeagueSeason extends Model
 		// Check to make sure that the completed playin games is equal
 		// to the total amount of playin games
 		if($games->isNotEmpty()) {
-			if($games->isNotEmpty()) {
-				foreach($games as $game) {
-					if($game->result) {
-						if($game->result->game_complete == "Y") {
-							$completeGames++;
-						}
+			foreach ($games as $game) {
+				if ($game->result) {
+					if ($game->result->game_complete == "Y") {
+						$completeGames++;
 					}
 				}
-			} else {
-				$completeGames = 0;
 			}
-			
-			if($games->count() == $completeGames) {
+
+			if ($games->count() == $completeGames) {
 				$settings = $this->playoffs;
-				$standings = $this->standings()->get();
+				$standings = $this->standings()->seasonStandings()->get();
 				$playoffTeams = collect();
-				
+
 				// Get the teams who have a bye
 				// Add them to the array of playoff teams
 				$totalByeTeams = $settings->teams_with_bye;
-				
-				for($x=1; $x <= $totalByeTeams; $x++) {
+
+				for ($x = 1; $x <= $totalByeTeams; $x++) {
 					$byeTeam = $standings->shift();
 					$byeTeam = $byeTeam->team;
-					
+
 					$playoffTeams->push($byeTeam);
 				}
-				
+
 				// Get the teams that have won their bye game
 				// Add them to the array of playoff teams
-				if($games->isNotEmpty()) {
-					foreach($games as $game) {
+				if ($games->isNotEmpty()) {
+					foreach ($games as $game) {
 						$team = LeagueTeam::find($game->result->winning_team_id);
 						$playoffTeams->push($team);
 					}
@@ -291,13 +288,13 @@ class LeagueSeason extends Model
 				$awaySeed = $playoffTeams->count();
 				// dd($this->games()->playoffRounds()->where('round', 1)->get());
 
-				if($this->games()->playoffRounds()->where('round', 1)->get()->isNotEmpty()) {
-					foreach($this->games()->playoffRounds()->where('round', 1)->get() as $playoffGameDelete) {
+				if ($this->games()->playoffRounds()->where('round', 1)->get()->isNotEmpty()) {
+					foreach ($this->games()->playoffRounds()->where('round', 1)->get() as $playoffGameDelete) {
 						$playoffGameDelete->delete();
 					}
 				}
-				
-				for($x=0; $x < $playoffTeams->count(); $x+2) {
+
+				for ($x = 0; $x < $playoffTeams->count(); $x + 2) {
 					$playoffSchedule = new LeagueSchedule();
 					$homeTeam = $playoffTeams->shift();
 					$awayTeam = $playoffTeams->pop();
@@ -309,46 +306,49 @@ class LeagueSeason extends Model
 					$playoffSchedule->round = $newRound;
 					$playoffSchedule->home_seed = $homeSeed;
 					$playoffSchedule->away_seed = $awaySeed;
-					$playoffSchedule->league_season_id = $settings->league_season_id;
+					$playoffSchedule->league_season_id = $showSeason->id;
 					// $playoffSchedule->game_time = "12:00";
 					// $playoffSchedule->game_date = date("Y-m-d");
 
-					if($playoffSchedule->save()) {
+					if ($playoffSchedule->save()) {
 						// Add home and away players stats
-						if($awayTeam->players->count() > 0) {
-							foreach($awayTeam->players as $awayPlayer) {
+						if ($awayTeam->players->count() > 0) {
+							foreach ($awayTeam->players as $awayPlayer) {
 								$newPlayerStat = new LeagueStat();
 								$newPlayerStat->league_teams_id = $awayTeam->id;
-								$newPlayerStat->league_season_id = $this->id;
+								$newPlayerStat->league_season_id = $showSeason->id;
 								$newPlayerStat->league_schedule_id = $playoffSchedule->id;
 								$newPlayerStat->league_player_id = $awayPlayer->id;
 								$newPlayerStat->game_played = 0;
-								
-								if($newPlayerStat->save()) {}
+
+								if ($newPlayerStat->save()) {
+								}
 							}
 						}
-						
-						if($homeTeam->players->count() > 0) {
-							foreach($homeTeam->players as $homePlayer) {
+
+						if ($homeTeam->players->count() > 0) {
+							foreach ($homeTeam->players as $homePlayer) {
 								$newPlayerStat = new LeagueStat();
 								$newPlayerStat->league_teams_id = $homeTeam->id;
-								$newPlayerStat->league_season_id = $this->id;
+								$newPlayerStat->league_season_id = $showSeason->id;
 								$newPlayerStat->league_schedule_id = $playoffSchedule->id;
 								$newPlayerStat->league_player_id = $homePlayer->id;
 								$newPlayerStat->game_played = 0;
-								
-								if($newPlayerStat->save()) {}
+
+								if ($newPlayerStat->save()) {
+								}
 							}
 						}
 					}
-					
+
 					$homeSeed++;
 					$awaySeed--;
 				}
 
 				$settings->playin_games_complete = "Y";
-				
-				if($settings->save()){}
+
+				if ($settings->save()) {
+				}
 			}
 		}
 	}
@@ -425,7 +425,8 @@ class LeagueSeason extends Model
 	public function create_playoff_settings() {
 		$this->is_playoffs = 'Y';
 		$seasonPlayoffs = $this->playoffs;
-		$totalPlayoffTeams = $this->league_teams;
+		$showSeason = $this->showSeason;
+		$totalPlayoffTeams = $this->standings()->seasonStandings()->get();
 		$teams = $totalPlayoffTeams->count();
 		$checkSchedule = $this->games->count();
 
@@ -481,16 +482,18 @@ class LeagueSeason extends Model
 			// Create playoff schedule
 			if($seasonPlayoffs->playin_games == "Y") {
 				$totalByeTeams = $seasonPlayoffs->teams_with_bye;
-				$playInSeeds = $totalPlayoffTeams->count();
+
+				// Remove the top teams so they wont get seleced for playoff
 				$removeByeTeams = $totalPlayoffTeams->splice(0, $totalByeTeams);
 				$totalPlayInGames = $totalPlayoffTeams->count() / 2;
+				$playInSeeds = $removeByeTeams->count();
 				
 				for($x=0; $x < $totalPlayInGames; $x++) {
 					$playoffSchedule = new LeagueSchedule();
-					$playInSeeds--;
+					$playInSeeds++;
 					$homeSeed = $awaySeed = $playInSeeds;
-					$homeTeam = $totalPlayoffTeams->shift();
-					$awayTeam = $totalPlayoffTeams->pop();
+					$homeTeam = $totalPlayoffTeams->shift()->team;
+					$awayTeam = $totalPlayoffTeams->pop()->team;
 					$playoffSchedule->league_season_id = $this->id;
 					$playoffSchedule->home_team = $homeTeam->team_name;
 					$playoffSchedule->home_team_id = $homeTeam->id;
@@ -500,7 +503,8 @@ class LeagueSeason extends Model
 					$playoffSchedule->away_seed = $awaySeed;
 					$playoffSchedule->playin_game = "Y";
 					
-					if($playoffSchedule->save()) {}
+					if($playoffSchedule->save()) {
+					}
 				}
 				
 			} else {
@@ -508,8 +512,8 @@ class LeagueSeason extends Model
 					$playoffSchedule = new LeagueSchedule();
 					$homeSeed++;
 					$awaySeed--;
-					$homeTeam = $totalPlayoffTeams->shift();
-					$awayTeam = $totalPlayoffTeams->pop();
+					$homeTeam = $totalPlayoffTeams->shift()->team;
+					$awayTeam = $totalPlayoffTeams->pop()->team;
 					
 					$playoffSchedule->league_season_id = $this->id;
 					$playoffSchedule->home_team = $homeTeam->team_name;
@@ -528,7 +532,7 @@ class LeagueSeason extends Model
 								$newPlayerStat = new LeagueStat();
 								$newPlayerStat->league_teams_id = $awayTeam->id;
 								$newPlayerStat->league_season_id = $showSeason->id;
-								$newPlayerStat->league_schedule_id = $newGame->id;
+								$newPlayerStat->league_schedule_id = $playoffSchedule->id;
 								$newPlayerStat->league_player_id = $awayPlayer->id;
 								$newPlayerStat->game_played = 0;
 								
@@ -541,7 +545,7 @@ class LeagueSeason extends Model
 								$newPlayerStat = new LeagueStat();
 								$newPlayerStat->league_teams_id = $homeTeam->id;
 								$newPlayerStat->league_season_id = $showSeason->id;
-								$newPlayerStat->league_schedule_id = $newGame->id;
+								$newPlayerStat->league_schedule_id = $playoffSchedule->id;
 								$newPlayerStat->league_player_id = $homePlayer->id;
 								$newPlayerStat->game_played = 0;
 								

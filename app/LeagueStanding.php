@@ -135,5 +135,19 @@ class LeagueStanding extends Model
 			
 			$teamStanding->save();
 		}
+
+		//Update Seeding
+		$teamSeedings = self::scopeSeasonStandings($query)->get();
+
+		// Update each team playoff seeding
+		$seed = 1;
+		foreach($teamSeedings as $teamSeeding) {
+			$teamSeeding->seeding = $seed;
+
+			if($teamSeeding->save()) {
+				$seed++;
+			}
+		}
+
 	}
 }

@@ -3,19 +3,10 @@
 @section('content')
 	<div class="container-fluid bgrd1">
 		<div class="row">
-			<!--Column will include buttons for creating a new season-->
-			<div class="col col-lg d-none d-lg-block mt-3">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_schedule.index', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="btn btn-lg btn-rounded deep-orange white-text" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
-			</div>
-			<div class="col-12 col-lg-8">
+			<div class="col-12 col-lg-10 mx-auto py-4">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
-					<h1 class="display-4 coolText4">It's Playoff Time</h1>
+					<h1 class="display-3 mb-4">{{ ucfirst($showSeason->name) }}</h1>
+					<h1 class="display-4 coolText4 mb-3">It's Playoff Time</h1>
 				</div>
 				@if($nonPlayInGames->get()->isNotEmpty())
 					<!-- Playoff Round Games -->
@@ -163,7 +154,7 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-md mt-3 text-center">
+			<div class="col-12 mt-3 text-center">
 				@if($showSeason->champion_id != null)
 					@php $championTeam = App\LeagueTeam::find($showSeason->champion_id); @endphp
 					<div class="container-fluid">

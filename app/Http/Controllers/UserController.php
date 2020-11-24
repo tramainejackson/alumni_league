@@ -41,8 +41,8 @@ class UserController extends Controller
      */
     public function index() {
     	$showSeason = $this->showSeason;
-	    $allUsers = $this->league->users;
-	    $users = $this->league->users()->showMembers();
+	    $allUsers = $showSeason->league_profile->users;
+	    $users = $showSeason->league_profile->users()->showMembers();
 	    
 	    return view('users.index', compact('users', 'allUsers', 'showSeason'));
     }
@@ -186,7 +186,29 @@ class UserController extends Controller
 					    $newPlayer->league_team_id = $team->id;
 					    $newPlayer->team_name = $team->team_name;
 
-					    $newPlayer->save();
+					    if($newPlayer->save()) {
+						    // If this team has any team stats, then
+						    // add each new player to that games stats
+						    if ($team->home_games->merge($team->away_games)->isNotEmpty()) {
+							    $games = $team->home_games->merge($team->away_games);
+
+							    foreach ($games as $game) {
+								    // Check and see if the game has stats added yet
+								    // Add player to that games stats if exist
+								    if ($game->player_stats->isNotEmpty()) {
+									    $newPlayerStat = new LeagueStat();
+									    $newPlayerStat->league_teams_id = $team->id;
+									    $newPlayerStat->league_season_id = $this->showSeason->id;
+									    $newPlayerStat->league_schedule_id = $game->id;
+									    $newPlayerStat->league_player_id = $newPlayer->id;
+									    $newPlayerStat->game_played = 0;
+
+									    if ($newPlayerStat->save()) {
+									    }
+								    }
+							    }
+						    }
+					    }
 				    }
 
 				    if ($user->save()) {

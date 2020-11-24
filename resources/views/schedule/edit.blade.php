@@ -21,7 +21,7 @@
 					<button class="btn btn-rounded btn-sm red darken-1 white-text mx-4 order-2" id="edit_page_remove_week" type="button" data-toggle="modal" data-target="#remove_week"><i class="fa fa-minus" aria-hidden="true"></i>&nbsp;Remove Week</button>					
 				</div>
 				<div class="text-center mb-4">
-					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $weekGames->first()->season_week]) : route('league_stat.edit_week', ['week' => $weekGames->first()->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded cyan darken-1 white-text" type="button">Edit Week Stats</a>
+					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $weekGames->first()->season_week]) : route('league_stats.edit_week', ['week' => $weekGames->first()->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded cyan darken-1 white-text" type="button">Edit Week Stats</a>
 				</div>
 
 				{!! Form::open(['action' => ['LeagueScheduleController@update_week', $weekGames->first()->season_week], 'class' => 'updateWeekForm', 'name' => 'edit_week_form', 'method' => 'PATCH']) !!}

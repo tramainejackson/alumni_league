@@ -3,16 +3,7 @@
 @section('content')
 	<div class="container-fluid bgrd3">
 		<div class="row">
-			<!--Column will include buttons for creating a new season-->
-			<div class="col col-md-3 mt-3 text-left d-none d-md-block">
-				@if($activeSeasons->isNotEmpty())
-					@foreach($activeSeasons as $activeSeason)
-						<a href="{{ route('league_teams.index', ['season' => $activeSeason->id]) }}" class="btn btn-lg btn-rounded deep-orange white-text{{ $activeSeason->id == $showSeason->id ? ' lighten-2' : '' }}" type="button">{{ $activeSeason->name }}</a>
-					@endforeach
-				@else
-				@endif
-			</div>
-			<div class="col-12 col-md-5 mx-auto">
+			<div class="col-12 col-md-8 mx-auto py-4">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 					<h3 class="h-responsive">Total Teams: {{ $totalTeams }}</h3>
@@ -31,7 +22,7 @@
 
 						<!-- Create Form -->
 						<!-- Create Form -->
-						<form action="{{ action('LeagueTeamController@store', ['season' => $showSeason->id, 'year' => $showSeason->year]) }}" method="POST" class="" enctype="multipart/form-data">
+						<form action="{{ action('LeagueTeamController@store', ['season' => $showSeason->id]) }}" method="POST" class="" enctype="multipart/form-data">
 
 							{{ csrf_field() }}
 
@@ -66,7 +57,7 @@
 				</div>
 				<!--/.Card-->
 			</div>
-			<div class="col col-md-3 mt-3 text-center text-md-right order-first order-md-0">
+			<div class="position-absolute" style="top:90px; right:15px;">
 				<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Teams</a>
 			</div>
 		</div>

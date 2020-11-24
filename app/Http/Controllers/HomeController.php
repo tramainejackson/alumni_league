@@ -127,16 +127,13 @@ class HomeController extends Controller
 	    // Get the season to show
 	    $showSeason = $this::get_season();
 
-	    if($this->league->seasons->isNotEmpty()) {
-
+	    if($showSeason) {
 		    $standings = $showSeason->standings()->seasonStandings()->get();
 
 			return view('standings', compact('standings', 'league', 'showSeason'));
 
 		} else {
-
 			return view('seasons.no_season', compact('showSeason'));
-
 		}
     }
 	

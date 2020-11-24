@@ -2,7 +2,24 @@
 
 @section('content')
 	<div class="container-fluid bgrd3">
-		
+
+		<div class="row" id="">
+			@if(Auth::check() && Auth::user()->type == 'admin')
+				<div class="col col-lg-10 mx-auto my-3">
+					{{--Authourization Only--}}
+					@if(!isset($allComplete))
+						@if($showSeason->league_teams->isNotEmpty())
+							<a class="btn mx-auto mx-0 mw-100 btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Week</a>
+						@endif
+
+						@if($seasonScheduleWeeks->get()->isNotEmpty())
+							<a href="#" class="btn mx-auto mx-0 mw-100 btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
+						@endif
+					@endif
+				</div>
+			@endif
+		</div>
+
 		<div class="row view">
 
 			<div class="col-12 col-lg-10 pt-3 d-flex justify-content-center flex-column mx-auto">
@@ -133,210 +150,11 @@
 					</div>
 				@endif
 			</div>
-
-			@if(Auth::check() && Auth::user()->type == 'admin')
-				<div class="col col-lg-2 text-center text-lg-right order-first order-lg-0">
-					{{--Authourization Only--}}
-					@if(!isset($allComplete))
-						@if($showSeason->league_teams->isNotEmpty())
-							<a class="btn mx-auto mx-0 mw-100 btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_schedule.create') : route('league_schedule.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Week</a>
-						@endif
-
-						@if($seasonScheduleWeeks->get()->isNotEmpty())
-							<a href="#" class="btn mx-auto mx-0 mw-100 btn-rounded mdb-color darken-3 white-text" type="button" data-target="#add_new_game_modal" data-toggle="modal">Add New Game</a>
-						@endif
-					@endif
-				</div>
-			@endif
 		</div>
 
-		<!-- Edit game modal -->
-		<div class="modal fade" id="edit_game_modal" tabindex="-1" role="dialog" aria-labelledby="editGameModal" aria-hidden="true" data-backdrop="true">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h2 class="h2-responsive">Edit Game</h2>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						{!! Form::open(['action' => ['LeagueScheduleController@update_game'], 'method' => 'PATCH', 'name' => 'edit_game_form',]) !!}
-							<!--Card-->
-							<div class="card mb-4">
-								<!--Card content-->
-								<div class="card-body">
-									<!--Title-->
-									<div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
-										<div class="d-flex align-items-center justify-content-center">
-											<h4 class="card-title h4-responsive my-2">Changing this games teams will remove any stats that have been added</h4>
-										</div>
-										
-										<!-- Forfeit Toggle -->
-										<div class="d-flex flex-column align-items-center">
-											<p class="m-0">Forfeit</p>
-											<div class="">
-												<button class="btn btn-sm stylish-color-dark awayForfeitBtn d-block white-text" type="button"><span class="awayForfeitBtnTeamName"></span>
-													<input type="checkbox" name="away_forfeit" class="hidden" value="" hidden />
-												</button>
-												<button class="btn btn-sm stylish-color-dark homeForfeitBtn d-block white-text" type="button"><span class="homeForfeitBtnTeamName"></span>
-													<input type="checkbox" name="home_forfeit" class="hidden" value="" hidden />
-												</button>
-											</div>
-										</div>
-									</div>
-									
-									<!-- Edit Form -->
-									<div class="my-2">
-										<div class="row">
-											<div class="col-12 col-lg">
-												<div class="">
-													<select class="mdb-select md-form" name="edit_away_team">
-														<option value="" disabled>Choose your option</option>
-														@foreach($showSeason->league_teams as $away_team)
-															<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
-														@endforeach
-													</select>
-													<label for="edit_away_team" class="mdb-main-label">Away Team</label>
-												</div>
-											</div>
-											<div class="col-12 col-lg">
-												<div class="">
-													<select class="mdb-select md-form" name="edit_home_team">
-														<option value="" disabled>Choose your option</option>
-														@foreach($showSeason->league_teams as $home_team)
-															<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
-														@endforeach
-													</select>
-													<label for="edit_home_team" class="mdb-main-label">Home Team</label>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col">
-												<div class="md-form input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text">Away Score</span>
-													</div>
-													
-													<input type="number" name="edit_away_score" id="" class="form-control" value="" placeholder="Enter Away Score" min="0" max="200" />
-												</div>
-											</div>
-											<div class="col">
-												<div class="md-form input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text">Home Score</span>
-													</div>
-													
-													<input type="number" name="edit_home_score" id="" class="form-control" value="" placeholder="Enter Home Score" min="0" max="200" />
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col">
-												<div class="md-form input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text">Game Date</span>
-													</div>
-													
-													<input type="text" name="edit_date_picker" id="input_gamedate" class="form-control datetimepicker" value="" placeholder="Selected Date" />
-												</div>
-											</div>
-											<div class="col">
-												<div class="md-form input-group">
-													<div class="input-group-prepend">
-														<span class="input-group-text">Game Time</span>
-													</div>
-													
-													<input type="text" name="edit_game_time" id="input_starttime" class="form-control timepicker" value="" placeholder="Selected time" />
-												</div>
-											</div>
-											
-											<input type="number" name="edit_game_id" class="hidden" value="" hidden />
-										</div>
-										<div class="md-form">
-											<button class="btn blue white-text darken-2" type="submit">Update Game</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!--/.Card-->
-						{!! Form::close() !!}
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<!-- Add new game modal -->
-		<div class="modal fade" id="add_new_game_modal" tabindex="-1" role="dialog" aria-labelledby="addNewGameModal" aria-hidden="true" data-backdrop="true">
-			<div class="modal-dialog modal-lg">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h2 class="">Add New Game</h2>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<!-- Create Form -->
-						{!! Form::open(['action' => ['LeagueScheduleController@add_game'], 'name' => 'new_game_form','method' => 'POST']) !!}
-							<div class="">
-								<select class="mdb-select md-form" name="season_week">
-									<option value="blank" disabled selected>Choose a week</option>
-									@foreach($seasonScheduleWeeks->get() as $week)
-										<option value="{{ $week->season_week }}">Week {{ $week->season_week }}</option>
-									@endforeach
-								</select>
-								<label for="" class="mdb-main-label">Select A Week</label>
-							</div>
-							<div class="row">
-								<div class="col-12 col-lg">
-									<div class="">
-										<select class="mdb-select md-form" name="away_team">
-											<option value="blank" disabled selected>Choose your option</option>
-											@foreach($showSeason->league_teams as $away_team)
-												<option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
-											@endforeach
-										</select>
-										<label for="away_team" class="mdb-main-label">Away Team</label>
-									</div>
-								</div>
-								<div class="col-12 col-lg">
-									<div class="">
-										<select class="mdb-select md-form" name="home_team">
-											<option value="blank" disabled selected>Choose your option</option>
-											@foreach($showSeason->league_teams as $home_team)
-												<option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
-											@endforeach
-										</select>
-										<label for="home_team" class="mdb-main-label">Home Team</label>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-12 col-lg">
-									<div class="md-form">
-										<input type="text" name="date_picker" id="input_gamedate" class="form-control datetimepicker" value="{{ old('game_date') }}" placeholder="Selected Date" />
-										
-										<label for="input_gamedate">Game Date</label>
-									</div>
-								</div>
-								<div class="col-12 col-lg">
-									<div class="md-form">
-										<input type="text" name="game_time" id="input_starttime" class="form-control timepicker" value="{{ old('game_time') }}" placeholder="Selected time" />
-										
-										<label for="input_starttime">Game Time</label>
-									</div>
-								</div>
-							</div>
-							<div class="md-form">
-								<button class="btn blue lighten-1 white-text" type="submit">Add Game</button>
-							</div>
-						{!! Form::close() !!}
-					</div>
-				</div>
-			</div>
-		</div>
+
+		@include('modals.edit_game')
+		@include('modals.add_new_game')
 	</div>
 
 	<!-- Footer -->

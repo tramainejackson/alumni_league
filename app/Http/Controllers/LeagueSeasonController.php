@@ -93,12 +93,44 @@ class LeagueSeasonController extends Controller
 		$season->league_fee = $request->league_fee;
 		$season->ref_fee = $request->ref_fee;
 		$season->location = $request->location;
+	    $season->has_conferences = $request->conferences;
+	    $season->has_divisions = $request->divisions;
 		$season->active = 'Y';
 		$season->paid = 'Y';
 		
 		if($season->save()) {
 			if($season->playoffs()->create([])) {
 				$newSeason = $season->id;
+
+				$season->conferences()->createMany([
+					[
+						'conference_name' => 'Conference A',
+						'league_season_id' => $newSeason,
+					],
+					[
+						'conference_name' => 'Conference B',
+						'league_season_id' => $newSeason,
+					],
+				]);
+
+				$season->divisions()->createMany([
+					[
+						'division_name' => 'Division A',
+						'league_season_id' => $newSeason,
+					],
+					[
+						'division_name' => 'Division B',
+						'league_season_id' => $newSeason,
+					],
+					[
+						'division_name' => 'Division C',
+						'league_season_id' => $newSeason,
+					],
+					[
+						'division_name' => 'Division D',
+						'league_season_id' => $newSeason,
+					],
+				]);
 
 				return [$newSeason, "New Season Added Successfully"];
 			}

@@ -43,7 +43,7 @@
 											</div>
 										</div>
 									</div>
-										
+
 									@if($game->player_stats->isNotEmpty())
 										<!-- Edit Form -->
 										<div class="my-2">
