@@ -233,7 +233,7 @@ class LeagueSeason extends Model
 	*
 	*/
 	public function complete_playins() {
-		$showSeason = $this->showSeaon;
+		$showSeason = $this;
 		$games 	= $this->games()->playoffPlayinGames()->get();
 		$roundGames = $this->games()->playoffRounds()->get();
 		$completeGames = 0;

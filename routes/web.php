@@ -70,7 +70,7 @@ Route::post('/edit_playoffs/', 'LeagueScheduleController@update_playoff_week')->
 
 Route::delete('/delete_game/{league_schedule}/', 'LeagueScheduleController@delete_game');
 
-Route::patch('/update_game/', 'LeagueScheduleController@update_game');
+Route::patch('/update_game', 'LeagueScheduleController@update_game');
 
 Route::get('/league_stats/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stats.edit_week');
 

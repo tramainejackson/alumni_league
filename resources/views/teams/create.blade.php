@@ -21,7 +21,6 @@
 						<h2 class="card-title h2-responsive text-center">Create New Team</h2>
 
 						<!-- Create Form -->
-						<!-- Create Form -->
 						<form action="{{ action('LeagueTeamController@store', ['season' => $showSeason->id]) }}" method="POST" class="" enctype="multipart/form-data">
 
 							{{ csrf_field() }}

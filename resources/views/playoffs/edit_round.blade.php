@@ -18,7 +18,7 @@
 					<h2 class="h2-responsive text-center m-2">Edit Round {{ $round }} Games</h2>
 				</div>
 
-				{!! Form::open(['action' => 'LeagueScheduleController@update_playoff_week', 'class' => 'updateplayoffsForm', 'method' => 'POST']) !!}
+				{!! Form::open(['action' => ['LeagueScheduleController@update_playoff_week', 'season' => $showSeason->id], 'class' => 'updateplayoffsForm', 'method' => 'POST']) !!}
 					<input type="text" name="round_id" class="hidden" value="{{ $round }}" hidden />
 					@foreach($weekGames as $game)
 						<!--Card-->

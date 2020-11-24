@@ -8,19 +8,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
             <div class="modal-body">
-                <form method="POST" action="{{ action('LeagueScheduleController@update_game', ['season' => $showSeason->id]) }}" name="edit_game_form">
+                <form method="POST" action="{{ action('LeagueScheduleController@update_game', ['season' => $showSeason->id]) }}">
 
-                    {{ method_field('PATCH') }}
-                    {{ csrf_field() }}
+                {{ method_field('PATCH') }}
+                {{ csrf_field() }}
 
-                    <!--Card-->
+                <!--Card-->
                     <div class="card mb-4">
                         <!--Card content-->
                         <div class="card-body">
                             <!--Title-->
-                            <div class="d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                            <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center justify-content-center">
                                     <h4 class="card-title h4-responsive my-2">Changing this games teams will remove any stats that have been added</h4>
                                 </div>
@@ -29,10 +28,10 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <p class="m-0">Forfeit</p>
                                     <div class="">
-                                        <button class="btn btn-sm stylish-color-dark awayForfeitBtn d-block white-text" type="button"><span class="awayForfeitBtnTeamName"></span>
+                                        <button class="btn btn-sm stylish-color-dark awayForfeitBtn d-block" type="button"><span class="awayForfeitBtnTeamName"></span>
                                             <input type="checkbox" name="away_forfeit" class="hidden" value="" hidden />
                                         </button>
-                                        <button class="btn btn-sm stylish-color-dark homeForfeitBtn d-block white-text" type="button"><span class="homeForfeitBtnTeamName"></span>
+                                        <button class="btn btn-sm stylish-color-dark homeForfeitBtn d-block" type="button"><span class="homeForfeitBtnTeamName"></span>
                                             <input type="checkbox" name="home_forfeit" class="hidden" value="" hidden />
                                         </button>
                                     </div>
@@ -42,26 +41,26 @@
                             <!-- Edit Form -->
                             <div class="my-2">
                                 <div class="row">
-                                    <div class="col-12 col-lg">
-                                        <div class="">
-                                            <select class="mdb-select md-form" name="edit_away_team">
+                                    <div class="col">
+                                        <div class="md-form">
+                                            <select class="mdb-select" name="edit_away_team">
                                                 <option value="" disabled>Choose your option</option>
                                                 @foreach($showSeason->league_teams as $away_team)
                                                     <option value="{{ $away_team->id }}">{{ $away_team->team_name }}</option>
                                                 @endforeach
                                             </select>
-                                            <label for="edit_away_team" class="mdb-main-label">Away Team</label>
+                                            <label for="edit_away_team">Away Team</label>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg">
-                                        <div class="">
-                                            <select class="mdb-select md-form" name="edit_home_team">
+                                    <div class="col">
+                                        <div class="md-form">
+                                            <select class="mdb-select" name="edit_home_team">
                                                 <option value="" disabled>Choose your option</option>
                                                 @foreach($showSeason->league_teams as $home_team)
                                                     <option value="{{ $home_team->id }}">{{ $home_team->team_name }}</option>
                                                 @endforeach
                                             </select>
-                                            <label for="edit_home_team" class="mdb-main-label">Home Team</label>
+                                            <label for="edit_home_team">Home Team</label>
                                         </div>
                                     </div>
                                 </div>

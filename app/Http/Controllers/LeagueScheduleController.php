@@ -484,7 +484,7 @@ class LeagueScheduleController extends Controller
 		$game		= LeagueSchedule::find($request->edit_game_id);
 		$awayTeam	= LeagueTeam::find($request->edit_away_team);
 		$homeTeam 	= LeagueTeam::find($request->edit_home_team);
-		$time 		= new Carbon($request->edit_game_time);
+		$time 		= $request->edit_game_time != 'N/A' ? new Carbon($request->edit_game_time) : Carbon::now();
 		$date 		= '';
 		
 		if($request->edit_date_picker_submit != null) {
@@ -696,6 +696,7 @@ class LeagueScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update_playoff_week(Request $request) {
+//    	dd($request);
 		// Get the season to show
 		$showSeason = $this->showSeason;
 		$playoffRound = isset($request->round_id) ? $request->round_id : null;
