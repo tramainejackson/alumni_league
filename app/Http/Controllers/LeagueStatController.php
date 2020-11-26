@@ -105,7 +105,7 @@ class LeagueStatController extends Controller
 				$playInGames = $showSeason->games()->playoffPlayinGames();
 				$playoffSettings = $showSeason->playoffs;
 
-				return view('stats.show', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+				return view('stats.show', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds', 'week_games', 'game', 'game_results', 'away_team', 'home_team'));
 
 			} else {
 
@@ -140,7 +140,7 @@ class LeagueStatController extends Controller
      */
     public function edit_round(Request $request, $round) {
 		// Get the season to show
-		$showSeason = $this->find_season(request());
+		$showSeason = $this->showSeason;
 		$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
 		$roundGames	= $showSeason->games()->getRoundGames($round)->get();
 

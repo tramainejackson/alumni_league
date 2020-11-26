@@ -696,7 +696,6 @@ class LeagueScheduleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update_playoff_week(Request $request) {
-//    	dd($request);
 		// Get the season to show
 		$showSeason = $this->showSeason;
 		$playoffRound = isset($request->round_id) ? $request->round_id : null;

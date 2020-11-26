@@ -7,6 +7,20 @@
 				<div class="text-center coolText1">
 					<h1 class="display-3 mb-4">{{ ucfirst($showSeason->name) }}</h1>
 					<h1 class="display-4 coolText4 mb-3">It's Playoff Time</h1>
+
+					<div class="col-12 mt-3 text-center">
+						@if($showSeason->champion_id != null)
+							@php $championTeam = App\LeagueTeam::find($showSeason->champion_id); @endphp
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col">
+										<h1 class="">Champion</h1>
+										<h2 class="">{{ $championTeam->team_name }}</h2>
+									</div>
+								</div>
+							</div>
+						@endif
+					</div>
 				</div>
 				@if($nonPlayInGames->get()->isNotEmpty())
 					<!-- Playoff Round Games -->
@@ -18,7 +32,11 @@
 										<th class="text-center" colspan="6">
 											<h2 class="h2-responsive position-relative my-3">
 												<span>{{ $round->round == $playoffSettings->total_rounds ? 'Championship Game' : 'Round ' . $round->round . ' Games' }}</span>
-												<a href="{{ request()->query() == null ? route('edit_round', ['round' => $round->round]) : route('edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
+
+												@if(Auth::check() && Auth::user()->type == 'admin')
+													{{--Authourization Only--}}
+													<a href="{{ request()->query() == null ? route('edit_round', ['round' => $round->round]) : route('edit_round', ['round' => $round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
+												@endif
 											</h2>
 										</th>
 									</tr>
@@ -73,7 +91,13 @@
 											<td class="gameTimeData">{{ $game->game_time == null ? 'N/A' : $game->game_time() }}</td>
 											<td class="gameDateData">{{ $game->game_date == null ? 'N/A' : $game->game_date() }}</td>
 											<td class="gameIDData" hidden>{{ $game->id }}</td>
-											<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
+
+											@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
+												{{--Authourization Only--}}
+												<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
+											@else
+												<td><a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $game->id]) }}">View Stats</a></td>
+											@endif
 										</tr>
 									@endforeach
 								</tbody>
@@ -91,7 +115,11 @@
 									<th class="text-center" colspan="6">
 										<h2 class="h2-responsive position-relative my-3">
 											<span>Playoff Playin Games</span>
-											<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
+
+											@if(Auth::check() && Auth::user()->type == 'admin')
+												{{--Authourization Only--}}
+												<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm btn-rounded position-absolute right white black-text">Edit Week</a>
+											@endif
 										</h2>
 									</th>
 								</tr>
@@ -146,24 +174,17 @@
 										<td class="gameTimeData">{{ $game->game_time == null ? 'N/A' : $game->game_time() }}</td>
 										<td class="gameDateData">{{ $game->game_date == null ? 'N/A' : $game->game_date() }}</td>
 										<td class="gameIDData" hidden>{{ $game->id }}</td>
-										<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
+
+										@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
+											{{--Authourization Only--}}
+											<td><button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button></td>
+										@else
+											<td><a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $game->id]) }}">View Stats</a></td>
+										@endif
 									</tr>
 								@endforeach
 							</tbody>
 						</table>
-					</div>
-				@endif
-			</div>
-			<div class="col-12 mt-3 text-center">
-				@if($showSeason->champion_id != null)
-					@php $championTeam = App\LeagueTeam::find($showSeason->champion_id); @endphp
-					<div class="container-fluid">
-						<div class="row">
-							<div class="col">
-								<h1 class="">Champion</h1>
-								<h2 class="">{{ $championTeam->team_name }}</h2>
-							</div>
-						</div>
 					</div>
 				@endif
 			</div>

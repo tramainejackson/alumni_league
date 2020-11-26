@@ -29,7 +29,7 @@
 				</div>
 
 				@if($showSeason->is_playoffs == 'Y')
-					<h1 class="display-4 coolText4">It's Playoff Time</h1>
+					<h1 class="display-4 coolText4 text-center">It's Playoff Time</h1>
 				@endif
 
 				@if($checkStats)
