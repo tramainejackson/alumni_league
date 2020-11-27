@@ -221,8 +221,10 @@
 			</div>
 		@endif
 
-		{{--Add Contact Us Form--}}
-		@include('layouts.contact')
+		@if(!Auth::check())
+			{{--Add Contact Us Form--}}
+			@include('layouts.contact')
+		@endif
 
 	</div>
 
