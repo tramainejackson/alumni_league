@@ -1,7 +1,7 @@
 <!-- Edit game modal -->
 <div class="container-fluid" id="contact_form">
     <div class="row my-4">
-        <div class="col-6 mx-auto p-2">
+        <div class="col-12 mx-auto p-2">
             <!--  Form login -->
             <div class="card">
 
@@ -19,7 +19,7 @@
                     <!-- Name -->
                         <div class="md-form">
                             <div class="form-row" id="">
-                                <div class="col" id="">
+                                <div class="col-12 col-md-6" id="">
                                     <input type="text" name="first_name" id="" class="form-control" value="{{ old('first_name') }}" {{ $errors->has('first_name') ? 'autofocus' : '' }}>
                                     <label for="materialLoginFormPassword">First Name</label>
 
@@ -29,7 +29,7 @@
                                         </span>
                                     @endif
                                 </div>
-                                <div class="col" id="">
+                                <div class="col-12 col-md-6" id="">
                                     <input type="text" name="last_name" id="" class="form-control" value="{{ old('last_name') }}" {{ $errors->has('last_name') ? 'autofocus' : '' }}>
                                     <label for="materialLoginFormPassword">Last Name</label>
 
@@ -80,7 +80,7 @@
                         </div>
 
                         <!-- Sign in button -->
-                        <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Submit</button>
+                        <button class="btn btn-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Send <i class="fas fa-paper-plane"></i></button>
 
                     </form>
                     <!-- Form -->

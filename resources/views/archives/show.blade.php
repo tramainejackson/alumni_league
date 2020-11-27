@@ -3,7 +3,7 @@
 @section('content')
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-12 col-xl-8 mx-auto">
+			<div class="col-11 col-md-10 col-xl-8 mx-auto">
 				<div class="text-center coolText4 mt-3">
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($archiveSeason->name) }}</h1>
@@ -181,7 +181,7 @@
 			</div>
 
 			@foreach($completedSeasons as $completedSeason)
-				<div class="col-md-3 mt-3">
+				<div class="col-md-5 mt-3">
 					<div class="text-center">
 						<a href="{{ route('archives_show', ['season' => $completedSeason->id]) }}" class="btn btn-rounded btn-lg purple white-text darken-2 d-block">
 							<span class="text-underline">{{ ucfirst($completedSeason->name) }}</span>

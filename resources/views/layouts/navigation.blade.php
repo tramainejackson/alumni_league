@@ -15,111 +15,68 @@
 	<!-- Sidebar navigation -->
 	<div id="slide-out" class="side-nav fixed">
 		<div class="view">
-			@if(Auth::guest())
+			@if($showSeason->league_profile)
+				<img src="{{ asset($showSeason->league_profile->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->league_profile->picture) }}" class="img-fluid" />
 			@else
-				@if($showSeason->league_profile)
-
-					@if(isset($allComplete))
-						<img src="{{ asset($showSeason->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->picture) }}" class="img-fluid" />
-					@else
-						<img src="{{ asset($showSeason->league_profile->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->league_profile->picture) }}" class="img-fluid" />
-					@endif
-				@else
-					<img src="{{ asset($showSeason->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->picture) }}" class="img-fluid" />
-				@endif
-
-				<div class="mask">
-					<a class='league_home position-absolute bottom btn btn-light-blue' href="{{ $queryStrCheck == null ? route('welcome') : route('welcome', ['season' => $queryStrCheck['season']]) }}">
-						@if($showSeason->league_profile)
-							{{ !isset($allComplete) ? $showSeason->league_profile->name : $showSeason->name }}
-						@else
-							{{ $showSeason->name }}
-						@endif
-					</a>
-				</div>
+				<img src="{{ asset($showSeason->picture) == null ? '/images/commissioner.jpg' : asset($showSeason->picture) }}" class="img-fluid" />
 			@endif
 		</div>
 
-		<ul class="custom-scrollbar nav navbar-nav">
-
+		<ul class="custom-scrollbar nav navbar-nav p-2">
 			<!--/. Side navigation links -->
+			@if($activeSeasons->isNotEmpty())
+				<li id="accordion1" class="accordion nav-link nav-item{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}">
+					<ul class="collapsible collapsible-accordion">
+						<li class="position-relative">
+							<a class="collapsible-header collapsed pl-1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="font-size: 1rem;">Seasons</a>
+							<i class="fa fa-angle-up rotate-icon"></i>
+						</li>
+
+						<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion1" class="collapse">
+							<ul class="list-unstyled">
+								<a id="" class='white-text' href="{{ $queryStrCheck == null ? route('league_seasons.index') : route('league_seasons.index', ['season' => $queryStrCheck['season']]) }}">Seasons Info</a>
+
+								<div class="dropdown-divider"></div>
+
+								@foreach($activeSeasons as $activeSeason)
+									<li>
+										<a href="{{ (substr_count(url()->current(),'archive') > 0) || (request()->getPathInfo() == '/') ? route('league_seasons.index', ['season' => $activeSeason->id], false) : url()->current() . '?season=' . $activeSeason->id }}" class="white-text{{ $activeSeason->id == $showSeason->id ? ' rgba-grey-strong white-text' : '' }}">{{ $activeSeason->name }}</a>
+									</li>
+								@endforeach
+							</ul>
+						</div>
+					</ul>
+				</li>
+			@else
+			@endif
+
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ route('league_schedule.index', ['season' => $showSeason->id], false) }}">Schedule</a>
+				<a id="leagues_schedule_link" class='nav-link white-text{{ substr_count(url()->current(),'schedule') > 0 ? ' activeNav': '' }}' href="{{ route('league_schedule.index', ['season' => $showSeason->id], false) }}">Schedule</a>
 			</li>
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ route('league_standings', ['season' => $showSeason->id], false) }}">Standings</a>
+				<a id="" class='nav-link white-text{{ substr_count(url()->current(),'standings') > 0 ? ' activeNav': '' }}' href="{{ route('league_standings', ['season' => $showSeason->id], false) }}">Standings</a>
 			</li>
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ route('league_stats.index', ['season' => $showSeason->id], false) }}">Stats</a>
+				<a id="" class='nav-link white-text{{ substr_count(url()->current(),'stats') > 0 ? ' activeNav': '' }}' href="{{ route('league_stats.index', ['season' => $showSeason->id], false) }}">Stats</a>
 			</li>
 			<li class="nav-item">
-				<a class='nav-link white-text' href="{{ route('league_teams.index', ['season' => $showSeason->id], false) }}">Teams</a>
+				<a id="" class='nav-link white-text{{ substr_count(url()->current(),'teams') > 0 ? ' activeNav': '' }}' href="{{ route('league_teams.index', ['season' => $showSeason->id], false) }}">Teams</a>
 			</li>
+			<li class="nav-item">
+				<a id="" class='league_home nav-link white-text{{ substr_count(url()->current(),'info') > 0 ? ' activeNav': '' }}' href="{{ route('league_info', ['season' => $showSeason->id], false) }}">League Info</a>
+			</li>
+
+			{{-- Add History Tab If League Has Completed Seasons--}}
+			@if($completedSeasons->isNotEmpty())
+				<li class="nav-item" id="archivedItems">
+					<a id="" class='nav-link white-text{{ substr_count(url()->current(),'archive') > 0 ? ' activeNav': '' }}' href="{{ route('archives_index') }}">History</a>
+				</li>
+			@endif
 			{{--<li class="nav-item">--}}
 				{{--<a class='nav-link white-text' href="{{ route('league_pictures.index', ['season' => $showSeason->id], false) }}">League Pics</a>--}}
 			{{--</li>--}}
 
-			@if(Auth::guest())
-				<!-- Logins -->
-				<li class="nav-item">
-					<a href="{{ route('login') }}" class="nav-link btn indigo white-text">Login
-						<i class="fa fa-user" aria-hidden="true"></i>
-					</a>
-				</li>
-			@endif
-
 			@if (Auth::check())
-				@if($showSeason->league_profile)
-					@if($showSeason)
-						<div id="accordion1" class="accordion">
-							<ul class="collapsible collapsible-accordion">
-								<li class="position-relative">
-									<a class="collapsible-header collapsed pl-1" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Seasons</a>
-									<i class="fa fa-angle-up rotate-icon"></i>
-								</li>
-
-								<div id="collapseOne" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion1" class="collapse">
-									<ul class="list-unstyled">
-
-										@foreach($activeSeasons as $activeSeason)
-											<li class="">
-												<a href="{{ route('welcome', ['season' => $activeSeason->id, 'year' => $activeSeason->year]) }}" class="" type="button">{{ $activeSeason->name }}</a>
-											</li>
-										@endforeach
-									</ul>
-								</div>
-							</ul>
-						</div>
-					@else
-					@endif
-				@endif
-
-				@if($showSeason->league_profile)
-					@if(!isset($allComplete))
-						<li class="nav-item" id="archivedItems">
-							<div id="accordion1" class="accordion">
-								<ul class="collapsible collapsible-accordion">
-									<li class="position-relative">
-										<a class="collapsible-header collapsed pl-1" data-toggle="collapse" data-parent="#accordionEx" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Archives</a>
-										<i class="fa fa-angle-up rotate-icon"></i>
-									</li>
-
-									<div id="collapseTwo" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion2" class="collapse">
-										<ul class="list-unstyled">
-											@foreach($showSeason->league_profile->seasons()->completed() as $completedSeason)
-												<li class="">
-													<a class="dropdown-item" href="{{ route('archives_show', ['season' => $completedSeason->id]) }}">{{ $completedSeason->name }}</a>
-												</li>
-											@endforeach
-										</ul>
-									</div>
-								</ul>
-							</div>
-						</li>
-					@endif
-				@endif
-
-
 				<li class="nav-item">
 					<a class='nav-link white-text' href="{{ route('logout') }}"
 						onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -129,6 +86,13 @@
 					<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 						{{ csrf_field() }}
 					</form>
+				</li>
+			@else
+				<!-- Logins -->
+				<li class="nav-item">
+					<a href="{{ route('login') }}" class="nav-link btn indigo white-text">Login
+						<i class="fa fa-user" aria-hidden="true"></i>
+					</a>
 				</li>
 			@endif
 			<!--/. Side navigation links -->

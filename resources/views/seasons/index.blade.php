@@ -359,7 +359,7 @@
 									@if($showSeasonSchedule->isNotEmpty())
 										@foreach($showSeasonSchedule as $upcomingGame)
 											<div class="card col-12 col-md-6 col-lg-4 col-lg-3 my-2">
-												<h3 class="h3-responsive text-center p-4 blue-grey white-text">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
+												<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
 												<div class="card-body text-center">
 													<p class="">{{ $upcomingGame->home_team }}</p>
 													<p class="">vs</p>
@@ -416,7 +416,7 @@
 							<!-- Season stat leaders by category -->
 						@if($showSeasonStat->isNotEmpty())
 							<!-- Get the scoring leaders -->
-								<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
 										<tr>
@@ -460,7 +460,7 @@
 								</div>
 
 								<!-- Get the assisting leaders -->
-								<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
 										<tr>
@@ -482,7 +482,7 @@
 								</div>
 
 								<!-- Get the stealing leaders -->
-								<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
 										<tr>
@@ -504,7 +504,7 @@
 								</div>
 
 								<!-- Get the blocking leaders -->
-								<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
 										<tr>
@@ -549,13 +549,13 @@
 
 					<div class="row">
 						<!-- League season schedule snap shot -->
-						<div class="col-12 col-lg-8 col-xl-8 mx-auto my-5">
+						<div class="col-10 col-lg-8 col-xl-8 mx-auto my-5">
 							<div class="text-center p-4 card rgba-deep-orange-light white-text" id="">
 								<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 							</div>
 							<div class="my-5 d-flex align-items-center justify-content-center flex-column">
-								<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-									<h1 class="h1-responsive">Upcoming Schedule</h1>
+								<div class="text-center">
+									<h1 class="h1 h1-responsive text-center">Upcoming Schedule</h1>
 									<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">Full Schedule</a>
 								</div>
 
@@ -563,16 +563,18 @@
 									<div class="row">
 										@if($showSeasonSchedule->isNotEmpty())
 											@foreach($showSeasonSchedule as $upcomingGame)
-												<div class="card col-12 col-md-6 col-lg-4 col-lg-3 my-2">
-													<h3 class="h3-responsive text-center p-4 blue-grey white-text">Week&nbsp;{{ $upcomingGame->season_week }}</h3>
-													<div class="card-body text-center">
-														<p class="">{{ $upcomingGame->home_team }}</p>
-														<p class="">vs</p>
-														<p class="">{{ $upcomingGame->away_team }}</p>
-													</div>
-													<div class="card-footer px-1 d-flex align-items-center justify-content-around">
-														<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
-														<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+												<div class="col-12 col-md-6 col-lg-4 col-lg-3 my-2">
+													<div class="card">
+														<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? $upcomingGame->round == null ? 'Play-In Game' : 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
+														<div class="card-body text-center">
+															<p class="">{{ $upcomingGame->home_team }}</p>
+															<p class="">vs</p>
+															<p class="">{{ $upcomingGame->away_team }}</p>
+														</div>
+														<div class="card-footer px-1 d-flex align-items-center justify-content-around">
+															<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
+															<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+														</div>
 													</div>
 												</div>
 											@endforeach
@@ -627,7 +629,7 @@
 								<!-- Season stat leaders by category -->
 							@if($showSeasonStat->isNotEmpty())
 								<!-- Get the scoring leaders -->
-									<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+									<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 										<table class="table white-text">
 											<thead>
 											<tr>
@@ -649,7 +651,7 @@
 									</div>
 
 									<!-- Get the rebounding leaders -->
-									<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+									<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 										<table class="table white-text">
 											<thead>
 											<tr>
@@ -671,7 +673,7 @@
 									</div>
 
 									<!-- Get the assisting leaders -->
-									<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+									<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 										<table class="table white-text">
 											<thead>
 											<tr>
@@ -693,7 +695,7 @@
 									</div>
 
 									<!-- Get the stealing leaders -->
-									<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+									<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 										<table class="table white-text">
 											<thead>
 											<tr>
@@ -715,7 +717,7 @@
 									</div>
 
 									<!-- Get the blocking leaders -->
-									<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+									<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 										<table class="table white-text">
 											<thead>
 											<tr>

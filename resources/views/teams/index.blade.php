@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="row view pt-3">
-			<div class="col-12 col-lg-10 mx-auto{{ $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
+			<div class="col-10 col-lg-8 mx-auto{{ $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
 				<div class="text-center coolText1">
 					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
 						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
@@ -183,7 +183,7 @@
 
 										@if($showSeason->is_playoffs == 'Y')
 
-											<div class="col-12 col-xl-6">
+											<div class="col-12 col-xl-6 mx-auto">
 												<div class="card card-cascade wider my-4">
 													<!-- Card image -->
 													<div class="view overlay">
@@ -295,6 +295,10 @@
 										</div>
 									@endif
 								@endforeach
+							</div>
+						@else
+							<div class="text-center">
+								<h1 class="h1-responsive coolText4"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;There are no teams added yet for the selected season.&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></h1>
 							</div>
 						@endif
 					@endif

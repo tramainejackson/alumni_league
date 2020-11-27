@@ -1,24 +1,16 @@
 @extends('layouts.app')
 
-@if($completedSeasons->count() < 10)
-	@section('scripts')
-		<script type="text/javascript">
-			$('footer').addClass('position-absolute bottom w-100');
-		</script>
-	@endsection
-@endif
-
 @section('content')
 	<div class="container-fluid">
 		<div class="row mt-4">
 			<div class="col-12 col-xl-8 mx-auto">
-				<h2 class="">Here are a list of the completed seasons so far. Click on any season to see the past Champion, Standings, Teams and Stats</h2>
+				<h2 class="h2 h2-responsive">Here are a list of the completed seasons so far. Click on any season to see the past Champion, Standings, Teams and Stats</h2>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row pb-5">
 			@foreach($completedSeasons as $completedSeason)
-				<div class="col-md-3 mt-3">
-					<div class="text-center">
+				<div class="col-md-5 mt-5 pb-5">
+					<div class="text-center pb-5">
 						<a href="{{ route('archives_show', ['season' => $completedSeason->id]) }}" class="btn btn-rounded btn-lg purple white-text darken-2 d-block">
 							<span class="text-underline">{{ ucfirst($completedSeason->name) }}</span>
 							<br/>
