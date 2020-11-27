@@ -15,24 +15,30 @@ use Illuminate\Support\Facades\DB;
 
 class LeaguePlayerController extends Controller
 {
+
+	public $showSeason;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         $this->middleware('auth')->only('index');
+
+	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
     }
+
+	public function get_season() {
+		return $this->showSeason;
+	}
 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-		$league = Auth::user()->leagues_profiles->where('user_id', Auth::id())->first();
+    public function index() {
 		$showcaseGame = LeagueSchedule::get_random_game();
 		
 		if($showcaseGame != null) {
@@ -48,8 +54,7 @@ class LeaguePlayerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function welcome()
-    {
+    public function welcome() {
 		$getRecs = RecCenter::all();
 		$getLeagues = LeagueProfile::all();
 		$fireRecs = PlayerProfile::get_fire_recs();
@@ -72,8 +77,7 @@ class LeaguePlayerController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
-    public function destroy(Request $request, LeaguePlayer $league_player)
-    {
+    public function destroy(Request $request, LeaguePlayer $league_player) {
 		// Delete Player
 		if($league_player->delete()) {
 			if($league_player->stats) {
@@ -85,31 +89,4 @@ class LeaguePlayerController extends Controller
 			}
 		}
     }
-	
-	/**
-     * Check for a query string and get the current season.
-     *
-     * @return seaon
-    */
-	public function find_season(Request $request) {
-		$league = Auth::user()->leagues_profiles->first();
-		
-		$showSeason = '';
-		
-		if($request->query('season') != null && $request->query('year') != null) {
-			$showSeason = $league->seasons()->active()->find($request->query('season'));
-		} else {
-			if($league->seasons()->get()->count() == 1) {
-				if($league->seasons()->active()->first()) {
-					$showSeason = $league->seasons()->active()->first();
-				} else {
-					$showSeason = $league->seasons()->first();
-				}
-			} else {
-				$showSeason = $league->seasons()->active()->first();
-			}
-		}
-		
-		return $showSeason;
-	}
 }

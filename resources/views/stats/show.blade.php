@@ -12,7 +12,7 @@
 					</div>
 
 					@if($showSeason->is_playoffs == 'Y')
-						<h1 class="display-4 coolText4">It's Playoff Time</h1>
+						<h1 class="display-4 coolText4 text-center">It's Playoff Time</h1>
 					@endif
 				</div>
 
@@ -20,7 +20,7 @@
 
 					<div class="my-4 pb-3" id="" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
 
-						<h4 class="h4 h4-responsive d-inline-block col-2 text-wrap" style="flex: 0 0 auto;">Other Games This Week:</h4>
+						<h4 class="h4 h4-responsive d-inline-block col-2 text-wrap" style="flex: 0 0 auto;">{{ $showSeason->is_playoffs == 'Y' ? 'Other Playoffs Games:' : 'Other Games This Week:' }}</h4>
 
 						@foreach($week_games as $week_game)
 							@if($week_game->id != $game->id)

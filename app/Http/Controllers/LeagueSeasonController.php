@@ -165,8 +165,8 @@ class LeagueSeasonController extends Controller
 		// Get the season to show
 		$showSeason = $this->showSeason;
 		$archiveSeason = $season;
-		$standings = $showSeason->standings()->seasonStandings()->get();
-		$playersStats = $showSeason->stats()->allFormattedStats();
+		$standings = $archiveSeason->standings()->seasonStandings()->get();
+		$playersStats = $archiveSeason->stats()->allFormattedStats();
 
 		// Resize the default image
 		Image::make(public_path('images/commissioner.jpg'))->resize(800, null, 	function ($constraint) {
@@ -194,12 +194,13 @@ class LeagueSeasonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function complete_season(LeagueSeason $league_season) {
+    public function complete_season(Request $request, LeagueSeason $league_season) {
+//    	dd($request);
 		$this->showSeason->completed = 'Y';
 		$this->showSeason->active = 'N';
 		
 		if($this->showSeason->save()) {
-			return redirect()->action('HomeController@index')->with(['status' => 'Season Completed']);
+			return redirect()->action('LeagueSeasonController@archive_show', ['season' => $this->showSeason->id])->with(['status' => 'Season Completed']);
 		}
     }
 	

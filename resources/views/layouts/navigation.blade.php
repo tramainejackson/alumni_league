@@ -108,7 +108,7 @@
 										<ul class="list-unstyled">
 											@foreach($showSeason->league_profile->seasons()->completed() as $completedSeason)
 												<li class="">
-													<a class="dropdown-item" href="{{ route('archives', ['season' => $completedSeason->id]) }}">{{ $completedSeason->name }}</a>
+													<a class="dropdown-item" href="{{ route('archives_show', ['season' => $completedSeason->id]) }}">{{ $completedSeason->name }}</a>
 												</li>
 											@endforeach
 										</ul>
@@ -186,6 +186,9 @@
 
 			@if(Auth::check())
 				@if(Auth::user()->type == 'admin')
+					<li class="nav-item">
+						<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'message') > 0 ? ' activeNav': '' }}' href="{{ route('messages.index', ['season' => $showSeason->id], false) }}">Messages</a>
+					</li>
 					<li class="nav-item">
 						<a id="" class='nav-link indigo-text{{ substr_count(url()->current(),'user') > 0 ? ' activeNav': '' }}' href="{{ route('users.index', ['season' => $showSeason->id], false) }}">Users</a>
 					</li>

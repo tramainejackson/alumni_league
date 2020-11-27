@@ -220,6 +220,10 @@
 				</div> -->
 			</div>
 		@endif
+
+		{{--Add Contact Us Form--}}
+		@include('layouts.contact')
+
 	</div>
 
 	<!-- Footer -->

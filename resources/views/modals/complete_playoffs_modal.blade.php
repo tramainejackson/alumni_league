@@ -9,14 +9,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p class="red-text"><i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i>&nbsp;Completing your season will add this season to the archives and remove it as an active season&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></p>
+                <p class="red-text"><i class="fa fa-exclamation deep-orange-text text-center" aria-hidden="true"></i>&nbsp;Completing your season will add this season to the archives and remove it as an active season&nbsp;<i class="fa fa-exclamation deep-orange-text" aria-hidden="true"></i></p>
 
-                <h2 class="h2-responsive my-5">Are you sure you want to complete this seasons?</h2>
+                <h2 class="h2-responsive my-5 text-center">Are you sure you want to complete this seasons?</h2>
 
                 <div class="d-flex align-items-center justify-content-between">
-                    <button class="btn btn-lg green" type="button" onclick="event.preventDefault(); document.getElementById('complete_season_form').submit();">Yes</button>
-                    {!! Form::open(['action' => ['LeagueSeasonController@complete_season', 'season' => $showSeason->id, 'year' => $showSeason->year], 'id' => 'complete_season_form', 'method' => 'POST']) !!}
-                    {!! Form::close() !!}
+                    <button class="btn btn-lg green white-text" type="button" onclick="event.preventDefault(); document.getElementById('complete_season_form').submit();">Yes</button>
+                        {!! Form::open(['action' => ['LeagueSeasonController@complete_season', 'season' => $showSeason->id], 'id' => 'complete_season_form', 'method' => 'POST']) !!}
+                        {!! Form::close() !!}
                     <button class="btn btn-lg btn-warning" type="button" data-dismiss="modal" aria-label="Close">No</button>
                 </div>
             </div>

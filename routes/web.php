@@ -91,13 +91,13 @@ Route::get('settings', 'HomeController@show_setting')->name('settings');
 Route::post('settings/{setting}', 'HomeController@edit_setting');
 
 /** MDB Templates **/
-Route::get('/templates/about_us', 'TemplateController@about_us');
-Route::get('/templates/blog_post', 'TemplateController@blog_post');
-Route::get('/templates/contact_us', 'TemplateController@contact_us');
-Route::get('/templates/ecommerce', 'TemplateController@ecommerce');
-Route::get('/templates/log_in', 'TemplateController@log_in');
-Route::get('/templates/pricing', 'TemplateController@pricing');
-Route::get('/templates/profile_page', 'TemplateController@profile_page');
-Route::get('/templates/signup', 'TemplateController@signup');
-Route::get('/templates/landing', 'TemplateController@landing');
+//Route::get('/templates/about_us', 'TemplateController@about_us');
+//Route::get('/templates/blog_post', 'TemplateController@blog_post');
+//Route::get('/templates/contact_us', 'TemplateController@contact_us');
+//Route::get('/templates/ecommerce', 'TemplateController@ecommerce');
+//Route::get('/templates/log_in', 'TemplateController@log_in');
+//Route::get('/templates/pricing', 'TemplateController@pricing');
+//Route::get('/templates/profile_page', 'TemplateController@profile_page');
+//Route::get('/templates/signup', 'TemplateController@signup');
+//Route::get('/templates/landing', 'TemplateController@landing');
 /** MDB Templates **/

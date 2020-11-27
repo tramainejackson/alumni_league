@@ -19,7 +19,6 @@ class HomeController extends Controller
 {
 
 	public $showSeason;
-	public $league;
 
     /**
      * Create a new controller instance.
@@ -30,7 +29,6 @@ class HomeController extends Controller
         $this->middleware('auth')->only('index');
 
 	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
-
     }
 
 	public function get_season() {

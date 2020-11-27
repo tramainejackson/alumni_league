@@ -191,5 +191,9 @@
 		</div>
 
 		@include('modals.edit_playoff_game')
+
+		<!-- Footer -->
+		@include('layouts.footer')
+		<!-- Footer -->
 	</div>
 @endsection

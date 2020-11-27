@@ -3,18 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Message;
+use App\LeagueProfile;
+use App\PlayerProfile;
+use App\LeagueRule;
+use App\LeagueSchedule;
+use App\LeagueStanding;
+use App\LeaguePlayer;
+use App\LeagueTeam;
+use App\LeagueStat;
+use App\LeagueSeason;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class MessagesController extends Controller
 {
+
+	public $showSeason;
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct() {
+		$this->middleware('auth')->except('store');
+
+		$this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
+	}
+
+	public function get_season() {
+		return $this->showSeason;
+	}
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+    	$showSeason = $this->showSeason;
+	    $admin = Auth::user();
+	    $messages = Message::all();
+	    $today = Carbon::now();
+
+	    return view('messages.index', compact('admin', 'messages', 'today', 'showSeason'));
     }
 
     /**
@@ -22,9 +55,11 @@ class MessagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+	    $showSeason = $this->showSeason;
+	    $admin = Auth::user();
+
+	    return view('messages.create', compact('admin', 'showSeason'));
     }
 
     /**
@@ -33,14 +68,21 @@ class MessagesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+//    	dd($request);
+	    $this->validate($request, [
+		    'first_name' => 'required',
+		    'last_name' => 'required',
+		    'email' => 'required',
+		    'message' => 'required',
+	    ]);
+
 		$message = new Message();
 
-	    $message->name      = $request->contact_name;
-	    $message->email     = $request->contact_email;
-	    $message->subject   = $request->contact_subject;
-	    $message->message   = $request->contact_message;
+	    $message->name      = $request->first_name . ' ' . $request->last_name;
+	    $message->email     = $request->email;
+	    $message->phone     = $request->phone;
+	    $message->message   = $request->message;
 
 	    if($message->save()) {
 	    	return redirect()->back()->with('status', 'Message sent successfully');
@@ -53,8 +95,7 @@ class MessagesController extends Controller
      * @param  \App\Message $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
-    {
+    public function show(Message $message) {
         //
     }
 
@@ -87,8 +128,9 @@ class MessagesController extends Controller
      * @param  \App\Message $message
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Message $message)
-    {
-        //
+    public function destroy(Message $message) {
+	    if($message->delete()) {
+		    return redirect()->action('MessagesController@index')->with('status', 'Message Deleted Successfully!');
+	    }
     }
 }

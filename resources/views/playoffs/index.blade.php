@@ -17,7 +17,10 @@
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) . ' ' . $showSeason->year }}</h1>
 					<h1 class="display-4 coolText4">It's Playoff Time</h1>
-					<button class="btn btn-rounded cyan accent-1 black-text coolText4" type="button" data-toggle="modal" data-target="#complete_season">Complete Season</button>
+
+					@if(Auth::check() && Auth::user()->type == 'admin')
+						<button class="btn btn-rounded cyan accent-1 black-text coolText4" type="button" data-toggle="modal" data-target="#complete_season">Complete Season</button>
+					@endif
 				</div>
 
 				@php
@@ -184,12 +187,16 @@
 										<div class="col text-center">
 											@if($i != $rounds)
 												<h2 class="roundHeader text-center p-3 my-3">Round {{ $i }} Games</h2>
-											
-												<a href="{{ request()->query() == null ? route('edit_round', ['round' => $i]) : route('edit_round', ['round' => $i, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit {{ $i }} Round</a>
+
+												@if(Auth::check() && Auth::user()->type == 'admin')
+													<a href="{{ request()->query() == null ? route('edit_round', ['round' => $i]) : route('edit_round', ['round' => $i, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit {{ $i }} Round</a>
+												@endif
 											@else
 												<h2 class="roundHeader text-center p-3 my-3">Championship Game</h2>
-											
-												<a href="{{ request()->query() == null ? route('edit_round', ['round' => $i]) : route('edit_round', ['round' => $i, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Championship Game</a>
+
+												@if(Auth::check() && Auth::user()->type == 'admin')
+													<a href="{{ request()->query() == null ? route('edit_round', ['round' => $i]) : route('edit_round', ['round' => $i, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Championship Game</a>
+												@endif
 											@endif
 										</div>
 									</div>
@@ -223,8 +230,10 @@
 							<div class="row">
 								<div class="col col-12 text-center">
 									<h2 class="roundHeader p-3 my-3">Play In Games</h2>
-									
-									<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Playin</a>
+
+									@if(Auth::check() && Auth::user()->type == 'admin')
+										<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Playin</a>
+									@endif
 								</div>
 								@foreach($playInGames as $game)
 									<div class="col-12 col-md-6 my-3 mx-auto">
@@ -375,7 +384,9 @@
 								<div class="col col-12 text-center">
 									<h2 class="roundHeader p-3 my-3">Play In Games</h2>
 
-									<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Playin Games</a>
+									@if(Auth::check() && Auth::user()->type == 'admin')
+										<a href="{{ request()->query() == null ? route('edit_playins') : route('edit_playins', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn rounded white black-text">Edit Playin Games</a>
+									@endif
 								</div>
 								
 								@foreach($playInGames as $game)
@@ -417,5 +428,9 @@
 		
 		@include('modals.new_season_modal')
 		@include('modals.complete_playoffs_modal')
+
+		<!-- Footer -->
+		@include('layouts.footer')
+		<!-- Footer -->
 	</div>
 @endsection
