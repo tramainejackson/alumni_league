@@ -9,6 +9,7 @@
 /public/videos/*
 /public/storage
 /public/addons
+/public/scss
 /public/css/mdb*
 /public/js/modules/*
 /public/js/mdb*
