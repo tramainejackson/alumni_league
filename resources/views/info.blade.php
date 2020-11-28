@@ -133,7 +133,7 @@
 		@else
 
 			<div class="row">
-				<div class="col-12 mx-auto leagueContactInfo">
+				<div class="col-12 col-xl-8 mx-auto leagueContactInfo">
 					<div class="row">
 						<div class="col-12 col-md-10 col-lg-8 col-xl-12 my-3 mx-auto">
 							<div id="update_pic" class="card card-cascade mx-auto">
@@ -221,10 +221,16 @@
 			</div>
 		@endif
 
-		@if(!Auth::check())
-			{{--Add Contact Us Form--}}
-			@include('layouts.contact')
-		@endif
+		<div class="col-12 col-xl-8 mx-auto leagueContactInfo">
+			<div class="row">
+				<!-- Footer -->
+				@if(!Auth::check())
+					{{--Add Contact Us Form--}}
+					@include('layouts.contact')
+				@endif
+				<!-- Footer -->
+			</div>
+		</div>
 
 	</div>
 
