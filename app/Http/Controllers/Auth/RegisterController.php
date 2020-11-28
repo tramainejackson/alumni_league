@@ -105,4 +105,8 @@ class RegisterController extends Controller
 			return $user;
 		}
     }
+
+	public function register() {
+	    abort(404);
+	}
 }

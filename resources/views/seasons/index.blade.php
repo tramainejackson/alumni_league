@@ -32,8 +32,10 @@
 					@if($showSeason->completed == 'N')
 						<!-- Show league season info -->
 						@if($showSeason->paid == 'Y')
-							<div class="text-center coolText1 d-flex align-items-center justify-content-center seasonName">
-								<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+							<div class="text-center coolText1">
+								<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
+									<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+								</div>
 							</div>
 
 							<!--Card-->
@@ -319,7 +321,7 @@
 													</div>
 												</div>
 
-												<div class="d-flex justify-content-around align-items-center">
+												<div class="d-flex justify-content-around align-items-center flex-column flex-md-row">
 													<button type="submit" class="btn btn-lg white-text green" id="">Update League</button>
 													<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
 												</div>
@@ -358,16 +360,18 @@
 								<div class="row">
 									@if($showSeasonSchedule->isNotEmpty())
 										@foreach($showSeasonSchedule as $upcomingGame)
-											<div class="card col-12 col-md-6 col-lg-4 col-lg-3 my-2">
-												<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
-												<div class="card-body text-center">
-													<p class="">{{ $upcomingGame->home_team }}</p>
-													<p class="">vs</p>
-													<p class="">{{ $upcomingGame->away_team }}</p>
-												</div>
-												<div class="card-footer px-1 d-flex align-items-center justify-content-around">
-													<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
-													<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+											<div class="col-12 col-md-6 col-lg-4 col-lg-3 my-2">
+												<div class="card">
+													<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
+													<div class="card-body text-center">
+														<p class="">{{ $upcomingGame->home_team }}</p>
+														<p class="">vs</p>
+														<p class="">{{ $upcomingGame->away_team }}</p>
+													</div>
+													<div class="card-footer px-1 d-flex align-items-center justify-content-around">
+														<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
+														<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+													</div>
 												</div>
 											</div>
 										@endforeach
@@ -438,7 +442,7 @@
 								</div>
 
 								<!-- Get the rebounding leaders -->
-								<div class="blue-gradient col-12 col-md-7 col-lg-5 m-1 table-wrapper mx-auto">
+								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
 										<tr>
@@ -554,7 +558,7 @@
 								<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 							</div>
 							<div class="my-5 d-flex align-items-center justify-content-center flex-column">
-								<div class="text-center">
+								<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 									<h1 class="h1 h1-responsive text-center">Upcoming Schedule</h1>
 									<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">Full Schedule</a>
 								</div>

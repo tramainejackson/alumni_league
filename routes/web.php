@@ -33,7 +33,7 @@ Route::resource('settings', 'AdminController');
 
 /* Overwrite the default login controller */
 	Route::post('/login', 'Auth\LoginController@authenticate');
-//	Route::get('/login/{user}', 'Auth\LoginController@ttr_user');
+	Route::get('/register', 'Auth\RegisterController@register');
 /* Overwrite the default login controller */
 
 Route::get('/', 'HomeController@about')->name('welcome');

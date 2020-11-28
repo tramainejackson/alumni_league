@@ -272,6 +272,11 @@ div[id^="backgroundImage"]::after {
 	background-color: rgba(5,5,5,.5);
 }
 
+.allGamesBtn {
+    top: 10px;
+    right: -140px;
+}
+
 .feesButton {
 	position: absolute!important;
     transform: rotate(-90deg);
@@ -3107,6 +3112,11 @@ table.currentMonth {
 		width: 9%;
 		text-align: center;
 	}
+
+    .team_players_stats_table {
+        table-layout: fixed;
+        overflow: hidden;
+    }
 	
 	.match_ups_player_pic1 {
 		margin: 0% 0% 0% 5%;
@@ -3149,5 +3159,10 @@ table.currentMonth {
         border-radius: .25rem!important;
         background-color: rgba(242,126,126,0.7);
         color: whitesmoke !important;
+    }
+
+    .allGamesBtn {
+        top: -25px;
+        right: -40px;
     }
 }

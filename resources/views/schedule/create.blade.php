@@ -4,8 +4,8 @@
 	<div class="container-fluid bgrd3">
 		<div class="row">
 
-			<div class="col-10 py-4 mx-auto">
-				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-lg-block position-absolute" type="button" style="top: 10px; right: -140px;">All Games</a>
+			<div class="col-10 py-4 mt-4 mx-auto">
+				<a href="{{ request()->query() == null ? route('league_schedule.index') : route('league_schedule.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text d-lg-block position-absolute allGamesBtn" type="button" style="">All Games</a>
 
 				<div class="container-fluid" id="">
 					<div class="row" id="">
@@ -21,8 +21,8 @@
 			</div>
 
 			<div class="col-12 col-lg-10 mx-auto">
-				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+				<div class="text-center p-4 card rgba-deep-orange-light white-text" id="">
+					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 				</div>
 				<div class="my-4">
 					<h2 class="h2-responsive text-center">Create New Week</h2>
