@@ -3,7 +3,7 @@
 @section('content')
 	<div id="leagues_landing_page" class="">
 		<div class="view">
-			<div class="mask d-flex flex-column rgba-blue-light align-items-center justify-content-md-center justify-content-around white-text coolText3 text-center">
+			<div class="mask d-flex flex-column rgba-blue-light align-items-center justify-content-center white-text coolText3 text-center">
 				<h1 class="font-weight-bold display-2 wow fadeInLeft aboutPageH1" data-wow-delay="1.0s">The</h1>
 				<h2 class="wow fadeInRight aboutPageH2 display-3" data-wow-delay="1.0s">Alumni League</h2>
 			</div>	
@@ -134,7 +134,7 @@
 						say, say it with ya chest! We keep it 300 over here.
 					</p>
 				</div>
-				<div class="col-md-6 col-lg-4 d-flex justify-content-center mb-md-0 mb-5">
+				<div class="col-md-6 col-lg-4 d-sm-flex justify-content-center mb-md-0 mb-5 d-none">
 					<img src="{{ asset('/images/alumni_league4.png') }}" alt="" class="img-fluid">
 				</div>
 			</div>
