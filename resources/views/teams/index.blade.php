@@ -68,22 +68,24 @@
 														</p>
 													</div>
 
-													@if($team->league_conference_id != null || $team->league_division_id != null)
-														<div class="divider-short"></div>
-													@endif
+													@if($showSeason->has_divisions == 'Y' || $showSeason->has_conferences == 'Y')
+														@if($team->league_conference_id != null || $team->league_division_id != null)
+															<div class="divider-short"></div>
+														@endif
 
-													@if($team->league_conference_id != null)
-														<p class="m-0">
-															<label class="">Conference:&nbsp;</label>
-															<span>{{ $team->conference->conference_name }}</span>
-														</p>
-													@endif
+														@if($team->league_conference_id != null)
+															<p class="m-0">
+																<label class="">Conference:&nbsp;</label>
+																<span>{{ $team->conference->conference_name }}</span>
+															</p>
+														@endif
 
-													@if($team->league_division_id != null)
-														<p class="m-0">
-															<label class="">Division:&nbsp;</label>
-															<span>{{ $team->division->division_name }}</span>
-														</p>
+														@if($team->league_division_id != null)
+															<p class="m-0">
+																<label class="">Division:&nbsp;</label>
+																<span>{{ $team->division->division_name }}</span>
+															</p>
+														@endif
 													@endif
 
 													@if(Auth::check() && (Auth::user()->type == 'admin') || array_search($team->id, $userTeamsIDs) !== false)
