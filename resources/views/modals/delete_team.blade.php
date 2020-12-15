@@ -6,7 +6,7 @@
             </div>
             <div class="modal-body">
                 <!-- Delete Form -->
-                <form method="POST" action="{{ action('LeagueTeamController@destroy', ['season' => $showSeason->id]) }}" name="">
+                <form method="POST" action="{{ action('LeagueTeamController@destroy', ['league_team' => $league_team->id, 'season' => $showSeason->id]) }}" name="">
 
                     {{ method_field('DELETE') }}
                     {{ csrf_field() }}

@@ -384,6 +384,7 @@ class LeagueTeamController extends Controller
     public function destroy(Request $request, LeagueTeam $league_team) {
 		// Get the season to show
 		$showSeason = $this->showSeason;
+//		dd($league_team);
 
 		// Delete team
 		if($league_team->delete()) {
@@ -413,7 +414,7 @@ class LeagueTeamController extends Controller
 							$game->delete();
 						}
 						
-						return redirect()->action('LeagueTeamController@index', ['season' => $showSeason->id, 'year' => $showSeason->year])->with('status', 'Team Deleted Successfully');
+						return redirect()->action('LeagueTeamController@index', ['season' => $showSeason->id])->with('status', 'Team Deleted Successfully');
 					}
 					
 					// Update the standings after updating all the games
