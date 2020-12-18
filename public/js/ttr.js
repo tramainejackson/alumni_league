@@ -372,7 +372,7 @@ $(document).ready(function() {
 	// Delete the player from the team
 	$('body').on('click', '.deletePlayerBtn', function() {
 		var playerID = $(this).next().val();
-		var deleteURL = window.location.protocol + '//' + window.location.hostname  + ':' + window.location.port + '/' + 'league_players/' + playerID;
+		var deleteURL = window.location.protocol + '//' + window.location.hostname  + ':' + window.location.port + '/league_players/' + playerID;
 		var playerName = $(this).parents('tr').find('input[name="player_name[]"]').val();
 
 		$('#delete_player form').attr('action', deleteURL);
@@ -382,13 +382,24 @@ $(document).ready(function() {
 	// Delete the rule from the settings
 	$('body').on('click', '.deleteRuleBtn', function() {
 		var ruleID = $(this).next().val();
-		var deleteURL = window.location.protocol + '//' + window.location.hostname  + ':' + window.location.port + '/' + 'league_rules/' + ruleID;
+		var deleteURL = window.location.protocol + '//' + window.location.hostname  + ':' + window.location.port + '/league_rules/' + ruleID;
 		var ruleDescr = $(this).parents('tr').find('input[name="rule[]"]').val();
 
 		$('#delete_rule form').attr('action', deleteURL);
 		$('#delete_rule .modal-header h2').text('Delete ' + ruleDescr);
 	});
-	
+
+    // Restore a deleted team
+    $('body').on('click', '.restoreTeamBtn', function() {
+        var teamID = $(this).next().val();
+        var seasonID = $(this).next().next().val();
+        var restoreURL = window.location.protocol + '//' + window.location.hostname  + ':' + window.location.port + '/restore_team/' + teamID + '?season=' + seasonID;
+        var teamName = $(this).prev().text();
+
+        $('form[name="restore_team_form"]').attr('action', restoreURL);
+        $('#restore_team .modal-header h2').text('Restore Team ' + teamName);
+    });
+
 	// Clear all the stats for a particular game on the stats edit page
 	$('body').on('click', '.clearStatsBtn', function() {
 		$(this).parents('.card').find('input').val('');

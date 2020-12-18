@@ -17,6 +17,10 @@
 							<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
 						@endforeach
 					@endif
+
+					@if($allStarGame != null)
+						<a href="{{ request()->query() == null ? route('league_stats.all_star_game', ['game' => $allStarGame->id]) : route('league_stats.all_star_game', ['game' => $allStarGame->id, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">All Star Game Stats</a>
+					@endif
 				@endif
 			</div>
 		</div>

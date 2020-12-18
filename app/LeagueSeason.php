@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\LeagueSchedule;
+use App\LeaguePlayer;
 
 class LeagueSeason extends Model
 {
@@ -574,5 +575,49 @@ class LeagueSeason extends Model
 				}
 			}
 		}
+	}
+
+	public function scopeCreateAllStarGame($query, $season=null) {
+		$completeCheck = 'All Star Game Created Successfully';
+
+		$allStarPlayers = self::league_players()->inRandomOrder()->allStars();
+		$allStarTeams = self::league_teams()->where('is_all_star_team', 'Y')->get();
+		$allStarGame = new LeagueSchedule();
+
+		if(self::league_teams()->where('is_all_star_team', 'Y')->get()->count() != 2) {
+			$completeCheck = 'All Star Game Not Created. There Should Be 2 Teams Designated As All Star Teams. You Currently Have ' . $allStarTeams->count() . ' Team(s) Assigned';
+		} else {
+			//Loop through all the players and assign them to the all-star teams
+			for($x=0; $x<$allStarPlayers->count(); $x++) {
+				if($x % 2 == 0) {
+					$addAllStar = new LeaguePlayer();
+					$addAllStar->league_season_id = $allStarPlayers[$x]->league_season_id;
+					$addAllStar->league_team_id = $allStarTeams[0]->id;
+					$addAllStar->team_name = $allStarTeams[0]->team_name;
+					$addAllStar->player_name = $allStarPlayers[$x]->player_name;
+
+					$addAllStar->save();
+				} else {
+					$addAllStar = new LeaguePlayer();
+					$addAllStar->league_season_id = $allStarPlayers[$x]->league_season_id;
+					$addAllStar->league_team_id = $allStarTeams[1]->id;
+					$addAllStar->team_name = $allStarTeams[1]->team_name;
+					$addAllStar->player_name = $allStarPlayers[$x]->player_name;
+
+					$addAllStar->save();
+				}
+			}
+
+			$allStarGame->league_season_id = $allStarTeams[0]->league_season_id;
+			$allStarGame->home_team_id = $allStarTeams[0]->id;
+			$allStarGame->home_team = $allStarTeams[0]->team_name;
+			$allStarGame->away_team_id = $allStarTeams[1]->id;
+			$allStarGame->away_team = $allStarTeams[1]->team_name;
+			$allStarGame->all_star_game = 'Y';
+
+			$allStarGame->save();
+		}
+
+		return $completeCheck;
 	}
 }

@@ -47,6 +47,7 @@ class LeagueStatController extends Controller
 		$allTeams = $showSeason->stats()->allTeamStats();
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 		$checkStats = $showSeason->stats()->allFormattedStats()->get()->isNotEmpty();
+	    $allStarGame = $this->showSeason->games()->where('all_star_game', 'Y')->first();
 
 		// Resize the default image
 		Image::make(public_path('images/emptyface.jpg'))->resize(800, null, 	function ($constraint) {
@@ -61,11 +62,11 @@ class LeagueStatController extends Controller
 			$playInGames = $showSeason->games()->playoffPlayinGames();
 			$playoffSettings = $showSeason->playoffs;
 
-			return view('stats.index', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds'));
+			return view('stats.index', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'playoffSettings', 'playoffRounds', 'allStarGame'));
 
 		} else {
 
-			return view('stats.index', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats'));
+			return view('stats.index', compact('showSeason', 'allPlayers', 'allTeams', 'seasonScheduleWeeks', 'defaultImg', 'checkStats', 'allStarGame'));
 
 		}
     }
@@ -118,6 +119,22 @@ class LeagueStatController extends Controller
     }
 	
 	/**
+     * Show the stats to be edited for the All-Star Game.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_asg(Request $request) {
+		// Get the season to show
+	    $showSeason = $this->showSeason;
+		$seasonASG = $showSeason->games()->where('all_star_game', 'Y')->first();
+		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
+
+		if((Auth::user()->type == 'statistician' || Auth::user()->type == 'admin')) {
+			return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'seasonASG'));
+		}
+    }
+
+	/**
      * Show the stats to be edited for selected week.
      *
      * @return \Illuminate\Http\Response
@@ -127,9 +144,10 @@ class LeagueStatController extends Controller
 	    $showSeason = LeagueSchedule::getWeekGames($week)->first()->season;
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
+	    $allStarGame = $this->showSeason->games()->where('all_star_game', 'Y')->first();
 
 		if((Auth::user()->type == 'statistician' || Auth::user()->type == 'admin')) {
-			return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames'));
+			return view('stats.edit', compact('seasonScheduleWeeks', 'showSeason', 'week', 'weekGames', 'allStarGame'));
 		}
     }
 	
@@ -143,9 +161,10 @@ class LeagueStatController extends Controller
 		$showSeason = $this->showSeason;
 		$playoffRounds = $showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
 		$roundGames	= $showSeason->games()->getRoundGames($round)->get();
+	    $allStarGame = $this->showSeason->games()->where('all_star_game', 'Y')->first();
 
 	    if((Auth::user()->type == 'statistician' || Auth::user()->type == 'admin')) {
-		    return view('playoffs.stat', compact('playoffRounds', 'showSeason', 'round', 'roundGames'));
+		    return view('playoffs.stat', compact('playoffRounds', 'showSeason', 'round', 'roundGames', 'allStarGame'));
 	    }
     }
 	

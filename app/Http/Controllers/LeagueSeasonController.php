@@ -57,6 +57,7 @@ class LeagueSeasonController extends Controller
 	    $showSeasonConferences = $this->showSeason->conferences;
 	    $showSeasonDivisions = $this->showSeason->divisions;
 	    $leagueRules = $this->showSeason->league_rules;
+	    $allStarGame = $this->showSeason->games()->where('all_star_game', 'Y')->first();
 
     	if($showSeason !== null || $completedSeasons !== null) {
 
@@ -68,9 +69,9 @@ class LeagueSeasonController extends Controller
 			    $nonPlayInGames = $this->showSeason->games()->playoffNonPlayinGames()->get();
 			    $playInGames = $this->showSeason->games()->playoffPlayinGames()->get();
 
-			    return view('playoffs.index', compact('ageGroups', 'compGroups', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams', 'leagueRules'));
+			    return view('playoffs.index', compact('ageGroups', 'compGroups', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams', 'leagueRules', 'allStarGame'));
 		    } else {
-			    return view('seasons.index', compact('showSeason', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'showSeasonUnpaidTeams', 'showSeasonConferences', 'showSeasonDivisions', 'leagueRules'));
+			    return view('seasons.index', compact('showSeason', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'showSeasonUnpaidTeams', 'showSeasonConferences', 'showSeasonDivisions', 'leagueRules', 'allStarGame'));
 		    }
 	    } else {
 		    return view('seasons.no_season');
@@ -344,5 +345,17 @@ class LeagueSeasonController extends Controller
 	    if($ruleID->delete()) {
 	    	return redirect()->back()->with('status', 'Rule Deleted Successfully');
 	    }
+    }
+
+	/**
+     * Show the application about us page for public.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create_all_star_team(Request $request) {
+    	// createAllStarGame will return a status of completed or denied
+	    $completeCheck = $this->showSeason->createAllStarGame($this->showSeason->id);
+
+	    return redirect()->back()->with('status', $completeCheck);
     }
 }

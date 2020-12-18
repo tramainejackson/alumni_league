@@ -63,38 +63,40 @@
 
 								<div class="form-row">
 
-									@if(Auth::check() && Auth::user()->type == 'admin')
-										@if($showSeason->has_conferences == 'Y')
-											@if($showSeason->conferences->isNotEmpty())
-												<div class="col-12 col-md">
-													<select class="mdb-select md-form" name="conference">
+									@if($league_team->is_all_star_team == 'N')
+										@if(Auth::check() && Auth::user()->type == 'admin')
+											@if($showSeason->has_conferences == 'Y')
+												@if($showSeason->conferences->isNotEmpty())
+													<div class="col-12 col-md">
+														<select class="mdb-select md-form" name="conference">
 
-														<option value="blank" selected disabled>Select A Conference</option>
+															<option value="blank" selected disabled>Select A Conference</option>
 
-														@foreach($conferences as $conference)
-															<option value="{{ $conference->id }}"{{ $league_team->league_conference_id == $conference->id ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $conference->conference_name)) }}</option>
-														@endforeach
-													</select>
+															@foreach($conferences as $conference)
+																<option value="{{ $conference->id }}"{{ $league_team->league_conference_id == $conference->id ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $conference->conference_name)) }}</option>
+															@endforeach
+														</select>
 
-													<label data-error="wrong" data-success="right" for="conference" class="text-primary mdb-main-label">Conference</label>
-												</div>
+														<label data-error="wrong" data-success="right" for="conference" class="text-primary mdb-main-label">Conference</label>
+													</div>
+												@endif
 											@endif
-										@endif
 
-										@if($showSeason->has_divisions == 'Y')
-											@if($showSeason->conferences->isNotEmpty())
-												<div class="col-12 col-md">
-													<select class="mdb-select md-form" name="division">
+											@if($showSeason->has_divisions == 'Y')
+												@if($showSeason->conferences->isNotEmpty())
+													<div class="col-12 col-md">
+														<select class="mdb-select md-form" name="division">
 
-														<option value="blank" selected disabled>Select A Division</option>
+															<option value="blank" selected disabled>Select A Division</option>
 
-														@foreach($divisions as $division)
-															<option value="{{ $division->id }}"{{ $league_team->league_division_id == $division->id ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $division->division_name)) }}</option>
-														@endforeach
-													</select>
+															@foreach($divisions as $division)
+																<option value="{{ $division->id }}"{{ $league_team->league_division_id == $division->id ? ' selected' : ''  }}>{{ ucwords(str_ireplace('_', ' ', $division->division_name)) }}</option>
+															@endforeach
+														</select>
 
-													<label for="comp_group" class="text-primary mdb-main-label">Division</label>
-												</div>
+														<label for="comp_group" class="text-primary mdb-main-label">Division</label>
+													</div>
+												@endif
 											@endif
 										@endif
 									@endif
@@ -103,19 +105,21 @@
 
 								@if(Auth::check() && Auth::user()->type == 'admin')
 									<div class="form-row align-items-center justify-content-between justify-content-md-around">
-										<div class="input-form">
-											<label for="fee_paid" class="d-block">League Fee Paid</label>
+										@if($league_team->is_all_star_team == 'N')
+											<div class="input-form">
+												<label for="fee_paid" class="d-block">League Fee Paid</label>
 
-											<div class="">
-												<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
-													<input type="checkbox" name="fee_paid" class="hidden" value="Y"{{ $league_team->fee_paid == 'Y' ? ' checked' : '' }} hidden />
-												</button>
+												<div class="">
+													<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
+														<input type="checkbox" name="fee_paid" class="hidden" value="Y"{{ $league_team->fee_paid == 'Y' ? ' checked' : '' }} hidden />
+													</button>
 
-												<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'N' ? ' green active' : ' grey' }}" type="button">No
-													<input type="checkbox" name="fee_paid" class="hidden" value="N"{{ $league_team->fee_paid == 'N' ? ' checked' : '' }} hidden />
-												</button>
+													<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'N' ? ' green active' : ' grey' }}" type="button">No
+														<input type="checkbox" name="fee_paid" class="hidden" value="N"{{ $league_team->fee_paid == 'N' ? ' checked' : '' }} hidden />
+													</button>
+												</div>
 											</div>
-										</div>
+										@endif
 
 										<div class="input-form">
 											<label for="fee_paid" class="d-block">Is This An All-Star Team?</label>
@@ -143,65 +147,88 @@
 							<div class="mt-4 position-relative">
 								<div class="d-flex flex-column flex-md-row align-items-center justify-content-center">
 									<h3 class="text-center my-0 mx-auto">{{ $league_team->team_name }} Players</h3>
-									<button class="btn btn-floating green addPlayerBtn" type="button">
-										<i class="fa fa-plus-circle" aria-hidden="true"></i>
-									</button>
+
+									@if($league_team->is_all_star_team == 'N')
+										<button class="btn btn-floating green addPlayerBtn" type="button">
+											<i class="fa fa-plus-circle" aria-hidden="true"></i>
+										</button>
+									@endif
 								</div>
 								<div class="table-wrapper">
 									<table class="table table-hover table-striped" id="team_players_table">
 										<thead>
 											<tr>
-												<th>Captain</th>
-												<th>Jersey Num.</th>
-												<th class="text-nowrap">Player Name</th>
-												<th class="text-nowrap">Email Address</th>
-												<th class="text-nowrap">Phone</th>
-												<th class="text-nowrap">All-Star</th>
-												<th></th>
+												@if($league_team->is_all_star_team == 'N')
+													<th>Captain</th>
+													<th>Jersey Num.</th>
+													<th class="text-nowrap">Player Name</th>
+													<th class="text-nowrap">Email Address</th>
+													<th class="text-nowrap">Phone</th>
+													<th class="text-nowrap">All-Star</th>
+													<th></th>
+												@else
+													<th>Jersey Num.</th>
+													<th class="text-nowrap">Player Name</th>
+												@endif
 											</tr>
 										</thead>
 										<tbody>
 											@if($league_team->players->isNotEmpty())
 												@foreach($league_team->players as $player)
 													<tr class="">
-														<td class="align-bottom">
-															<div class="form-check" id="">
-																<input type="checkbox" name="team_captain" class="form-check-input filled-in" value="captain_{{ $player->id }}" id="captain_{{ $player->id }}"{{ $player->team_captain == 'Y' ? ' checked' : '' }} />
-																<label class="form-check-label" for="captain_{{ $player->id }}"></label>
-															</div>
-														</td>
-														<td class="">
-															<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" min="0" step="1" />
-														</td>
-														<td class="">
-															<input type="text" name="player_name[]" class="form-control" value="{{ $player->player_name }}" placeholder="Enter Player Name" />
-														</td>
-														<td class="">
-															<input type="text" name="player_email[]" class="form-control" value="{{ $player->email }}" placeholder="Enter Player Email" />
-														</td>
-														<td class="">
-															<input type="text" name="player_phone[]" class="form-control" value="{{ $player->phone }}" placeholder="Enter Player Phone" />
-														</td>
-
-														@if(Auth::check() && Auth::user()->type == 'admin')
+														@if($league_team->is_all_star_team == 'N')
 															<td class="align-bottom">
 																<div class="form-check" id="">
-																	<input type="checkbox" name="all_star[]" class="form-check-input filled-in" value="all_star_{{ $player->id }}" id="all_star_{{ $player->id }}"{{ $player->all_star == 'Y' ? ' checked' : '' }} />
-																	<label class="form-check-label" for="all_star_{{ $player->id }}"></label>
+																	<input type="checkbox" name="team_captain" class="form-check-input filled-in" value="captain_{{ $player->id }}" id="captain_{{ $player->id }}"{{ $player->team_captain == 'Y' ? ' checked' : '' }} />
+																	<label class="form-check-label" for="captain_{{ $player->id }}"></label>
 																</div>
 															</td>
-														@endif
+															<td class="">
+																<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" min="0" step="1" />
+															</td>
+															<td class="">
+																<input type="text" name="player_name[]" class="form-control" value="{{ $player->player_name }}" placeholder="Enter Player Name" />
+															</td>
+															<td class="">
+																<input type="text" name="player_email[]" class="form-control" value="{{ $player->email }}" placeholder="Enter Player Email" />
+															</td>
+															<td class="">
+																<input type="text" name="player_phone[]" class="form-control" value="{{ $player->phone }}" placeholder="Enter Player Phone" />
+															</td>
 
-														<td class="">
-															<button data-target="#delete_player" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deletePlayerBtn">Remove</button>
-															<input type="text" class="hidden" value="{{ $player->id }}" hidden />
-														</td>
+															@if(Auth::check() && Auth::user()->type == 'admin')
+																<td class="align-bottom">
+																	<div class="form-check" id="">
+																		<input type="checkbox" name="all_star[]" class="form-check-input filled-in" value="all_star_{{ $player->id }}" id="all_star_{{ $player->id }}"{{ $player->all_star == 'Y' ? ' checked' : '' }} />
+																		<label class="form-check-label" for="all_star_{{ $player->id }}"></label>
+																	</div>
+																</td>
+															@endif
+
+															<td class="">
+																<button data-target="#delete_player" data-toggle="modal" type="button" class="btn btn-sm red darken-1 white-text rounded w-100 deletePlayerBtn">Remove</button>
+																<input type="text" class="hidden" value="{{ $player->id }}" hidden />
+															</td>
+														@else
+															<td class="">
+																<input type="number" name="jersey_num[]" class="form-control" value="{{ $player->jersey_num }}" placeholder="Enter Jersey #" min="0" step="1" />
+															</td>
+															<td class="">
+																<input type="text" name="player_name[]" class="form-control" value="{{ $player->player_name }}" placeholder="Enter Player Name" />
+															</td>
+														@endif
 													</tr>
 												@endforeach
 											@else
-												<tr class="">
-													<th colspan="6" class="text-center">No Players Added for this team yet</th>
-												</tr>
+												@if($league_team->is_all_star_team == 'N')
+													<tr class="">
+														<th colspan="6" class="text-center">No Players Added for this team yet</th>
+													</tr>
+												@else
+													<tr class="">
+														<th colspan="2" class="text-center">No Players Added for this team yet. All Star Team Players Are Added Automatically</th>
+													</tr>
+												@endif
 											@endif
 
 											<tr class="newPlayerRow hidden" hidden>
@@ -250,4 +277,8 @@
 			@include('modals.delete_player')
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection

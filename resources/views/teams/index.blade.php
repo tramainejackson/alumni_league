@@ -53,38 +53,42 @@
 											<div class="card-body text-center position-relative border z-depth-1-half rgba-white-strong">
 												<!-- Title -->
 												<h1 class="card-title h1-responsive font-weight-bold mx-auto">{{ $team->team_name }}</h1>
+
 												<!-- Team Captain Info -->
 												<div class="d-flex flex-column align-items-center">
-													<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
-													<div class="d-flex flex-column align-items-center justify-content-center">
-														<p class="m-0">
-															<label class="">Name:&nbsp;</label>
-															<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
-														</p>
 
-														<p class="m-0">
-															<label class="">Phone:&nbsp;</label>
-															<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
-														</p>
-													</div>
-
-													@if($showSeason->has_divisions == 'Y' || $showSeason->has_conferences == 'Y')
-														@if($team->league_conference_id != null || $team->league_division_id != null)
-															<div class="divider-short"></div>
-														@endif
-
-														@if($team->league_conference_id != null)
+													@if($team->is_all_star_team == 'N')
+														<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
+														<div class="d-flex flex-column align-items-center justify-content-center">
 															<p class="m-0">
-																<label class="">Conference:&nbsp;</label>
-																<span>{{ $team->conference->conference_name }}</span>
+																<label class="">Name:&nbsp;</label>
+																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
 															</p>
-														@endif
 
-														@if($team->league_division_id != null)
 															<p class="m-0">
-																<label class="">Division:&nbsp;</label>
-																<span>{{ $team->division->division_name }}</span>
+																<label class="">Phone:&nbsp;</label>
+																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
 															</p>
+														</div>
+
+														@if($showSeason->has_divisions == 'Y' || $showSeason->has_conferences == 'Y')
+															@if($team->league_conference_id != null || $team->league_division_id != null)
+																<div class="divider-short"></div>
+															@endif
+
+															@if($team->league_conference_id != null)
+																<p class="m-0">
+																	<label class="">Conference:&nbsp;</label>
+																	<span>{{ $team->conference->conference_name }}</span>
+																</p>
+															@endif
+
+															@if($team->league_division_id != null)
+																<p class="m-0">
+																	<label class="">Division:&nbsp;</label>
+																	<span>{{ $team->division->division_name }}</span>
+																</p>
+															@endif
 														@endif
 													@endif
 
@@ -98,23 +102,50 @@
 															<a href="{{ request()->query() == null ? route('league_teams.show', ['league_team' => $team->id]) : route('league_teams.show', ['league_team' => $team->id, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg blue lighten-1 white-text">View Team</a>
 														</div>
 													@endif
+
 												</div>
 
 												@if(Auth::check() && Auth::user()->type == 'admin')
 													{{--Authourization Only--}}
-													<div class="feesButton">
-														@if($team->fee_paid == 'N')
-															<button class="btn orange darken-2 white-text" type="button">Fees Due</button>
-														@else
-															<button class="btn green darken-1 white-text" type="button">Fees Paid</button>
-														@endif
-													</div>
+													@if($team->is_all_star_team == 'N')
+														<div class="feesButton">
+															@if($team->fee_paid == 'N')
+																<button class="btn orange darken-2 white-text" type="button">Fees Due</button>
+															@else
+																<button class="btn green darken-1 white-text" type="button">Fees Paid</button>
+															@endif
+														</div>
+													@endif
 												@endif
 											</div>
 										</div>
 									</div>
 								@endforeach
+
 							</div>
+
+							@if($deletedTeams->isNotEmpty())
+								<div class="divider-long" id=""></div>
+
+								<div class="row my-4" id="">
+									<div class="col-12">
+										<h1 class="text-center h1 h1-responsive">Restore Deleted Team(s)</h1>
+									</div>
+
+									@foreach($deletedTeams as $deletedTeam)
+										<div class="col-4">
+											<div class="card" id="">
+												<div class="card-body" id="">
+													<h2 class="card-title">{{ $deletedTeam->team_name }}</h2>
+													<button class="btn red darken-1 white-text waves-effect waves-light restoreTeamBtn" type="button" data-toggle="modal" data-target="#restore_team">Restore Team</button>
+													<input type="number" name="restore_team_id" value="{{ $deletedTeam->id }}" hidden />
+													<input type="number" name="season_id" value="{{ $showSeason->id }}" hidden />
+												</div>
+											</div>
+										</div>
+									@endforeach
+								</div>
+							@endif
 
 						@else
 
@@ -310,6 +341,10 @@
 					</div>
 				@endif
 			</div>
+		</div>
+
+		<div class="row">
+			@include('modals.restore_team')
 		</div>
 	</div>
 

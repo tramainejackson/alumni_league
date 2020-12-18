@@ -90,4 +90,12 @@ class LeaguePlayer extends Model
 		return $query->where('team_captain', 'Y')
 			->get();
 	}
+
+	/**
+	* Scope a query to get the captain of the team
+	*/
+	public function scopeAllStars($query) {
+		return $query->where('all_star', 'Y')
+			->get();
+	}
 }

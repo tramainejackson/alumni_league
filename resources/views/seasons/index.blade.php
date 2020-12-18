@@ -321,6 +321,95 @@
 													</div>
 												</div>
 
+												@if($showSeason->league_players()->allStars()->count() > 0)
+													<div class="card mx-5 my-4 rgba-light-blue-strong text-white" id="">
+														<div class="card-body" id="">
+															<div class="" id="">
+																<h2 class="h2-responsive text-underline text-center">All Star Game</h2>
+															</div>
+
+															@if($allStarGame == null)
+																<div class="" id="">
+																	<h3 class="h3 text-center">Current All Star Selection Count: {{ $showSeason->league_players()->allStars()->count() }}</h3>
+																</div>
+
+																<div class="text-center" id="">
+																	<button class="btn peach-gradient" type='button' id="" data-toggle="modal" data-target="#create_all_star_team">Create All Star Game</button>
+																</div>
+															@else
+																<div class="" id="">
+																	<table id='' class='table-light table'>
+																		<thead>
+																			<tr class="indigo darken-3 white-text">
+																				<th class="text-center" colspan="3">Match-Up</th>
+																				<th>Time</th>
+																				<th>Date</th>
+																				<th></th>
+																			</tr>
+																		</thead>
+
+																		<tbody>
+																			<tr>
+																				@if($allStarGame->result)
+																					<td class="awayTeamData text-nowrap"><span class="awayTeamNameData">{{ $allStarGame->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $allStarGame->away_team_obj->id }}</span>
+																						@if($allStarGame->result->winning_team_id == $allStarGame->away_team_id)
+																							@if($allStarGame->result->forfeit == 'Y')
+																								<span class="badge badge-pill green darken-2 ml-3 forfeitData awayTeamScoreData">Winner</span>
+																							@else
+																								<span class="badge badge-pill green darken-2 ml-3 awayTeamScoreData">{{ $allStarGame->result->away_team_score }}</span>
+																							@endif
+																						@else
+																							@if($allStarGame->result->forfeit == 'Y')
+																								<span class="badge badge-pill red darken-2 ml-3 awayTeamScoreData forfeitData">Forfeit</span>
+																							@else
+																								<span class="badge badge-pill red darken-2 ml-3 awayTeamScoreData">{{ $allStarGame->result->away_team_score }}</span>
+																							@endif
+																						@endif
+																					</td>
+																					<td>vs</td>
+																					<td class="homeTeamData text-nowrap"><span class="homeTeamNameData">{{ $allStarGame->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $allStarGame->home_team_obj->id }}</span>
+																						@if($allStarGame->result->winning_team_id == $allStarGame->home_team_id)
+																							@if($allStarGame->result->forfeit == 'Y')
+																								<span class="badge badge-pill green darken-2 ml-3 forfeitData homeTeamScoreData">Winner</span>
+																							@else
+																								<span class="badge badge-pill green darken-2 ml-3 homeTeamScoreData">{{ $allStarGame->result->home_team_score }}</span>
+																							@endif
+																						@else
+																							@if($allStarGame->result->forfeit == 'Y')
+																								<span class="badge badge-pill red darken-2 ml-3 homeTeamScoreData forfeitData">Forfeit</span>
+																							@else
+																								<span class="badge badge-pill red darken-2 ml-3 homeTeamScoreData">{{ $allStarGame->result->home_team_score }}</span>
+																							@endif
+																						@endif
+																					</td>
+																				@else
+																					<td class="awayTeamData text-nowrap"><span class="awayTeamNameData">{{ $allStarGame->away_team }}</span><span class="awayTeamIDData hidden" hidden>{{ $allStarGame->away_team_obj->id }}</span></td>
+																					<td>vs</td>
+																					<td class="homeTeamData text-nowrap"><span class="homeTeamNameData">{{ $allStarGame->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $allStarGame->home_team_obj->id }}</span></td>
+																				@endif
+
+																				<td class="gameTimeData text-nowrap">{{ $allStarGame->game_time() }}</td>
+																				<td class="gameDateData text-nowrap">{{ $allStarGame->game_date() }}</td>
+																				<td>
+
+																					@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
+																						{{--Authourization Only--}}
+																						<button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button>
+																					@else
+																						<a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $allStarGame->id]) }}">View Stats</a>
+																					@endif
+
+																				</td>
+																				<td class="gameIDData" hidden>{{ $allStarGame->id }}</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+															@endif
+														</div>
+													</div>
+												@endif
+
 												<div class="d-flex justify-content-around align-items-center flex-column flex-md-row">
 													<button type="submit" class="btn btn-lg white-text green" id="">Update League</button>
 													<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
@@ -542,6 +631,14 @@
 			@include('modals.new_season_modal')
 			@include('modals.complete_season_modal')
 			@include('modals.delete_rule')
+
+			@if($showSeason->league_players()->allStars()->count() > 0)
+				@include('modals.create_all_star_game')
+			@endif
+
+			@if($allStarGame != null)
+				@include('modals.edit_game')
+			@endif
 
 		</div>
 	@else

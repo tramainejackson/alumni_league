@@ -72,6 +72,8 @@ Route::delete('/delete_game/{league_schedule}/', 'LeagueScheduleController@delet
 
 Route::patch('/update_game', 'LeagueScheduleController@update_game');
 
+Route::get('/league_stats/all_star_game/{game}', 'LeagueStatController@edit_asg')->name('league_stats.all_star_game');
+
 Route::get('/league_stats/edit_week/{week}', 'LeagueStatController@edit_week')->name('league_stats.edit_week');
 
 Route::get('/league_stats/edit_round/{round}', 'LeagueStatController@edit_round')->name('league_stats.edit_round');
@@ -89,6 +91,10 @@ Route::get('league_profile/{league}/{season}', 'LeagueProfileController@show_sea
 Route::get('settings', 'HomeController@show_setting')->name('settings');
 
 Route::post('settings/{setting}', 'HomeController@edit_setting');
+
+Route::post('/restore_team/{id}', 'LeagueTeamController@restore');
+
+Route::post('/create_all_star_team/', 'LeagueSeasonController@create_all_star_team');
 
 /** MDB Templates **/
 //Route::get('/templates/about_us', 'TemplateController@about_us');
