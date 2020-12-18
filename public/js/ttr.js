@@ -579,8 +579,7 @@ $(document).ready(function() {
 	});
 	
 	//Add player stats to player card and display
-	$("body").on("click", ".leagueLeadersCategory tr:not(.leagueLeadersCategoryFR), #player_stats tr:not(:first)", function(e)
-	{
+	$("body").on("click", ".leagueLeadersCategory tr:not(.leagueLeadersCategoryFR), #player_stats tr:not(:first)", function(e) {
 		var playerStats = [
 			$(this).children(".playerNameTD").text(),
 			$(this).children(".totalPointsTD").text(),
@@ -597,7 +596,8 @@ $(document).ready(function() {
 			$(this).children(".stealsPGTD").text(),
 			$(this).children(".totalBlocksTD").text(),
 			$(this).children(".blocksPGTD").text(),
-			$(this).children(".teamNameTD").text()
+			$(this).children(".teamNameTD").text(),
+			$(this).children(".allStarTD").text()
 		];
 		
 		$(".playerNamePlayerCard").text(playerStats[0]);
@@ -607,6 +607,7 @@ $(document).ready(function() {
 		$(".perGameReboundsVal").text(playerStats[10]);
 		$(".perGameStealsVal").text(playerStats[12]);
 		$(".perGameBlocksVal").text(playerStats[14]);
+        playerStats[16] == 'N' ? $(".playerASG").addClass("text-hide") : $(".playerASG").removeClass("text-hide");
 	});
 	
 	//Add team stats to team card and display	

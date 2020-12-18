@@ -451,7 +451,7 @@
 										@foreach($showSeasonSchedule as $upcomingGame)
 											<div class="col-12 col-md-6 col-lg-4 col-lg-3 my-2">
 												<div class="card">
-													<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
+													<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? $upcomingGame->all_star_game == 'Y' ? 'All-Star Game' : 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
 													<div class="card-body text-center">
 														<p class="">{{ $upcomingGame->home_team }}</p>
 														<p class="">vs</p>

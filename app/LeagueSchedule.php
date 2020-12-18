@@ -309,8 +309,16 @@ class LeagueSchedule extends Model
 	*/	
 	public function scopeGetScheduleWeeks($query) {
 		return $query->select('season_week')
-		->where("season_week", '<>', null)
-		->groupBy("season_week");
+			->where('season_week', '<>', null)
+			->groupBy("season_week");
+	}
+
+	/**
+	* Scope a query to get the asg listed on the schedule.
+	*/
+	public function scopeGetASG($query) {
+		return $query->select('*')
+			->where('all_star_game', '=', 'Y');
 	}
 	
 	/**
@@ -319,12 +327,12 @@ class LeagueSchedule extends Model
 	*/	
 	public function scopePlayoffRounds($query) {
 		return $query->select('round')
-		->where([
-			["season_week", null],
-			["playin_game", 'N'],
-			["round", '>', 0],
-		])
-		->groupBy("round");
+			->where([
+				['season_week', null],
+				['playin_game', 'N'],
+				['round', '>', 0],
+			])
+			->groupBy("round");
 	}
 	
 	/**
@@ -332,11 +340,11 @@ class LeagueSchedule extends Model
 	*/	
 	public function scopePlayoffNonPlayinGames($query) {
 		return $query->select('*')
-		->where([
-			["season_week", null],
-			["playin_game", 'N'],
-			["round", '<>', null],
-		]);
+			->where([
+				['season_week', null],
+				['playin_game', 'N'],
+				['round', '<>', null],
+			]);
 	}
 	
 	/**
@@ -344,11 +352,11 @@ class LeagueSchedule extends Model
 	*/	
 	public function scopeRoundGames($query, $round) {
 		return $query->select('*')
-		->where([
-			["season_week", null],
-			["playin_game", 'N'],
-			["round", $round],
-		]);
+			->where([
+				['season_week', null],
+				['playin_game', 'N'],
+				['round', $round],
+			]);
 	}
 	
 	/**
@@ -356,10 +364,10 @@ class LeagueSchedule extends Model
 	*/	
 	public function scopePlayoffPlayinGames($query) {
 		return $query->select('*')
-		->where([
-			["season_week", null],
-			["playin_game", 'Y'],
-		]);
+			->where([
+				['season_week', null],
+				['playin_game', 'Y'],
+			]);
 	}
 	
 	/**
@@ -384,9 +392,9 @@ class LeagueSchedule extends Model
 	public function scopeGetRoundGames($query, $round) 
 	{
 		return $query->where([
-			["round", $round],
-			["season_week", null],
-		])->orderBy('game_date')->orderBy('game_time');
+				["round", $round],
+				["season_week", null],
+			])->orderBy('game_date')->orderBy('game_time');
 	}
 	
 	/**

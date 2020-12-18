@@ -43,6 +43,7 @@
 						<button type="button" class="btn statCategoryBtn gray w-100" id="player_stats_btn">Player Stats</button>
 						<button type="button" class="btn statCategoryBtn gray w-100" id="team_stats_btn">Team Stats</button>
 					</div>
+
 					<div id="league_stats" class="container-fluid mb-4">
 
 						<div id="league_leaders" class="row">
@@ -75,6 +76,7 @@
 												<td class='totalBlocksTD' hidden>{{ $scoringLeader->TBLK == null ? 0 : $scoringLeader->TBLK }}</td>
 												<td class='blocksPGTD' hidden>{{ $scoringLeader->BPG == null ? 0 : $scoringLeader->BPG }}</td>
 												<td class='teamNameTD' hidden>{{ $scoringLeader->player->team_name }}</td>
+												<td class='allStarTD' hidden>{{ $scoringLeader->player->all_star }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -109,6 +111,7 @@
 												<td class='totalBlocksTD' hidden>{{ $assistLeader->TBLK == null ? 0 : $assistLeader->TBLK }}</td>
 												<td class='blocksPGTD' hidden>{{ $assistLeader->BPG == null ? 0 : $assistLeader->BPG }}</td>
 												<td class='teamNameTD' hidden>{{ $assistLeader->player->team_name }}</td>
+												<td class='allStarTD' hidden>{{ $assistLeader->player->all_star }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -143,6 +146,7 @@
 												<td class='totalBlocksTD' hidden>{{ $reboundsLeader->TBLK == null ? 0 : $reboundsLeader->TBLK }}</td>
 												<td class='blocksPGTD' hidden>{{ $reboundsLeader->BPG == null ? 0 : $reboundsLeader->BPG }}</td>
 												<td class='teamNameTD' hidden>{{ $reboundsLeader->player->team_name }}</td>
+												<td class='allStarTD' hidden>{{ $reboundsLeader->player->all_star }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -177,6 +181,7 @@
 												<td class='totalBlocksTD' hidden>{{ $stealsLeader->TBLK == null ? 0 : $stealsLeader->TBLK }}</td>
 												<td class='blocksPGTD' hidden>{{ $stealsLeader->BPG == null ? 0 : $stealsLeader->BPG }}</td>
 												<td class='teamNameTD' hidden>{{ $stealsLeader->player->team_name }}</td>
+												<td class='allStarTD' hidden>{{ $stealsLeader->player->all_star }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -211,6 +216,7 @@
 												<td class='totalBlocksTD text-center'>{{ $blocksLeader->TBLK == null ? 0 : $blocksLeader->TBLK }}</td>
 												<td class='blocksPGTD text-center'>{{ $blocksLeader->BPG == null ? 0 : $blocksLeader->BPG }}</td>
 												<td class='teamNameTD' hidden>{{ $blocksLeader->player->team_name }}</td>
+												<td class='allStarTD' hidden>{{ $blocksLeader->player->all_star }}</td>
 											</tr>
 										@endforeach
 									</tbody>
@@ -259,6 +265,7 @@
 											<td class='totalBlocksTD'>{{ $showPlayer->TBLK == null ? 0 : $showPlayer->TBLK }}</td>
 											<td class='blocksPGTD'>{{ $showPlayer->BPG == null ? 0 : $showPlayer->BPG }}</td>
 											<td class='teamNameTD' hidden>{{ $showPlayer->player->team_name }}</td>
+											<td class='allStarTD' hidden>{{ $showPlayer->player->all_star }}</td>
 										</tr>
 									@endforeach
 								</tbody>
@@ -324,131 +331,8 @@
 		</div>
 		
 		<!-- Modal Cards -->
-		<div class="">
-			<!-- Player Card -->
-			<div class="modal fade" id="player_card" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="true">
-			
-				<div class="modal-dialog modal-lg">
-				
-					<div class="modal-content">
-					
-						<!--Card-->
-						<div class="card testimonial-card">
-						
-							<!-- Bacground color -->
-							<div class="card-up dark-gradient lighten-1">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-	
-							<!--Card image-->
-							<div class="avatar mx-auto white">
-								<img src="{{ $defaultImg }}" class="rounded-circle">
-							</div>
-							
-							<!--Card content-->
-							<div class="card-body playerCardStats container-fluid">
-							
-								<div class="card-header-title">
-									<h2 class="playerNamePlayerCard"></h2>
-								</div>
-								
-								<hr/>
-								
-								<div class="row">
-									<div class="col-4 playerCardStatsLI">
-										<b>Team Name:</b> <span class="teamNameVal"></span>
-									</div>
-									<div class="col-4 playerCardStatsLI">
-										<b>Points:</b> <span class="perGamePointsVal"></span>
-									</div>
-									<div class="col-4 playerCardStatsLI">
-										<b>Assist:</b> <span class="perGameAssistVal"></span>
-									</div>
-									<div class="col-4 playerCardStatsLI">
-										<b>Rebounds:</b> <span class="perGameReboundsVal"></span>
-									</div>
-									<div class="col-4 playerCardStatsLI">
-										<b>Steals:</b> <span class="perGameStealsVal"></span>
-									</div>
-									<div class="col-4 playerCardStatsLI">
-										<b>Blocks:</b> <span class="perGameBlocksVal"></span>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--/.Card-->
-					</div>
-				</div>
-			</div>
-			
-			<!-- Team Card -->
-			<div class="modal fade" id="team_card" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" data-backdrop="true">
-				<div class="modal-dialog modal-lg">
-					<div class="modal-content"  id="team_card_content">
-						<!--Card-->
-						<div class="card black white-text">
-							<!--Card image-->
-							<div class="view teamCardHeader">
-								<img src="" class="img-fluid" alt="photo">
-								<a href="#">
-									<div class="mask rgba-white-slight">
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-								</a>
-							</div>
-							<!--Card content-->
-							<div class="card-body text-center">
-								<div class="modal-body teamCardStats container-fluid">
-									<div class="row">
-										<div class="col-4 teamCardStatsLI">
-											<b>Team:&nbsp;</b><span class="teamNameTeamCard"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>Record:</b> <span class="teamWinsVal"></span> - <span class="teamLossesVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>Points:</b> <span class="totalTeamPointsVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>Assist:</b> <span class="perGameTeamAssistVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>Rebounds:</b> <span class="perGameTeamReboundsVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>Steals:</b> <span class="perGameTeamStealsVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>Blocks:</b> <span class="perGameTeamBlocksVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>PPG:</b> <span class="perGameTeamPointsVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>APG:</b> <span class="totalTeamAssistVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>RPG:</b> <span class="totalTeamReboundsVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>SPG:</b> <span class="totalTeamStealsVal"></span>
-										</div>
-										<div class="col-4 teamCardStatsLI">
-											<b>BPG:</b> <span class="totalTeamBlocksVal"></span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--/.Card-->
-					</div>
-				</div>
-			</div>
-		</div>
+		@include('modals.player_card')
+		@include('modals.team_card')
 	</div>
 
 	<!-- Footer -->

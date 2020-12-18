@@ -19,7 +19,6 @@ class LeagueScheduleController extends Controller
 {
 
 	public $showSeason;
-	public $league;
 
     /**
      * Create a new controller instance.
@@ -44,6 +43,7 @@ class LeagueScheduleController extends Controller
     public function index() {
 	    // Get the season to show
 	    $showSeason = $this::get_season();
+	    $seasonASG = $this->showSeason->games()->getASG()->first();
 
 		if($this->showSeason->is_playoffs == 'Y') {
 			$playoffRounds = $this->showSeason->games()->playoffRounds()->orderBy('round', 'desc')->get();
@@ -51,11 +51,11 @@ class LeagueScheduleController extends Controller
 			$playInGames = $this->showSeason->games()->playoffPlayinGames();
 			$playoffSettings = $this->showSeason->playoffs;
 
-			return view('playoffs.schedule', compact('showSeason', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings'));
+			return view('playoffs.schedule', compact('showSeason', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings', 'seasonASG'));
 		} else {
 			$seasonScheduleWeeks = $this->showSeason->games()->getScheduleWeeks();
 
-			return view('schedule.index', compact('showSeason', 'seasonScheduleWeeks'));
+			return view('schedule.index', compact('showSeason', 'seasonScheduleWeeks', 'seasonASG'));
 		}
     }
 	
@@ -668,7 +668,6 @@ class LeagueScheduleController extends Controller
 	public function delete_game(LeagueSchedule $league_schedule) {
 		// Get the season to show
 		$showSeason = $this->showSeason;
-		$activeSeasons = $showSeason->league_profile->seasons()->active()->get();
 
 		if($league_schedule->delete()) {
 			if($league_schedule->result) {
