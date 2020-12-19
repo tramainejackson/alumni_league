@@ -19,6 +19,7 @@
 /public/css/addons*
 /public/css/modules/
 /public/js/addons*
+/public/src
 /storage/*.key
 /vendor
 /.idea
