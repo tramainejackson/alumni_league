@@ -2,6 +2,12 @@
 
 @section('content')
 	<div class="container-fluid bgrd3 pb-5">
+
+		@if($showSeason->is_playoffs == 'Y')
+			<div class="row z-depth-3">
+				<div class="col-12 playoffTimeHeader" id=""></div>
+			</div>
+		@endif
 	
 		<div class="row{{ $showSeason->league_profile && $standings->isNotEmpty() ? '' : ' view' }}">
 
@@ -10,10 +16,6 @@
 					<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
 						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 					</div>
-					
-					@if($showSeason->is_playoffs == 'Y')
-						<h1 class="display-4 coolText4">It's Playoff Time</h1>
-					@endif
 				</div>
 
 				@if($standings != null && $standings->isNotEmpty())

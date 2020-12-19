@@ -2721,10 +2721,6 @@ span.leagues_age_header {
     min-width: 80%;
 }
 
-.under10, .under12, .under14, .under16, .under18, .over30, .over50, .unlimited{
-	/* display: none; */
-}
-
 #about_header, #contact_header, #contact_header2 {
 	text-align: center;
 	max-height: 70px;
@@ -2733,12 +2729,13 @@ span.leagues_age_header {
 	margin: 0%;
 }
 
-#contact_header {
+#contact_header2 {
+    padding-bottom: 20px;
 }
 
-#contact_header2 {padding-bottom: 20px;}
-
-#contact_header2 span {margin: 0px 15px;font-size: 110%;}
+#contact_header2 span {
+    margin: 0px 15px;font-size: 110%;
+}
 
 #player_demographics h2#contact_header {
     font-size: 300%;
@@ -2761,160 +2758,13 @@ span.leagues_age_header {
     display: none;
 }
 
-.calendarHoliday {
-	
-}
-
-.importantDate {
-	background: linear-gradient(gray, darkgoldenrod, darkgoldenrod, gray);
-}
-
-.awayGame span.nbaMatchup {
-	background: linear-gradient(gray,darkred, darkred, gray);
-	display: -webkit-box;
-	display: block;
-	max-width: 100%;
-}
-
-.homeGame span.nbaMatchup {
-	background: linear-gradient(gray, darkblue, darkblue, gray);
-	display: -webkit-box;
-	display: block;
-	max-width: 100%;
-}
-
-div#all_calendar {
-    position: relative;
-}
-
-table.allCalendar_table th, table.allCalendar_table td, table.allCalendar_table caption {
-    border: solid 1.5px black;
-    /* border-collapse: collapse; */
-    color: whitesmoke;
-    position: relative;
-}
-
-table.allCalendar_table table, table.allCalendar_table tr:last-of-type td:last-of-type {
-    border-bottom-right-radius: 10px;
-}
-
-table.allCalendar_table tr:last-of-type td:first-of-type {
-    border-bottom-left-radius: 10px;
-}
-
-table.allCalendar_table {
-    border-collapse: separate;
-    margin: 0% 5%;
-    width: 90%;
-    display: none;
-    background-image: url(../images/sixers_kids.png);
+.playoffTimeHeader {
+    min-height: 250px;
+    background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)), url('images/playoff_time_wide.png');
+    background-attachment: initial;
     background-repeat: no-repeat;
+    background-position: center center;
     background-size: 100% 100%;
-    background-position: 100% 100%;
-    position: relative;
-}
-
-table.allCalendar_table {border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;box-shadow: 0px 0px 15px black;}
-
-table.allCalendar_table th {
-	color: white;
-	width: 9%;
-	padding: 0% 0.5%;
-	background: rgba(0, 0, 0, 0.35);
-}
-
-td.weekDayContent {
-    padding: 5% 0.3%;
-    position: relative;
-    background: rgba(0, 0, 0, 0.35);
-}
-
-span.weekDayNum {
-    position: absolute;
-    top: 0%;
-    right: 1%;
-}
-
-th.weekDayName {
-    width: 1%;
-	font-size: 150%;
-}
-
-table.allCalendar_table caption {
-    font-size: 400%;
-    background: linear-gradient(to bottom right, red, white,blue);
-    color: darkslategray;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    box-shadow: 0px -2px 15px 0px black;
-    text-align: -webkit-center;
-    text-align: center;
-}
-
-td.weekDayContent:hover {
-    background-color: aliceblue;
-}
-
-td.weekDayContent:hover span.weekDayNum {
-    color: black;
-}
-
-p#calendarDayNum {
-    width: 2%;
-    position: absolute;
-    top: 15%;
-    margin: 0% 0%;
-}
-
-p#calendarDay {
-    width: 100%;
-    text-align: center;
-    padding: 3% 0%;
-}
-
-.calendar_modal p.calendarMatchups, .calendar_modal p.nbaMatchup {
-    margin: 1% 25%;
-    text-align: center;
-    font-size: 110%;
-	background: initial;
-}
-
-.calendar_modal span.gameTime {
-    margin: 0% 1%;
-    display: -webkit-inline-box;
-    display: inline;
-}
-
-.moreGamesNotifi {
-	color: white;
-}
-
-.nextMonth {right: 3%;background-image: url("../images/right_arrow.png");background-position: 68% 56%;background-repeat: no-repeat;background-size: 125% 150%;}
-
-button.nextMonth, button.prevMonth {
-    position: absolute;
-    top: 30%;
-    height: 35px;
-    width: 35px;
-    border-radius: 100px;
-    /* border: outset 2px; */
-}
-
-.prevMonth {
-    left: 3%;
-    background-image: url("../images/left_arrow.png");
-    background-position: 48% 57.5%;
-    background-repeat: no-repeat;
-    background-size: 125% 150%;
-}
-
-table.currentMonth {
-    display: table;
-}
-
-.calendars {
-    padding: 3% 0%;
-    margin: 1% 0%;
 }
 
 /*Smartphones portrait*/
@@ -3015,11 +2865,27 @@ table.currentMonth {
 	#versus {
 		text-align: center;
 	}
+
+    .playoffTimeHeader {
+        min-height: 350px;
+        background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)), url('/images/playoff_time_tall.png');
+        background-attachment: initial;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+    }
 }
 
 /*Coverage between iPad and Smartphone*/
 @media only screen and (min-device-width:576px) {
-
+    .playoffTimeHeader {
+        min-height: 350px;
+        background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)), url('/images/playoff_time_tall.png');
+        background-attachment: initial;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+    }
 }
 
 /*Coverage between iPad and Smartphone*/
@@ -3047,6 +2913,15 @@ table.currentMonth {
 		max-width: 75%;
 		margin: 0% 0% 0% 15%;
 	}
+
+    .playoffTimeHeader {
+        min-height: 350px;
+        background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)), url('/images/playoff_time_tall.png');
+        background-attachment: initial;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+    }
 
 }
 
@@ -3101,6 +2976,15 @@ table.currentMonth {
 		max-width: 90%;
 		margin: 3% 5%;
 	}
+
+    .playoffTimeHeader {
+        min-height: 250px;
+        background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0)), url('/images/playoff_time_wide.png');
+        background-attachment: initial;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: 100% 100%;
+    }
 }
 
 @media only screen and (min-width:1200px) {

@@ -43,6 +43,7 @@ class LeagueScheduleController extends Controller
     public function index() {
 	    // Get the season to show
 	    $showSeason = $this::get_season();
+	    $seasonScheduleWeeks = $this->showSeason->games()->getScheduleWeeks();
 	    $seasonASG = $this->showSeason->games()->getASG()->first();
 
 		if($this->showSeason->is_playoffs == 'Y') {
@@ -51,9 +52,8 @@ class LeagueScheduleController extends Controller
 			$playInGames = $this->showSeason->games()->playoffPlayinGames();
 			$playoffSettings = $this->showSeason->playoffs;
 
-			return view('playoffs.schedule', compact('showSeason', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings', 'seasonASG'));
+			return view('playoffs.schedule', compact('showSeason', 'seasonScheduleWeeks', 'playInGames', 'nonPlayInGames', 'playoffRounds', 'playoffSettings', 'seasonASG'));
 		} else {
-			$seasonScheduleWeeks = $this->showSeason->games()->getScheduleWeeks();
 
 			return view('schedule.index', compact('showSeason', 'seasonScheduleWeeks', 'seasonASG'));
 		}

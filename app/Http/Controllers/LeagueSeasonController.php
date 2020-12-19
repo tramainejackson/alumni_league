@@ -58,21 +58,14 @@ class LeagueSeasonController extends Controller
 	    $showSeasonDivisions = $this->showSeason->divisions;
 	    $leagueRules = $this->showSeason->league_rules;
 	    $allStarGame = $this->showSeason->games()->where('all_star_game', 'Y')->first();
+	    $allGames = $this->showSeason->games;
+	    $allTeams = $this->showSeason->league_teams;
+	    $playoffSettings = $this->showSeason->playoffs;
+	    $nonPlayInGames = $this->showSeason->games()->playoffNonPlayinGames()->get();
+	    $playInGames = $this->showSeason->games()->playoffPlayinGames()->get();
 
     	if($showSeason !== null || $completedSeasons !== null) {
-
-		    if($this->showSeason->is_playoffs == 'Y') {
-
-			    $allGames = $this->showSeason->games;
-			    $allTeams = $this->showSeason->league_teams;
-			    $playoffSettings = $this->showSeason->playoffs;
-			    $nonPlayInGames = $this->showSeason->games()->playoffNonPlayinGames()->get();
-			    $playInGames = $this->showSeason->games()->playoffPlayinGames()->get();
-
-			    return view('playoffs.index', compact('ageGroups', 'compGroups', 'showSeason', 'nonPlayInGames', 'playInGames', 'playoffSettings', 'allGames', 'allTeams', 'leagueRules', 'allStarGame'));
-		    } else {
-			    return view('seasons.index', compact('showSeason', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'showSeasonUnpaidTeams', 'showSeasonConferences', 'showSeasonDivisions', 'leagueRules', 'allStarGame'));
-		    }
+		    return view('seasons.index', compact('showSeason', 'ageGroups', 'compGroups', 'showSeasonSchedule', 'showSeasonStat', 'showSeasonTeams', 'showSeasonPlayers', 'showSeasonUnpaidTeams', 'showSeasonConferences', 'showSeasonDivisions', 'leagueRules', 'allStarGame', 'playoffSettings', 'allGames', 'allTeams', 'nonPlayInGames', 'playInGames'));
 	    } else {
 		    return view('seasons.no_season');
 	    }

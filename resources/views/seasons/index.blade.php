@@ -15,6 +15,13 @@
 		@include('include.functions')
 
 		<div class="container-fluid bgrd3">
+
+			@if($showSeason->is_playoffs == 'Y')
+				<div class="row z-depth-3">
+					<div class="col-12 playoffTimeHeader" id=""></div>
+				</div>
+			@endif
+
 			<div class="row align-items-stretch{{ $showSeason->league_profile ? '': ' view' }}">
 				<!--Column will include buttons for creating a new season-->
 				<div class="col-2 py-3" id="">
@@ -412,7 +419,10 @@
 
 												<div class="d-flex justify-content-around align-items-center flex-column flex-md-row">
 													<button type="submit" class="btn btn-lg white-text green" id="">Update League</button>
-													<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
+
+													@if($showSeason->is_playoffs == 'N')
+														<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
+													@endif
 												</div>
 											</div>
 										</form>
@@ -453,9 +463,9 @@
 												<div class="card">
 													<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? $upcomingGame->all_star_game == 'Y' ? 'All-Star Game' : 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
 													<div class="card-body text-center">
-														<p class="">{{ $upcomingGame->home_team }}</p>
+														<p class=""><a href="{{ route('league_teams.show', ['league_team' => $upcomingGame->home_team_id, 'season' => $showSeason->id]) }}">{{ $upcomingGame->home_team }}</a></p>
 														<p class="">vs</p>
-														<p class="">{{ $upcomingGame->away_team }}</p>
+														<p class=""><a href="{{ route('league_teams.show', ['league_team' => $upcomingGame->away_team_id, 'season' => $showSeason->id]) }}">{{ $upcomingGame->away_team }}</a></p>
 													</div>
 													<div class="card-footer px-1 d-flex align-items-center justify-content-around">
 														<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
@@ -644,9 +654,15 @@
 	@else
 		<div class="container-fluid bgrd3">
 
-			<div class="row view">
+			@if($showSeason->paid == 'Y')
 
-				@if($showSeason->paid == 'Y')
+				@if($showSeason->is_playoffs == 'Y')
+					<div class="row z-depth-3">
+						<div class="col-12 playoffTimeHeader" id=""></div>
+					</div>
+				@endif
+
+				<div class="row view">
 
 					<div class="row">
 						<!-- League season schedule snap shot -->
@@ -654,6 +670,7 @@
 							<div class="text-center p-4 card rgba-deep-orange-light white-text" id="">
 								<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 							</div>
+
 							<div class="my-5 d-flex align-items-center justify-content-center flex-column">
 								<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 									<h1 class="h1 h1-responsive text-center">Upcoming Schedule</h1>
@@ -668,9 +685,9 @@
 													<div class="card">
 														<h3 class="h3-responsive text-center p-4 blue-grey white-text">{{ $upcomingGame->season_week == null ? $upcomingGame->round == null ? 'Play-In Game' : 'Round ' . $upcomingGame->round : 'Week ' . $upcomingGame->season_week }}</h3>
 														<div class="card-body text-center">
-															<p class="">{{ $upcomingGame->home_team }}</p>
+															<p class=""><a href="{{ route('league_teams.show', ['league_team' => $upcomingGame->home_team_id, 'season' => $showSeason->id]) }}">{{ $upcomingGame->home_team }}</a></p>
 															<p class="">vs</p>
-															<p class="">{{ $upcomingGame->away_team }}</p>
+															<p class=""><a href="{{ route('league_teams.show', ['league_team' => $upcomingGame->away_team_id, 'season' => $showSeason->id]) }}">{{ $upcomingGame->away_team }}</a></p>
 														</div>
 														<div class="card-footer px-1 d-flex align-items-center justify-content-around">
 															<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
@@ -723,7 +740,7 @@
 						<!-- League season stats snap shot -->
 						<div class="col-8 mx-auto my-5">
 							<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
-								<h1 class="h1-responsive">Stats</h1>
+								<h1 class="h1-responsive">Stats Leaders</h1>
 								<a href="{{ request()->query() == null ? route('league_stats.index') : route('league_stats.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 							</div>
 							<div id="season_stats_snap" class="my-5 row">
@@ -878,9 +895,9 @@
 							</div>
 						@endif
 					</div>
-				@else
-				@endif
-			</div>
+				</div>
+			@else
+			@endif
 		</div>
 	@endif
 
