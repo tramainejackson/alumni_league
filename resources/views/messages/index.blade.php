@@ -86,4 +86,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    @include('layouts.footer')
+    <!-- Footer -->
 @endsection

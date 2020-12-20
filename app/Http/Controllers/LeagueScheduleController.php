@@ -484,7 +484,7 @@ class LeagueScheduleController extends Controller
 		$game		= LeagueSchedule::find($request->edit_game_id);
 		$awayTeam	= LeagueTeam::find($request->edit_away_team);
 		$homeTeam 	= LeagueTeam::find($request->edit_home_team);
-		$time 		= $request->edit_game_time != 'N/A' ? new Carbon($request->edit_game_time) : Carbon::now();
+		$time 		= $request->edit_game_time != 'TBD' ? new Carbon($request->edit_game_time) : Carbon::now();
 		$date 		= '';
 		
 		if($request->edit_date_picker_submit != null) {

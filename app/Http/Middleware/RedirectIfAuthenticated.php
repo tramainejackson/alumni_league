@@ -17,9 +17,13 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
-        }
+    	if(Auth::check() && Auth::user()->type == 'admin' && isset($request->adminPSResetRequest)) {
+
+	    } else {
+		    if (Auth::guard($guard)->check()) {
+			    return redirect('/league_seasons');
+		    }
+	    }
 
         return $next($request);
     }

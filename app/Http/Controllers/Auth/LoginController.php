@@ -26,8 +26,6 @@ class LoginController extends Controller
 	use AuthenticatesUsers;
 
 	public $showSeason;
-	public $activeSeasons;
-	public $league;
 	
 	/**
      * Where to redirect users after login.
@@ -44,21 +42,11 @@ class LoginController extends Controller
     public function __construct() {
         $this->middleware('guest')->except('logout');
 
-	    $this->league = LeagueProfile::find(2);
 	    $this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
-	    $this->activeSeasons = LeagueProfile::find(2)->seasons()->active();
     }
 
 	public function get_season() {
 		return $this->showSeason;
-	}
-
-	public function get_league() {
-		return $this->league;
-	}
-
-	public function get_active_seasons() {
-		return $this->activeSeasons;
 	}
 	
 	/**

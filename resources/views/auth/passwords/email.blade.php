@@ -1,47 +1,51 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
 
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+    <div class="view" id="login_page">
+        <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
+            <div class="container-fluid">
+                <div class="row align-items-center justify-content-around">
+                    <div class="col col-md-10 col-lg-6 pb-md-2">
+                        <div class="card wow fadeInLeft" data-wow-delay="0.3s">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <h1 class="font-weight-bold h1-responsive text-underline">Reset Password</h1>
+                                </div>
 
-                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
-                        {{ csrf_field() }}
+                                <div class="">
+                                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+                                        {{ csrf_field() }}
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                        <div class="md-form">
+                                            <i class="fa fa-envelope prefix grey-text"></i>
 
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                            <input type="text" class="form-control" name="email" id="email" value="{{ old('email') }}" required />
+
+                                            <label for="email">Email Address</label>
+
+                                            @if ($errors->has('email'))
+                                                <span class="help-block">
+                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="md-form">
+                                            <button type="submit" class="btn btn-lg deep-orange white-text ml-0">Send Password Reset Link</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+    <!-- Footer -->
+    @include('layouts.footer')
+    <!-- Footer -->
 @endsection

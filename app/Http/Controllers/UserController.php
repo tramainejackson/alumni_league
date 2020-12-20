@@ -11,12 +11,13 @@ use App\User;
 use App\MessageReason;
 use App\Service;
 use App\NewsArticle;
-use App\Mail\NewContact;
+use App\Mail\NewUser;
 use App\Mail\Update;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Validation\Rule;
 use Carbon\Carbon;
 
 class UserController extends Controller
@@ -24,8 +25,13 @@ class UserController extends Controller
 
 	public $showSeason;
 
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
 	public function __construct() {
-		$this->middleware(['auth'])->except(['index']);
+		$this->middleware(['auth']);
 
 		$this->showSeason = LeagueProfile::find(2)->seasons()->showSeason();
 	}
@@ -66,24 +72,25 @@ class UserController extends Controller
     public function store(Request $request) {
 	    $this->validate($request, [
 		    'name'      => 'required|max:50',
-		    'title'     => 'nullable|max:50',
-		    'email'     => 'nullable|email|max:50',
+		    'username'  => 'required|max:50|unique:users,username',
+		    'email'     => 'required|email|max:50|unique:users,email',
 		    'phone'     => 'nullable',
 		    'active'    => 'nullable',
-		    'bio'       => 'nullable',
 	    ]);
 
 	    $user = new User();
-	    $user->name   = $request->name;
-	    $user->title  = $request->title;
-	    $user->email  = $request->email;
-	    $user->phone  = $request->phone;
-	    $user->active = $request->active;
-	    $user->bio    = $request->bio;
+	    $user->name     = $request->name;
+	    $user->username = $request->username;
+	    $user->email    = $request->email;
+	    $user->phone    = $request->phone;
+	    $user->active   = $request->active;
 
-	    if($user->save()) {
-		    return back()->with('status', 'New User Added Successfully');
-	    }
+	    dd($user);
+	    \Mail::to($user->email)->send(new NewUser($user));
+
+//	    if($user->save()) {
+//		    return back()->with('status', 'New User Added Successfully');
+//	    }
     }
 
     /**
@@ -131,24 +138,32 @@ class UserController extends Controller
     public function update(Request $request, User $user) {
 
 	    $this->validate($request, [
-		    'username' => 'required',
-		    'name'     => 'required|max:100',
-		    'type'     => 'required',
-		    'email'    => 'required|email|max:50',
-		    'active'   => 'required|',
+		    'username'  => [
+		    	    'required',
+                    Rule::unique('users')->ignore($user->id),
+		    ],
+		    'name'      => 'required|max:100',
+		    'type'      => 'required',
+		    'email'     => [
+		    	'required',
+			    'email',
+			    'max:50',
+			    Rule::unique('users')->ignore($user->email),
+		    ],
+		    'active'    => 'required|',
 	    ]);
 
-	    $user->username  = $request->username;
-	    $user->name      = $request->name;
-	    $user->type      = $request->type;
-	    $user->email     = $request->email;
-	    $user->active    = $request->active;
+	    $user->username = $request->username;
+	    $user->name     = $request->name;
+	    $user->type     = $request->type;
+	    $user->email    = $request->email;
+	    $user->active   = $request->active;
 
 	    if($user->type == 'player') {
 		    $season_id = $request->season;
 		    $team_id   = $request->season_team;
 		    $teamCheck = LeaguePlayer::where([['email', '=', $user->email], ['league_season_id', '=', $request->season], ['user_id', '=', $user->id]])->get()->first();
-		    $teamChangeCheck = $teamCheck->league_season_id == $season_id ? $teamCheck->league_team_id == $team_id ? false : true : false;
+		    $teamChangeCheck = $teamCheck !== null && $teamCheck->league_season_id == $season_id ? $teamCheck->league_team_id == $team_id ? false : true : false;
 
 		    //Find season and make sure the selected team
 		    //is in that season

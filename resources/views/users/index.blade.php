@@ -43,13 +43,13 @@
 
                                 <div class="md-form" id="">
 
-                                    <!-- Name -->
-                                    <input type="text" id="name" class="form-control" name='name' value='{{ old('name') }}' placeholder="Enter Full Name" {{ $errors->has('name') ? 'autofocus' : '' }}/>
+                                    <!-- Title -->
+                                    <input type="text" id="username" class="form-control" name='username' value='{{ old('username') }}' placeholder="Enter username" {{ $errors->has('username') ? 'autofocus' : '' }}/>
 
-                                    <label class="" for="name">Name</label>
+                                    <label class="" for="username">Username</label>
 
-                                    @if ($errors->has('name'))
-                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                    @if ($errors->has('username'))
+                                        <span class="text-danger">{{ $errors->first('username') }}</span>
                                     @endif
 
                                 </div>
@@ -59,13 +59,13 @@
 
                                 <div class="md-form" id="">
 
-                                    <!-- Title -->
-                                    <input type="text" id="title" class="form-control" name='title' value='{{ old('title') }}' placeholder="Enter Title" {{ $errors->has('title') ? 'autofocus' : '' }}/>
+                                    <!-- Name -->
+                                    <input type="text" id="name" class="form-control" name='name' value='{{ old('name') }}' placeholder="Enter Full Name" {{ $errors->has('name') ? 'autofocus' : '' }}/>
 
-                                    <label class="" for="title">Title</label>
+                                    <label class="" for="name">Name</label>
 
-                                    @if ($errors->has('title'))
-                                        <span class="text-danger">Title cannot be empty</span>
+                                    @if ($errors->has('name'))
+                                        <span class="text-danger">{{ $errors->first('name') }}</span>
                                     @endif
 
                                 </div>
@@ -131,10 +131,10 @@
                                     <div class="form-inline pt-5 ml-0" id="">
                                         <div class="btn-group">
                                             <button type="button" class="btn activeYes showClient{{ old('active') == true ? ' btn-success active' : ' btn-blue-grey' }}">
-                                                <input type="checkbox" name="active" value="1" hidden {{ old('active') == true ? 'checked' : '' }} />Yes
+                                                <input type="checkbox" name="active" value="Y" hidden {{ old('active') == true ? 'checked' : '' }} />Yes
                                             </button>
                                             <button type="button" class="btn activeNo showClient{{ old('active') == false ? ' btn-danger active' : ' btn-blue-grey' }}">
-                                                <input type="checkbox" name="active" value="0" {{ old('active') == false ? 'checked' : '' }} hidden />No
+                                                <input type="checkbox" name="active" value="N" {{ old('active') == false ? 'checked' : '' }} hidden />No
                                             </button>
                                         </div>
                                     </div>
@@ -203,4 +203,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    @include('layouts.footer')
+    <!-- Footer -->
 @endsection

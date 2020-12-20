@@ -105,8 +105,8 @@
 												<td class="homeTeamData"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span></td>
 											@endif
 											
-											<td class="gameTimeData">{{ $game->game_time == null ? 'N/A' : $game->game_time() }}</td>
-											<td class="gameDateData">{{ $game->game_date == null ? 'N/A' : $game->game_date() }}</td>
+											<td class="gameTimeData">{{ $game->game_time == null ? 'TBD' : $game->game_time() }}</td>
+											<td class="gameDateData">{{ $game->game_date == null ? 'TBD' : $game->game_date() }}</td>
 											<td class="gameIDData" hidden>{{ $game->id }}</td>
 
 											@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
@@ -188,8 +188,8 @@
 											<td class="homeTeamData"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span></td>
 										@endif
 										
-										<td class="gameTimeData">{{ $game->game_time == null ? 'N/A' : $game->game_time() }}</td>
-										<td class="gameDateData">{{ $game->game_date == null ? 'N/A' : $game->game_date() }}</td>
+										<td class="gameTimeData">{{ $game->game_time == null ? 'TBD' : $game->game_time() }}</td>
+										<td class="gameDateData">{{ $game->game_date == null ? 'TBD' : $game->game_date() }}</td>
 										<td class="gameIDData" hidden>{{ $game->id }}</td>
 
 										@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
@@ -290,8 +290,8 @@
 												<td class="homeTeamData text-nowrap"><span class="homeTeamNameData">{{ $game->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $game->home_team_obj->id }}</span></td>
 											@endif
 
-											<td class="gameTimeData text-nowrap">{{ $game->game_time() }}</td>
-											<td class="gameDateData text-nowrap">{{ $game->game_date() }}</td>
+											<td class="gameTimeData text-nowrap">{{ $game->game_time == null ? 'TBD' : $game->game_time() }}</td>
+											<td class="gameDateData text-nowrap">{{ $game->game_date == null ? 'TBD' : $game->game_date() }}</td>
 											<td>
 
 												@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
@@ -373,8 +373,8 @@
 									<td class="homeTeamData text-nowrap"><span class="homeTeamNameData">{{ $seasonASG->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $seasonASG->home_team_obj->id }}</span></td>
 								@endif
 
-								<td class="gameTimeData text-nowrap">{{ $seasonASG->game_time() }}</td>
-								<td class="gameDateData text-nowrap">{{ $seasonASG->game_date() }}</td>
+								<td class="gameTimeData text-nowrap">{{ $seasonASG->game_time !== null ? $seasonASG->game_time() : 'TBD'}}</td>
+								<td class="gameDateData text-nowrap">{{ $seasonASG->game_date !== null ? $seasonASG->game_date() : 'TBD'}}</td>
 								<td>
 
 									@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))

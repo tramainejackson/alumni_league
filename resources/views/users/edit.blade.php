@@ -35,7 +35,7 @@
                                             <label for="username">Username</label>
 
                                             @if ($errors->has('username'))
-                                                <span class="text-danger">Username cannot be empty</span>
+                                                <span class="text-danger">{{ $errors->first('username') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -83,12 +83,12 @@
 
                                         <div class="md-form" id="">
                                             <!-- Email -->
-                                            <input type="email" id="email" class="form-control" name='email' value='{{ $user->email }}' placeholder="Enter Email Address">
+                                            <input type="email" id="email" class="form-control" name='email' value='{{ $user->email }}' placeholder="Enter Email Address" />
 
                                             <label for="email">Email</label>
 
                                             @if ($errors->has('email'))
-                                                <span class="text-danger">Email Address cannot be empty</span>
+                                                <span class="text-danger">{{ $errors->first('email') }}</span>
                                             @endif
 
                                         </div>
@@ -166,7 +166,30 @@
                                 </div>
                             </form>
 
+                            <form action="{{ route('password.email') }}" method="POST">
+
+                                {{ csrf_field() }}
+
+                                <div class="md-form" hidden>
+                                    <i class="fa fa-envelope prefix grey-text"></i>
+
+                                    <input type="text" name="adminPSResetRequest" value="true" hidden>
+                                    <input type="email" class="form-control" name="email" id="email" value="{{ $user->email }}" required />
+
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <div class="md-form">
+                                    <button type="submit" class="btn btn-rounded deep-orange white-text ml-0">Send User A Password Reset Link</button>
+                                </div>
+                            </form>
+
                             <form class="position-absolute top right" method="POST" action="{{ route('users.destroy', [$user->id]) }}">
+
                                 {{ method_field('DELETE') }}
                                 {{ csrf_field() }}
 
@@ -179,4 +202,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    @include('layouts.footer')
+    <!-- Footer -->
 @endsection

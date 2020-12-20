@@ -87,7 +87,7 @@ class LeagueSchedule extends Model
 	public function game_date() 
 	{
 		$dt = new Carbon($this->game_date);
-		return $this->game_date !== null ? $dt->format('m-d-Y') : 'TBD';
+		return $dt->format('m-d-Y');
 	}
 	
 	/*
@@ -98,7 +98,7 @@ class LeagueSchedule extends Model
 	public function game_time()
 	{
 		$dt = new Carbon($this->game_time);
-		return $this->game_time !== null ? $dt->format('g:i A') : 'TBD';
+		return $dt->format('g:i A');
 	}
 	
 	/*

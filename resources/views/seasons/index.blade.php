@@ -395,8 +395,8 @@
 																					<td class="homeTeamData text-nowrap"><span class="homeTeamNameData">{{ $allStarGame->home_team }}</span><span class="homeTeamIDData hidden" hidden>{{ $allStarGame->home_team_obj->id }}</span></td>
 																				@endif
 
-																				<td class="gameTimeData text-nowrap">{{ $allStarGame->game_time() }}</td>
-																				<td class="gameDateData text-nowrap">{{ $allStarGame->game_date() }}</td>
+																				<td class="gameTimeData text-nowrap">{{ $allStarGame->game_time != null ? $allStarGame->game_time() : 'TBD' }}</td>
+																				<td class="gameDateData text-nowrap">{{ $allStarGame->game_date != null ? $allStarGame->game_date() : 'TBD' }}</td>
 																				<td>
 
 																					@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
@@ -468,8 +468,8 @@
 														<p class=""><a href="{{ route('league_teams.show', ['league_team' => $upcomingGame->away_team_id, 'season' => $showSeason->id]) }}">{{ $upcomingGame->away_team }}</a></p>
 													</div>
 													<div class="card-footer px-1 d-flex align-items-center justify-content-around">
-														<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
-														<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+														<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time != null ? $upcomingGame->game_time() : 'TBD' }}</span>
+														<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date != null ? $upcomingGame->game_date() : 'TBD' }}</span>
 													</div>
 												</div>
 											</div>
@@ -690,8 +690,8 @@
 															<p class=""><a href="{{ route('league_teams.show', ['league_team' => $upcomingGame->away_team_id, 'season' => $showSeason->id]) }}">{{ $upcomingGame->away_team }}</a></p>
 														</div>
 														<div class="card-footer px-1 d-flex align-items-center justify-content-around">
-															<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time() }}</span>
-															<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date() }}</span>
+															<span class="mx-2"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_time != null ? $upcomingGame->game_time() : 'TBD' }}</span>
+															<span class="mx-2"><i class="fa fa-calendar-o" aria-hidden="true"></i>&nbsp;{{ $upcomingGame->game_date != null ? $upcomingGame->game_date() : 'TBD' }}</span>
 														</div>
 													</div>
 												</div>
