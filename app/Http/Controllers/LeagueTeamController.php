@@ -363,8 +363,6 @@ class LeagueTeamController extends Controller
 					if($team_standing->save()) {}
 				} else {
 					LeagueStanding::onlyTrashed()->where('league_team_id', $league_team->id);
-
-					dd(LeagueStanding::onlyTrashed()->where('league_team_id', $league_team->id));
 				}
 			}
 
