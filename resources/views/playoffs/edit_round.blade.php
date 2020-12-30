@@ -197,7 +197,7 @@
 					</div>
 					<!--/.Card-->
 					<div class="md-form">
-						<button class="btn btn-lg blue lighten-1" type="submit">Update Week Games</button>
+						<button class="btn btn-lg blue lighten-1 text-white" type="submit">Update Playoff Games</button>
 					</div>
 				{!! Form::close() !!}
 			</div>

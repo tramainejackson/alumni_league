@@ -69,8 +69,8 @@
 
             @else
 
-                <div class="row" id="">
-                    <div class="d-flex justify-content-center align-items-center col-9 mx-auto" id="">
+                <div class="row mb-5" id="">
+                    <div class="d-flex justify-content-center align-items-center col-9 mx-auto mb-5" id="">
                         <h1>You Do Not Have Any Current Messages</h1>
                     </div>
                 </div>

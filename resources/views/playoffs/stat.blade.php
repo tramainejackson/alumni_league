@@ -3,19 +3,32 @@
 @section('content')
 	@include('include.functions')
 	
-	<div class="container-fluid" id="leaguesProfileContainer">
+	<div class="container-fluid bgrd3" id="leaguesProfileContainer">
 		<div class="row">
 			<div class="col-12 mt-3">
-				@foreach($playoffRounds as $edit_round)
-					<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $edit_round->round]) : route('league_stats.edit_round', ['round' => $edit_round->round, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded mdb-color darken-3 white-text{{ $edit_round->round == $round ? ' disabled' : '' }}"{{ $edit_round->round == $round ? ' disabled' : '' }}>{{ $edit_round->round != $playoffRounds->count() ? 'Round ' . $edit_round->round  . ' Stats' : 'Championship Game Stats'}}</a>
-				@endforeach
+				{{--Authourization Only--}}
+				@if($seasonScheduleWeeks->isNotEmpty())
+					@foreach($seasonScheduleWeeks as $week)
+						<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
+					@endforeach
+				@endif
+
+				@if($showSeason->is_playoffs == 'Y')
+					@foreach($playoffRounds as $round)
+						<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $round->round]) : route('league_stats.edit_round', ['round' => $round->round, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+					@endforeach
+				@endif
+
+				@if($allStarGame != null)
+					<a href="{{ request()->query() == null ? route('league_stats.all_star_game', ['game' => $allStarGame->id]) : route('league_stats.all_star_game', ['game' => $allStarGame->id, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">All Star Game Stats</a>
+				@endif
 			</div>
 			<div class="col-12">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->season) . ' ' . $showSeason->year }}</h1>
 				</div>
 				<div class="text-center">
-					<h3 class="h3-responsive">{{ $round != $playoffRounds->count() ? 'Round ' . $round  . ' Stats' : 'Championship Game Stats'}}</h3>
+					<h3 class="h3-responsive">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</h3>
 				</div>
 				
 				@if($roundGames->count() > 0)
@@ -325,7 +338,7 @@
 						@endforeach
 						
 						<div class="md-form">
-							<button class="btn btn-lg blue lighten-1" type="submit">Update round Games</button>
+							<button class="btn btn-lg blue lighten-1 text-white" type="submit">Update round Games</button>
 						</div>
 					{!! Form::close() !!}
 				@else
@@ -337,4 +350,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection

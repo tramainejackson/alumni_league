@@ -120,8 +120,7 @@ class LeagueSchedule extends Model
 	* Check and see if the game is a playoff playin game
 	*
 	*/
-	public function is_playin_game()
-	{
+	public function is_playin_game() {
 		if($this->season_week == null && $this->playin_game == 'Y') {
 			return true;
 		} else {
@@ -291,6 +290,17 @@ class LeagueSchedule extends Model
 			}
 		}
 	}
+
+	/**
+	 * Scope a query to get all the games on the schedule for particular week.
+	 */
+	public function scopeGetSingleGame($query, $game) {
+		return $query->where([
+			['id', $game],
+			['round', null],
+			['all_star_game', 'N'],
+		])->limit(1);
+	}
 	
 	/**
 	* Scope a query to only include games from now to next week.
@@ -373,24 +383,21 @@ class LeagueSchedule extends Model
 	/**
 	* Scope a query to get all the games on the schedule.
 	*/
-	public function scopeGetAllGames($query) 
-	{
+	public function scopeGetAllGames($query) {
 		return $query->orderBy("season_week");
 	}
 	
 	/**
 	* Scope a query to get all the games on the schedule for particular week.
 	*/
-	public function scopeGetWeekGames($query, $week) 
-	{
+	public function scopeGetWeekGames($query, $week) {
 		return $query->where("season_week", $week)->orderBy('game_date')->orderBy('game_time');
 	}
 	
 	/**
 	* Scope a query to get all the games on the schedule for particular week.
 	*/
-	public function scopeGetRoundGames($query, $round) 
-	{
+	public function scopeGetRoundGames($query, $round) {
 		return $query->where([
 				["round", $round],
 				["season_week", null],

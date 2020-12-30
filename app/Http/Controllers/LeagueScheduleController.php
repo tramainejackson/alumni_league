@@ -487,7 +487,7 @@ class LeagueScheduleController extends Controller
 		$homeTeam 	= LeagueTeam::find($request->edit_home_team);
 		$time 		= $request->edit_game_time != 'TBD' ? new Carbon($request->edit_game_time) : Carbon::now();
 		$date 		= '';
-		
+
 		if($request->edit_date_picker_submit != null) {
 			$date = new Carbon($request->edit_date_picker_submit);
 		} else {
@@ -521,8 +521,9 @@ class LeagueScheduleController extends Controller
 			// add new players
 			if($game->player_stats->isNotEmpty()) {
 
-				$currentTeamID1 = isset($game->player_stats()->teams()[0]) ? $game->player_stats()->teams()[0]->league_teams_id : null;
-				$currentTeamID2 = isset($game->player_stats()->teams()[1]) ? $game->player_stats()->teams()[1]->league_teams_id : null;
+				$currentTeamID1 = isset($game->player_stats()->teams()[0]) ? $game->player_stats()->teams()[0]->league_teams_id : $awayTeam->id;
+				$currentTeamID2 = isset($game->player_stats()->teams()[1]) ? $game->player_stats()->teams()[1]->league_teams_id : $homeTeam->id;
+
 				// Remove team players if they do not match either team that was saved
 				// for this game
 				if($currentTeamID1 != $awayTeam->id && $currentTeamID1 != $homeTeam->id) {

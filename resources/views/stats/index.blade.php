@@ -11,22 +11,40 @@
 
 		<div class="row">
 
-			<div class="col col-lg-10 my-3">
+			<div class="col-12 my-3">
 				@if(Auth::check() && (Auth::user()->type == 'statistician' || Auth::user()->type == 'admin'))
 					{{--Authourization Only--}}
-					@if($showSeason->is_playoffs == 'Y')
+                    @if($seasonScheduleWeeks->isNotEmpty())
+                        @foreach($seasonScheduleWeeks as $week)
+                            <a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
+                        @endforeach
+                    @endif
+
+                    @if($showSeason->is_playoffs == 'Y')
 						@foreach($playoffRounds as $round)
 							<a href="{{ request()->query() == null ? route('league_stats.edit_round', ['round' => $round->round]) : route('league_stats.edit_round', ['round' => $round->round, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
-						@endforeach
-					@else
-						@foreach($seasonScheduleWeeks as $week)
-							<a href="{{ request()->query() == null ? route('league_stats.edit_week', ['week' => $week->season_week]) : route('league_stats.edit_week', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
 						@endforeach
 					@endif
 
 					@if($allStarGame != null)
 						<a href="{{ request()->query() == null ? route('league_stats.all_star_game', ['game' => $allStarGame->id]) : route('league_stats.all_star_game', ['game' => $allStarGame->id, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">All Star Game Stats</a>
 					@endif
+				@else
+                    @if($seasonScheduleWeeks->isNotEmpty())
+                        @foreach($seasonScheduleWeeks as $week)
+                            <a href="{{ request()->query() == null ? route('league_stats.show', ['week' => $week->season_week]) : route('league_stats.show', ['week' => $week->season_week, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">Week {{ $loop->iteration }} Stats</a>
+                        @endforeach
+                    @endif
+
+                    @if($showSeason->is_playoffs == 'Y')
+                        @foreach($playoffRounds as $round)
+                            <a href="{{ request()->query() == null ? route('league_stats.show', ['round' => $round->round]) : route('league_stats.show', [$round->round, 'round' => $round->round, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">{{ $round->round != $playoffSettings->total_rounds ? 'Round ' . $round->round  . ' Stats' : 'Championship Game Stats'}}</a>
+                        @endforeach
+                    @endif
+
+                    @if($allStarGame != null)
+                        <a href="{{ request()->query() == null ? route('league_stats.all_star_game', ['game' => $allStarGame->id]) : route('league_stats.all_star_game', ['game' => $allStarGame->id, 'season' => request()->query('season')]) }}" class="btn btn-rounded mdb-color darken-3 white-text mw-100">All Star Game Stats</a>
+                    @endif
 				@endif
 			</div>
 		</div>
@@ -250,6 +268,7 @@
 								</thead>
 								<tbody>
 									@foreach($allPlayers->get() as $showPlayer)
+										{{dd($allPlayers->get())}}
 										<tr data-toggle="modal" data-target="#player_card" class="text-center">
 											<td class='playerNameTD'>#{{ $showPlayer->player->jersey_num . ' ' . $showPlayer->player->player_name }}</td>
 											<td class='totalPointsTD'>{{ $showPlayer->TPTS == null ? 0 : $showPlayer->TPTS }}</td>
