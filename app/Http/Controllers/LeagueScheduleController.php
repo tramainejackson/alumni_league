@@ -83,8 +83,9 @@ class LeagueScheduleController extends Controller
 		$showSeason	= $this::get_season();
 	    $thisWeek 	= $week;
 	    $weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
+	    $seasonASG = $this->showSeason->games()->getASG()->first();
 
-		return view('schedule.edit', compact('showSeason', 'weekGames', 'thisWeek'));
+		return view('schedule.edit', compact('showSeason', 'weekGames', 'thisWeek', 'seasonASG'));
     }
 	
 	/**
