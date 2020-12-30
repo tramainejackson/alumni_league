@@ -17,7 +17,7 @@
 
 			<div class="col-12">
 
-				@if(isset($allStarGame))
+				@if(!isset($allStarGame))
 					<div class="text-center coolText1">
 						<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
 					</div>
