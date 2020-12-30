@@ -122,7 +122,7 @@
 															{{--Authourization Only--}}
 															<button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button>
 														@else
-															<a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $game->id]) }}">View Stats</a>
+															<a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $game->id, 'season' => $showSeason->id]) }}">View Stats</a>
 														@endif
 
 													</td>
@@ -220,7 +220,7 @@
 										{{--Authourization Only--}}
 										<button class="btn btn-primary btn-rounded btn-sm my-0 editGameBtn" type="button" data-target="#edit_game_modal" data-toggle="modal">Edit Game</button>
 									@else
-										<a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $seasonASG->id]) }}">View Stats</a>
+										<a class="btn btn-primary btn-rounded btn-sm my-0 w-100 editGameBtn" href="{{ route('league_stats.show', ['game' => $seasonASG->id, 'season' => $showSeason->id]) }}">View Stats</a>
 									@endif
 
 								</td>
