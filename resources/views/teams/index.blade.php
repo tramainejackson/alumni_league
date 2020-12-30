@@ -12,7 +12,7 @@
 		<div class="row" id="">
 			@if(Auth::check() && Auth::user()->type == 'admin')
 				{{--Authourization Only--}}
-				<div class="col col-lg-10 mx-auto my-3">
+				<div class="col offset-10 my-3">
 					@if(!isset($allComplete))
 						<a class="btn btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Team</a>
 					@else
@@ -92,6 +92,8 @@
 																</p>
 															@endif
 														@endif
+													@else
+														<h3 class="border-bottom card-title h3-responsive mb-2 px-5 text-primary"><i class="fas fa-star"></i>This Is An All-Star Team<i class="fas fa-star"></i></h3>
 													@endif
 
 													@if(Auth::check() && (Auth::user()->type == 'admin') || array_search($team->id, $userTeamsIDs) !== false)
@@ -234,35 +236,42 @@
 														<h1 class="card-title h1-responsive font-weight-bold mx-auto">{{ $team->team_name }}</h1>
 														<!-- Team Captain Info -->
 														<div class="d-flex flex-column align-items-center">
-															<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
-															<div class="d-flex flex-column align-items-center justify-content-center">
-																<p class="m-0">
-																	<label class="">Name:&nbsp;</label>
-																	<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
-																</p>
 
-																<p class="m-0">
-																	<label class="">Phone:&nbsp;</label>
-																	<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
-																</p>
-															</div>
+															@if($team->is_all_star_team == 'N')
+																<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
+																<div class="d-flex flex-column align-items-center justify-content-center">
+																	<p class="m-0">
+																		<label class="">Name:&nbsp;</label>
+																		<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
+																	</p>
 
-															@if($team->league_conference_id != null || $team->league_division_id != null)
-																<div class="divider-short"></div>
-															@endif
+																	<p class="m-0">
+																		<label class="">Phone:&nbsp;</label>
+																		<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
+																	</p>
+																</div>
 
-															@if($team->league_conference_id != null)
-																<p class="m-0">
-																	<label class="">Conference:&nbsp;</label>
-																	<span>{{ $team->conference->conference_name }}</span>
-																</p>
-															@endif
+																@if($showSeason->has_divisions == 'Y' || $showSeason->has_conferences == 'Y')
+																	@if($team->league_conference_id != null || $team->league_division_id != null)
+																		<div class="divider-short"></div>
+																	@endif
 
-															@if($team->league_division_id != null)
-																<p class="m-0">
-																	<label class="">Division:&nbsp;</label>
-																	<span>{{ $team->division->division_name }}</span>
-																</p>
+																	@if($team->league_conference_id != null)
+																		<p class="m-0">
+																			<label class="">Conference:&nbsp;</label>
+																			<span>{{ $team->conference->conference_name }}</span>
+																		</p>
+																	@endif
+
+																	@if($team->league_division_id != null)
+																		<p class="m-0">
+																			<label class="">Division:&nbsp;</label>
+																			<span>{{ $team->division->division_name }}</span>
+																		</p>
+																	@endif
+																@endif
+															@else
+																<h3 class="border-bottom card-title h3-responsive mb-2 px-5 text-primary"><i class="fas fa-star"></i>This Is An All-Star Team<i class="fas fa-star"></i></h3>
 															@endif
 
 															<div class="">

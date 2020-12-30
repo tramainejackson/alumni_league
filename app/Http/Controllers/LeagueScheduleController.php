@@ -490,8 +490,12 @@ class LeagueScheduleController extends Controller
 		if($request->edit_date_picker_submit != null) {
 			$date = new Carbon($request->edit_date_picker_submit);
 		} else {
-			$date = explode('-', $request->edit_date_picker);
-			$date = Carbon::create($date['2'], $date[0], $date[1]);
+			if($request->edit_date_picker !== 'TBD') {
+				$date = explode('-', $request->edit_date_picker);
+				$date = Carbon::create($date['2'], $date[0], $date[1]);
+			} else {
+				$date = Carbon::now();
+			}
 		}
 
 		// Check if any games are set to forfeit

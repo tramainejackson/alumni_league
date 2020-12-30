@@ -60,7 +60,7 @@
 								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered league_conferences_table">
 									<thead>
 									<tr>
-										<th class="font-weight-bold" colspan="3">{{ $conference->conference_name }}</th>
+										<th class="font-weight-bold" style="font-size: x-large;" colspan="3">{{ $conference->conference_name }}</th>
 									</tr>
 										<tr>
 											<th class="font-weight-bold">Team Name</th>
@@ -92,13 +92,13 @@
 							<div id="" class="league_divisions_standings">
 								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered league_divisions_table">
 									<thead>
-										<tr>
-											<th class="font-weight-bold" colspan="3">{{ $division->division_name }}</th>
+										<tr style="border: 2px solid cadetblue;background-color: aliceblue;">
+											<th class="font-weight-bold" colspan="3" style="border: 2px solid cadetblue;background-color: aliceblue; font-size: x-large;">{{ $division->division_name }}</th>
 										</tr>
-										<tr>
-											<th class="font-weight-bold">Team Name</th>
-											<th class="font-weight-bold">Wins</th>
-											<th class="font-weight-bold">Losses</th>
+										<tr style="border: 2px solid cadetblue;background-color: aliceblue;">
+											<th class="font-weight-bold" style="border: 2px solid cadetblue;background-color: aliceblue;">Team Name</th>
+											<th class="font-weight-bold" style="border: 2px solid cadetblue;background-color: aliceblue;">Wins</th>
+											<th class="font-weight-bold" style="border: 2px solid cadetblue;background-color: aliceblue;">Losses</th>
 										</tr>
 									</thead>
 
@@ -107,10 +107,10 @@
 										@foreach($division->teams as $showDivisionTeam)
 											@php $showStandings = $showDivisionTeam->standings; @endphp
 
-											<tr>
-												<td>{{ $showStandings->team_name }}</td>
-												<td>{{ $showStandings->team_wins == null ? '0' : $showStandings->team_wins }}</td>
-												<td>{{ $showStandings->team_losses == null ? '0' : $showStandings->team_losses }}</td>
+											<tr style="border: 2px solid cadetblue;background-color: aliceblue;">
+												<td style="border: 2px solid cadetblue;background-color: aliceblue;">{{ $showStandings->team_name }}</td>
+												<td style="border: 2px solid cadetblue;background-color: aliceblue;">{{ $showStandings->team_wins == null ? '0' : $showStandings->team_wins }}</td>
+												<td style="border: 2px solid cadetblue;background-color: aliceblue;">{{ $showStandings->team_losses == null ? '0' : $showStandings->team_losses }}</td>
 											</tr>
 										@endforeach
 

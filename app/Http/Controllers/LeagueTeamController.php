@@ -212,7 +212,7 @@ class LeagueTeamController extends Controller
 		]);
 
 		if(Auth::user()->type == 'admin') {
-			$league_team->fee_paid = $request->fee_paid;
+			$league_team->fee_paid = isset($request->fee_paid) ? $request->fee_paid : 'N';
 			$league_team->is_all_star_team = $request->all_star_team;
 			$league_team->league_conference_id = isset($request->conference) ? $request->conference : null;
 			$league_team->league_division_id = isset($request->division) ? $request->division : null;
@@ -459,27 +459,28 @@ class LeagueTeamController extends Controller
 
 					$player->restore();
 				}
+			}
 
-				// Restore team standings
-				if($league_team->standings()->onlyTrashed()->where('league_team_id', $teamID)->get()->first()->restore()) {
-					// Restore team games
-					if($league_team->home_games()->onlyTrashed()->where('home_team_id', $league_team->id)->get()->merge($league_team->away_games()->onlyTrashed()->where('away_team_id', $league_team->id)->get())->isNotEmpty()) {
-						// Restore each game
-						foreach($league_team->home_games()->onlyTrashed()->where('home_team_id', $league_team->id)->get()->merge($league_team->away_games()->onlyTrashed()->where('away_team_id', $league_team->id)->get()) as $game) {
-							if($game->result()->onlyTrashed()->get()->isNotEmpty()) {
-								$game->result()->onlyTrashed()->first()->restore();
-							}
-
-							$game->restore();
-						}
-
-						// Update the standings after updating all the games
-						$showSeason->standings()->standingUpdate();
-
-						return redirect()->action('LeagueTeamController@edit', ['league_team' => $league_team->id, 'season' => $showSeason->id])->with('status', 'Team Restored Successfully');
+			// Restore team games
+			if($league_team->home_games()->onlyTrashed()->where('home_team_id', $league_team->id)->get()->merge($league_team->away_games()->onlyTrashed()->where('away_team_id', $league_team->id)->get())->isNotEmpty()) {
+				// Restore each game
+				foreach($league_team->home_games()->onlyTrashed()->where('home_team_id', $league_team->id)->get()->merge($league_team->away_games()->onlyTrashed()->where('away_team_id', $league_team->id)->get()) as $game) {
+					if($game->result()->onlyTrashed()->get()->isNotEmpty()) {
+						$game->result()->onlyTrashed()->first()->restore();
 					}
+
+					$game->restore();
 				}
 			}
+
+			// Restore team standings
+			if($league_team->standings()->onlyTrashed()->where('league_team_id', $teamID)->get()->first()->restore()) {
+				// Update the standings after updating all the games
+				$showSeason->standings()->standingUpdate();
+
+				return redirect()->action('LeagueTeamController@edit', ['league_team' => $league_team->id, 'season' => $showSeason->id])->with('status', 'Team Restored Successfully');
+			}
+
 		} else {}
     }
 }

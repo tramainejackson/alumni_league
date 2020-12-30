@@ -122,7 +122,7 @@
 										@endif
 
 										<div class="input-form">
-											<label for="fee_paid" class="d-block">Is This An All-Star Team?</label>
+											<h3 for="" class="d-block">Is This An All-Star Team?</h3>
 
 											<div class="">
 												<button class="btn inputSwitchToggle{{ $league_team->is_all_star_team == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
