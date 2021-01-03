@@ -83,16 +83,22 @@ class LeagueStatController extends Controller
 
 	    if($regularSeasonWeek) {
 		    $week_games = $showSeason->games()->getWeekGames($leagueSchedule)->get();
+		    $game = $week_games->first();
 		    $weekCheck = 'Other Games This Week';
+
+		    if($week_games->isEmpty()) {
+			    $game = $showSeason->games()->getSingleGame($leagueSchedule)->first();
+			    $week_games = $showSeason->games()->getWeekGames($game->season_week)->get();
+		    }
 	    } else {
 		    $week_games = $showSeason->games()->getRoundGames($leagueSchedule)->get();
-		    $weekCheck = 'Other Playoff Games This Round';
-	    }
-
-	    if($week_games->isEmpty()) {
-		    $game = $showSeason->games()->getSingleGame($leagueSchedule)->first();
-	    } else {
 		    $game = $week_games->first();
+		    $weekCheck = 'Other Playoff Games This Round';
+
+		    if($week_games->isEmpty()) {
+			    $game = $showSeason->games()->getSingleGame($leagueSchedule)->first();
+			    $week_games = $showSeason->games()->getRoundGames($game->round)->get();
+		    }
 	    }
 
 	    if($game) {
@@ -152,7 +158,7 @@ class LeagueStatController extends Controller
      */
     public function edit_week(Request $request, $week) {
 		// Get the season to show
-	    $showSeason = LeagueSchedule::getWeekGames($week)->first()->season;
+	    $showSeason = $this->showSeason;
 		$seasonScheduleWeeks = $showSeason->games()->getScheduleWeeks()->get();
 		$weekGames 	= $showSeason->games()->getWeekGames($week)->orderBy('game_date')->orderBy('game_time')->get();
 	    $allStarGame = $this->showSeason->games()->where('all_star_game', 'Y')->first();

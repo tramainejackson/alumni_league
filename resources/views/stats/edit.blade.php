@@ -52,6 +52,7 @@
 										</div>
 
 										@if($game->player_stats->isNotEmpty())
+
 											<!-- Edit Form -->
 											<div class="my-2">
 												<div class="row">
@@ -164,6 +165,7 @@
 															<tbody>
 																@foreach($game->home_team_obj->players as $home_player)
 																	@php $playerStat = $home_player->stats->where('league_schedule_id', $game->id)->first(); @endphp
+
 																	<tr>
 																		<td class="text-center text-nowrap">{{ '#' . $home_player->jersey_num . ' ' . $home_player->player_name }}</td>
 																		<td>

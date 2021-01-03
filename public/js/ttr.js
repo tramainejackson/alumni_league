@@ -579,7 +579,8 @@ $(document).ready(function() {
 	});
 	
 	//Add player stats to player card and display
-	$("body").on("click", ".leagueLeadersCategory tr:not(.leagueLeadersCategoryFR), #player_stats tr:not(:first)", function(e) {
+	$("body").on("click", ".leagueLeadersCategory tr:not(.leagueLeadersCategoryFR), .showGameStats tr:not(:first), #player_stats tr:not(:first)", function(e) {
+		console.log(this);
 		var playerStats = [
 			$(this).children(".playerNameTD").text(),
 			$(this).children(".totalPointsTD").text(),

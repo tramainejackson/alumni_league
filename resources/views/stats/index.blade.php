@@ -268,7 +268,7 @@
 								</thead>
 								<tbody>
 									@foreach($allPlayers->get() as $showPlayer)
-										{{dd($allPlayers->get())}}
+
 										<tr data-toggle="modal" data-target="#player_card" class="text-center">
 											<td class='playerNameTD'>#{{ $showPlayer->player->jersey_num . ' ' . $showPlayer->player->player_name }}</td>
 											<td class='totalPointsTD'>{{ $showPlayer->TPTS == null ? 0 : $showPlayer->TPTS }}</td>
