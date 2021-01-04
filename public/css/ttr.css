@@ -1017,7 +1017,7 @@ table#team_stats_table tbody tr:hover, table#player_stats_table tbody tr:hover {
 	cursor: pointer;
 	color: black;
 }
-div.leagueLeadersCategory table tbody tr:hover {
+div.leagueLeadersCategory table tbody tr:hover, div.showGameStats table tbody tr:hover {
     background-color: cornflowerblue;
     color: black;
 	cursor: pointer;
