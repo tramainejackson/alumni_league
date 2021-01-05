@@ -135,29 +135,23 @@
 									<tbody>
 										@foreach($away_team->players as $away_team_player)
 											@php $player_game_stats = $game->player_stats->where('league_player_id', $away_team_player->id)->first(); @endphp
+											@php $player_season_stats = \App\LeagueStat::playerGameStats($away_team_player->id)->first(); @endphp
 
 											@if($player_game_stats != null)
 												<tr data-toggle="modal" data-target="#player_card" class="text-center{{ $player_game_stats->potw == 'Y' ? ' red' : '' }}">
 													<td class='playerNameTD'>#{{ $away_team_player->jersey_num . ' ' . $away_team_player->player_name }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->points != null ? $player_game_stats->points : 0 }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->rebounds != null ? $player_game_stats->rebounds : 0 }}</td>
-													<td class='playerStatTD'>{{ $player_game_stats->assists != null ? $player_game_stats->assists : 0 }}</td>
+													<td class='playerStatTD'>{{ $player_game_stats->assist != null ? $player_game_stats->assist : 0 }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->blocks != null ? $player_game_stats->blocks : 0 }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->steals != null ? $player_game_stats->steals : 0 }}</td>
-													<td class='totalPointsTD text-center' hidden>{{ $away_team_player->TPTS == null ? 0 : $away_team_player->TPTS }}</td>
-													<td class='pointsPGTD text-center' hidden>{{ $away_team_player->PPG == null ? 0 : $away_team_player->PPG }}</td>
-													<td class='totalThreesTD' hidden>{{ $away_team_player->TTHR == null ? 0 : $away_team_player->TTHR }}</td>
-													<td class='threesPGTD' hidden>{{ $away_team_player->TPG == null ? 0 : $away_team_player->TPG }}</td>
-													<td class='totalFTTD' hidden>{{ $away_team_player->TFTS == null ? 0 : $away_team_player->TFTS }}</td>
-													<td class='freeThrowsPGTD' hidden>{{ $away_team_player->FTPG == null ? 0 : $away_team_player->FTPG }}</td>
-													<td class='totalAssTD' hidden>{{ $away_team_player->TASS == null ? 0 : $away_team_player->TASS }}</td>
-													<td class='assistPGTD' hidden>{{ $away_team_player->APG == null ? 0 : $away_team_player->APG }}</td>
-													<td class='totalRebTD' hidden>{{ $away_team_player->TRBD == null ? 0 : $away_team_player->TRBD }}</td>
-													<td class='rebPGTD' hidden>{{ $away_team_player->RPG == null ? 0 : $away_team_player->RPG }}</td>
-													<td class='totalStealsTD' hidden>{{ $away_team_player->TSTL == null ? 0 : $away_team_player->TSTL }}</td>
-													<td class='stealsPGTD' hidden>{{ $away_team_player->SPG == null ? 0 : $away_team_player->SPG }}</td>
-													<td class='totalBlocksTD' hidden>{{ $away_team_player->TBLK == null ? 0 : $away_team_player->TBLK }}</td>
-													<td class='blocksPGTD' hidden>{{ $away_team_player->BPG == null ? 0 : $away_team_player->BPG }}</td>
+													<td class='pointsPGTD text-center' hidden>{{ $player_season_stats->PPG == null ? 0 : $player_season_stats->PPG }}</td>
+													<td class='threesPGTD' hidden>{{ $player_season_stats->TPG == null ? 0 : $player_season_stats->TPG }}</td>
+													<td class='freeThrowsPGTD' hidden>{{ $player_season_stats->FTPG == null ? 0 : $player_season_stats->FTPG }}</td>
+													<td class='assistPGTD' hidden>{{ $player_season_stats->APG == null ? 0 : $player_season_stats->APG }}</td>
+													<td class='rebPGTD' hidden>{{ $player_season_stats->RPG == null ? 0 : $player_season_stats->RPG }}</td>
+													<td class='stealsPGTD' hidden>{{ $player_season_stats->SPG == null ? 0 : $player_season_stats->SPG }}</td>
+													<td class='blocksPGTD' hidden>{{ $player_season_stats->BPG == null ? 0 : $player_season_stats->BPG }}</td>
 													<td class='teamNameTD' hidden>{{ $away_team_player->team_name }}</td>
 													<td class='allStarTD' hidden>{{ $away_team_player->all_star }}</td>
 												</tr>
@@ -184,29 +178,23 @@
 									<tbody>
 										@foreach($home_team->players as $home_team_player)
 											@php $player_game_stats = $game->player_stats->where('league_player_id', $home_team_player->id)->first(); @endphp
+											@php $player_season_stats = \App\LeagueStat::playerGameStats($home_team_player->id)->first(); @endphp
 
 											@if($player_game_stats != null)
 												<tr data-toggle="modal" data-target="#player_card">
 													<td class='playerNameTD'>#{{ $home_team_player->jersey_num . ' ' . $home_team_player->player_name }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->points != null ? $player_game_stats->points : 0 }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->rebounds != null ? $player_game_stats->rebounds : 0 }}</td>
-													<td class='playerStatTD'>{{ $player_game_stats->assists != null ? $player_game_stats->assists : 0 }}</td>
+													<td class='playerStatTD'>{{ $player_game_stats->assist != null ? $player_game_stats->assist : 0 }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->blocks != null ? $player_game_stats->blocks : 0 }}</td>
 													<td class='playerStatTD'>{{ $player_game_stats->steals != null ? $player_game_stats->steals : 0 }}</td>
-													<td class='totalPointsTD text-center' hidden>{{ $home_team_player->TPTS == null ? 0 : $home_team_player->TPTS }}</td>
-													<td class='pointsPGTD text-center' hidden>{{ $home_team_player->PPG == null ? 0 : $home_team_player->PPG }}</td>
-													<td class='totalThreesTD' hidden>{{ $home_team_player->TTHR == null ? 0 : $home_team_player->TTHR }}</td>
-													<td class='threesPGTD' hidden>{{ $home_team_player->TPG == null ? 0 : $home_team_player->TPG }}</td>
-													<td class='totalFTTD' hidden>{{ $home_team_player->TFTS == null ? 0 : $home_team_player->TFTS }}</td>
-													<td class='freeThrowsPGTD' hidden>{{ $home_team_player->FTPG == null ? 0 : $home_team_player->FTPG }}</td>
-													<td class='totalAssTD' hidden>{{ $home_team_player->TASS == null ? 0 : $home_team_player->TASS }}</td>
-													<td class='assistPGTD' hidden>{{ $home_team_player->APG == null ? 0 : $home_team_player->APG }}</td>
-													<td class='totalRebTD' hidden>{{ $home_team_player->TRBD == null ? 0 : $home_team_player->TRBD }}</td>
-													<td class='rebPGTD' hidden>{{ $home_team_player->RPG == null ? 0 : $home_team_player->RPG }}</td>
-													<td class='totalStealsTD' hidden>{{ $home_team_player->TSTL == null ? 0 : $home_team_player->TSTL }}</td>
-													<td class='stealsPGTD' hidden>{{ $home_team_player->SPG == null ? 0 : $home_team_player->SPG }}</td>
-													<td class='totalBlocksTD' hidden>{{ $home_team_player->TBLK == null ? 0 : $home_team_player->TBLK }}</td>
-													<td class='blocksPGTD' hidden>{{ $home_team_player->BPG == null ? 0 : $home_team_player->BPG }}</td>
+													<td class='pointsPGTD text-center' hidden>{{ $player_season_stats->PPG == null ? 0 : $player_season_stats->PPG }}</td>
+													<td class='threesPGTD' hidden>{{ $player_season_stats->TPG == null ? 0 : $player_season_stats->TPG }}</td>
+													<td class='freeThrowsPGTD' hidden>{{ $player_season_stats->FTPG == null ? 0 : $player_season_stats->FTPG }}</td>
+													<td class='assistPGTD' hidden>{{ $player_season_stats->APG == null ? 0 : $player_season_stats->APG }}</td>
+													<td class='rebPGTD' hidden>{{ $player_season_stats->RPG == null ? 0 : $player_season_stats->RPG }}</td>
+													<td class='stealsPGTD' hidden>{{ $player_season_stats->SPG == null ? 0 : $player_season_stats->SPG }}</td>
+													<td class='blocksPGTD' hidden>{{ $player_season_stats->BPG == null ? 0 : $player_season_stats->BPG }}</td>
 													<td class='teamNameTD' hidden>{{ $home_team_player->team_name }}</td>
 													<td class='allStarTD' hidden>{{ $home_team_player->all_star }}</td>
 												</tr>

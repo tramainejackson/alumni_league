@@ -156,7 +156,9 @@ class LeagueStat extends Model
 	*
 	*/
 	public function scopePlayerGameStats($query, $playerID=0) {
-		return $query->where('league_player_id', $playerID)->get();
+		return $query->select(DB::raw(self::get_formatted_stats()))
+			->where('league_player_id', $playerID)
+			->get();
 	}
 	
 	public static function get_formatted_stats() {
