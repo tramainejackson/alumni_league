@@ -26,7 +26,7 @@
 					</div>
 
 					@if($weekGames->count() > 0)
-						{!! Form::open(['action' => ['LeagueStatController@update', 'week' => $week], 'method' => 'PATCH']) !!}
+						{!! Form::open(['action' => ['LeagueStatController@update', 'week' => $week, 'season' => $showSeason->id], 'method' => 'PATCH']) !!}
 							@foreach($weekGames as $game)
 								<!--Card-->
 								<div class="card mb-4">
@@ -438,7 +438,7 @@
 						<h3 class="h3-responsive">All-Star Stats</h3>
 					</div>
 
-					{!! Form::open(['action' => ['LeagueStatController@update', 'week' => 2], 'method' => 'PATCH']) !!}
+					{!! Form::open(['action' => ['LeagueStatController@update', 'week' => 2, 'season' => $showSeason->id], 'method' => 'PATCH']) !!}
 
 						<!--Card-->
 						<div class="card mb-4">

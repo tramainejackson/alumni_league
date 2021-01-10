@@ -17,20 +17,6 @@
 
 Auth::routes();
 
-/* Resource Controllers */
-Route::resource('league_schedule', 'LeagueScheduleController');
-Route::resource('league_players', 'LeaguePlayerController');
-Route::resource('league_teams', 'LeagueTeamController');
-Route::resource('league_pictures', 'LeaguePictureController');
-Route::resource('league_profile', 'LeagueProfileController');
-Route::resource('league_seasons', 'LeagueSeasonController');
-Route::resource('league_stats', 'LeagueStatController');
-Route::resource('news', 'NewsArticleController');
-Route::resource('messages', 'MessagesController');
-Route::resource('users', 'UserController');
-Route::resource('settings', 'AdminController');
-/* Resource Controllers */
-
 /* Overwrite the default login controller */
 	Route::post('/login', 'Auth\LoginController@authenticate');
 	Route::get('/register', 'Auth\RegisterController@register');
@@ -95,6 +81,20 @@ Route::post('settings/{setting}', 'HomeController@edit_setting');
 Route::post('/restore_team/{id}', 'LeagueTeamController@restore');
 
 Route::post('/create_all_star_team/', 'LeagueSeasonController@create_all_star_team');
+
+/* Resource Controllers */
+Route::resource('league_schedule', 'LeagueScheduleController');
+Route::resource('league_players', 'LeaguePlayerController');
+Route::resource('league_teams', 'LeagueTeamController');
+Route::resource('league_pictures', 'LeaguePictureController');
+Route::resource('league_profile', 'LeagueProfileController');
+Route::resource('league_seasons', 'LeagueSeasonController');
+Route::resource('league_stats', 'LeagueStatController');
+Route::resource('news', 'NewsArticleController');
+Route::resource('messages', 'MessagesController');
+Route::resource('users', 'UserController');
+Route::resource('settings', 'AdminController');
+/* Resource Controllers */
 
 /** MDB Templates **/
 //Route::get('/templates/about_us', 'TemplateController@about_us');

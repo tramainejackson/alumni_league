@@ -24,8 +24,10 @@
 					<a href="{{ request()->query() == null ? route('league_stat.edit_week', ['week' => $weekGames->first()->season_week]) : route('league_stats.edit_week', ['week' => $weekGames->first()->season_week, 'season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-rounded cyan darken-1 white-text" type="button">Edit Week Stats</a>
 				</div>
 
-				{!! Form::open(['action' => ['LeagueScheduleController@update_week', $weekGames->first()->season_week], 'class' => 'updateWeekForm', 'name' => 'edit_week_form', 'method' => 'PATCH']) !!}
+				{!! Form::open(['action' => ['LeagueScheduleController@update_week', 'week' => $weekGames->first()->season_week, 'season' => $showSeason->id], 'class' => 'updateWeekForm', 'name' => 'edit_week_form', 'method' => 'PATCH']) !!}
+
 					@if($weekGames->count() > 0)
+
 						@foreach($weekGames as $game)
 							<!--Card-->
 							<div class="card mb-4">
@@ -279,4 +281,8 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Footer -->
+	@include('layouts.footer')
+	<!-- Footer -->
 @endsection

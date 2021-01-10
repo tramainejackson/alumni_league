@@ -384,24 +384,24 @@ class LeagueSeason extends Model
 		    	['id', $season],
 		    	['year', $year],
 		    	['completed', 'N'],
-		    ])->get()->last();
+		    ])->get()->first();
 	    } elseif($season == null && $year != null) {
 		    return $query->where([
 			    ['active', 'Y'],
 			    ['year', $year],
 			    ['completed', 'N'],
-		    ])->get()->last();
+		    ])->get()->first();
 	    } elseif($season != null && $year == null) {
 		    return $query->where([
 			    ['active', 'Y'],
 			    ['id', $season],
 			    ['completed', 'N'],
-		    ])->get()->last();
+		    ])->get()->first();
 	    } else {
 		    return $query->where([
 			    ['completed', 'N'],
 			    ['active', 'Y'],
-		    ])->get()->last();
+		    ])->get()->first();
 	    }
     }
 	
