@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 	<div class="container-fluid bgrd3">
 
 		@if($showSeason->is_playoffs == 'Y')
@@ -74,6 +75,7 @@
 														</div>
 
 														@if($showSeason->has_divisions == 'Y' || $showSeason->has_conferences == 'Y')
+
 															@if($team->league_conference_id != null || $team->league_division_id != null)
 																<div class="divider-short"></div>
 															@endif
@@ -313,11 +315,12 @@
 															</p>
 														</div>
 
-														@if($team->league_conference_id != null || $team->league_division_id != null)
-															<div class="divider-short"></div>
-														@endif
-
 														@if($showSeason->has_divisions == 'Y' || $showSeason->has_conferences == 'Y')
+
+															@if($team->league_conference_id != null || $team->league_division_id != null)
+																<div class="divider-short"></div>
+															@endif
+
 															@if($team->league_conference_id != null)
 																<p class="m-0">
 																	<label class="">Conference:&nbsp;</label>

@@ -25,28 +25,28 @@ class League_Standings extends DatabaseObject {
 		
 	}
 	
-	public static function get_leagues_profile_id() {
-		return $this->leagues_profile_id;
-	}
-	
-	public function get_team_id() {
-		return $this->leagues_teams_id;
-	}
-	
-	private function sql_formatted_standings($leagueID=0) {
-		$sqlFormat = "SELECT *, ROUND(team_wins/team_games, 2) AS winPERC 
-			FROM leagues_standings 
-			WHERE leagues_profile_id='".$leagueID."'
-			ORDER BY team_wins/team_games DESC";
-		return $sqlFormat;
-	}
-	
-	public static function get_league_standings() {
-		$sql = self::sql_formatted_standings($leagueID);
-		$standings = self::find_by_sql($sql);
-		
-		return $standings;
-	}
+//	public static function get_leagues_profile_id() {
+//		return $this->leagues_profile_id;
+//	}
+//
+//	public function get_team_id() {
+//		return $this->leagues_teams_id;
+//	}
+//
+//	private function sql_formatted_standings($leagueID=0) {
+//		$sqlFormat = "SELECT *, ROUND(team_wins/team_games, 2) AS winPERC
+//			FROM leagues_standings
+//			WHERE leagues_profile_id='".$leagueID."'
+//			ORDER BY team_wins/team_games DESC";
+//		return $sqlFormat;
+//	}
+//
+//	public static function get_league_standings($leagueID=0) {
+//		$sql = self::sql_formatted_standings($leagueID);
+//		$standings = self::find_by_sql($sql);
+//
+//		return $standings;
+//	}
 	
 }
 

@@ -99,7 +99,8 @@ class LeagueTeamController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(LeagueTeam $league_team) {
+	public function show(Request $request, LeagueTeam $league_team) {
+
 		$showSeason = $this->showSeason;
 
 		// Get the season to show

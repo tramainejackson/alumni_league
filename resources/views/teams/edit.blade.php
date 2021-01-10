@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+	{{--{{ dd(explode('/', request()->getPathInfo())) }}--}}
 	<div class="container-fluid bgrd3">
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->

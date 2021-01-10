@@ -113,7 +113,9 @@
 						<div class="dropdown-divider"></div>
 
 						@foreach($activeSeasons as $activeSeason)
-							<a href="{{ (substr_count(url()->current(),'archive') > 0) || (request()->getPathInfo() == '/') ? route('league_seasons.index', ['season' => $activeSeason->id], false) : substr_count(url()->current(),'stats') > 0 ? route('league_stats.index', ['season' => $activeSeason->id], false) : url()->current() . '?season=' . $activeSeason->id }}" class="dropdown-item indigo-text{{ $activeSeason->id == $showSeason->id ? ' rgba-grey-strong white-text' : '' }}">{{ $activeSeason->name }}</a>
+							@php $seasonTabURI = explode('/', request()->getPathInfo()); @endphp
+
+							<a href="{{ (substr_count(url()->current(),'archive') > 0) || (request()->getPathInfo() == '/') ? route('league_seasons.index', ['season' => $activeSeason->id], false) : '/' . $seasonTabURI[1] . '?season=' . $activeSeason->id }}" class="dropdown-item indigo-text{{ $activeSeason->id == $showSeason->id ? ' rgba-grey-strong white-text' : '' }}">{{ $activeSeason->name }}</a>
 						@endforeach
 					</div>
 				</li>
