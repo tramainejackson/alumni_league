@@ -24,7 +24,7 @@
 					</div>
 
 					<div id="league_standings">
-						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-dark table-bordered">
+						<table id="league_standings_table" class="table text-center table-striped table-responsive-sm table-dark text-nowrap table-bordered">
 							<thead>
 								<tr>
 									<th class="font-weight-bold">Team Name</th>
@@ -57,7 +57,7 @@
 					@foreach($showSeason->conferences as $conference)
 						@if($conference->teams->isNotEmpty())
 							<div id="" class="league_conferences_standings">
-								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered league_conferences_table">
+								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered text-nowrap league_conferences_table">
 									<thead>
 									<tr>
 										<th class="font-weight-bold" style="font-size: x-large;" colspan="3">{{ $conference->conference_name }}</th>
@@ -90,7 +90,7 @@
 					@foreach($showSeason->divisions as $division)
 						@if($division->teams->isNotEmpty())
 							<div id="" class="league_divisions_standings">
-								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered league_divisions_table">
+								<table id="" class="table text-center table-striped table-responsive-sm table-secondary table-bordered text-nowrap league_divisions_table">
 									<thead>
 										<tr style="border: 2px solid cadetblue;background-color: aliceblue;">
 											<th class="font-weight-bold" colspan="3" style="border: 2px solid cadetblue;background-color: aliceblue; font-size: x-large;">{{ $division->division_name }}</th>
@@ -126,6 +126,6 @@
 	</div>
 
 	<!-- Footer -->
-	@include('layouts.footer')
+	@include('content_parts.footer')
 	<!-- Footer -->
 @endsection

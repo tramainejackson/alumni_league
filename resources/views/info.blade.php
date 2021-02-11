@@ -153,50 +153,56 @@
 						</div>
 					</div>
 
-					<div class="">
-						<div class="rgba-white-strong px-5 py-3 rounded" id="">
-							@if($league->commish != '')
-								<div class="">
-									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">Commissioner:</p>
-									<p class="d-inline-block text-left">{{ $league->commish }}</p>
-								</div>
-							@endif
+					<div class="row">
 
-							@if($league->address != '')
-								<div class="">
-									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Address:</p>
-									<p class="d-inline-block text-left">{{ $league->address }}</p>
-								</div>
-							@endif
+						<div class="col-12 col-md-10 col-lg-8 col-xl-12 my-3 mx-auto" id="">
 
-							@if($league->phone != '')
-								<div class="">
-									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Phone:</p>
-									<p class="d-inline-block text-left">{{ $league->phone }}</p>
-								</div>
-							@endif
+							<div class="rgba-white-strong px-md-5 px-2 py-3 rounded" id="">
 
-							@if($league->leagues_email != '')
-								<div class="">
-									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Email:</p>
-									<p class="d-inline-block text-left">{{ $league->leagues_email }}</p>
-								</div>
-							@endif
+								@if($league->commish != '')
+									<div class="d-flex align-items-center justify-content-between">
+										<p class="font-weight-bold leagueInfoHeader mb-0">Commissioner:</p>
+										<p class="text-muted mb-0">{{ $league->commish }}</p>
+									</div>
+								@endif
 
-							@if($league->comp != '')
-								<div class="">
-									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Competition:</p>
-									<p class="d-inline-block text-left">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', ucwords($league->comp))) }}</p>
-								</div>
-							@endif
+								@if($league->address != '')
+									<div class="d-flex align-items-center justify-content-between">
+										<p class="font-weight-bold leagueInfoHeader mb-0"><span class="d-none d-sm-inline-block">League&nbsp;</span>Address:</p>
+										<p class="text-muted mb-0">{{ $league->address }}</p>
+									</div>
+								@endif
 
-							@if($league->age != '')
-								<div class="">
-									<p class="d-inline-block text-left font-weight-bold leagueInfoHeader">League Ages:</p>
-									<p class="d-inline-block text-left">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', $league->age)) }}</p>
-								</div>
-							@endif
+								@if($league->phone != '')
+									<div class="d-flex align-items-center justify-content-between">
+										<p class="font-weight-bold leagueInfoHeader mb-0"><span class="d-none d-sm-inline-block">League&nbsp;</span>Phone:</p>
+										<p class="text-muted mb-0">{{ $league->phone }}</p>
+									</div>
+								@endif
+
+								@if($league->leagues_email != '')
+									<div class="d-flex align-items-center justify-content-between">
+										<p class="font-weight-bold leagueInfoHeader mb-0"><span class="d-none d-sm-inline-block">League&nbsp;</span>Email:</p>
+										<p class="text-muted mb-0">{{ $league->leagues_email }}</p>
+									</div>
+								@endif
+
+								@if($league->comp != '')
+									<div class="d-flex align-items-center justify-content-between">
+										<p class="font-weight-bold leagueInfoHeader mb-0"><span class="d-none d-sm-inline-block">League&nbsp;</span>Comp:</p>
+										<p class="text-muted mb-0">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', ucwords($league->comp))) }}</p>
+									</div>
+								@endif
+
+								@if($league->age != '')
+									<div class="d-flex align-items-center justify-content-between">
+										<p class="font-weight-bold leagueInfoHeader mb-0"><span class="d-none d-sm-inline-block">League&nbsp;</span>Ages:</p>
+										<p class="text-muted mb-0">{{ str_ireplace('_', ' ', str_ireplace(' ', ', ', $league->age)) }}</p>
+									</div>
+								@endif
+							</div>
 						</div>
+
 					</div>
 				</div>
 
@@ -221,12 +227,15 @@
 			</div>
 		@endif
 
-		<div class="col-12 col-xl-8 mx-auto leagueContactInfo">
-			<div class="row">
+
+		<div class="row">
+
+			<div class="col-12 col-md-10 col-lg-8 my-3 mx-auto">
+
 				<!-- Footer -->
 				@if(!Auth::check())
 					{{--Add Contact Us Form--}}
-					@include('layouts.contact')
+					@include('content_parts.contact')
 				@endif
 				<!-- Footer -->
 			</div>
@@ -235,6 +244,6 @@
 	</div>
 
 	<!-- Footer -->
-	@include('layouts.footer')
+	@include('content_parts.footer')
 	<!-- Footer -->
 @endsection

@@ -78,6 +78,6 @@
 	</div>
 
 	<!-- Footer -->
-	@include('layouts.footer')
+	@include('content_parts.footer')
 	<!-- Footer -->
 @endsection

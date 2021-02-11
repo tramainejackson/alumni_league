@@ -52,7 +52,7 @@
 		<div class="row view">
 
 			<div class="pt-3{{ Auth::check() && Auth::user()->type == 'admin' ? ' d-flex justify-content-center flex-column col col-lg-2' : $checkStats ? ' col-12' : ' col-12' }}">
-				<div class="text-center p-4 card rgba-deep-orange-light white-text my-3 col-8 mx-auto" id="">
+				<div class="text-center p-4 card rgba-deep-orange-light white-text my-3 col-12 mx-auto" id="">
 					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
 				</div>
 
@@ -69,7 +69,7 @@
 						<div id="league_leaders" class="row">
 
 							<div class="leagueLeadersCategory col-12 col-md my-1 mx-auto table-wrapper" id="league_leaders_points">
-								<table class="table white-text" id="points_category">
+								<table class="table white-text text-nowrap" id="points_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -104,7 +104,7 @@
 							</div>
 
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_assist">
-								<table class="table white-text" id="assist_category">
+								<table class="table white-text text-nowrap" id="assist_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -139,7 +139,7 @@
 							</div>
 
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_rebounds">
-								<table class="table white-text" id="rebounds_category">
+								<table class="table white-text text-nowrap" id="rebounds_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -174,7 +174,7 @@
 							</div>
 
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_steals">
-								<table class="table white-text" id="steals_category">
+								<table class="table white-text text-nowrap" id="steals_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -209,7 +209,7 @@
 							</div>
 
 							<div class="leagueLeadersCategory col-12 col-md mx-auto my-1 table-wrapper" id="league_leaders_blocks">
-								<table class="table white-text" id="blocks_category">
+								<table class="table white-text text-nowrap" id="blocks_category">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -246,7 +246,7 @@
 						</div>
 
 						<div class="hidden table-wrapper" id="player_stats" style="display:none !important; max-height: initial;">
-							<table class="table table-bordered" id="player_stats_table">
+							<table class="table table-bordered text-nowrap" id="player_stats_table">
 								<thead>
 									<tr>
 										<th></th>
@@ -294,7 +294,7 @@
 						</div>
 
 						<div class="hidden table-wrapper" id="team_stats" style="display:none !important; max-height: initial;">
-							<table class="table table-bordered" id="team_stats_table">
+							<table class="table table-bordered text-nowrap" id="team_stats_table">
 								<thead>
 									<tr class='text-center'>
 										<th></th>
@@ -357,6 +357,6 @@
 	</div>
 
 	<!-- Footer -->
-	@include('layouts.footer')
+	@include('content_parts.footer')
 	<!-- Footer -->
 @endsection

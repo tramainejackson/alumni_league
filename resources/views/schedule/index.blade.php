@@ -34,7 +34,7 @@
 							@php $seasonWeekGames = $showSeason->games()->getWeekGames($showWeekInfo->season_week)->get() @endphp
 
 							<div class='leagues_schedule text-center table-wrapper mb-5'>
-								<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table'>
+								<table id='week_{{ $showWeekInfo->season_week }}_schedule' class='weekly_schedule table text-nowrap'>
 									<thead>
 										<tr class="indigo darken-2 white-text">
 											<th class="text-center" colspan="6">
@@ -153,7 +153,7 @@
 
 				@if($seasonASG != null)
 					<div class='leagues_schedule text-center table-wrapper mb-5'>
-						<table id='asg_week_schedule' class='weekly_schedule table'>
+						<table id='asg_week_schedule' class='weekly_schedule table text-nowrap'>
 							<thead>
 							<tr class="indigo darken-2 white-text">
 								<th class="text-center" colspan="6">
@@ -239,6 +239,6 @@
 	</div>
 
 	<!-- Footer -->
-	@include('layouts.footer')
+	@include('content_parts.footer')
 	<!-- Footer -->
 @endsection

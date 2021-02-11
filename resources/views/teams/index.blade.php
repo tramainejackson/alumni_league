@@ -23,7 +23,7 @@
 		</div>
 
 		<div class="row view pt-3">
-			<div class="col-10 col-lg-8 mx-auto{{ $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
+			<div class="col-12 col-sm-10 col-lg-8 mx-auto{{ $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
 				<div class="text-center coolText1">
 					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
 						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
@@ -64,12 +64,12 @@
 														<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
 														<div class="d-flex flex-column align-items-center justify-content-center">
 															<p class="m-0">
-																<label class="">Name:&nbsp;</label>
+																<label class="font-weight-bold">Name:&nbsp;</label>
 																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
 															</p>
 
 															<p class="m-0">
-																<label class="">Phone:&nbsp;</label>
+																<label class="font-weight-bold">Phone:&nbsp;</label>
 																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
 															</p>
 														</div>
@@ -82,14 +82,14 @@
 
 															@if($team->league_conference_id != null)
 																<p class="m-0">
-																	<label class="">Conference:&nbsp;</label>
+																	<label class="font-weight-bold">Conference:&nbsp;</label>
 																	<span>{{ $team->conference->conference_name }}</span>
 																</p>
 															@endif
 
 															@if($team->league_division_id != null)
 																<p class="m-0">
-																	<label class="">Division:&nbsp;</label>
+																	<label class="font-weight-bold">Division:&nbsp;</label>
 																	<span>{{ $team->division->division_name }}</span>
 																</p>
 															@endif
@@ -244,12 +244,12 @@
 																<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
 																<div class="d-flex flex-column align-items-center justify-content-center">
 																	<p class="m-0">
-																		<label class="">Name:&nbsp;</label>
+																		<label class="font-weight-bold">Name:&nbsp;</label>
 																		<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
 																	</p>
 
 																	<p class="m-0">
-																		<label class="">Phone:&nbsp;</label>
+																		<label class="font-weight-bold">Phone:&nbsp;</label>
 																		<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
 																	</p>
 																</div>
@@ -261,14 +261,14 @@
 
 																	@if($team->league_conference_id != null)
 																		<p class="m-0">
-																			<label class="">Conference:&nbsp;</label>
+																			<label class="font-weight-bold">Conference:&nbsp;</label>
 																			<span>{{ $team->conference->conference_name }}</span>
 																		</p>
 																	@endif
 
 																	@if($team->league_division_id != null)
 																		<p class="m-0">
-																			<label class="">Division:&nbsp;</label>
+																			<label class="font-weight-bold">Division:&nbsp;</label>
 																			<span>{{ $team->division->division_name }}</span>
 																		</p>
 																	@endif
@@ -305,12 +305,12 @@
 														<h3 class="border-bottom card-title h3-responsive mb-2 px-5">Captain Info</h3>
 														<div class="d-flex flex-column align-items-center justify-content-center">
 															<p class="m-0">
-																<label class="">Name:&nbsp;</label>
+																<label class="font-weight-bold">Name:&nbsp;</label>
 																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->player_name : 'N/A' }}</span>
 															</p>
 
 															<p class="m-0">
-																<label class="">Phone:&nbsp;</label>
+																<label class="font-weight-bold">Phone:&nbsp;</label>
 																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
 															</p>
 														</div>
@@ -323,14 +323,14 @@
 
 															@if($team->league_conference_id != null)
 																<p class="m-0">
-																	<label class="">Conference:&nbsp;</label>
+																	<label class="font-weight-bold">Conference:&nbsp;</label>
 																	<span>{{ $team->conference->conference_name }}</span>
 																</p>
 															@endif
 
 															@if($team->league_division_id != null)
 																<p class="m-0">
-																	<label class="">Division:&nbsp;</label>
+																	<label class="font-weight-bold">Division:&nbsp;</label>
 																	<span>{{ $team->division->division_name }}</span>
 																</p>
 															@endif
@@ -366,6 +366,6 @@
 	</div>
 
 	<!-- Footer -->
-	@include('layouts.footer')
+	@include('content_parts.footer')
 	<!-- Footer -->
 @endsection

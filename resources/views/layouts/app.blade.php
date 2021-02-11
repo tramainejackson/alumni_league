@@ -39,7 +39,7 @@
 
     <div id="app">
 
-		@include('layouts.navigation')
+		@include('content_parts.navigation')
 
 		@if(session('status'))
 			<!-- Add return message -->

@@ -23,7 +23,7 @@
 
 					<div class="my-4 pb-3" id="" style="display: flex; flex-wrap: nowrap; overflow-x: auto;">
 
-						<h4 class="h4 h4-responsive d-inline-block col-2 text-wrap" style="flex: 0 0 auto;">{{ $weekCheck }}</h4>
+						<h4 class="h4 h4-responsive d-inline-block col-6 col-md-4 text-wrap" style="flex: 0 0 auto;">{{ $weekCheck }}</h4>
 
 						@foreach($week_games as $week_game)
 
@@ -31,7 +31,7 @@
 
 								@if($week_game->result !== null)
 
-									<div class="d-inline-block col-4 py-1 border border-primary rounded-pill rgba-stylish-light mr-3 align-self-center" id="" style="flex: 0 0 auto;">
+									<div class="d-inline-block col-8 col-sm-6 col-md-4 py-1 border border-primary rounded-pill rgba-stylish-light mr-3 align-self-center" id="" style="flex: 0 0 auto;">
 										<a href="{{ route('league_stats.show', [$week_game->id, 'season' => $showSeason->id]) }}">
 
 											<div class="container-fluid" id="">
@@ -121,7 +121,7 @@
 					<div class="row" id="">
 						<div class="col-12 col-md-6 away_team_stats" id="">
 							<div class="showGameStats col-12 col-md my-1 mx-auto table-wrapper" id="">
-								<table class="table white-text" id="show_away_team_stats">
+								<table class="table white-text text-nowrap" id="show_away_team_stats">
 									<thead>
 										<tr class="leagueLeadersCategoryFR">
 											<th></th>
@@ -164,7 +164,7 @@
 
 						<div class="col-12 col-md-6 home_team_stats" id="">
 							<div class="showGameStats col-12 col-md my-1 mx-auto table-wrapper" id="">
-								<table class="table white-text" id="show_home_team_stats">
+								<table class="table white-text text-nowrap" id="show_home_team_stats">
 									<thead>
 										<tr class="">
 											<th></th>
@@ -259,6 +259,6 @@
 	</div>
 
 	<!-- Footer -->
-	@include('layouts.footer')
+	@include('content_parts.footer')
 	<!-- Footer -->
 @endsection
