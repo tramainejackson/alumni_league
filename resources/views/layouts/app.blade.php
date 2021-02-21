@@ -23,7 +23,7 @@
 
 	<!-- Material Design Bootstrap -->
 	<link href="{{ asset('/css/mdb.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('/css/ttr.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/alumni_league.css') }}" rel="stylesheet">
 	
 	@if(substr_count(request()->server('HTTP_USER_AGENT'), 'rv:') > 0)
 		<link href="{{ asset('/css/myIEcss.css') }}" rel="stylesheet">
@@ -61,7 +61,7 @@
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="/js/mdb.min.js"></script>
-	<script type="text/javascript" src="/js/ttr.js"></script>
+	<script type="text/javascript" src="/js/alumni_league.js"></script>
 
 	{{--@if(session()->has('testdrive'))--}}
         {{--@if(session()->get('testdrive') == 'true')--}}
