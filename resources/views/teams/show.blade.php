@@ -1,10 +1,16 @@
 @extends('layouts.app')
 
+@section('title', 'The Alumni League Teams')
+
 @section('content')
+
 	<div class="container-fluid bgrd3">
+
 		<div class="row">
+		@section('title', 'The Alumni League Teams')
 			<!--Column will include buttons for creating a new season-->
 			<div class="col mt-3 d-none d-xl-block"></div>
+
 			<div class="col-12 col-xl-8 mx-auto">
 				<div class="text-center coolText1">
 					<h1 class="display-3 py-3">{{ ucfirst($showSeason->name) }}</h1>

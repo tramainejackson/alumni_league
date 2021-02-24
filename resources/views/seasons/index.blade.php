@@ -11,6 +11,7 @@
 @endsection
 
 @section('content')
+
 	@if(Auth::check() && Auth::user()->type == 'admin')
 		@include('include.functions')
 
@@ -22,19 +23,19 @@
 				</div>
 			@endif
 
-			<div class="row align-items-stretch{{ $showSeason->league_profile ? '': ' view' }}">
-				<!--Column will include buttons for creating a new season-->
-				<div class="col-2 py-3" id="">
-					<div class="row">
-						<div class="col">
-							<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>
-						</div>
-					</div>
-				</div>
+			{{--<div class="row align-items-stretch{{ $showSeason->league_profile ? '': ' view' }}">--}}
+				{{--<!--Column will include buttons for creating a new season-->--}}
+				{{--<div class="col-2 py-3" id="">--}}
+					{{--<div class="row">--}}
+						{{--<div class="col">--}}
+							{{--<button class="btn btn-lg btn-rounded blue white-text" type="button" data-toggle="modal" data-target="#newSeasonForm">New Season</button>--}}
+						{{--</div>--}}
+					{{--</div>--}}
+				{{--</div>--}}
+			{{--</div>--}}
 
-			</div>
 			<div class="row" id="">
-				<div class="col-12 col-lg-10 pb-3 mx-auto">
+				<div class="col-12 col-lg-10 py-3 mx-auto">
 
 					@if($showSeason->completed == 'N')
 						<!-- Show league season info -->
@@ -212,9 +213,9 @@
 														<h2>Conference Names</h2>
 													</div>
 
-													<div class="row">
+													<div class="row align-items-center d-flex justify-content-center">
 														@foreach($showSeasonConferences as $conference)
-															<div class="col-12 col-md" id="">
+															<div class="col-10 col-sm-5" id="">
 																<div class="md-form">
 																	<input type="text" name="conference_name[]" class="form-control" id="conference_name" placeholder="Name" value="{{ $conference->conference_name }}" />
 
@@ -255,9 +256,9 @@
 														<h2>Division Names</h2>
 													</div>
 
-													<div class="row">
+													<div class="row row-cols-2 align-items-center justify-content-center">
 														@foreach($showSeasonDivisions as $division)
-															<div class="col-12 col-md" id="">
+															<div class="col-10 col-sm-5" id="">
 																<div class="md-form">
 																	<input type="text" name="division_name[]" class="form-control" id="division_name" placeholder="Name" value="{{ $division->division_name }}" />
 
@@ -420,7 +421,7 @@
 												<div class="d-flex justify-content-around align-items-center flex-column flex-md-row">
 													<button type="submit" class="btn btn-lg white-text green" id="">Update League</button>
 
-													@if($showSeason->is_playoffs == 'N')
+													@if($showSeason->is_playoffs == 'N' && $allGames->isNotEmpty())
 														<button type="button" class="btn btn-lg white-text cyan darken-2" id="" data-toggle="modal" data-target="#start_playoffs">Start Playoffs</button>
 													@endif
 												</div>
@@ -511,31 +512,34 @@
 
 					<!-- League season stats snap shot -->
 					<div class="col-8 mx-auto my-5">
+
 						<div class="d-flex w-100 justify-content-center align-items-center flex-column flex-lg-row">
 							<h1 class="h1-responsive">Stats</h1>
 							<a href="{{ request()->query() == null ? route('league_stats.index') : route('league_stats.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-sm blue-gradient fullCatLink">All Stats</a>
 						</div>
+
 						<div id="season_stats_snap" class="my-5 row">
+
 							<!-- Season stat leaders by category -->
-						@if($showSeasonStat->isNotEmpty())
-							<!-- Get the scoring leaders -->
+							@if($showSeasonStat->isNotEmpty())
+								<!-- Get the scoring leaders -->
 								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>PPG</th>
-										</tr>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>PPG</th>
+											</tr>
 										</thead>
 										<tbody>
-										@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
+											@foreach($showSeason->stats()->scoringLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->PPG != null ? $playerStat->PPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -544,20 +548,21 @@
 								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>RPG</th>
-										</tr>
-										</thead>
-										<tbody>
-										@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>RPG</th>
 											</tr>
-										@endforeach
+										</thead>
+
+										<tbody>
+											@foreach($showSeason->stats()->reboundingLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->RPG != null ? $playerStat->RPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -566,20 +571,21 @@
 								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>APG</th>
-										</tr>
-										</thead>
-										<tbody>
-										@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>APG</th>
 											</tr>
-										@endforeach
+										</thead>
+
+										<tbody>
+											@foreach($showSeason->stats()->assistingLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->APG != null ? $playerStat->APG : 'N/A' }}</td>
+												</tr>
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -594,14 +600,15 @@
 											<th>SPG</th>
 										</tr>
 										</thead>
+
 										<tbody>
-										@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
-											<tr class="white-text">
-												<td>{{ $playerStat->player->team_name }}</td>
-												<td>{{ $playerStat->player->player_name }}</td>
-												<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
-											</tr>
-										@endforeach
+											@foreach($showSeason->stats()->stealingLeaders(5)->get() as $playerStat)
+												<tr class="white-text">
+													<td>{{ $playerStat->player->team_name }}</td>
+													<td>{{ $playerStat->player->player_name }}</td>
+													<td>{{ $playerStat->SPG != null ? $playerStat->SPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -610,20 +617,21 @@
 								<div class="blue-gradient col-12 col-lg-5 m-1 table-wrapper mx-auto">
 									<table class="table white-text">
 										<thead>
-										<tr>
-											<th>Team</th>
-											<th>Player</th>
-											<th>BPG</th>
-										</tr>
-										</thead>
-										<tbody>
-										@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
-											<tr class="white-text">
-												<td>{{ $playerBlocks->player->team_name }}</td>
-												<td>{{ $playerBlocks->player->player_name }}</td>
-												<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
+											<tr>
+												<th>Team</th>
+												<th>Player</th>
+												<th>BPG</th>
 											</tr>
-										@endforeach
+										</thead>
+
+										<tbody>
+											@foreach($showSeason->stats()->blockingLeaders(5)->get() as $playerBlocks)
+												<tr class="white-text">
+													<td>{{ $playerBlocks->player->team_name }}</td>
+													<td>{{ $playerBlocks->player->player_name }}</td>
+													<td>{{ $playerBlocks->BPG != null ? $playerBlocks->BPG : 'N/A' }}</td>
+												</tr>
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -638,7 +646,7 @@
 			@endif
 
 			{{-- Include Modals--}}
-			@include('modals.new_season_modal')
+			{{--@include('modals.new_season_modal')--}}
 			@include('modals.complete_season_modal')
 			@include('modals.delete_rule')
 

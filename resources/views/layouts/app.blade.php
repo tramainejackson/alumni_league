@@ -12,11 +12,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $league->name }}</title>
+	<title>@yield('title', 'The Alumni League')</title>
 
     <!-- Styles -->
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
 	<!-- Bootstrap core CSS -->
 	<link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -62,12 +62,6 @@
 	<!-- MDB core JavaScript -->
 	<script type="text/javascript" src="/js/mdb.min.js"></script>
 	<script type="text/javascript" src="/js/alumni_league.js"></script>
-
-	{{--@if(session()->has('testdrive'))--}}
-        {{--@if(session()->get('testdrive') == 'true')--}}
-            {{--<script type="text/javascript" src="/js/test_drive_tutorial.js"></script>--}}
-        {{--@endif--}}
-	{{--@endif--}}
 
 	@yield('scripts')
 </body>

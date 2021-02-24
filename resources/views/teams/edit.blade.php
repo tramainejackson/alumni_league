@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
+@section('title', 'The Alumni League Teams')
+
 @section('content')
 
-	{{--{{ dd(explode('/', request()->getPathInfo())) }}--}}
 	<div class="container-fluid bgrd3">
+
 		<div class="row">
 			<!--Column will include buttons for creating a new season-->
 			<div class="col mt-3 d-none d-xl-block"></div>
+
 			<div class="col-12 col-xl-8 mx-auto">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
@@ -16,7 +19,7 @@
 				<div class="card card-cascade mb-4 reverse wider">
 					<!--Card image-->
 					<div class="view">
-						<img src="{{ $league_team->team_picture != null ? $league_team->lg_photo() : $defaultImg }}" class="img-fluid mx-auto" alt="photo" style="max-width: 75%;">
+						<img src="{{ asset($league_team->lg_photo()) }}" class="img-fluid mx-auto" alt="photo" style="max-width: 75%;">
 					</div>
 
 					<!--Card content-->

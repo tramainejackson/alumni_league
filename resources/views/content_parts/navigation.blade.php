@@ -22,7 +22,7 @@
 			@endif
 		</div>
 
-		<ul class="custom-scrollbar nav navbar-nav p-2">
+		<ul class="custom-scrollbar p-2">
 			<!--/. Side navigation links -->
 			@if($activeSeasons->isNotEmpty())
 				<li id="accordion1" class="accordion nav-link nav-item{{ substr_count(url()->current(),'season') > 0 ? ' activeNav': '' }}">
@@ -77,6 +77,16 @@
 			{{--</li>--}}
 
 			@if (Auth::check())
+
+				@if(Auth::user()->type == 'admin')
+					<li class="nav-item">
+						<a id="" class='nav-link white-text{{ substr_count(url()->current(),'message') > 0 ? ' activeNav': '' }}' href="{{ route('messages.index', ['season' => $showSeason->id], false) }}">Messages</a>
+					</li>
+					<li class="nav-item">
+						<a id="" class='nav-link white-text{{ substr_count(url()->current(),'user') > 0 ? ' activeNav': '' }}' href="{{ route('users.index', ['season' => $showSeason->id], false) }}">Users</a>
+					</li>
+				@endif
+
 				<li class="nav-item">
 					<a class='nav-link white-text' href="{{ route('logout') }}"
 						onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

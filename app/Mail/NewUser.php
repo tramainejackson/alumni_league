@@ -33,8 +33,7 @@ class NewUser extends Mailable
 	 *
 	 * @return $this
 	 */
-	public function build()
-	{
+	public function build() {
 		return $this->subject('New User Added')->view('emails.new_contact', compact('user'));
 	}
 }

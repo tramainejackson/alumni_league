@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'The Alumni League Teams')
+
 @section('content')
 
 	<div class="container-fluid bgrd3">
@@ -46,7 +48,7 @@
 										<div class="card card-cascade wider my-4">
 											<!-- Card image -->
 											<div class="view overlay">
-												<img class="card-img-top" src="{{ $team->team_picture != null ? $team->sm_photo() : $defaultImg }}" alt="Card image cap">
+												<img class="card-img-top" src="{{ asset($team->sm_photo()) }}" alt="Card image cap">
 												<a href="#!">
 													<div class="mask rgba-white-slight"></div>
 												</a>

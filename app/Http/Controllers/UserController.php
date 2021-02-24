@@ -58,8 +58,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -79,18 +78,17 @@ class UserController extends Controller
 	    ]);
 
 	    $user = new User();
+	    $user->league_profile_id = LeagueProfile::find(2)->id;
 	    $user->name     = $request->name;
 	    $user->username = $request->username;
 	    $user->email    = $request->email;
 	    $user->phone    = $request->phone;
+	    $user->type     = $request->type;
 	    $user->active   = $request->active;
 
-	    dd($user);
-	    \Mail::to($user->email)->send(new NewUser($user));
-
-//	    if($user->save()) {
-//		    return back()->with('status', 'New User Added Successfully');
-//	    }
+	    if($user->save()) {
+		    return back()->with('status', 'New User Added Successfully');
+	    }
     }
 
     /**
@@ -148,7 +146,7 @@ class UserController extends Controller
 		    	'required',
 			    'email',
 			    'max:50',
-			    Rule::unique('users')->ignore($user->email),
+			    Rule::unique('users')->ignore($user->id),
 		    ],
 		    'active'    => 'required|',
 	    ]);
@@ -160,6 +158,11 @@ class UserController extends Controller
 	    $user->active   = $request->active;
 
 	    if($user->type == 'player') {
+		    $this->validate($request, [
+			    'season' => 'required|',
+			    'season_team' => 'required',
+		    ]);
+
 		    $season_id = $request->season;
 		    $team_id   = $request->season_team;
 		    $teamCheck = LeaguePlayer::where([['email', '=', $user->email], ['league_season_id', '=', $request->season], ['user_id', '=', $user->id]])->get()->first();
@@ -276,6 +279,10 @@ class UserController extends Controller
 				    }
 
 				    if ($user->save()) {
+						if($user->password == null) {
+							\Mail::to($user->email)->send(new NewUser($user));
+						}
+
 					    return back()->with('status', 'User Info Updated Successfully');
 				    }
 			    }

@@ -11,9 +11,10 @@
 |
 */
 
-// Route::get('/test', function () {
-//     return view('about2');
-// });
+ Route::get('/test', function () {
+ 	$user = \App\User::find(1);
+     return view('emails.new_contact', compact('user'));
+ });
 
 Auth::routes();
 

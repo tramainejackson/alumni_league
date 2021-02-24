@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'The Alumni League Info')
+
 @section('content')
 
 	@include('include.functions')
@@ -10,7 +12,9 @@
 
 			{{--Authourization Only--}}
 			<div class="row">
+
 				<div class="col-12 col-md-10 mx-auto leagueContactInfo">
+
 					<form action="{{ action('LeagueProfileController@update', ['league' => $league->id]) }}" method="POST" enctype="multipart/form-data">
 
 						{{ method_field('PATCH') }}

@@ -96,39 +96,36 @@ class LeagueTeam extends Model
 	/**
 	* Get the standings for the team object.
 	*/
-    public function division()
-    {
+    public function division() {
         return $this->belongsTo('App\LeagueDivision', 'league_division_id');
     }
 	
 	/**
 	* Get the large team picture.
 	*/
-    public function lg_photo()
-    {
+    public function lg_photo() {
 	    // Check if file exist
-	    $img_file = Storage::disk('public')->exists('images/' . $this->team_picture . '_sm.png');
-
-	    if($img_file) {
-		    return asset(str_ireplace('images', 'images/lg', $this->team_picture));
+	    if(file_exists(str_ireplace('public/images', 'storage/images/lg', $this->team_picture))) {
+		    $path = str_ireplace('public/images', 'storage/images/lg', $this->team_picture);
 	    } else {
-		    return asset(str_ireplace('images', 'images/lg', LeagueProfile::find(2)->picture));
+		    $path = str_ireplace('public/images', 'storage/images/lg', LeagueProfile::find(2)->picture);
 	    }
+
+	    return $path;
     }
 	
 	/**
 	* Get the small team picture.
 	*/
-    public function sm_photo()
-    {
+    public function sm_photo() {
 	    // Check if file exist
-	    $img_file = Storage::disk('public')->exists('images/' . $this->team_picture . '_sm.png');
-
-	    if($img_file) {
-		    return asset(str_ireplace('images', 'images/sm', $this->team_picture));
+	    if(file_exists(str_ireplace('public/images', 'storage/images/sm', $this->team_picture))) {
+		    $path = str_ireplace('public/images', 'storage/images/sm', $this->team_picture);
 	    } else {
-		    return asset(str_ireplace('images', 'images/sm', LeagueProfile::find(2)->picture));
+		    $path = str_ireplace('public/images', 'storage/images/sm', LeagueProfile::find(2)->picture);
 	    }
+
+	    return $path;
     }
 	
 	/**

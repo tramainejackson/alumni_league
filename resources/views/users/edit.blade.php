@@ -64,7 +64,7 @@
                                             <select class="mdb-select md-form colorful-select dropdown-primary" id="user_type_select" name="type" onchange="playOptionSelect();">
                                                 <option value="" disabled selected>----Select A User Type----</option>
                                                 <option value="admin" {{ $user->type == 'admin' ? 'selected' : '' }}>Administrator</option>
-                                                <option value="statitician" {{ $user->type == 'statistician' ? 'selected' : '' }}>Statitician</option>
+                                                <option value="statitician" {{ $user->type == 'statitician' ? 'selected' : '' }}>Statitician</option>
                                                 <option value="player" {{ $user->type == 'player' ? 'selected' : '' }}>Player/Coach</option>
                                             </select>
                                             <!-- Type -->
@@ -87,8 +87,8 @@
 
                                             <label for="email">Email</label>
 
-                                            @if ($errors->has('email'))
-                                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                                            @if($errors->has('email'))
+                                                <span class="text-danger">@foreach($errors->get('email') as $value){{ $value }} @endforeach</span>
                                             @endif
 
                                         </div>
@@ -99,6 +99,7 @@
                                 <div class="row{{ $user->type == 'player' ? '' : ' d-none' }}" id="user_player_edit">
                                     <div class="col-12 text-center" id="">
                                         <h2 class="text-underline">Player/Coach Selections</h2>
+                                        <span class="font-italic font-small text-muted text-warning">Players will receive an email after you select their team and saved their information</span>
                                     </div>
 
                                     <div class="md-form col-12 col-lg-6" id="">
@@ -107,7 +108,7 @@
                                             <option value="" disabled selected>----Select An Active Season----</option>
 
                                             @foreach($activeSeasons as $activeSeason)
-                                                <option value="{{ $activeSeason->id }}"{{ $activeSeason->id == $seasonID ? 'selected' : '' }}>{{ ucwords($activeSeason->name) }}</option>
+                                                <option value="{{ $activeSeason->id }}"{{ $activeSeason->id == $seasonID ? 'selected' : $loop->first ? 'selected' : '' }}>{{ ucwords($activeSeason->name) }}</option>
                                             @endforeach
                                         </select>
                                         <!-- Type -->
@@ -126,7 +127,7 @@
 
                                             @foreach($activeSeasons as $activeSeason)
                                                 @foreach($activeSeason->league_teams as $league_team)
-                                                    <option class="season_{{ $activeSeason->id }}_team" value="{{ $league_team->id }}" {{ $league_team->id == $teamID ? 'selected' : '' }}>{{ ucwords($league_team->team_name) }}</option>
+                                                    <option class="season_{{ $activeSeason->id }}_team" value="{{ $league_team->id }}"{{ $league_team->id == $teamID ? 'selected' : $loop->first ? 'selected' : '' }}>{{ ucwords($league_team->team_name) }}</option>
                                                 @endforeach
                                             @endforeach
                                         </select>
@@ -163,28 +164,6 @@
                                         </div>
 
                                     </div>
-                                </div>
-                            </form>
-
-                            <form action="{{ route('password.email') }}" method="POST">
-
-                                {{ csrf_field() }}
-
-                                <div class="md-form" hidden>
-                                    <i class="fa fa-envelope prefix grey-text"></i>
-
-                                    <input type="text" name="adminPSResetRequest" value="true" hidden>
-                                    <input type="email" class="form-control" name="email" id="email" value="{{ $user->email }}" required />
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('email') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <div class="md-form">
-                                    <button type="submit" class="btn btn-rounded deep-orange white-text ml-0">Send User A Password Reset Link</button>
                                 </div>
                             </form>
 

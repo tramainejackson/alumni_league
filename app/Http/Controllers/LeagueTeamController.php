@@ -105,20 +105,9 @@ class LeagueTeamController extends Controller
 
 		// Get the season to show
 		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
-
-			// Resize the default image
-			Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
-				$constraint->aspectRatio();
-			}
-			)->save(storage_path('app/public/images/lg/default_img.jpg'));
-			$defaultImg = asset('/storage/images/lg/default_img.jpg');
-
-			return view('teams.show', compact('league_team', 'showSeason', 'defaultImg'));
-
+			return view('teams.show', compact('league_team', 'showSeason'));
 		} else {
-
 			abort(404);
-
 		}
 	}
 	
@@ -164,13 +153,6 @@ class LeagueTeamController extends Controller
 		// Get the season to show
 		if($this->showSeason->league_teams->contains('id', $league_team->id)) {
 
-			// Resize the default image
-			Image::make(public_path('images/commissioner.jpg'))->resize(600, null, 	function ($constraint) {
-					$constraint->aspectRatio();
-				}
-			)->save(storage_path('app/public/images/lg/default_img.jpg'));
-			$defaultImg = asset('/storage/images/lg/default_img.jpg');
-
 			// Check for user and if they are a player on a team
 			if(Auth::check()) {
 				if(Auth::user()->type == 'player') {
@@ -189,9 +171,9 @@ class LeagueTeamController extends Controller
 			}
 
 			if($checkUserTeams === true) {
-				return view('teams.edit', compact('league_team', 'showSeason', 'defaultImg', 'conferences', 'divisions'));
+				return view('teams.edit', compact('league_team', 'showSeason', 'conferences', 'divisions'));
 			} else {
-				return view('teams.show', compact('league_team', 'showSeason', 'defaultImg'));
+				return view('teams.show', compact('league_team', 'showSeason'));
 			}
 
 		} else {
