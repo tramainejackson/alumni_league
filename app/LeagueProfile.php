@@ -76,6 +76,19 @@ class LeagueProfile extends Model
     public function users() {
         return $this->hasMany('App\User');
     }
+
+	/**
+	 * Create a readable sting for the phone number
+	 */
+	public function phone_number() {
+		if($this->phone !== null && $this->phone !== '') {
+			$phoneNum = substr($this->phone, 0 ,3) . '-' . substr($this->phone, 3 ,3) . '-' .substr($this->phone, 6 ,4);
+		} else {
+			$phoneNum = 'No Phone Number Listed';
+		}
+
+		return $phoneNum;
+	}
 	
 	private function sql_formatted_stats($leagueID=0) {
 		$sqlFormat = "*, FORMAT(SUM(points)/SUM(game_played), 1) AS PPG,

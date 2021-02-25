@@ -7,12 +7,23 @@
 	<div class="container-fluid bgrd3">
 
 		<div class="row">
-			<!--Column will include buttons for creating a new season-->
-			<div class="col mt-3 d-none d-xl-block"></div>
+
+			<div class="col-12 mt-3 text-center">
+				@if(Auth::check() && Auth::user()->type == 'admin')
+					<div class="text-center d-inline-block" id="">
+						<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
+					</div>
+					<div class="text-center d-inline-block" id="">
+						<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Teams</a>
+					</div>
+				@endif
+			</div>
 
 			<div class="col-12 col-xl-8 mx-auto">
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
+						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+					</div>
 				</div>
 				
 				<!--Card-->
@@ -114,7 +125,7 @@
 											<div class="input-form">
 												<label for="fee_paid" class="d-block">League Fee Paid</label>
 
-												<div class="">
+												<div class="d-flex">
 													<button class="btn inputSwitchToggle{{ $league_team->fee_paid == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
 														<input type="checkbox" name="fee_paid" class="hidden" value="Y"{{ $league_team->fee_paid == 'Y' ? ' checked' : '' }} hidden />
 													</button>
@@ -127,9 +138,9 @@
 										@endif
 
 										<div class="input-form">
-											<h3 for="" class="d-block">Is This An All-Star Team?</h3>
+											<label for="all_star_team" class="d-block">Is This An All-Star Team?</label>
 
-											<div class="">
+											<div class="d-flex">
 												<button class="btn inputSwitchToggle{{ $league_team->is_all_star_team == 'Y' ? ' green active' : ' grey' }}" type="button">Yes
 													<input type="checkbox" name="all_star_team" class="hidden" value="Y"{{ $league_team->is_all_star_team == 'Y' ? ' checked' : '' }} hidden />
 												</button>
@@ -165,7 +176,7 @@
 											<tr>
 												@if($league_team->is_all_star_team == 'N')
 													<th>Captain</th>
-													<th>Jersey Num.</th>
+													<th class="text-nowrap">Jersey Num.</th>
 													<th class="text-nowrap">Player Name</th>
 													<th class="text-nowrap">Email Address</th>
 													<th class="text-nowrap">Phone</th>
@@ -270,16 +281,13 @@
 				</div>
 				<!--/.Card-->
 			</div>
-			<div class="col mt-3 text-center text-xl-right order-first order-xl-0">
-				@if(Auth::check() && Auth::user()->type == 'admin')
-					<a href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">Add New Team</a>
-				@endif
-			</div>
 		</div>
 
 		<div class="row">
-			@include('modals.delete_team')
-			@include('modals.delete_player')
+			@if(Auth::check() && Auth::user()->type == 'admin')
+				@include('modals.delete_team')
+				@include('modals.delete_player')
+			@endif
 		</div>
 	</div>
 

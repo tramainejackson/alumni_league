@@ -82,7 +82,20 @@ class LeaguePlayer extends Model
 
 		return $img_file;
 	}
-	
+
+	/**
+	 * Create a readable sting for the phone number
+	 */
+	public function phone_number() {
+		if($this->phone !== null && $this->phone !== '') {
+			$phoneNum = substr($this->phone, 0 ,3) . '-' . substr($this->phone, 3 ,3) . '-' .substr($this->phone, 6 ,4);
+		} else {
+			$phoneNum = 'No Phone Number Listed';
+		}
+
+		return $phoneNum;
+	}
+
 	/**
 	* Scope a query to get the captain of the team
 	*/

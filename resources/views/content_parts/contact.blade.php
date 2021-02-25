@@ -11,9 +11,10 @@
 
         <!-- Form -->
         <form action="{{ route('messages.store') }}" method="POST" class="text-center" style="color: #757575;">
-        {{ csrf_field() }}
 
-        <!-- Name -->
+            {{ csrf_field() }}
+
+            <!-- Name -->
             <div class="md-form">
                 <div class="form-row" id="">
                     <div class="col-12 col-md-6" id="">
@@ -53,13 +54,11 @@
 
             <!-- Phone -->
             <div class="md-form">
-                <input type="text" name="phone" id="" class="form-control" value="{{ old('phone') }}">
+                <input type="number" name="phone" id="" class="form-control" value="{{ old('phone') }}">
                 <label for="materialLoginFormEmail">Phone (Optional)</label>
 
-                @if ($errors->has('phone'))
-                    <span class="help-block text-danger">
-                        <strong>{{ $errors->first('phone') }}</strong>
-                    </span>
+                @if($errors->has('phone'))
+                    <span class="text-danger">Phone number has to be exactly 10 numbers</span>
                 @endif
             </div>
 

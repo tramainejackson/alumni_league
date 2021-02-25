@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'The Alumni League Users')
+
 @section('content')
 
     <div class="container" id="clients">
@@ -10,7 +12,7 @@
                 <div class="py-5" id="">
 
                     <!-- Subtitle -->
-                    <h3 class="my-0 pre_title">The Team</h3>
+                    <h3 class="my-0 pre_title">The Members</h3>
 
                     <!-- Title -->
                     <h2 class="display-2 text-center">Users</h2>
@@ -92,12 +94,12 @@
                                 <div class="md-form" id="">
 
                                     <!-- Phone -->
-                                    <input type="text" id="phone" class="form-control" name='phone' value='{{ old('phone') }}' placeholder="Enter Phone Number" {{ $errors->has('phone') ? 'autofocus' : '' }}/>
+                                    <input type="number" id="phone" class="form-control" name='phone' value='{{ old('phone') }}' placeholder="Enter Phone Number" {{ $errors->has('phone') ? 'autofocus' : '' }} />
 
                                     <label class="" for="phone">Phone</label>
 
-                                    @if ($errors->has('phone'))
-                                        <span class="text-danger">{{ $errors->first('phone') }}</span>
+                                    @if($errors->has('phone'))
+                                        <span class="text-danger">Phone number has to be exactly 10 numbers</span>
                                     @endif
 
                                 </div>
@@ -168,11 +170,19 @@
                                 </div>
 
                                 <div class="" id="">
-                                    <h5 class="card-title"><b>Name:</b> {{ $user->name }}</h5>
+                                    <h5 class="card-title"><b>Name:</b> <span class="text-black-50">{{ $user->name }}</span></h5>
                                 </div>
 
                                 <div class="" id="">
-                                    <p class="card-title"><b>Access Type:</b> {{ $user->type == 'player' ? 'Player/Coach' : ucfirst($user->type) }}</p>
+                                    <p class="card-title"><b>Access Type:</b> <span class="text-black-50">{{ $user->type == 'player' ? 'Player/Coach' : ucfirst($user->type) }}</span></p>
+                                </div>
+
+                                <div class="" id="">
+                                    <p class="card-title"><b>Phone Number:</b> <span class="text-black-50">{{ $user->phone_number() }}</span></p>
+                                </div>
+
+                                <div class="" id="">
+                                    <p class="card-title"><b>Email Address:</b> <span class="text-black-50">{{ $user->email }}</span></p>
                                 </div>
 
                                 <div class="" id="">

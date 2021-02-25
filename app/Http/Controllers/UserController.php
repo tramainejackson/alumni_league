@@ -73,7 +73,8 @@ class UserController extends Controller
 		    'name'      => 'required|max:50',
 		    'username'  => 'required|max:50|unique:users,username',
 		    'email'     => 'required|email|max:50|unique:users,email',
-		    'phone'     => 'nullable',
+		    'type'      => 'required',
+		    'phone'     => 'nullable|numeric|digits:10',
 		    'active'    => 'nullable',
 	    ]);
 
@@ -142,6 +143,7 @@ class UserController extends Controller
 		    ],
 		    'name'      => 'required|max:100',
 		    'type'      => 'required',
+		    'phone'     => 'nullable|numeric|digits:10',
 		    'email'     => [
 		    	'required',
 			    'email',
@@ -156,6 +158,7 @@ class UserController extends Controller
 	    $user->type     = $request->type;
 	    $user->email    = $request->email;
 	    $user->active   = $request->active;
+	    $user->phone    = $request->phone;
 
 	    if($user->type == 'player') {
 		    $this->validate($request, [

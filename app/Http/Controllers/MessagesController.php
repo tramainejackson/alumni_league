@@ -21,6 +21,7 @@ class MessagesController extends Controller
 {
 
 	public $showSeason;
+
 	/**
 	 * Create a new controller instance.
 	 *
@@ -44,10 +45,11 @@ class MessagesController extends Controller
     public function index() {
     	$showSeason = $this->showSeason;
 	    $admin = Auth::user();
-	    $messages = Message::all();
+	    $messages = Message::paginate(5);
+	    $allMessages = Message::all();
 	    $today = Carbon::now();
 
-	    return view('messages.index', compact('admin', 'messages', 'today', 'showSeason'));
+	    return view('messages.index', compact('admin', 'messages', 'allMessages', 'today', 'showSeason'));
     }
 
     /**
@@ -69,16 +71,15 @@ class MessagesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-//    	dd($request);
 	    $this->validate($request, [
-		    'first_name' => 'required',
-		    'last_name' => 'required',
-		    'email' => 'required',
-		    'message' => 'required',
+		    'first_name'    => 'required',
+		    'last_name'     => 'required',
+		    'email'         => 'required',
+		    'message'       => 'required',
+		    'phone'         => 'nullable|numeric|digits:10',
 	    ]);
 
 		$message = new Message();
-
 	    $message->name      = $request->first_name . ' ' . $request->last_name;
 	    $message->email     = $request->email;
 	    $message->phone     = $request->phone;
@@ -105,8 +106,7 @@ class MessagesController extends Controller
      * @param  \App\Message $message
      * @return \Illuminate\Http\Response
      */
-    public function edit(Message $message)
-    {
+    public function edit(Message $message) {
         //
     }
 
@@ -117,8 +117,7 @@ class MessagesController extends Controller
      * @param  \App\Message $message
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Message $message)
-    {
+    public function update(Request $request, Message $message) {
         //
     }
 

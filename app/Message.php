@@ -27,17 +27,16 @@ class Message extends Model
 	}
 
 	/**
-	 * Get the consult request record associated with the user.
+	 * Create a readable sting for the phone number
 	 */
-	public function consultContact()	{
-		return $this->hasOne('App\ConsultContact');
-	}
+	public function phone_number() {
+		if($this->phone !== null && $this->phone !== '') {
+			$phoneNum = substr($this->phone, 0 ,3) . '-' . substr($this->phone, 3 ,3) . '-' .substr($this->phone, 6 ,4);
+		} else {
+			$phoneNum = 'No Phone Number Listed';
+		}
 
-	/**
-	 * Get the consult request record associated with the user.
-	 */
-	public function consultResponse()	{
-		return $this->hasOne('App\ConsultResponse');
+		return $phoneNum;
 	}
 
 	/**

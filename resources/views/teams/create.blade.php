@@ -7,10 +7,19 @@
 
 		<div class="row">
 
+			<div class="col-12 my-3 text-center">
+				<a class="btn btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">All Teams</a>
+			</div>
+
 			<div class="col-12 col-md-8 mx-auto py-4">
 
 				<div class="text-center coolText1">
-					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
+					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
+						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+					</div>
+				</div>
+
+				<div class="text-center coolText1">
 					<h3 class="h-responsive">Total Teams: {{ $totalTeams }}</h3>
 				</div>
 				
@@ -60,9 +69,6 @@
 					</div>
 				</div>
 				<!--/.Card-->
-			</div>
-			<div class="position-absolute" style="top:90px; right:15px;">
-				<a href="{{ request()->query() == null ? route('league_teams.index') : route('league_teams.index', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}" class="btn btn-lg btn-rounded mdb-color darken-3 white-text" type="button">All Teams</a>
 			</div>
 		</div>
 	</div>

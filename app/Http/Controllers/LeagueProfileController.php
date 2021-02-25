@@ -17,8 +17,7 @@ class LeagueProfileController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
        $this->middleware('auth')->except(['index', 'show', 'show_season']); 
     }
 	
@@ -49,8 +48,7 @@ class LeagueProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -60,8 +58,7 @@ class LeagueProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -71,8 +68,7 @@ class LeagueProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $league)
-    {
+    public function show(Request $request, $league) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		
@@ -105,8 +101,7 @@ class LeagueProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show_season(Request $request, $league, $season)
-    {
+    public function show_season(Request $request, $league, $season) {
 		// Get the season to show
 		$showSeason = $this->find_season(request());
 		
@@ -171,8 +166,7 @@ class LeagueProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -186,8 +180,10 @@ class LeagueProfileController extends Controller
     public function update(Request $request, LeagueProfile $league_profile) {
 		// Validate incoming data
 		$this->validate($request, [
-			'name' => 'required|max:50:unique:league_profile',
-			'commish' => 'required|max:100',
+			'name'          => 'required|max:50:unique:league_profile',
+			'commish'       => 'required|max:100',
+			'leagues_phone' => 'nullable|numeric|digits:10',
+			'leagues_email' => 'nullable|email|max:100',
 		]);
 		
 		$league = $league_profile;

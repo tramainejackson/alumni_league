@@ -41,16 +41,6 @@ class User extends Authenticatable
     ];
 
 	/**
-	 * Send the password reset notification.
-	 *
-	 * @param  string  $token
-	 * @return void
-	 */
-	public function sendPasswordResetNotification($token) {
-		$this->notify(new ResetPasswordNotification($token));
-	}
-
-	/**
 	* Get the leagues profile for the user.
 	*/
     public function leagues_profiles() {
@@ -63,13 +53,6 @@ class User extends Authenticatable
     public function league_player_profiles() {
         return $this->hasMany('App\LeaguePlayer');
     }
-
-	/**
-	* Get the player profile for the user.
-	*/
-//    public function player_profiles() {
-//        return $this->hasMany('App\PlayerProfile');
-//    }
 
 	/**
 	 * Get the name of the member
@@ -104,6 +87,19 @@ class User extends Authenticatable
 	 */
 	public function setLinkAttribute($value) {
 		$this->attributes['link'] = strtolower($value);
+	}
+
+	/**
+	 * Create a readable sting for the phone number
+	 */
+	public function phone_number() {
+		if($this->phone !== null && $this->phone !== '') {
+			$phoneNum = substr($this->phone, 0 ,3) . '-' . substr($this->phone, 3 ,3) . '-' .substr($this->phone, 6 ,4);
+		} else {
+			$phoneNum = 'No Phone Number Listed';
+		}
+
+		return $phoneNum;
 	}
 
 	/**

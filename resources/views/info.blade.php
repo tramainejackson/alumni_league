@@ -85,7 +85,7 @@
 									<label for="leagues_address">League Address</label>
 								</div>
 								<div class="md-form">
-									<input type="text" name="leagues_phone" class="form-control" id="leagues_phone" placeholder="Phone" value="{{ $league->phone }}" />
+									<input type="number" name="leagues_phone" class="form-control" id="leagues_phone" placeholder="Phone" value="{{ $league->phone }}" />
 
 									<label for="leagues_phone">League Phone</label>
 								</div>
@@ -180,7 +180,7 @@
 								@if($league->phone != '')
 									<div class="d-flex align-items-center justify-content-between">
 										<p class="font-weight-bold leagueInfoHeader mb-0"><span class="d-none d-sm-inline-block">League&nbsp;</span>Phone:</p>
-										<p class="text-muted mb-0">{{ $league->phone }}</p>
+										<p class="text-muted mb-0">{{ $league->phone_number() }}</p>
 									</div>
 								@endif
 

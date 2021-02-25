@@ -16,7 +16,7 @@
                     <h2 class="display-2 text-center">Messages</h2>
 
                     <!-- Title -->
-                    <p class="text-center">Total Messages: {{ $messages->count() }}</p>
+                    <p class="text-center">Total Messages: {{ $allMessages->count() }}</p>
                 </div>
             </div>
         </div>
@@ -25,6 +25,8 @@
     <div class="container fluid" id="">
 
             @if($messages->count() > 0)
+
+                {{ $messages->links() }}
 
                 @foreach($messages as $message)
 
@@ -66,6 +68,8 @@
                     @endif
 
                 @endforeach
+
+                {{ $messages->links() }}
 
             @else
 

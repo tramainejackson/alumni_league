@@ -15,7 +15,7 @@
 		<div class="row" id="">
 			@if(Auth::check() && Auth::user()->type == 'admin')
 				{{--Authourization Only--}}
-				<div class="col offset-10 my-3">
+				<div class="col-12 my-3 text-center">
 					@if(!isset($allComplete))
 						<a class="btn btn-rounded mdb-color darken-3 white-text" type="button" href="{{ request()->query() == null ? route('league_teams.create') : route('league_teams.create', ['season' => request()->query('season'), 'year' => request()->query('year')]) }}">Add New Team</a>
 					@else
@@ -72,7 +72,7 @@
 
 															<p class="m-0">
 																<label class="font-weight-bold">Phone:&nbsp;</label>
-																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone != null ? $teamCaptain->first()->phone : 'No Phone Number' : 'No Phone Number' }}</span>
+																<span>{{ $teamCaptain->isNotEmpty() ? $teamCaptain->first()->phone_number() : 'No Phone Number Listed' }}</span>
 															</p>
 														</div>
 
