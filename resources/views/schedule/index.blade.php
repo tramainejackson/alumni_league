@@ -5,7 +5,7 @@
 
 		<div class="row" id="">
 			@if(Auth::check() && Auth::user()->type == 'admin')
-				<div class="col col-lg-10 mx-auto my-3">
+				<div class="col col-lg-10 mx-auto my-3{{ $seasonScheduleWeeks->get()->isEmpty() && Auth::check() ? ' position-absolute' : '' }}">
 					{{--Authourization Only--}}
 					@if(!isset($allComplete))
 						@if($showSeason->league_teams->isNotEmpty())

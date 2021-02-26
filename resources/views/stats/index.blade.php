@@ -51,9 +51,11 @@
 
 		<div class="row view">
 
-			<div class="pt-3{{ Auth::check() && Auth::user()->type == 'admin' ? ' d-flex justify-content-center flex-column col col-lg-2' : $checkStats ? ' col-12' : ' col-12' }}">
-				<div class="text-center p-4 card rgba-deep-orange-light white-text my-3 col-12 mx-auto" id="">
-					<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+			<div class="pt-3 col-12 col-lg-8 mx-auto{{ $checkStats ? '' : ' d-flex justify-content-center flex-column' }}">
+				<div class="text-center coolText1">
+					<div class="text-center p-4 card rgba-deep-orange-light white-text mb-3" id="">
+						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>
+					</div>
 				</div>
 
 				@if($checkStats)

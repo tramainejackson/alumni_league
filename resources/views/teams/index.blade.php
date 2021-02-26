@@ -25,7 +25,7 @@
 		</div>
 
 		<div class="row view pt-3">
-			<div class="col-12 col-sm-10 col-lg-8 mx-auto{{ $seasonTeams->isNotEmpty() ? '' : ' d-flex align-items-center justify-content-center flex-column' }}">
+			<div class="col-12 col-sm-10 col-lg-8 mx-auto">
 				<div class="text-center coolText1">
 					<div class="text-center p-4 card rgba-deep-orange-light white-text my-3" id="">
 						<h1 class="h1-responsive text-uppercase">{{ $showSeason->name }}</h1>

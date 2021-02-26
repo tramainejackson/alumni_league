@@ -1,14 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+
 	<div class="container-fluid bgrd3">
+
 		<div class="row">
-			<!--Column will include buttons for creating a new season-->
+
+			<!--Checklist for creating new week of games-->
 			<div class="col col-lg-3 mt-3 d-none d-lg-block">
 				<h2 class="h2-responsive text-underline">Check List</h2>
 				<p class="text-justify font-small">*Make Sure All Games Have Teams, Date, and Time Selected*</p>
 				<p class="text-justify font-small">*Forfeited Games Will Not Have Team Scores*</p>
 			</div>
+
 			<div class="col-12 col-lg-6">
 				<div class="text-center coolText1">
 					<h1 class="display-3">{{ ucfirst($showSeason->name) }}</h1>
@@ -25,8 +29,11 @@
 				</div>
 
 				{!! Form::open(['action' => ['LeagueScheduleController@update_week', $weekGames->first()->season_week], 'class' => 'updateWeekForm', 'name' => 'edit_week_form', 'method' => 'PATCH']) !!}
+
 					@if($weekGames->count() > 0)
+
 						@foreach($weekGames as $game)
+
 							<!--Card-->
 							<div class="card mb-4">
 								<!--Card content-->

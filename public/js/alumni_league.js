@@ -807,24 +807,30 @@ function userSeasonSelect() {
 	});
 }
 
-// // Regular map
-// function regular_map() {
-	// var var_location = new google.maps.LatLng(39.9526, -75.1652);
+(function ($){
+    $.fn.counter = function() {
+        const $this = $(this),
+            numberFrom = parseInt($this.attr('data-from')),
+            numberTo = parseInt($this.attr('data-to')),
+            delta = numberTo - numberFrom,
+            deltaPositive = delta > 0 ? 1 : 0,
+            time = parseInt($this.attr('data-time')),
+            changeTime = 10;
 
-	// var var_mapoptions = {
-		// center: var_location,
-		// zoom: 14
-	// };
+        let currentNumber = numberFrom,
+            value = delta*changeTime/time;
+        var interval1;
+        const changeNumber = () => {
+            currentNumber += value;
+            //checks if currentNumber reached numberTo
+            (deltaPositive && currentNumber >= numberTo) || (!deltaPositive &&currentNumber<= numberTo) ? currentNumber=numberTo : currentNumber;
+            this.text(parseInt(currentNumber));
+            currentNumber == numberTo ? clearInterval(interval1) : currentNumber;
+        }
 
-	// var var_map = new google.maps.Map(document.getElementById("map-container-8"),
-		// var_mapoptions);
-
-	// var var_marker = new google.maps.Marker({
-		// position: var_location,
-		// map: var_map,
-		// title: "Philadelphia"
-	// });
-// }
+        interval1 = setInterval(changeNumber,changeTime);
+    }
+}(jQuery));
 
 // Tooltips Initialization
 $(function () {

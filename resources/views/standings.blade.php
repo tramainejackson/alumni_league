@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 	<div class="container-fluid bgrd3 pb-5">
 
 		@if($showSeason->is_playoffs == 'Y')
